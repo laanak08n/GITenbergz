@@ -170,9 +170,9 @@ DROP TABLE IF EXISTS `hr_leave`;
 CREATE TABLE `hr_leave` (
   `LEA_ID` char(36) NOT NULL,
   `USER_ID` char(36) DEFAULT NULL,
-  `LEA_DATE` varchar(32) DEFAULT NULL,
-  `LEA_SDATE` datetime DEFAULT NULL,
-  `LEA_EDATE` datetime DEFAULT NULL,
+  `LEA_DATE` datetime DEFAULT NULL,
+  `LEA_SDATE` date DEFAULT NULL,
+  `LEA_EDATE` date DEFAULT NULL,
   `LEA_DAYS` varchar(32) DEFAULT NULL,
   `LEA_TYPE` varchar(12) DEFAULT NULL,
   `LEA_CAUSE` varchar(256) DEFAULT NULL,
@@ -186,6 +186,22 @@ CREATE TABLE `hr_leave` (
 
 -- ----------------------------
 -- Records of hr_leave
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for hr_location
+-- ----------------------------
+DROP TABLE IF EXISTS `hr_location`;
+CREATE TABLE `hr_location` (
+  `LOCAT_ID` char(36) NOT NULL,
+  `USER_ID` char(36) DEFAULT NULL,
+  `LOCAT_TIME` datetime DEFAULT NULL,
+  `LOCAT_PLACE` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`LOCAT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hr_location
 -- ----------------------------
 
 -- ----------------------------
@@ -205,6 +221,7 @@ CREATE TABLE `hr_salary` (
   `SAL_PERFORMANCE` decimal(8,2) DEFAULT NULL,
   `SAL_SUBSIDY` decimal(8,2) DEFAULT NULL,
   `SAL_BONUS` decimal(8,2) DEFAULT NULL,
+  `SAL_ACTUAL` decimal(8,2) DEFAULT NULL,
   `SAL_TOTAL` decimal(8,2) DEFAULT NULL,
   `SAL_STATE` varchar(32) DEFAULT NULL,
   `SAL_INSURE` decimal(8,2) DEFAULT NULL,
@@ -231,7 +248,6 @@ CREATE TABLE `hr_valid` (
 -- ----------------------------
 -- Records of hr_valid
 -- ----------------------------
-INSERT INTO `hr_valid` VALUES ('2015', '03', '24.0');
 
 -- ----------------------------
 -- Table structure for hr_work_overtime
@@ -484,9 +500,9 @@ CREATE TABLE `security_user` (
 -- Records of security_user
 -- ----------------------------
 INSERT INTO `security_user` VALUES ('57ECFB2D-1F40-4136-AD2F-87D37A9AEFB5', 'CS01', '张老大', 'DAE6CDC2B49F7C32164BE2AF1A7916AA', 'M', '普通用户', '1', '3', '', '', null);
+INSERT INTO `security_user` VALUES ('7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', 'admin', '管理员', '21232F297A57A5A743894A0E4A801FC3', 'M', '内置账户，勿删！！', '1', '1', null, null, null);
 INSERT INTO `security_user` VALUES ('9C548347-0732-4D83-B860-11531C2B58E5', 'CS04', '赵小四', 'FBAF749E6A085DCBBE41FF5C030EBF98', 'M', '普通用户', '1', '0', '', '', null);
 INSERT INTO `security_user` VALUES ('B9E0DDB0-F0A3-4CF8-94A4-C806FFA868D0', 'CS03', '孙小三', '25EC07853BDC7B87DD021F5580C70855', 'M', '普通用户', '1', '0', '', '', null);
-INSERT INTO `security_user` VALUES ('D67622CD-EBA3-48B0-BBF4-46D3BFD567F2', 'admin', '管理员', '21232F297A57A5A743894A0E4A801FC3', 'M', '内置账户，勿删！！', '1', '1', null, null, null);
 INSERT INTO `security_user` VALUES ('E011D0E7-C777-4CC8-BEBD-EBC8E63E797D', 'CS02', '赵小二', '39661AF3C6AFE19E95700A0E7373446A', 'M', '普通用户', '1', '0', '', '', null);
 
 -- ----------------------------
@@ -700,13 +716,6 @@ INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '4', '4', '', '5', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '5', '5', '', '6', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME_COMPANY', 'day', '天', '', '2', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME_COMPANY', 'hour', '小时', '', '1', '1');
-INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Bottom', 'BottomHandler', '', '1', '1');
-INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Building', 'BuildingHandler', '', '1', '1');
-INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Homepage', 'HomepageHandler', '', '1', '1');
-INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Logo', 'LogoHandler', '', '1', '1');
-INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'MainWin', 'MainWinHandler', '', '1', '1');
-INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'MenuTree', 'MenuTreeHandler', '', '1', '1');
-INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Navigater', 'NavigaterHandler', '', '1', '1');
 
 -- ----------------------------
 -- Table structure for sys_codetype
@@ -753,7 +762,6 @@ INSERT INTO `sys_codetype` VALUES ('UNIT_TYPE', '单位类型', 'app_code_define
 INSERT INTO `sys_codetype` VALUES ('USER_SEX', '性别类型', 'sys_code_define', '', 'N', 'Y', 'Y', '16', 'C', null, null, null);
 INSERT INTO `sys_codetype` VALUES ('WOT_TIME', '加班时间', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('WOT_TIME_COMPANY', '加班时长单位', 'sys_code_define', '', 'Y', 'Y', 'Y', '20', '', 'N', '', '');
-INSERT INTO `sys_codetype` VALUES ('AuthedHandlerId', '认证Handler定义', 'sys_code_define', '', 'Y', 'Y', 'Y', '', 'B', 'N', '', '');
 
 -- ----------------------------
 -- Table structure for sys_function
@@ -780,16 +788,17 @@ INSERT INTO `sys_function` VALUES ('49F49293-5270-4C72-B7EE-02562627BF03', '基�
 INSERT INTO `sys_function` VALUES ('5FDEE3AB-6D32-4C5F-AD65-EF1EE5FFBAE6', '附件管理', 'funcnode', '1F617665-FC8B-4E8C-ABE4-540C363A17A8', '00000000-0000-0000-00000000000000001', '1', '7', '');
 INSERT INTO `sys_function` VALUES ('67BA273A-DD31-48D0-B78C-1D60D5316074', '系统日志', 'funcnode', '494DF09B-7573-4CCA-85C1-97F4DC58C86B', '00000000-0000-0000-00000000000000001', '1', '6', null);
 INSERT INTO `sys_function` VALUES ('692B0D37-2E66-4E82-92B4-E59BCF76EE76', '编码管理', 'funcnode', 'B4FE5722-9EA6-47D8-8770-D999A3F6A354', '00000000-0000-0000-00000000000000001', '1', '5', null);
-INSERT INTO `sys_function` VALUES ('697BF588-ED62-43BB-B30E-3A7E40E7F1F1', '薪资管理', 'funcnode', '0248868D-BBBE-4F96-B7C5-FAF4E1556570', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '6', '');
+INSERT INTO `sys_function` VALUES ('697BF588-ED62-43BB-B30E-3A7E40E7F1F1', '薪资管理', 'funcnode', '0248868D-BBBE-4F96-B7C5-FAF4E1556570', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '7', '');
+INSERT INTO `sys_function` VALUES ('6FDE7748-A30D-4386-999E-600B79D472D5', '定位查看', 'funcnode', '34BD49C5-0BA6-4DAC-A96C-B2B426127C28', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '3', '');
 INSERT INTO `sys_function` VALUES ('8C84B439-2788-4608-89C4-8F5AA076D124', '组织机构', 'funcnode', '439949F0-C6B7-49FF-8ED1-2A1B5062E7B9', '00000000-0000-0000-00000000000000001', '1', '1', null);
 INSERT INTO `sys_function` VALUES ('99EAA89A-59E6-4866-9980-21164DA571F2', '考勤管理', 'funcnode', '67CF818A-7AB6-43CB-BDD5-A57B5FC2C512', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '2', '');
 INSERT INTO `sys_function` VALUES ('A0334956-426E-4E49-831B-EB00E37285FD', '编码类型', 'funcnode', '9A16D554-F989-438A-B92D-C8C8AC6BF9B8', '00000000-0000-0000-00000000000000001', '1', '4', null);
-INSERT INTO `sys_function` VALUES ('AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '人力资源', 'funcmenu', '', '00000000-0000-0000-00000000000000000', '1', '99', '');
-INSERT INTO `sys_function` VALUES ('B29FEBDB-F5D9-41AE-8C2D-451A00B2C51F', '请假申请', 'funcnode', '642BCD38-28C1-4FF1-A194-535BFAB10679', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '4', '');
+INSERT INTO `sys_function` VALUES ('AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '业务功能', 'funcmenu', '', '00000000-0000-0000-00000000000000000', '1', '99', '');
+INSERT INTO `sys_function` VALUES ('B29FEBDB-F5D9-41AE-8C2D-451A00B2C51F', '请假申请', 'funcnode', '642BCD38-28C1-4FF1-A194-535BFAB10679', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '6', '');
 INSERT INTO `sys_function` VALUES ('C977BC31-C78F-4B16-B0C6-769783E46A06', '功能管理', 'funcnode', '46C52D33-8797-4251-951F-F7CA23C76BD7', '00000000-0000-0000-00000000000000001', '1', '3', null);
 INSERT INTO `sys_function` VALUES ('D3582A2A-3173-4F92-B1AD-2F999A2CBE18', '修改密码', 'funcnode', '88882DB9-967F-430E-BA9C-D0BBBBD2BD0C', '00000000-0000-0000-00000000000000001', '1', '8', '');
 INSERT INTO `sys_function` VALUES ('DFE8BE4C-4024-4A7B-8DF2-630003832AE9', '角色管理', 'funcnode', '0CE03AD4-FF29-4FDB-8FEE-DA8AA38B649F', '00000000-0000-0000-00000000000000001', '1', '2', null);
-INSERT INTO `sys_function` VALUES ('F8C4DC47-8F58-4420-8FC4-4DB1CE35C0F6', '加班申请', 'funcnode', '7782AD69-8FDC-4F5D-8510-36FD8D3BF249', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '3', '');
+INSERT INTO `sys_function` VALUES ('F8C4DC47-8F58-4420-8FC4-4DB1CE35C0F6', '加班申请', 'funcnode', '7782AD69-8FDC-4F5D-8510-36FD8D3BF249', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '4', '');
 
 -- ----------------------------
 -- Table structure for sys_handler
@@ -813,6 +822,7 @@ INSERT INTO `sys_handler` VALUES ('0CE03AD4-FF29-4FDB-8FEE-DA8AA38B649F', 'Secur
 INSERT INTO `sys_handler` VALUES ('145920A1-3843-419E-A633-5C3AC2AFC454', 'HrSalaryManageEdit', 'OTHER', '', '697BF588-ED62-43BB-B30E-3A7E40E7F1F1');
 INSERT INTO `sys_handler` VALUES ('1F617665-FC8B-4E8C-ABE4-540C363A17A8', 'WcmGeneralGroup8ContentList', 'MAIN', null, '5FDEE3AB-6D32-4C5F-AD65-EF1EE5FFBAE6');
 INSERT INTO `sys_handler` VALUES ('27BCFFDE-DD30-4659-8EAB-D0D848A39DB8', 'DeptTreeSelect', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
+INSERT INTO `sys_handler` VALUES ('34BD49C5-0BA6-4DAC-A96C-B2B426127C28', 'HrLocationManageList', 'MAIN', null, '6FDE7748-A30D-4386-999E-600B79D472D5');
 INSERT INTO `sys_handler` VALUES ('3844F972-311A-459A-8B9A-B39DFA526B6C', 'HrValidDays', 'OTHER', '', '697BF588-ED62-43BB-B30E-3A7E40E7F1F1');
 INSERT INTO `sys_handler` VALUES ('439949F0-C6B7-49FF-8ED1-2A1B5062E7B9', 'SecurityGroupList', 'MAIN', '', '8C84B439-2788-4608-89C4-8F5AA076D124');
 INSERT INTO `sys_handler` VALUES ('46C52D33-8797-4251-951F-F7CA23C76BD7', 'FunctionTreeManage', 'MAIN', null, 'C977BC31-C78F-4B16-B0C6-769783E46A06');
@@ -820,12 +830,14 @@ INSERT INTO `sys_handler` VALUES ('4878413D-5A54-464A-8ECE-59E78D43F2D1', 'HrLea
 INSERT INTO `sys_handler` VALUES ('494DF09B-7573-4CCA-85C1-97F4DC58C86B', 'SysLogQueryList', 'MAIN', null, '67BA273A-DD31-48D0-B78C-1D60D5316074');
 INSERT INTO `sys_handler` VALUES ('4F0BC221-A2D0-4500-907A-EC116B48AC74', 'HrWorkOvertimeManageEdit', 'OTHER', '', 'F8C4DC47-8F58-4420-8FC4-4DB1CE35C0F6');
 INSERT INTO `sys_handler` VALUES ('4F7D78BE-CEF2-4B71-9F43-EEF3ABADC5A1', 'HrEmployeeManageList', 'MAIN', null, '49F49293-5270-4C72-B7EE-02562627BF03');
+INSERT INTO `sys_handler` VALUES ('62EA8181-C838-4E46-9A2E-82E94D866EFF', 'UserListSelectList', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
 INSERT INTO `sys_handler` VALUES ('642BCD38-28C1-4FF1-A194-535BFAB10679', 'HrLeaveManageList', 'MAIN', null, 'B29FEBDB-F5D9-41AE-8C2D-451A00B2C51F');
 INSERT INTO `sys_handler` VALUES ('67CF818A-7AB6-43CB-BDD5-A57B5FC2C512', 'HrAttendanceManageList', 'MAIN', null, '99EAA89A-59E6-4866-9980-21164DA571F2');
 INSERT INTO `sys_handler` VALUES ('7782AD69-8FDC-4F5D-8510-36FD8D3BF249', 'HrWorkOvertimeManageList', 'MAIN', null, 'F8C4DC47-8F58-4420-8FC4-4DB1CE35C0F6');
 INSERT INTO `sys_handler` VALUES ('7D03AFCE-974A-45B8-B163-34002C7CE07B', 'HrExperienceEditBox', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
 INSERT INTO `sys_handler` VALUES ('86C0B8E5-92FE-4FB7-ACBF-1C63243B5D30', 'HrWorkPerformanceEditBox', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
 INSERT INTO `sys_handler` VALUES ('88882DB9-967F-430E-BA9C-D0BBBBD2BD0C', 'ModifyPassword', 'MAIN', null, 'D3582A2A-3173-4F92-B1AD-2F999A2CBE18');
+INSERT INTO `sys_handler` VALUES ('89E26739-44ED-4BF5-9CA1-D950052F07A9', 'UserListSelectList', 'OTHER', '', 'B29FEBDB-F5D9-41AE-8C2D-451A00B2C51F');
 INSERT INTO `sys_handler` VALUES ('98733F5B-A599-41A9-B135-33F480BDE062', 'HrEmployeeManageEdit', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
 INSERT INTO `sys_handler` VALUES ('9A16D554-F989-438A-B92D-C8C8AC6BF9B8', 'CodeTypeManageList', 'MAIN', null, 'A0334956-426E-4E49-831B-EB00E37285FD');
 INSERT INTO `sys_handler` VALUES ('A2E1E8E7-EAC9-45F7-AAEE-D08C89BDEE0A', 'UserListSelectList', 'OTHER', '', 'F8C4DC47-8F58-4420-8FC4-4DB1CE35C0F6');
@@ -850,6 +862,257 @@ CREATE TABLE `sys_log` (
 -- Records of sys_log
 -- ----------------------------
 INSERT INTO `sys_log` VALUES ('8FC62FDE-2D17-4EA6-9E89-72DA2D37B58A', '2015-03-24 11:05:30', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('FD0CD6E0-4375-4085-815F-B6BA485D5F19', '2016-02-04 09:14:50', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('12AF36BB-F032-4BC4-A382-2ADD26C0EC79', '2016-02-04 09:15:45', '127.0.0.1', 'CS03', '孙小三', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('E33150D8-65FF-4328-9F64-2D4FD87ED88B', '2016-02-04 09:16:58', '127.0.0.1', 'CS04', '赵小四', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('8514CE49-807E-4296-B73D-3C625077E884', '2016-02-04 09:17:52', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('D72B7794-7566-4E98-9F31-0E244AA4C197', '2016-02-04 09:19:33', '127.0.0.1', 'admin', '管理员', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('63D3E19F-804A-45D5-B68A-A1ADF4D18514', '2016-02-04 09:19:43', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('AF45279C-D17C-4D02-B2F5-B1F77D928BE0', '2016-02-04 09:25:30', '127.0.0.1', 'CS03', '孙小三', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('2D596D13-739F-4A79-B1D4-224674AF1C69', '2016-02-04 09:25:35', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('9D5A816B-6B72-405B-B0E6-41B9658FD096', '2016-02-04 09:26:08', '127.0.0.1', 'CS02', '赵小二', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('05351ED6-F3F0-4C5F-8E68-2C9B00A83021', '2016-02-04 09:26:16', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('E4B93630-3807-47C3-B5F9-FA49EC86D402', '2016-02-04 09:29:49', '127.0.0.1', 'CS03', '孙小三', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('F04F6143-4782-43FC-9C5A-CC9EBFEAEF51', '2016-02-04 09:30:43', '127.0.0.1', 'CS02', '赵小二', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('205A02DF-2F0D-449B-9442-CF9A23264555', '2016-02-04 09:30:50', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('77E743EF-867B-445C-A53A-64B42FE6F6A5', '2016-02-04 09:32:05', '127.0.0.1', 'CS03', '孙小三', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('F86F8C71-2BDB-4093-B420-118AC479344F', '2016-02-04 09:32:13', '127.0.0.1', 'CS03', '孙小三', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('60391D66-EA28-45C2-8703-9BC400A383D9', '2016-02-04 09:32:39', '127.0.0.1', 'CS02', '赵小二', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('DD4981E3-3A99-4158-A7D4-EE169D494624', '2016-02-04 09:32:52', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('A64E4075-2CEC-4E73-9946-245876049B58', '2016-02-04 10:32:40', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('5E0440E8-1BD8-44E2-A023-7750712B0EBC', '2016-02-04 11:41:25', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('6C815E94-7ECF-40B9-97A2-06AB748D0969', '2016-02-04 13:43:47', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('FA427528-DAD3-4003-B828-846DB1C1E5C1', '2016-02-04 14:09:07', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('29567583-07D2-4377-8F84-7D47EFC45ECA', '2016-03-14 17:28:21', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('3C70754D-2174-4C04-9CC6-DB7033D640D9', '2016-03-14 17:32:40', '127.0.0.1', 'admin', '管理员', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('D8E01D73-C1AF-4C59-A6F8-5BB6E257B128', '2016-03-14 17:32:47', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('08212CD8-B82A-475D-9647-85EA9973DAAA', '2016-03-15 08:43:12', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('C997839D-33E7-4EB1-94BF-76C537C60A39', '2016-03-15 08:44:28', '127.0.0.1', 'admin', '管理员', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('0AAC1B8A-FD98-4959-BA0B-EE4491B12527', '2016-03-15 08:44:36', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('45BAEE97-88E1-4249-9A76-954F18ED0C3F', '2016-03-15 09:17:25', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('CC54D5C4-2771-4095-9694-19AB0CF39D79', '2016-03-15 13:15:32', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('EAE38677-AF03-4949-8A6C-85CE94465AC7', '2016-03-15 13:55:13', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('C046CDA2-C8E1-4846-B68E-FED1A47744F7', '2016-03-15 16:59:07', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('A33F5580-C895-4B20-AB4D-A6EA03AB8CFD', '2016-03-16 09:12:02', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('7F291AEC-1756-4CCF-996B-A02B764142CB', '2016-03-16 11:13:01', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('3C7C9BD5-C427-4DB3-A088-44DB619AAEAC', '2016-03-16 11:23:56', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('C878F8D9-1049-48B8-B58B-BA5277A600A8', '2016-03-16 11:26:59', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('9772F088-7855-420F-B666-F5A01702D6A3', '2016-03-16 15:22:35', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('5306591F-98B5-4806-834E-749BC4203E76', '2016-03-16 15:22:40', '127.0.0.1', 'CS02', '赵小二', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('153CEFC8-A797-4588-AB97-9AE2C5EF24A2', '2016-03-16 15:22:48', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('AB060976-134F-4F31-B4CF-D5028D96C922', '2016-03-17 10:59:59', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('10607041-F8CA-4CBF-BEAC-C28422261BC9', '2016-03-17 11:41:34', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('8D07BD5E-DE86-414A-A18C-403535FF07F3', '2016-03-17 13:01:35', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('6CC2806E-AEA4-4A49-BFB2-7AC706F355EF', '2016-03-17 13:32:16', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('4BF3D6A9-A368-446B-978F-C5F904C099F0', '2016-03-17 13:44:31', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('5DABCCD3-C0A5-4DB6-B709-A95737429114', '2016-03-17 14:27:53', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('0EB553EA-129C-4BB5-BBA9-DC8DA469C150', '2016-03-17 15:32:27', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('E6F4B1C9-EC49-45EA-A6B2-F423F3EE225F', '2016-03-17 17:23:36', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('E2FF7FFC-362E-41D6-B837-F621419A43A1', '2016-03-17 19:42:07', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('7A4891DE-F794-4A17-9C22-203606376546', '2016-03-18 08:29:24', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('1EA2C7D9-E56E-468C-A87B-50C65876C580', '2016-03-18 09:37:17', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('AE1FEDFF-3622-4B10-8823-690264F11F36', '2016-03-18 09:42:28', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('C2CCE9D0-BB56-4CE3-9C7A-3542FDD2AD2C', '2016-03-18 13:42:56', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('E0F1CD25-2C73-4EA7-9CFB-889FFD154220', '2016-03-18 14:03:16', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('6A29B72E-A0D8-4959-A216-72CD40E97143', '2016-03-18 15:05:45', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('AAEBDE6D-E674-4806-B791-6A530E34948A', '2016-03-18 16:22:27', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('A12B2BE4-CC39-41CE-946A-72A41F907047', '2016-03-20 11:22:40', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('2EDED753-BB80-46AA-89C4-04B47741CAD6', '2016-03-20 11:57:11', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('6C9B0008-E440-4600-A509-58E7BCD98DCF', '2016-03-20 12:10:40', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('570809C6-66A1-4E0C-9ED2-BE171F242FD1', '2016-03-21 08:47:32', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('956DBC31-A57C-49B2-9FC0-BD9FC062B12F', '2016-03-21 09:55:05', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('6347AF06-D061-46BA-977E-A9F9E3E75EC2', '2016-03-21 11:40:33', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('05245A8A-49AD-4B18-84E1-DFB57AA3A2BA', '2016-03-21 12:51:32', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('E3C75205-01BB-43C2-BC21-6881EFA6396A', '2016-03-21 15:00:53', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('8D4194C1-A196-45B6-950A-BEC8A359F743', '2016-03-21 16:25:25', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('78EC1992-8313-4DEE-9320-99EBF62DDC2F', '2016-03-21 18:01:37', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('CCBB7832-CBFE-4EB5-B57E-05CA184D8F75', '2016-03-24 09:40:22', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('4CD3D126-D689-49DB-BA08-EC946C656B1E', '2016-03-24 13:21:25', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('92BA795B-CEB3-4A7D-A9E8-C9552D31B2F6', '2016-03-24 17:39:43', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('5CDAD9F5-2052-46B0-8B6F-7CE85CADBE08', '2016-03-25 08:17:23', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('A887504E-C870-4876-AD5C-7D7923A1CD54', '2016-03-25 10:13:13', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('BA35F51A-B5D2-4F57-B585-9645CB9C0B74', '2016-03-25 10:27:08', '127.0.0.1', 'admin', '管理员', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('28E3DF76-0214-4629-8208-4879FE8B4C7C', '2016-03-25 10:27:14', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('97C1C7B8-7BF6-43F5-8D05-DF4A1AD8F79A', '2016-03-25 10:33:18', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('2ED1BECA-6CDC-4D76-BC93-8030F396287A', '2016-03-25 13:25:55', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('69FE7B1C-98A4-4827-B5CF-FB2A04794D60', '2016-03-28 08:39:35', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('76F6A0E7-D4A3-4D0A-8E73-925CFDA8D3CD', '2016-03-28 08:39:39', '127.0.0.1', 'admin', '管理员', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('94B9A375-5DF3-4E9D-9C98-B3CE0D095F51', '2016-03-28 08:39:50', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('6EAA4FE5-382C-4E42-A166-10FB1B430BEA', '2016-03-28 08:39:54', '127.0.0.1', 'admin', '管理员', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('7FB79A86-1C7D-4C25-B1FE-8B49CDF35ABC', '2016-03-28 09:31:54', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
+INSERT INTO `sys_log` VALUES ('7B82D863-CED6-45F7-A847-8159824A30B5', '2016-03-28 09:32:58', '127.0.0.1', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('02E75DE6-1CBF-432F-8BAB-E01ADAB2A225', '2016-03-28 14:11:35', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('3CCD7E32-A9EC-4493-860F-C104E2167EF2', '2016-03-28 14:46:34', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('70084669-E3A3-4496-90B0-CEB467B10D2E', '2016-03-28 15:30:37', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('D9757CF9-676C-4D7A-880B-370BC7A32655', '2016-03-28 16:05:25', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('E93AD01D-7AA7-4596-8B15-60FB8DF4323F', '2016-03-28 17:38:49', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('62F80435-348A-4559-9568-5AB8445DECAF', '2016-03-28 18:50:01', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('71443B30-B6B8-42C1-9D90-1756026F5B89', '2016-03-29 08:33:23', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('CFF0CBEA-1322-4442-99BC-39D2EE1AA6DD', '2016-03-29 08:34:44', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('0C364A05-5259-4A4A-8FA8-AD6A253014DF', '2016-03-29 09:29:49', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('4970943D-3100-4F13-A209-8E32729B4E66', '2016-03-29 10:43:17', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('4C51CA76-BA2B-46B3-8F47-6DAE8A3EB98D', '2016-03-29 11:19:23', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('58525555-07B1-42A5-A8BA-E6B9E0700FFB', '2016-03-29 11:29:42', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('E73F028D-7167-41C8-A40C-C7814DFF63A6', '2016-03-29 12:56:58', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('22089E95-D805-42F7-93EC-19FDE9B45D68', '2016-03-29 13:23:37', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('C2E82043-5EB4-4237-B258-C839D5919B11', '2016-03-29 13:23:37', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('922AF9B7-420C-4E7E-8C49-FCF8FCCC510B', '2016-03-29 14:13:39', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('0538E4D6-2F00-4848-A616-F3C0B03A31EE', '2016-03-29 15:21:00', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('5611F135-BBF4-48BD-9CDA-53E705F52D2A', '2016-03-29 15:27:01', '192.168.1.103', 'CS01', '张老大', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('270E1859-AA57-49DA-9B14-92AD3C8D8C69', '2016-03-29 15:29:46', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('734B650B-EBE2-4CA0-9CA7-E319316435DB', '2016-03-29 17:30:55', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('25F30B31-C495-4C1C-AD0E-360D72842147', '2016-03-29 18:11:18', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('E1C96D7B-C7F0-4740-9DC9-A3EFFD2E120D', '2016-03-29 18:39:45', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('BB64CBCF-8365-434A-8901-27E41938126D', '2016-03-30 08:37:59', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('9011BAF4-E212-4BFE-8D6C-26041DB3430C', '2016-03-30 08:39:43', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('FBB6FFDD-5B54-4F68-9E8B-D1E81E427354', '2016-03-30 09:24:36', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('81859795-E5DB-4183-BF0C-AB9A889C3538', '2016-03-30 09:25:16', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('C22BC24B-3AA4-4E83-BC64-A1222AB086B5', '2016-03-30 11:51:00', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('6775D032-CE7C-443D-8AD9-48CAB3F90EAC', '2016-03-30 13:11:00', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('B8AF7A99-26B9-462A-9276-AF415A99BA58', '2016-03-30 15:32:03', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('95F5C353-F908-4101-AECF-E966AC32AE32', '2016-03-30 15:48:19', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('6226025D-276F-4A51-91CA-231A13D41639', '2016-03-30 16:11:47', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('60B70F3E-FF85-408C-8463-47FB580792F3', '2016-03-30 16:33:19', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('92011B3D-EBD8-481D-9572-E19DA1ADAA9E', '2016-03-30 17:41:07', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('BCB7B831-202E-47DF-90FB-ACC8EE385DC3', '2016-03-30 18:52:29', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('E87E146B-A0CC-4FB6-8899-092BEC402571', '2016-03-31 08:39:36', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('AD12C581-2C49-44EE-8932-88F0C1758F08', '2016-03-31 08:48:25', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('4C9B8909-FB9D-4BBF-A157-AFA8F419E304', '2016-03-31 09:06:03', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('CE094F05-8163-4AF4-B23B-94AEE0B3F8A9', '2016-03-31 10:25:58', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('4F214150-AF79-44A8-B775-A8A394F364F4', '2016-03-31 10:51:32', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('AEF5B458-857A-4092-A4AC-8917FF9D5FFB', '2016-03-31 13:09:24', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('1DA87004-D54F-455F-B356-8653E03948B5', '2016-03-31 13:09:24', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('AFB4D6A6-1BBD-4271-8877-327670AD20F2', '2016-03-31 13:09:24', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('40C82828-CC9F-4F15-B674-26F8BC3753EA', '2016-03-31 13:09:24', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('134912B2-437D-41A1-A027-CDCD29547476', '2016-03-31 13:25:01', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('E7DB7FEE-5333-46BF-8D46-CB58E1925C13', '2016-03-31 13:25:01', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('BCF1E582-4C92-4B99-A7EC-C4913ED415A9', '2016-03-31 13:25:01', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('C4135B77-B692-49EC-9D7E-F6500E90275C', '2016-03-31 13:25:01', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('86931A4A-3D11-4D4E-8D0E-58D05249BD84', '2016-03-31 13:25:01', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('23F82549-D78F-4E5B-8554-E3BFE34BC2C4', '2016-03-31 13:25:01', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('285C981C-15D8-4550-B30C-A9AC6C9FA6F8', '2016-03-31 13:25:01', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('F9454C32-DD3A-422A-ADCC-EFF56BBDE7B5', '2016-03-31 13:25:01', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('DBE9F19A-8DA0-42D0-ABC9-B1BB1E611666', '2016-03-31 13:28:45', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('DB893824-2AE2-4B70-B56A-05DF2D5EAC64', '2016-03-31 13:28:45', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('D8EFF685-A453-47D8-8657-28DF22A1C53E', '2016-03-31 13:28:45', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('0DD93C72-E73A-44EB-9C06-920A14F413AD', '2016-03-31 13:35:40', '192.168.1.102', 'CS01', '张老大', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('AFC61D9D-B35F-4F5F-A460-0C53593B1468', '2016-03-31 13:39:31', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('65942317-3B8B-4B09-A709-3B7EC3D90D7E', '2016-03-31 15:30:41', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('89875386-0103-435D-84BE-F8E8CDF8363B', '2016-03-31 15:32:45', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('B743636D-1AFB-476F-A7D9-3C32EC70573C', '2016-03-31 16:10:07', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('E0DCFCE0-D563-4E1E-B247-3D6990F7BE67', '2016-03-31 16:14:58', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('B51A0CCD-AC48-49B0-BFD4-B7462D23EE71', '2016-03-31 16:47:58', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('FCF4C77E-CC63-4FE3-AD5B-9D82825BECC7', '2016-03-31 17:26:59', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('B368D507-0191-444F-8151-0C8251F0A685', '2016-03-31 17:26:59', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('F7ADCD95-4FFE-474D-81DB-996A5ADBF14E', '2016-03-31 17:26:59', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('5954CFCC-7238-481E-972A-5FBB1089F6EE', '2016-03-31 17:26:59', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('6E18A335-676D-42EF-9D72-29E582EA7B4B', '2016-03-31 17:26:59', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('ABD64215-7E45-4BCF-AD70-DAEEF1D2DCA4', '2016-03-31 17:26:59', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('6CB2B291-ECEA-41B2-8CE6-64E1872EA090', '2016-03-31 17:26:59', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('AD254D4C-59E2-41C2-A581-B5E14D421318', '2016-03-31 17:26:59', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('31456157-981C-464E-97BD-26BA26C1EDC0', '2016-03-31 17:29:05', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('7B0EDC5C-EC54-45B4-B356-621C26BD84B7', '2016-03-31 20:07:21', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('436FB27F-9350-426A-8ED7-D8EC8BBBD9A9', '2016-03-31 20:54:50', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('57FF3472-EF0D-4517-AA8F-9C818229A9E3', '2016-03-31 21:05:43', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('8DBB346D-3287-4DE4-97CB-2A04AD5E4B80', '2016-03-31 21:21:22', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('763A304E-BB31-4C14-8246-1A147263F332', '2016-03-31 21:28:16', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('6D26038D-85D2-4582-93D8-3D6142B3CA1D', '2016-03-31 21:30:13', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('5DF45794-0741-4AEA-B5F5-A909C967B5E3', '2016-03-31 21:31:15', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('56AD8FFE-255D-4FF4-9D95-A67962A87F7A', '2016-03-31 21:37:51', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('2E6C39EB-429E-4614-A53C-314B15B7334B', '2016-03-31 21:38:27', '192.168.1.102', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('81DADD6C-3354-4317-8187-C86F19B2322C', '2016-04-01 08:54:18', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('AA6545C9-5863-4575-BE58-B4CE0FFC5BD0', '2016-04-01 08:59:17', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('F6620222-85AF-4F33-8502-B219C412B895', '2016-04-01 09:19:53', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('ABC1279A-21F9-4AAE-AD0D-49A4F6CA6DA2', '2016-04-01 09:23:36', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('AAE5458F-C483-4156-AC28-BDDBF8D4F55D', '2016-04-01 10:03:38', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('20D3938F-74C3-4662-A9F0-1BBC85B9F04B', '2016-04-01 10:14:18', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('837EC917-CECC-484D-B5FF-A2EE6683928D', '2016-04-01 11:44:59', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('7D341B06-AAE1-4AAA-9653-8D0C869F03A4', '2016-04-01 12:53:25', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('1FC234B2-F702-4FAA-9D70-796FEA95A96F', '2016-04-01 12:57:56', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('813D4455-3C1B-43B7-85DA-443B80DB0E06', '2016-04-01 13:10:56', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('99BE046F-6E49-4511-B097-A69CA166B02D', '2016-04-01 13:20:26', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('81ECA598-A932-4079-BF4B-A3A505CBFD4C', '2016-04-01 13:46:38', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('9295529A-ECDE-42A1-A28E-6856976AB2E8', '2016-04-01 14:04:15', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('5F234E01-6220-4F0D-8B92-0189B770C195', '2016-04-01 14:13:57', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('EE56F92E-73D5-44F8-A5AF-03940C3723F1', '2016-04-01 15:22:10', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('2A12741E-8BF9-441B-9497-D095D8308C8A', '2016-04-01 15:57:03', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('0CED33FE-5E0A-4358-A0E1-7E3C2E04AEBA', '2016-04-01 16:15:59', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('D0F27065-A2A3-4C94-9701-A3C1D8644497', '2016-04-01 16:15:59', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('0A4FE8C8-0D43-45B5-B39B-9513C491097D', '2016-04-01 16:19:19', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('7737B0DD-747B-49D2-9BC7-E3BFC6DA7B41', '2016-04-01 16:20:11', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('1EC4AA48-8985-43D3-91A1-C7C6B75979D8', '2016-04-01 16:21:37', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('418D75E2-1E42-450A-B932-FEA589A7424E', '2016-04-01 16:37:12', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('3B0297EF-10A3-432C-A34B-6B58935EDD48', '2016-04-01 17:14:20', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('D1CDD894-1A8C-4494-B1B9-FCF0585D67E2', '2016-04-01 17:14:20', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('10B33C10-4DEF-4DEF-ACDE-4F5A82269C1D', '2016-04-01 17:14:20', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('C2FDEA05-E3A3-4713-AE94-E6EF8A6967E6', '2016-04-01 17:14:20', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('74275962-B3F1-46D5-972E-13E1A45774AD', '2016-04-01 17:14:20', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('E4FA1626-53EC-4F83-8530-DFBE65DEEF19', '2016-04-01 17:14:20', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('DC2C4AF5-4522-43F2-8FB7-D073AE40F60C', '2016-04-01 17:14:20', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('477D14CA-6D03-43A3-B010-7E83F171197E', '2016-04-01 17:14:20', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('1D9BB3BB-A7F7-4FAA-A059-288E8796A182', '2016-04-01 17:44:57', '192.168.1.103', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('A8558A9B-8B14-4FDC-BACB-DF569D499184', '2016-04-03 12:13:18', '192.168.1.100', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('65E6AAE5-1896-49BD-B4A6-445687A6B069', '2016-04-03 12:13:18', '192.168.1.100', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('8D057B75-3781-4EC6-ADE8-0B64A7B7ED9E', '2016-04-03 12:14:59', '192.168.1.100', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('8C696C76-8A48-4E3B-ACFA-1A8226C7E6C5', '2016-04-03 12:26:35', '192.168.1.100', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('6831E1A6-BA0B-4774-BEE8-BCDF452AF2F5', '2016-04-03 12:42:00', '192.168.1.100', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('1D004C30-2B15-4868-9D9B-BD1078678B45', '2016-04-03 12:46:08', '192.168.1.100', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('13AC340B-6904-4BCD-9D16-FC20EC735159', '2016-04-05 08:45:58', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('A9B698C0-1E3B-4FB4-B062-40D16F565F72', '2016-04-05 08:45:58', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('427CF10C-B3BB-47FC-A146-D50B81189919', '2016-04-05 08:45:58', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('1BE09F73-79BB-4A98-BB5A-7F77DA3C06A0', '2016-04-05 08:45:58', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('CE060328-7609-4EE3-AEC6-BD08A0DB842E', '2016-04-05 08:45:58', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('C14FBABC-3A2B-4EC4-83CD-D1751047D738', '2016-04-05 08:45:58', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('C7CDE102-0B38-4F61-AB33-27D52EB84BF6', '2016-04-05 08:45:59', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('A1081808-05B2-417C-921E-AD08F91CA1B7', '2016-04-05 08:45:59', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('FFBDDFC5-C7C6-4303-B53F-7DB470421770', '2016-04-05 09:30:36', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('2A83E353-13B6-4B7B-B945-568BF53694E0', '2016-04-05 09:34:02', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('CD5772B4-D973-408F-8501-36D714A34943', '2016-04-05 09:35:46', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('75B6D711-8B9D-40AE-9B8A-076CB3E2AEF7', '2016-04-05 09:50:52', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('A137C8F5-E6D2-4B52-B373-E6FC208E1C8E', '2016-04-05 13:36:16', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('A208BBB1-F904-4AEF-9970-4FD64C05C3EA', '2016-04-05 13:36:16', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('49DFF375-C90C-4581-A1E7-2669CA59FB03', '2016-04-05 13:36:16', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('4AA3AF03-EE5C-4BAC-97C3-48E06C202966', '2016-04-05 13:36:16', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('4C3287F7-34D5-4D05-9AD3-CF3AFACAAFC2', '2016-04-05 14:02:44', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('FEA6EB2B-3DC9-4D5B-99A7-ECA7A2ED23F7', '2016-04-05 16:22:39', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('122AAB03-B234-4CCA-B43A-8130EE1BD8C1', '2016-04-05 17:56:44', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('03EA570F-56EF-4D61-BAF2-A04480C5E0C9', '2016-04-05 18:05:00', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('9AD223A9-3741-47AC-B61A-01C0597AF92E', '2016-04-05 18:18:32', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('3F9D778D-DCBC-4A68-9E66-31027C77AEEC', '2016-04-05 18:22:42', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('92618E05-4E5F-42E6-A902-581B03367615', '2016-04-05 20:01:51', '192.168.1.105', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('299739B0-9390-4490-824D-3BF51A03C303', '2016-04-06 09:21:19', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('7E0290D6-862D-4FC4-AA44-BC030BA5E947', '2016-04-06 09:21:19', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('145B6339-3B2E-4667-9E66-0CC3CFC12D24', '2016-04-06 09:21:19', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('7DAEB635-DE87-4325-859D-AE3F34B4B1CE', '2016-04-06 09:21:19', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('88C737F4-41F5-4997-8825-BFA4F335F2C7', '2016-04-06 09:21:19', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('7335B3B2-0382-427C-BD0D-6C2D328FF80B', '2016-04-06 09:22:45', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('8353BAC7-F060-467C-8E21-86D5085B202A', '2016-04-06 09:22:45', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('EF27ACDC-19E2-42CF-838B-C3D68B3DCFB1', '2016-04-06 09:22:45', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('5BE36159-B380-4829-9C7F-EE9339C26E6A', '2016-04-06 09:22:45', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('4FF1D5A6-5FEE-4ABF-B268-E554C2A4401F', '2016-04-06 09:26:27', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('49CB92D6-69A4-42E9-8A65-91F64EBBC8E6', '2016-04-06 09:26:27', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('4EE77550-E168-46B8-A9CB-EDC79DD6E894', '2016-04-06 09:26:27', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('D285D700-4437-49A2-847B-1C4D0FA6AB7E', '2016-04-06 09:26:27', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('0F978C8B-271F-4A12-AB1A-04D73FE063EE', '2016-04-06 09:26:27', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('241B52B8-16E3-4335-BC1E-70B3DFC2EA0C', '2016-04-06 09:26:27', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('02F3C5BE-16FC-47B0-A395-751087839293', '2016-04-06 10:08:09', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('C3AF81EC-3326-4CFF-992C-CF2B26BB441F', '2016-04-06 10:43:40', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('BA27A219-8EB4-4767-A8E3-5942BE60844C', '2016-04-06 10:50:16', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('D48FFC93-428D-41E9-961B-2A5ACC992BCC', '2016-04-06 10:55:37', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('3989878E-2B32-4B5A-96D5-7E6CD7094B01', '2016-04-06 11:13:02', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('3EE80AA8-3B54-4BAC-A2ED-F84833E2CA4C', '2016-04-06 12:02:40', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('FABBF802-2B46-4249-A149-65344AEAD54D', '2016-04-06 13:58:08', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('3427643B-A4F9-477C-BBE9-642C4F2DBD4D', '2016-04-06 14:29:54', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('132C6D8C-6196-4AD5-A5F7-B955CDD6F908', '2016-04-06 14:54:13', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('04E1D52D-7152-4705-B7B2-961427C5DE02', '2016-04-06 15:09:37', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('FAD20BA4-C008-4399-A2F3-A23EC9A3F6AE', '2016-04-06 15:11:43', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('29E3FCB9-0C2A-4938-ADD5-F1B21D601919', '2016-04-06 15:17:20', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('B5BFE6D0-AA64-4D88-8433-541DAE0D65D5', '2016-04-06 15:38:39', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('AFD5DA72-9585-40DC-85CB-C6E135B3C754', '2016-04-06 16:40:07', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('139D8C17-55D8-4182-84C9-4CDD581F632A', '2016-04-06 17:09:02', '192.168.1.107', 'admin', '管理员', '退出系统', 'logout');
+INSERT INTO `sys_log` VALUES ('6D336B42-AD3B-49BE-A934-687391364CDF', '2016-04-06 17:09:02', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('F4A51EDC-C2FA-4785-8191-5EE5FE156634', '2016-04-06 17:22:58', '192.168.1.107', 'CS01', '张老大', 'CAS认证权限初始化', 'initAuth');
+INSERT INTO `sys_log` VALUES ('ED64C526-2E73-4F53-8F3F-60BB25FFE5DD', '2016-04-06 17:29:32', '192.168.1.107', 'admin', '管理员', 'CAS认证权限初始化', 'initAuth');
 
 -- ----------------------------
 -- Table structure for sys_onlinecount
