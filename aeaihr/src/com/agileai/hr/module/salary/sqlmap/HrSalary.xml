@@ -333,6 +333,9 @@
 set USER_ID=#USER_ID:CHAR#,BP_DATE=#BP_DATE:DATE#,BP_TYPE=#BP_TYPE:VARCHAR#,BP_MONEY=#BP_MONEY:DECIMAL#
 where USER_ID = #USER_ID# and BP_DATE = #BP_DATE# and BP_TYPE = #BP_TYPE#
   </update>
+  <delete id="deleteBonusPenaltRecord" parameterClass="com.agileai.domain.DataParam">
+    delete from hr_bonus_penalty where BP_ID=#BP_ID#
+  </delete>  
 	<select id="getFulltimeAwardRecord" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
 		select TYPE_NAME

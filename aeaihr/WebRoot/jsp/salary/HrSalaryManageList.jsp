@@ -89,8 +89,8 @@ height="390px"
 	<ec:column width="100" property="SAL_SUBSIDY" style="text-align:right;" title="补贴"   />
     <ec:column width="100" property="SAL_INSURE" style="text-align:right;" title="保险"   />
     <ec:column width="100" property="SAL_TAX" style="text-align:right;" title="个人所得税"   />
-    <ec:column width="100" property="SAL_HOUSING_FUND" style="text-align:right;" title="公积金"   />
-    <ec:column width="100" property="SAL_BONUS" style="text-align:right;" title="奖金"   />
+    <ec:column width="100" property="SAL_HOUSING_FUND" style="text-align:right;" title="公积金" />
+    <ec:column width="100" property="SAL_BONUS" style="text-align:right;" title="奖惩金额" />
 	<ec:column width="100" property="SAL_TOTAL" style="text-align:right;background-color:yellow;" title="总工资"/>
     <ec:column width="100" property="SAL_SHOULD" style="text-align:right;background-color:yellow;" title="应发工资"/>
     <ec:column width="100" property="SAL_ACTUAL" style="text-align:right;background-color:yellow;" title="实发工资"/>

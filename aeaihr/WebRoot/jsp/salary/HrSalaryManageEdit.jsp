@@ -12,6 +12,10 @@
 	background-color:yellow;
 	color:black;
 }
+.markable0{
+	background-color:red;
+	color:white;
+}
 </style>
 </head>
 <body>
@@ -92,8 +96,8 @@
 	<th width="100" nowrap>请假天数</th>
 	<td><input name="SAL_LEAVE" type="text" class="text" id="SAL_LEAVE" value="<%=pageBean.inputValue("SAL_LEAVE")%>" size="24" readonly="readonly" label="请假天数" />
 </td>
-	<th width="100" nowrap>奖金</th>
-	<td colspan="3"><input id="SAL_BONUS" label="奖金" name="SAL_BONUS" type="text" class="text" value="<%=pageBean.inputValue("SAL_BONUS")%>" size="24" maxlength="6" readonly="readonly"  />
+	<th width="100" nowrap>奖惩金额</th>
+	<td colspan="3"><input id="SAL_BONUS" label="奖金" name="SAL_BONUS" type="text" class="text markable0" value="<%=pageBean.inputValue("SAL_BONUS")%>" size="24" maxlength="6" readonly="readonly"  />
 </td>
 </tr>
 <tr>

@@ -209,14 +209,10 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				}
 			}
 			
-			BigDecimal sal_bonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal);
-			dataParam.put("SAL_BONUS", sal_bonus);
-			
 			BigDecimal sal_should = sal_total.subtract(sal_insure).subtract(sal_tax).subtract(sal_housing_fund);
 			dataParam.put("SAL_SHOULD", sal_should);
 			
 			BigDecimal sal_offset_vacation =  (BigDecimal) dataParam.getObject("SAL_OFFSET_VACATION");
-			log.info(sal_offset_vacation);
 			
 			BigDecimal valid_days = (BigDecimal) validDaysRow.get("VALID_DAYS");
 			BigDecimal sal_day_money = sal_total.divide(valid_days,2, RoundingMode.HALF_UP);
@@ -233,7 +229,6 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				
 				statementId = sqlNameSpace + "." + "getBonusPenaltyRecord";
 				DataRow bonusPenaltyRow = this.daoHelper.getRecord(statementId, bonusPenaltyParam);
-				log.info(bonusPenaltyRow);
 				if(bonusPenaltyRow != null && !bonusPenaltyRow.isEmpty()){
 					statementId = sqlNameSpace + "." + "updateBonusPenaltyRecord";
 					this.daoHelper.updateRecord(statementId, bonusPenaltyParam);
@@ -256,7 +251,6 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				fulltimeAwardParam.put("BP_MONEY", sal_fulltime_award);
 				statementId = sqlNameSpace + "." + "getBonusPenaltyRecord";
 				DataRow bonusPenaltyRow = this.daoHelper.getRecord(statementId, fulltimeAwardParam);
-				log.info(bonusPenaltyRow);
 				if(bonusPenaltyRow != null && !bonusPenaltyRow.isEmpty()){
 					statementId = sqlNameSpace + "." + "updateBonusPenaltyRecord";
 					this.daoHelper.updateRecord(statementId, fulltimeAwardParam);
@@ -265,7 +259,23 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 					this.daoHelper.insertRecord(statementId, fulltimeAwardParam);
 				}
 				
+			}else{
+				DataParam fulltimeAwardParam = new DataParam();
+				fulltimeAwardParam.put("USER_ID", userCode);
+				fulltimeAwardParam.put("BP_DATE", date);
+				fulltimeAwardParam.put("BP_TYPE", "FULLTIME");
+				statementId = sqlNameSpace + "." + "getBonusPenaltyRecord";
+				DataRow bonusPenaltyRow = this.daoHelper.getRecord(statementId, fulltimeAwardParam);
+				if(bonusPenaltyRow != null && !bonusPenaltyRow.isEmpty()){
+					String bpId = (String) bonusPenaltyRow.get("BP_ID");
+					statementId = sqlNameSpace + "." + "deleteBonusPenaltRecord";
+					this.daoHelper.deleteRecords(statementId, new DataParam("BP_ID",bpId));
+				}
 			}
+			
+			BigDecimal sal_bonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal).add(sal_day_money_total).add(sal_fulltime_award);
+			dataParam.put("SAL_BONUS", sal_bonus);
+			
 			BigDecimal sal_actual  = sal_should.add(sal_bonus).add(sal_day_money_total).add(sal_fulltime_award);
 			dataParam.put("SAL_ACTUAL", sal_actual);
 			
