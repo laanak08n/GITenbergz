@@ -13,11 +13,9 @@ import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.common.DateHelper;
 import com.agileai.hr.common.PrivilegeHelper;
 import com.agileai.hr.cxmodule.HrSalaryManage;
 import com.agileai.util.DateUtil;
-import com.agileai.util.StringUtil;
 
 public class HrSalaryManageEditHandler extends StandardEditHandler {
 	public ViewRenderer prepareDisplay(DataParam param) {
@@ -67,11 +65,10 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 		}		
 		this.setAttribute("salProbationDayMoney", salProbationDayMoney);
 		this.setAttribute("salRegularDayMoney", salRegularDayMoney);
-		DateHelper dateHelper = new DateHelper();
 		boolean isAddAttendance = false;
-		if(!StringUtil.isNullOrEmpty(param.get("salDate"))){
-			isAddAttendance = dateHelper.dateDuringMonth(inductionDate, param.get("salDate"));
-		}
+		if(DateUtil.getDateDiff(salDate, inductionDate, DateUtil.MONTH) == 0 && DateUtil.getDateDiff(salDate, inductionDate, DateUtil.DAY) > 0){
+			isAddAttendance = true;
+		}	
 		setAttribute("isAddAttendance", isAddAttendance);
 		this.setAttributes(record);
 		this.setOperaType(operaType);

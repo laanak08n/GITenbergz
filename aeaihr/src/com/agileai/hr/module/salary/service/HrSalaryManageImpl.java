@@ -233,19 +233,19 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			String statementId = sqlNameSpace + "." + "getSalYearLeaveInfo";
 			DataRow beforeRegularLeaveRow = this.daoHelper.getRecord(
 					statementId, new DataParam("userCode",userCode,"beginTime",DateUtil.getDateAdd(date, DateUtil.DAY, -1),"endTime",regularDate));
-			if(!(beforeRegularLeaveRow == null || beforeRegularLeaveRow.isEmpty())){
-				beforeRegularLeaveDays = BigDecimal.valueOf((double)beforeRegularLeaveRow.get("SAL_YEAR_LEAVE"));
+			if(!MapUtil.isNullOrEmpty(beforeRegularLeaveRow)){
+				beforeRegularLeaveDays = BigDecimal.valueOf((Double)beforeRegularLeaveRow.get("SAL_YEAR_LEAVE"));
 			}
 			DataRow regularLeaveRow = this.daoHelper.getRecord(
 					statementId, new DataParam("userCode",userCode,"beginTime",DateUtil.getDateAdd(regularDate, DateUtil.DAY, -1),"endTime",DateUtil.getDateAdd(date, DateUtil.MONTH, 1)));	
-			if(!(regularLeaveRow == null || regularLeaveRow.isEmpty())){
-				regularLeaveDays = BigDecimal.valueOf((double)regularLeaveRow.get("SAL_YEAR_LEAVE"));
+			if(!MapUtil.isNullOrEmpty(regularLeaveRow)){
+				regularLeaveDays = BigDecimal.valueOf((Double)regularLeaveRow.get("SAL_YEAR_LEAVE"));
 			}
 			statementId = "HrAttendance"+"."+"attendanceStatisticsRecords";
 			HashMap<String, DataRow> regularAtdMap = this.daoHelper.queryRecords(
 					"USER_ID", statementId, new DataParam("sdate",regularDate,"edate",DateUtil.getEndOfMonth(date)));
 			BigDecimal regularAtdDays = new BigDecimal("0.0");
-			if(!(regularAtdMap == null || regularAtdMap.isEmpty())){
+			if(!MapUtil.isNullOrEmpty(regularAtdMap)){
 				DataRow regularAtdRow = regularAtdMap.get(userCode);
 				if(regularAtdRow != null){
 					regularAtdDays = BigDecimal.valueOf(regularAtdRow.getInt("IN_NUM"));
@@ -263,8 +263,8 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				String statementId = sqlNameSpace + "." + "getSalYearLeaveInfo";
 				DataRow ProbationLeaveRow = this.daoHelper.getRecord(
 						statementId, new DataParam("userCode",userCode,"beginTime",DateUtil.getDateAdd(inductionDate, DateUtil.DAY, -1),"endTime",DateUtil.getDateAdd(date, DateUtil.MONTH, 1)));
-				if(!(ProbationLeaveRow == null || ProbationLeaveRow.isEmpty())){
-					ProbationLeaveDays = BigDecimal.valueOf((double)ProbationLeaveRow.get("SAL_YEAR_LEAVE"));
+				if(!MapUtil.isNullOrEmpty(ProbationLeaveRow)){
+					ProbationLeaveDays = BigDecimal.valueOf((Double)ProbationLeaveRow.get("SAL_YEAR_LEAVE"));
 				}
 				salTotal = salProbationDayMoney.multiply(currentMonthAttendDays.add(ProbationLeaveDays));
 			}
@@ -393,7 +393,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			probationOverTimeDecimal = new BigDecimal(totalOverTimeDouble);
 		}
 		if(!MapUtil.isNullOrEmpty(regularOverTimeRow)){
-			double regularOverTimeDouble = (Double) probationOverTimeRow.get("WOT_DAYS");
+			double regularOverTimeDouble = (Double) regularOverTimeRow.get("WOT_DAYS");
 			regularOverTimeDecimal = new BigDecimal(regularOverTimeDouble);
 		}
 		Number leaveDaysNum = (Number) dataParam.getObject("SAL_LEAVE");

@@ -9,7 +9,6 @@ import com.agileai.hotweb.controller.core.SimpleHandler;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.common.DateHelper;
 import com.agileai.hr.cxmodule.HrAttendanceManage;
 import com.agileai.hr.cxmodule.HrSalaryManage;
 import com.agileai.util.DateUtil;
@@ -26,13 +25,10 @@ public class AddAttendanceHandler extends SimpleHandler{
 		DataRow row = hrSalaryManage.getInductionAndCreateTime(userId);
 		Date inductionDate = (Date) row.get("EMP_INDUCTION_TIME");
 		Date createDate = (Date) row.get("EMP_CREATE_TIME");
-		long dateDiff = DateUtil.getDateDiff(inductionDate,createDate, 1);
-		String gatherDate = param.get("salYear")+"-"+param.get("salMonth")+"-01";		
-		DateHelper dateHelper = new DateHelper();
-		boolean isCalSalary = dateHelper.dateDuringMonth(inductionDate, gatherDate);
-		if(isCalSalary){
+		Date beginMonthDate = DateUtil.getBeginOfMonth(DateUtil.getDate(param.get("salYear")+"-"+param.get("salMonth")+"-01"));
+		if(DateUtil.getDateDiff(beginMonthDate, inductionDate, DateUtil.MONTH) == 0 && DateUtil.getDateDiff(beginMonthDate, inductionDate, DateUtil.DAY) > 0){
 			setAttribute("EMP_INDUCTION_TIME", inductionDate);
-			setAttribute("dateDiff", dateDiff);
+			setAttribute("dateDiff", DateUtil.getDateDiff(inductionDate, createDate, DateUtil.DAY));
 		}
 		this.processPageAttributes(param);
 		return new LocalRenderer(getPage());
