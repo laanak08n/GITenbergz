@@ -11,7 +11,7 @@ public interface HrAttendanceManage
 	public DataRow retrieveUserInfo(DataParam param);
 	public void bindUserWxOpenId(String userCode,String wxOpenId);
 	public List<DataRow> attendanceStatisticsRecords (DataParam param);
-	public List<DataRow> getAttendanceStatInfo();
+	public List<DataRow> getAttendanceStatInfo(String date);
 	public List<DataRow> getAttendContentData(String code, String date);
 	public List<DataRow> getLeaveContentData(String code, String date);
 	public List<DataRow> getOverworkContentData(String code, String date);
