@@ -81,6 +81,12 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		statementId = sqlNameSpace + "." + "existsDataRecords";
 		HashMap<String, DataRow> existsDataMap = this.daoHelper.queryRecords(
 				"SAL_USER", statementId, new DataParam("year",year,"month",month));
+		statementId = "HrLeave"+"."+"findRecords";
+		HashMap<String, DataRow> totalLeaveTimeMap = this.daoHelper.queryRecords(
+				"USER_ID", statementId, new DataParam("edate",currentDate));
+		statementId = "HrAttendance"+"."+"attendanceStatisticsRecords";
+		HashMap<String, DataRow> currentMonthAttendMap = this.daoHelper.queryRecords(
+				"USER_ID", statementId, new DataParam("sdate",date,"edate",currentDate));
 		List<DataParam> insertParamList = new ArrayList<DataParam>();
 		List<DataParam> updateParamList = new ArrayList<DataParam>();
 		for (int i = 0; i < basicRecords.size(); i++) {
@@ -88,8 +94,9 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			DataParam dataParam = new DataParam();
 			dataParam.put("SAL_ID", keyGenerator.genKey());
 			String userCode = row.getString("USER_ID");
+			DataRow currentMonthAttendRow = currentMonthAttendMap.get(userCode);
+			DataRow leaveDaysRow = totalLeaveTimeMap.get(userCode);
 			dataParam = calculateTotalSalary(workDaysMap,leaveDaysMap,overTimeDaysMap,userCode,dataParam,validDaysRow,year,month,row,date);
-			DataRow leaveDaysRow = leaveDaysMap.get(userCode);
 			Date regularTime = (Date)row.get("EMP_REGULAR_TIME");
 			dataParam = calculateLeaveOfYear(totalLeaveOfYearMap,totalOverTimeOfYearMap,date,row,userCode,dataParam,regularTime,yearMonth);
 			BigDecimal salTotal = (BigDecimal) dataParam.getObject("SAL_TOTAL");
@@ -110,7 +117,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			if(!rewardtRow.isEmpty()){
 				rewardMoneyDecimal = (BigDecimal) rewardtRow.get("MONEY");
 			}
-			BigDecimal salFulltimeAward = calculateFullTimeAward(leaveDaysRow,userCode,regularTime,date);
+			BigDecimal salFulltimeAward = calculateFullTimeAward(leaveDaysRow,currentMonthAttendRow,userCode,regularTime,date,dataParam);
 			BigDecimal salDayMoneyTotal = calculateOverRunSalary(dataParam,validDaysRow,salTotal,userCode,date);
 			BigDecimal salBonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal).add(salDayMoneyTotal).add(salFulltimeAward);
 			dataParam.put("SAL_BONUS", salBonus);
@@ -123,7 +130,6 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			}else{
 				dataParam.put("SAL_YEAR_LEAVE", salYearLeaveRow.get("SAL_YEAR_LEAVE"));
 			}
-			
 			if (existsDataMap.containsKey(userCode)){
 				updateParamList.add(dataParam);
 			}else{
@@ -226,11 +232,28 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		dataParam.put("SAL_STATE", "0");
 		return dataParam;
 	}
-	private BigDecimal calculateFullTimeAward(DataRow leaveDaysRow,String userCode,Date regularTime,Date date){
+	private BigDecimal calculateFullTimeAward(DataRow leaveDaysRow,DataRow currentMonthAttendRow,String userCode,Date regularTime,Date date,DataParam param){
 		KeyGenerator keyGenerator = KeyGenerator.instance();
 		String statementId = "";
 		BigDecimal salFullTimeAward = new BigDecimal("0.0");
-		if(leaveDaysRow == null && regularTime.compareTo(DateUtil.getDateAdd(date, DateUtil.DAY, -1)) <= 0){
+		String validDayStr = param.get("SAL_VALID_DAYS");
+		int inAttend = currentMonthAttendRow.getInt("IN_NUM",0);
+		int outAttend = currentMonthAttendRow.getInt("OUT_NUM",0);
+		Double validDay = Double.valueOf(validDayStr);
+		boolean isLeave = false;
+		boolean isFullAttend = true;
+		if(!MapUtil.isNullOrEmpty(leaveDaysRow)){
+			Date endDate = (Date) leaveDaysRow.get("LEA_EDATE");
+			if(endDate.compareTo(DateUtil.getDateAdd(date, DateUtil.MONTH, 1))>=0){
+				isLeave = true;
+			}else if(endDate.compareTo(DateUtil.getDateAdd(date, DateUtil.MONTH, 1))<0&&endDate.compareTo(DateUtil.getDateAdd(date, DateUtil.MONTH, -2))>=0){
+				isLeave = true;
+			}
+		}
+		if(inAttend+3<validDay||outAttend+3<validDay){
+			isFullAttend = false;
+		}
+		if(!isLeave&&isFullAttend&&regularTime.compareTo(DateUtil.getDateAdd(date, DateUtil.DAY, -1)) <= 0){
 			statementId = sqlNameSpace + "." + "getFulltimeAwardRecord";
 			DataRow dataRow = this.daoHelper.getRecord(statementId, new DataParam());
 			salFullTimeAward = new BigDecimal(dataRow.getString("TYPE_NAME"));
