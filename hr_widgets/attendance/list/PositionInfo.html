@@ -1,0 +1,22 @@
+<div class="item">
+	<p class="ng-binding">时&nbsp;间：{{atdInTime | date:'yyyy-MM-dd HH:mm:ss'}}  
+		<img class="right-link-item category-label" ng-show="positioninfos.isSignIn == 'Y'" ng-src="{{positioninfos.imgs}}" >
+	</p>
+	<p class="ng-binding">名&nbsp;称：{{titleName}}</p>
+	<p class="ng-binding">地&nbsp;址：{{titleAddress}}</p>
+</div>
+
+<gaode-map options="mapOptions" style="height:300px"></gaode-map>
+
+<div class="list">
+    <label class="item item-radio ng-valid" ng-repeat="x in  results" ng-value="x.address"   ng-click="setPosition(x)" ng-disabled="$first" >
+    	<input type="radio" name="radio-group" ng-value="x.address" ng-checked="$first" >
+	    <div class="radio-content">
+		    <div class="item-content disable-pointer-events"  >
+				<p class="ng-binding">{{x.name}}</p>
+				<p class="ng-binding">{{x.address}}</p>
+		   </div>
+		   <i class="radio-icon disable-pointer-events icon ion-checkmark"></i>
+	   </div>
+   </label> 
+</div>

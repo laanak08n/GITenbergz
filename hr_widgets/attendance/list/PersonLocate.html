@@ -1,0 +1,54 @@
+<style>
+.attendance-list {
+    margin-bottom: 0 !important;
+}
+</style>
+<p class="item view-detail-center font-size ng-binding"> {{currentMonth|date:'yyyy-MM' }}</span>
+<div ng-show="locationInfos.length==0" style="margin-top: 200px;text-align: center " >无记录</div>
+<div class="list item home-card-bottom home-card-list-font attendance-list" ng-repeat="c in locationInfos"  style="padding-right: 0;">
+			<div class="row ">
+			      <div class="col">
+			        <div class="col-demo">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</div>
+			      </div>
+			       <div class="col col-75">
+			        <div class="col-demo">{{c.userName}}</div>
+			      </div>
+		   </div>
+		   
+		   <div class="row ">
+			       <div class="col">
+			        <div class="col-demo">部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门：</div>
+			      </div>
+			       <div class="col col-75">
+			        <div class="col-demo">{{c.grpName}}</div>
+			      </div>
+		   </div>
+			
+			<div class="row  ">
+			      <div class="col">
+			        <div class="col-demo">定位时间：</div>
+			      </div>
+			      <div class="col col-75">
+			        <div class="col-demo">{{c.locatTime}}</div>
+			      </div>
+			</div>
+			
+			<div class="row  ">
+			      <div class="col">
+			        <div class="col-demo">定位地点：</div>
+			      </div>
+			      <div class="col col-75">
+			        <div class="col-demo">{{c.locatHouse}}</div>
+			      </div>
+			</div>
+			
+			<div class="row  ">
+			      <div class="col">
+			        <div class="col-demo">具体位置：</div>
+			      </div>
+			      <div class="col col-75">
+			        <div class="col-demo">{{c.locatPlace}}</div>
+			      </div>
+			</div>
+			
+		</div>

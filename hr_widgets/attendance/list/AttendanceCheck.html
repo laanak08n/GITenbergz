@@ -1,0 +1,150 @@
+<div style="background: white;padding: 1px 1px;border: 1px solid white;">
+	<div style="width: 50%;margin: auto;">
+		<a class="lable-first" ng-class="{'lable-active':isActive}" ng-click="setActive('first')">考勤</a>
+		<a class="lable-second" ng-class="{'lable-active':!isActive}" ng-click="setActive('second')">定位</a>
+	</div>
+</div>
+<p ng-if="isActive" class="item view-detail-center font-size ng-binding" style="margin-top: 0px">{{currentDay|date:'EEEE' }}<span class="margin-left ng-binding">{{currentDay|date:'MM-dd' }}</span>
+	<span class="right-link-item">
+		<a   ng-click="findLastDaySigninInfos();" class="" style="">
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastday.png"  >
+		</a>
+		
+		<a   ng-click="findCurrentDaySigninInfos();" style="margin-left: 10px;" >
+			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curday.png"  >
+		</a>
+		
+		<a   ng-click="findFollowDaySigninInfos();" style="margin-left: 10px;" class="">
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextday.png"  >
+		</a>
+	</span>
+</p>
+<p ng-if="!isActive" class="item view-detail-center font-size ng-binding">当前月份：{{currentMonth|date:'yyyy-MM' }}</span>
+	<span class="right-link-item">
+		<a   ng-click="findLastMonthLocations();" class="" style="">
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastMonth.png" >
+		</a>
+		
+		<a   ng-click="findThisMonthLocations();" style="margin-left: 10px;" >
+			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curMonth.png" >
+		</a>
+		
+		<a   ng-click="findNextMonthLocations();" style="margin-left: 10px;" class="">
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextMonth.png">
+		</a>
+	</span>
+</p>
+<div class="list" style="margin-bottom: 0px;">
+	
+	<div ng-show="isActive">
+		<div ng-show="signinInfos.length==0" style="margin-top: 200px;text-align: center " >无记录</div>
+		<div class="list item home-card-bottom home-card-list-font attendance-list"  ng-repeat="x in signinInfos"  style="padding-right: 0;">
+			<div class="row ">
+			      <div class="col">
+			        <div class="col-demo">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</div>
+			      </div>
+			       <div class="col col-75">
+			        <div class="col-demo">{{x.userName}}</div>
+			      </div>
+		   </div>
+		   
+		   <div class="row ">
+			       <div class="col">
+			        <div class="col-demo">部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门：</div>
+			      </div>
+			       <div class="col col-75">
+			        <div class="col-demo">{{x.grpName}}</div>
+			      </div>
+		   </div>
+			
+			<div class="row  ">
+			      <div class="col">
+			        <div class="col-demo">签到时间：</div>
+			      </div>
+			      <div class="col col-75">
+			        <div class="col-demo">{{x.atdInTime|truncate}}</div>
+			      </div>
+			</div>
+			
+			<div class="row  ">
+			      <div class="col">
+			        <div class="col-demo">签到地点：</div>
+			      </div>
+			      <div class="col col-75">
+			        <div class="col-demo" style="text-overflow: ellipsis;overflow: hidden;">{{x.atdInPlace}}</div>
+			      </div>
+			</div>
+			
+			<div class="row  ">
+			      <div class="col">
+			        <div class="col-demo">签退时间：</div>
+			      </div>
+			      <div class="col col-75">
+			        <div class="col-demo" >{{x.atdOutTime|truncate}}</div>
+			      </div>
+			</div>
+			
+			<div class="row  ">
+			      <div class="col">
+			        <div class="col-demo">签退地点：</div>
+			      </div>
+			      <div class="col col-75">
+			        <div class="col-demo" style="text-overflow: ellipsis;overflow: hidden;">{{x.atdOutPlace}}</div>
+			      </div>
+			</div>
+		</div>
+	</div>
+	
+	<div ng-show="!isActive">
+		<div ng-show="locationInfos.length==0" style="margin-top: 200px;text-align: center " >无记录</div>
+		<div class="list item home-card-bottom home-card-list-font attendance-list item-icon-right" ng-repeat="c in locationInfos"  style="padding-right: 0;">
+			<div class="row ">
+			      <div class="col">
+			        <div class="col-demo">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</div>
+			      </div>
+			       <div class="col col-75">
+			        <div class="col-demo">{{c.userName}}</div>
+			      </div>
+		   </div>
+		   
+		   <div class="row ">
+			       <div class="col">
+			        <div class="col-demo">部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门：</div>
+			      </div>
+			       <div class="col col-75">
+			        <div class="col-demo">{{c.grpName}}</div>
+			      </div>
+		   </div>
+			
+			<div class="row  ">
+			      <div class="col">
+			        <div class="col-demo">定位时间：</div>
+			      </div>
+			      <div class="col col-75">
+			        <div class="col-demo">{{c.locatTime|truncate}}</div>
+			      </div>
+			</div>
+			
+			<div class="row  ">
+			      <div class="col">
+			        <div class="col-demo">定位地点：</div>
+			      </div>
+			      <div class="col col-75">
+			        <div class="col-demo">{{c.locatHouse}}</div>
+			      </div>
+			</div>
+			
+			<div class="row  ">
+			      <div class="col">
+			        <div class="col-demo">具体位置：</div>
+			      </div>
+			      <div class="col col-75">
+			        <div class="col-demo">{{c.locatPlace}}</div>
+			      </div>
+			</div>
+			
+			<i class="icon ion-ios-arrow-right" ng-click="toPersonLocate('{{c.theUserId}}')"></i>
+			
+		</div>
+	</div>
+</div>
