@@ -273,10 +273,12 @@ function doDelete(itemValue)
 		return;
 	}
   	$("#"+actionTypeTagId).val(deleteActionValue);
-	if(confirm(confirmMsg)) {
-		showSplash(deleteMsg);
-		$('#'+formTagId).submit();
-	}
+	jConfirm(confirmMsg,function(r){
+		if(r){
+			showSplash(deleteMsg);
+			$('#'+formTagId).submit();
+		}
+	});
 }
 function selectRow(rowObj,params)   
 {   
@@ -697,7 +699,7 @@ FormSelect.prototype.isExistItem = function(objItemValue) {
 }
 FormSelect.prototype.addItem = function(objItemText, objItemValue) {        
     if (this.isExistItem(objItemValue)) {        
-        alert("该Item的Value值已经存在");        
+        jAlert("该Item的Value值已经存在");        
     } else {        
         var varItem = new Option(objItemText, objItemValue);      
         this.obj.options.add(varItem);     
@@ -712,7 +714,7 @@ FormSelect.prototype.removeItem = function(objItemValue) {
             }
         }
     } else {        
-        alert("不存在该项");        
+        jAlert("不存在该项");        
     }        
 }
 FormSelect.prototype.removeSelectedItem = function() {        
@@ -732,7 +734,7 @@ FormSelect.prototype.updateItem =function (objItemText, objItemValue) {
             }
         }
     } else {        
-        alert("不存在该项");        
+        jAlert("不存在该项");        
     }        
 }
 FormSelect.prototype.setSelectedByText = function(objItemText) {    
@@ -1042,7 +1044,7 @@ validation.checkEmail = function (_email)
 	{
 		var elength=_email.length;
 		if (elength<5 || _email.indexOf("@")==-1 || _email.indexOf("@")>_email.lastIndexOf(".")){ 
-			alert("!");
+			jAlert("!");
 			return false;
 		}
 	}
@@ -1081,7 +1083,7 @@ validation.isValidDateRange = function (beginDate,endDate){
 	var endValue = $("#"+endDate).val();
 	var diffValue = validation.compareDate(beginValue,endValue);
 	if (diffValue < 0){
-		alert('终止日期不能小于开始日期!');
+		jAlert('终止日期不能小于开始日期!');
 		return false;
 	}
 	return true;
@@ -1105,7 +1107,7 @@ validation.isValidTimeRange = function (beginTime,endTime){
 	var endValue = $("#"+endTime).val();
 	var diffValue = validation.compareDate(beginValue,endValue);
 	if (diffValue < 0){
-		alert('终止时间不能小于开始时间!');
+		jAlert('终止时间不能小于开始时间!');
 		return false;
 	}
 	return true;
@@ -1218,7 +1220,7 @@ validation.isPositiveData = function(s)
 	var patrn=/^\d+[.]?\d+|\d$/;
 	if (!patrn.exec(s))
 	{
-		alert('不是正数！');
+		jAlert('不是正数！');
 		return false
 	}
 	return true;

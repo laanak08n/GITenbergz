@@ -712,7 +712,7 @@ CompareValidator.prototype =  jQuery.extend(true,{},new BaseValidator(), {
 		}
 		else 
 		{
-			alert("验证框架使用错误:CompareValidator的比较类型不支持'" + compareType + "'");
+			jAlert("验证框架使用错误:CompareValidator的比较类型不支持'" + compareType + "'");
 		}
 		return this;
 	},

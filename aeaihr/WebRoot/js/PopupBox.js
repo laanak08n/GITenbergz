@@ -45,13 +45,13 @@ function PopupBox(name,title,params){
 		this.height = (clientHeight-2)+'px';
 	}
 	this.init();
-	//alert("this.width is " + this.width + " this.height is " + this.height);
+	//jAlert("this.width is " + this.width + " this.height is " + this.height);
 	this.top = (clientHeight - $("#"+this.divName).height())/2 ;
 	if (params && params.top){
 		this.top = params.top;
 	}
 	
-	//alert("this.left is " + this.left + " this.top is " + this.top);
+	//jAlert("this.left is " + this.left + " this.top is " + this.top);
 	this.resetPosition();
 }
 

@@ -591,7 +591,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 			// Run the default event handler
 			if ($.inArray('onDialogClose', settings.overrideEvents) < 0) {
 				if (this.queueData.filesErrored > 0) {
-					alert(this.queueData.errorMsg);
+					jAlert(this.queueData.errorMsg);
 				}
 			}
 
@@ -815,7 +815,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 					errorString = 'Security Error';
 					break;
 				case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
-					alert('The upload limit has been reached (' + errorMsg + ').');
+					jAlert('The upload limit has been reached (' + errorMsg + ').');
 					errorString = 'Exceeds Upload Limit';
 					break;
 				case SWFUpload.UPLOAD_ERROR.UPLOAD_FAILED:

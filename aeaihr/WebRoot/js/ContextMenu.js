@@ -41,7 +41,7 @@ ContextMenu.prototype.clear = function(){
 }
 ContextMenu.prototype.addMenu = function(id,name,parent){
 	if (this.containKey(id)){
-		alert(this.menuName+"_extmenu_"+id+"already exist!");
+		jAlert(this.menuName+"_extmenu_"+id+"already exist!");
 		return;
 	}
 	var tempSyntax = "";
@@ -83,7 +83,7 @@ ContextMenu.prototype.addSperator = function(parent){
 ContextMenu.prototype.addItem = function(id,name,parent,handler){
 	var tempStr = new Array();	
 	if (this.containKey(id)){
-		alert(this.menuName+"_item_"+id+"already exist!");
+		jAlert(this.menuName+"_item_"+id+"already exist!");
 		return;
 	}
 		

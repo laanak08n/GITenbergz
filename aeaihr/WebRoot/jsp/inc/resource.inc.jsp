@@ -9,9 +9,11 @@
 <link rel="stylesheet" type="text/css" href="css/contextmenu.css" />
 <link rel="stylesheet" type="text/css" href="css/decorator.css" />
 <link rel="stylesheet" type="text/css" href="css/jquery.inputlimiter.1.0.css" />
+<link rel="stylesheet" type="text/css" href="css/jquery.alerts.css" />
 <link href="css/dtree.css" rel="stylesheet" type="text/css"/>
 <link href="css/stree.css" rel="stylesheet" type="text/css"/>
 <script src="js/jquery-1.7.1.js" language="javascript"></script>
+<script src="js/jquery.alerts.js" language="javascript"></script>
 <script src="js/ArrayList.js" type="text/javascript"></script>
 <script src="js/Map.js" type="text/javascript"></script>
 <script src="js/ContextMenu.js" type="text/javascript"></script>

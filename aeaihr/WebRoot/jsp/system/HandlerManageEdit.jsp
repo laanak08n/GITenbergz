@@ -17,12 +17,12 @@ function saveMasterRecord(){
 	if (validate()){
 		postRequest('form1',{actionType:'saveMasterRecord',onComplete:function(responseText){
 			if ("fail" != responseText){
-				alert('保存成功！');
+				jAlert('保存成功！');
 				$('#operaType').val('update');
 				$('#HANLER_ID').val(responseText);
 				doSubmit({actionType:'prepareDisplay'});
 			}else{
-				alert('保存操作出错啦！');
+				jAlert('保存操作出错啦！');
 			}
 		}});
 	}

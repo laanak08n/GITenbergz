@@ -37,9 +37,6 @@ function revokeApproval(){
 	}
 	doSubmit({actionType:'revokeApproval'});
 }
-function salarySet(){
-	alert('没毛病');
-}
 </script>
 </head>
 <body>

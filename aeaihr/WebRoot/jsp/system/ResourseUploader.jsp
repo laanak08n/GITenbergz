@@ -64,16 +64,16 @@ $(document).ready(function() {
         'onSelectError': function (file, errorCode, errorMsg) {  
             switch (errorCode) {  
                 case -100:  
-                    alert("上传的文件数量已经超出系统限制的" + jQuery('#file_upload').uploadify('settings', 'queueSizeLimit') + "个文件！");  
+                	jAlert("上传的文件数量已经超出系统限制的" + jQuery('#file_upload').uploadify('settings', 'queueSizeLimit') + "个文件！");  
                     break;  
                 case -110:  
-                    alert("文件 [" + file.name + "] 大小超出系统限制的" + jQuery('#uploadify').uploadify('settings', 'fileSizeLimit') + "大小！");  
+                	jAlert("文件 [" + file.name + "] 大小超出系统限制的" + jQuery('#uploadify').uploadify('settings', 'fileSizeLimit') + "大小！");  
                     break;  
                 case -120:  
-                    alert("文件 [" + file.name + "] 大小异常！");  
+                	jAlert("文件 [" + file.name + "] 大小异常！");  
                     break;  
                 case -130:  
-                    alert("文件 [" + file.name + "] 类型不正确！");  
+                	jAlert("文件 [" + file.name + "] 类型不正确！");  
                     break;  
             }  
 	      },
@@ -84,12 +84,12 @@ $(document).ready(function() {
             //fileObj:选中文件的对象，他包含的属性列表
             //response:服务器端返回的Response文本，我这里返回的是处理过的文件名称
             //data：文件队列详细信息和文件上传的一般数据
-           // alert("文件:" + fileObj.name + " 上传成功！");
-			//alert("response is " + response);
+           // jAlert("文件:" + fileObj.name + " 上传成功！");
+			//jAlert("response is " + response);
 			$('#uploadify').uploadify('upload');
         },
         'onUploadStart': function (file) {
-        	  //alert("文件:" + file.name + " 上传开始！");
+        	  //jAlert("文件:" + file.name + " 上传开始！");
         },
         'onQueueComplete':function(queueData){
 			if (queueData.uploadsSuccessful >= batchUploadCount){
@@ -97,7 +97,7 @@ $(document).ready(function() {
         	}
         },    
         'onError': function(event, queueID, fileObj) {//当单个文件上传出错时触发
-            alert("文件:" + fileObj.name + " 上传失败！");
+        	jAlert("文件:" + fileObj.name + " 上传失败！");
         }
 	});
 });

@@ -25,7 +25,7 @@ function modifyPassword(){
 				postRequest('form1',{actionType:'modifyPassword',onComplete:function(responseText){
 					if (responseText == 'success'){
 						hideSplash();
-						alert('修改密码成功,请重新登录系统！');
+						jAlert('修改密码成功,请重新登录系统！');
 						parent.logout();
 						//resetForm();
 					}else{

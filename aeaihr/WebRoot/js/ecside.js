@@ -331,7 +331,7 @@ var ECSide=function(formid){
 		}
 		if(!asy && Me.doingAjaxSubmit){
 			/*
-			alert("the last ajax request is not complete. try later.");
+			jAlert("the last ajax request is not complete. try later.");
 			return;
 			*/
 		}
@@ -342,7 +342,7 @@ var ECSide=function(formid){
 		//pars=pars.replace(/(^|&)_=(&|$)/g,'$1'+'$2');
 		//pars=pars.replace(/&+/g,'&');
 		/* end of fix a prototype bug */
-		//alert(url+"  "+pars)
+		//jAlert(url+"  "+pars)
 		//ECSideUtil.formSubmit(Me.ECForm,resfunc,"post",asy,parameter);
 		if (Me.findAjaxZoneAtClient===false){
 			if (!parameter){
@@ -434,7 +434,7 @@ var ECSide=function(formid){
 		Me.ECForm=document.getElementById(ECSideConstants.FORM_ID);
 		
 		if (!Me.ECForm)	{
-			/* alert("ERR: tableId=\""+Me.id+"\" not exist!"); */
+			/* jAlert("ERR: tableId=\""+Me.id+"\" not exist!"); */
 			return;
 		}
 		Me.doPreload=Me.doPrep=="temp"?Me.doPreload:Me.doPrep;
@@ -715,7 +715,7 @@ Me.updateCallBack=function(responseObj){
 		}else{
 			//Fail
 			if (message.length>1){
-				alert(message);
+				jAlert(message);
 			}
 		}
 	}
@@ -739,7 +739,7 @@ Me.insertCallBack=function(responseObj){
 		}else{
 			//Fail
 			if (message.length>1){
-				alert(message);
+				jAlert(message);
 			}
 		}
 	}
@@ -763,7 +763,7 @@ Me.deleteCallBack=function(responseObj){
 		}else{
 			//Fail
 			if (message.length>1){
-				alert(message);
+				jAlert(message);
 			}
 		}
 	}
@@ -1015,7 +1015,7 @@ ECSideUtil.gotoPageByInput=function(inputNoObj,formid){
 	var pageno=inputNoObj.value/1;
 	var totalpages=form[ECSideConstants.EC_ID+"_totalpages"].value/1;
 	if (!isFinite(pageno) || (pageno+"").indexOf(".")!=-1 || pageno<1 || pageno>totalpages){
-		alert(ECSideUtil.getMessage("ERR_PAGENO",totalpages));
+		jAlert(ECSideUtil.getMessage("ERR_PAGENO",totalpages));
 		inputNoObj.focus();
 		inputNoObj.select();
 		return;
@@ -1165,7 +1165,7 @@ ECSideUtil.doExport=function(type,fileName,page,formid){
 	//form.getAttribute("maxRowsExported");
 	if (page===false && maxRowsExported && ECSideUtil.parseIntOrZero(maxRowsExported)>0){
 		if(ECSideUtil.parseIntOrZero(maxRowsExported)<ECSideUtil.getTotalRows(formid)){
-			alert(ECSideUtil.getMessage("OVER_MAXEXPORT",ECSideUtil.parseIntOrZero(maxRowsExported)));
+			jAlert(ECSideUtil.getMessage("OVER_MAXEXPORT",ECSideUtil.parseIntOrZero(maxRowsExported)));
 			return;
 		}
 	}
@@ -1434,7 +1434,7 @@ ECSideUtil.printFrame=function(frame, doctitle,onfinish) {
     execOnFinish();
     return;
   }else{
-	alert("the PRINT for IE 5.0+ Only");
+	  jAlert("the PRINT for IE 5.0+ Only");
   }
 
 };
@@ -2486,20 +2486,20 @@ ECSideUtil.showShadowRow=function(crow,eventSrc,formid){
 				//if (ecsideObj.showShadowRowCallBack){
 					//ecsideObj.showShadowRowCallBack(formid,crow,shadowRow,eventSrc);
 				//}
-				//alert(1)
+				//jAlert(1)
 				eventSrc.className="shadowRowButtonOpen";
 			}else{
 				shadowRow.style.display="none";
 				//if (ecsideObj.hideShadowRowCallBack){
 					//ecsideObj.hideShadowRowCallBack(formid,crow,shadowRow,eventSrc);
 				//}	
-				//alert(2)
+				//jAlert(2)
 				eventSrc.className="shadowRowButtonClose";
 				isShowed=false;
 			}
 		
 		}else{
-			//alert(3)
+			//jAlert(3)
 			shadowRow=crow.parentNode.insertRow(crowIndex);
 			shadowRow.className="shadowRow";
 			shadowRow.style.display="";
@@ -2644,7 +2644,7 @@ ECSideUtil.saveGirdBatch=function(buttonObj,formid,isBatch){
 	}
 
 	if ( rows.length<1 && rowsi.length<1 && rowsd.length<1 ){
-		alert(ECSideMessage.NO_RECORD_UPDATE);
+		jAlert(ECSideMessage.NO_RECORD_UPDATE);
 	}
 	
 };

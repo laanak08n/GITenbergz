@@ -80,7 +80,7 @@ AlertInvalidProcessor.prototype = jQuery.extend(true,{},new InvalidProcessor(),
 	{
 		this.defaultProcess();
 		this.element.addClassName(classNameOfValidateErrorInput);
-        alert(this.validator.getMessage(this.field.label));
+		jAlert(this.validator.getMessage(this.field.label));
 	}
 });
 
@@ -175,7 +175,7 @@ InvalidProcessorFactory.prototype =
 		}		
 		else 
 		{
-			alert('validateErrorMsgDisplayStyle');
+			jAlert('validateErrorMsgDisplayStyle');
 			return new TextInvalidProcessor(element, field, validator); 
 		}
 	}

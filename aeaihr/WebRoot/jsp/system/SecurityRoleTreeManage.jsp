@@ -26,7 +26,7 @@ function doChangeParent(){
 		if (responseText == 'success'){
 			doRefresh($('#ROLE_ID').val());			
 		}else {
-			alert('迁移父节点出错啦！');
+			jAlert('迁移父节点出错啦！');
 		}
 	}});
 }

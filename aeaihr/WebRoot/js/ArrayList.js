@@ -3,7 +3,7 @@ use as ArrayList for java programmer
 */
 function testArrayList(){
  
- alert("ArrayList test begin:");
+	jAlert("ArrayList test begin:");
  try{
   var list=new ArrayList();
   assert(list.isEmpty());
@@ -70,10 +70,10 @@ function testArrayList(){
 
  }
  catch(e){
-  alert(e);
+	 jAlert(e);
  }
    
- alert("ArrayList test end");
+ jAlert("ArrayList test end");
 }
 
 function ArrayList(){

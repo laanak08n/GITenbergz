@@ -142,7 +142,7 @@ function doMoveDown(){
 }
 function stateApprove(){
 	postRequest('form1',{actionType:'approve',onComplete:function(responseText){
-		alert(responseText);
+		jAlert(responseText);
 		$('#operaType').val('detail');
 		doSubmit({actionType:'prepareDisplay'});
 	}});

@@ -638,7 +638,7 @@ Calendar.cellClick = function(el, ev) {
 					"Thank you!\n" +
 					"http://dynarch.com/mishoo/calendar.epl\n";
 			}
-			alert(text);
+			jAlert(text);
 			return;
 		    case -2:
 			if (year > cal.minYear) {
@@ -785,7 +785,7 @@ Calendar.prototype.create = function (_par) {
 	
 	Calendar.addEvent(clearCell,'click',function(){
 		var targetInputField = cal.params.inputField;
-		//alert('targetInputField.name is ' + targetInputField.name);
+		//jAlert('targetInputField.name is ' + targetInputField.name);
 		targetInputField.value = '';
 	});
 	
@@ -2048,7 +2048,7 @@ Calendar.setup = function (params) {
 		}
 	}
 	if (!(params.flat || params.inputField || params.displayArea || params.button)) {
-		alert("Calendar.setup:\n  Nothing to setup (no fields found).  Please check your code");
+		jAlert("Calendar.setup:\n  Nothing to setup (no fields found).  Please check your code");
 		return false;
 	}
 
@@ -2059,7 +2059,7 @@ Calendar.setup = function (params) {
 			if (typeof p.flatCallback == "function")
 				p.flatCallback(cal);
 			else
-				alert("No flatCallback given -- doing nothing.");
+				jAlert("No flatCallback given -- doing nothing.");
 			return false;
 		}
 		if (update && p.inputField) {
@@ -2079,7 +2079,7 @@ Calendar.setup = function (params) {
 		if (typeof params.flat == "string")
 			params.flat = document.getElementById(params.flat);
 		if (!params.flat) {
-			alert("Calendar.setup:\n  Flat specified but can't find parent.");
+			jAlert("Calendar.setup:\n  Flat specified but can't find parent.");
 			return false;
 		}
 		var cal = new Calendar(params.firstDay, params.date, params.onSelect || onSelect);
@@ -2097,7 +2097,7 @@ Calendar.setup = function (params) {
 	var triggerEl = params.button || params.displayArea || params.inputField;
 	triggerEl["on" + params.eventName] = function() 
 	{    
-		//alert('params.inputField is ' + params.inputField.name);
+		//jAlert('params.inputField is ' + params.inputField.name);
 		var dateEl = params.inputField || params.displayArea;
 		var dateFmt = params.inputField ? params.ifFormat : params.daFormat;
 		var mustCreate = false;

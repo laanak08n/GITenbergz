@@ -18,7 +18,7 @@ function resetPassword(){
 			postRequest('form1',{actionType:'resetPassword',onComplete:function(responseText){
 				if (responseText == 'success'){
 					hideSplash();
-					alert('修改密码成功！');
+					jAlert('修改密码成功！');
 					parent.PopupBox.closeCurrent();
 				}else{
 					writeErrorMsg('修改密码失败！');
