@@ -44,6 +44,7 @@ public class HrLeaveManageListHandler
 		} else {
 			param.put("currentUserId", user.getUserId());
 			setAttribute("hasRight", false);
+			setAttribute("userId", user.getUserId());
 		}
     	
 		mergeParam(param);
