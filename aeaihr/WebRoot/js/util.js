@@ -17,7 +17,7 @@ var saveImgBtnTagId = 'saveImgBtn';
 
 var waitMsg="正在执行后台操作，请稍候……";
 var deleteMsg="正在删除数据，请稍候……";
-var confirmMsg="您确认是要删除数据吗？";
+var confirmMsg="您确认要删除数据吗？";
 var currentRow=null;
 
 if (window.jQuery){
