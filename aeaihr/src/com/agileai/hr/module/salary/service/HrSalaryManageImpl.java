@@ -678,6 +678,7 @@ totalOverTimeRecordsMap,additionalVationRecordMap,updateAdditionalVationParamLis
 		Double validDay = (Double) dataParam.getObject("validDay");
 		Double fulltimeAwardMoney = (Double) dataParam.getObject("fulltimeAwardMoney");
 		BigDecimal fullTimeAward = BigDecimal.valueOf(fulltimeAwardMoney);
+		BigDecimal salBonus = new BigDecimal("0.00");
 		int inDays = 0;
 		int outDays = 0;
 		BigDecimal beforeYearDecemberDayMoney =  new BigDecimal("0.0000");
@@ -724,10 +725,12 @@ totalOverTimeRecordsMap,additionalVationRecordMap,updateAdditionalVationParamLis
 		boolean isAutoAdditionalVation = (beforeYearDecemberRewordSalary.compareTo(BigDecimal.ZERO)>0);
 		boolean isProbationOverRun = (probationOverRunSalary.compareTo(BigDecimal.ZERO)<0);
 		boolean isRegularOverRun = (regulartionOverRunSalary.compareTo(BigDecimal.ZERO)<0);
-		salAuthal = salAuthal.add(rewardSalary).add(additionalVationSalary).subtract(punishmentSalary);
+		salBonus = salBonus.add(rewardSalary).add(additionalVationSalary).subtract(punishmentSalary);
+		salAuthal = salAuthal.add(salBonus);
 		dataParam.put("beforeYearDecemberRewordSalary",beforeYearDecemberRewordSalary);
 		dataParam.put("beforeYearDecemberOffsetVationDay",beforeYearDecemberOffsetVationDay);
 		dataParam.put("beforeYearDecemberDayMoney",beforeYearDecemberDayMoney);
+		dataParam.put("salBonus",salBonus);
 		dataParam = buildRewordList(dataParam,regularTime,date,inductionDate,userId,overRunDayRecordMap,additionalVationRecordMap,insertAdditionalVationParamList,updateAdditionalVationParamList,updateOverRunParamList,
 				insertOverRunParamList,beforeYearDecemberRewordSalary,salAuthal,insertAdditionalVationParam,overRunParam,
 probationOverRunSalary,regulartionOverRunSalary,insertfullTimeParamList,fullTimeAward,fullTimeParam,isFeb,isRegular,isFullTime,isLeave,isAutoAdditionalVation,isProbationOverRun,
@@ -755,7 +758,7 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 			boolean isRegularOverRun,List<DataParam> updateFullTimeParamList
 			,HashMap<String,DataRow> fullTimeRecordMap,Double fulltimeAwardMoney,HashMap<String,List<DataRow>> totalLeaveRecordsMap,HashMap<String,DataRow> beforeYearDecemberOffsetVationDaysMap,HashMap<String,DataRow> beforeMonthOffsetVationDaysMap,
 			HashMap<String, List<DataRow>> totalOverTimeRecordsMap,BigDecimal salProbationDayMoney) {
-		BigDecimal salBonus = new BigDecimal("0.00");
+		BigDecimal salBonus = (BigDecimal) dataParam.getObject("salBonus");
 		dataParam = calculateBeforeYearProbationDays(dataParam,date,regularTime,inductionDate,userId,totalLeaveRecordsMap,beforeYearDecemberOffsetVationDaysMap,beforeMonthOffsetVationDaysMap,totalOverTimeRecordsMap); 
 		beforeYearDecemberRewordSalary = (BigDecimal) dataParam.getObject("beforeYearDecemberRewordSalary");
 		BigDecimal probationAdditionalVationSalary = (BigDecimal) dataParam.getObject("probationAdditionalVationSalary");

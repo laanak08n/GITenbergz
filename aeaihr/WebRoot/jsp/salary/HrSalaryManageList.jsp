@@ -40,10 +40,10 @@ function revokeApproval(){
 <tr>
 <%if(!pageBean.getBoolValue("hasRight")){
 	%>
-<%if(pageBean.getBoolValue("canGather")){
-	%>
+<%-- <%if(pageBean.getBoolValue("canGather")){
+	%> --%>
    <aeai:previlege code="summary"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="A" align="center" onclick="gatherData()" <%if(!pageBean.getBoolValue("validDays")){%>hidden="hidden"<%}%> ><input id="gatherImgBtn" value="&nbsp;" title="汇总" type="button"  class="salaryImgBtn" />汇总</td></aeai:previlege>
-   <%}%>
+  <%--  <%}%> --%>
    <aeai:previlege code="edit"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="E" align="center" onclick="doRequest('updateRequest')"><input value="&nbsp;" title="编辑" type="button" id="edit" class="editImgBtn"  />编辑</td></aeai:previlege>
    <aeai:previlege code="approve"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="R" align="center" onclick="doRequest('approveRequest')"><input value="&nbsp;" title="核准" type="button" id="approve" class="approveImgBtn"   />核准</td></aeai:previlege>
    <aeai:previlege code="revokeApproval"><td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td></aeai:previlege>

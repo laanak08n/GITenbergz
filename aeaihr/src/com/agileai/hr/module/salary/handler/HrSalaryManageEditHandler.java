@@ -60,8 +60,8 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 		BigDecimal salRegular = (BigDecimal) record.get("SAL_BASIC");
 		BigDecimal salTotal = (BigDecimal) record.get("SAL_TOTAL");
 		BigDecimal validDays = (BigDecimal) record.get("SAL_VALID_DAYS");
-		BigDecimal salProbationDayMoney = new BigDecimal("0.0");
-		BigDecimal salRegularDayMoney = new BigDecimal("0.0");
+		BigDecimal salProbationDayMoney = new BigDecimal("0.0000");
+		BigDecimal salRegularDayMoney = new BigDecimal("0.0000");
 		BigDecimal salPerformance = (BigDecimal) record.get("SAL_PERFORMANCE");
 		BigDecimal salSubsidy = (BigDecimal)record.get("SAL_SUBSIDY");
 		if(DateUtil.getDateDiff(regularDate, salDate, DateUtil.DAY) >= 0){
