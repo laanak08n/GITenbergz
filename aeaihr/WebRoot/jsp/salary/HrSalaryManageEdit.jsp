@@ -108,6 +108,11 @@
 </td>
 </tr>
 <tr>
+	<th width="100" nowrap>抵扣假期</th>
+	<td><input name="SAL_OFFSET_VACATION" type="text" class="text" id="SAL_OFFSET_VACATION" value="<%=pageBean.inputValue("SAL_OFFSET_VACATION")%>" size="24" readonly="readonly" label="抵扣假期" />
+</td>
+</tr>
+<tr>
 	<th width="100" nowrap>备注</th>
 	<td colspan="3"><textarea id="SAL_REMARKS" label="备注" name="SAL_REMARKS" cols="60" rows="5" class="textarea"><%=pageBean.inputValue("SAL_REMARKS")%></textarea>
 </td>
