@@ -109,16 +109,18 @@ CREATE TABLE `hr_employee` (
   `EMP_ALLOWANCE` decimal(8,0) DEFAULT NULL,
   `EMP_PARTICIPATE_SALARY` varchar(32) DEFAULT NULL,
   `EMP_PAY_INSURE` varchar(32) DEFAULT NULL,
+  `EMP_PROBATION` decimal(8,2) DEFAULT NULL,
+  `EMP_CREATE_TIME` date DEFAULT NULL,
   PRIMARY KEY (`EMP_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hr_employee
 -- ----------------------------
-INSERT INTO `hr_employee` VALUES ('15B1BB01-783E-4FB1-8BD3-2704193ECC37', 'CS02', '赵小二', 'F', null, '', '', '', '', '', '', null, '0E12268C-BD14-4FCE-A7C0-A8A5D55ED842', '行政总监', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N');
-INSERT INTO `hr_employee` VALUES ('244DEC90-0509-4785-9BF0-4643E599EAE8', 'CS04', '赵小四', 'M', null, '', '', '', '', '', '', null, '3435DD86-53B8-41DC-BE10-0463428D18D6', '研发总管', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N');
-INSERT INTO `hr_employee` VALUES ('3A97C063-84B0-4F5B-96BF-C9BF6987467C', 'CS01', '张老大', 'M', null, '', '', '', '', '', '', null, '72A9E7B1-5B47-4822-ACA0-A8CB1EE78506', '总负责人', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N');
-INSERT INTO `hr_employee` VALUES ('8DFC57A5-E8E8-4796-851D-F60491F74670', 'CS03', '孙小三', 'M', null, '', '', '', '', '', '', null, '72A9E7B1-5B47-4822-ACA0-A8CB1EE78506', '技术经理', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N');
+INSERT INTO `hr_employee` VALUES ('15B1BB01-783E-4FB1-8BD3-2704193ECC37', 'CS02', '赵小二', 'F', null, '', '', '', '', '', '', null, '0E12268C-BD14-4FCE-A7C0-A8A5D55ED842', '行政总监', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N',null,null);
+INSERT INTO `hr_employee` VALUES ('244DEC90-0509-4785-9BF0-4643E599EAE8', 'CS04', '赵小四', 'M', null, '', '', '', '', '', '', null, '3435DD86-53B8-41DC-BE10-0463428D18D6', '研发总管', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N',null,null);
+INSERT INTO `hr_employee` VALUES ('3A97C063-84B0-4F5B-96BF-C9BF6987467C', 'CS01', '张老大', 'M', null, '', '', '', '', '', '', null, '72A9E7B1-5B47-4822-ACA0-A8CB1EE78506', '总负责人', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N',null,null);
+INSERT INTO `hr_employee` VALUES ('8DFC57A5-E8E8-4796-851D-F60491F74670', 'CS03', '孙小三', 'M', null, '', '', '', '', '', '', null, '72A9E7B1-5B47-4822-ACA0-A8CB1EE78506', '技术经理', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N',null,null);
 
 -- ----------------------------
 -- Table structure for hr_evection
@@ -256,6 +258,7 @@ CREATE TABLE `hr_salary` (
   `SAL_YEAR_LEAVE` decimal(8,2) DEFAULT NULL,
   `SAL_HOUSING_FUND` decimal(8,2) DEFAULT NULL,
   `SAL_SHOULD` decimal(8,2) DEFAULT NULL,
+  `SAL_PROBATION` decimal(8,2) DEFAULT NULL,
   PRIMARY KEY (`SAL_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1048,3 +1051,68 @@ CREATE TABLE `wcm_general_resource` (
 -- Records of wcm_general_resource
 -- ----------------------------
 INSERT INTO `wcm_general_resource` VALUES ('66146C8F-EF05-4687-B724-569E82773413', 'CF35D1E6-102E-428A-B39C-0072D491D5B1', '新建文本文档.txt', 'Y', '/HotServer/reponsitory/resourse/CF35D1E6-102E-428A-B39C-0072D491D5B1/2015/04/21/新建文本文档.txt', '2522', '.txt', null);
+-- ----------------------------
+-- Table structure for hr_oper_log
+-- ----------------------------
+DROP TABLE IF EXISTS `hr_oper_log`;
+CREATE TABLE `hr_oper_log`  (
+  `OPER_LOG_ID` char(36)  NOT NULL,
+  `OBJ_CODE` varchar(32)  DEFAULT NULL,
+  `OBJ_TYPE` varchar(32)  DEFAULT NULL,
+  `OPER_TYPE` varchar(32)  DEFAULT NULL,
+  `OPER_TIME` datetime DEFAULT NULL,
+  PRIMARY KEY (`OPER_LOG_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Records of hr_oper_log
+-- ----------------------------
+
+CREATE DEFINER = `root`@`localhost` TRIGGER `insert_group` AFTER INSERT ON `security_group` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),new.GRP_CODE,'org','INSERT',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `update_group` AFTER UPDATE ON `security_group` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),new.GRP_CODE,'org','UPDATE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `delete_group` AFTER DELETE ON `security_group` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),old.GRP_CODE,'org','DELETE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `insert_role` AFTER INSERT ON `security_role` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),new.ROLE_CODE,'pos','INSERT',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `update_role` AFTER UPDATE ON `security_role` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),new.ROLE_CODE,'pos','UPDATE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `delete_role` AFTER DELETE ON `security_role` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),old.ROLE_CODE,'pos','DELETE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `insert_role_group_rel` AFTER INSERT ON `security_role_group_rel` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),(select ROLE_CODE from security_role where ROLE_ID = new.ROLE_ID),'pos','UPDATE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `delete_role_group_rel` AFTER DELETE ON `security_role_group_rel` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),(select ROLE_CODE from security_role where ROLE_ID = old.ROLE_ID),'pos','UPDATE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `insert_user` AFTER INSERT ON `security_user` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),new.USER_CODE,'emp','INSERT',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `update_user` AFTER UPDATE ON `security_user` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),new.USER_CODE,'emp','UPDATE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `delete_user` AFTER DELETE ON `security_user` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),old.USER_CODE,'emp','DELETE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `insert_user_group_rel` AFTER INSERT ON `security_user_group_rel` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),(select USER_CODE from security_user where USER_ID = new.USER_ID),'emp','UPDATE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `update_user_group_rel` AFTER UPDATE ON `security_user_group_rel` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),(select USER_CODE from security_user where USER_ID = new.USER_ID),'emp','UPDATE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `delete_user_group_rel` AFTER DELETE ON `security_user_group_rel` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),(select USER_CODE from security_user where USER_ID = old.USER_ID),'emp','UPDATE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `insert_user_rg_rel` AFTER INSERT ON `security_user_rg_rel` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),(select USER_CODE from security_user where USER_ID = new.USER_ID),'emp','UPDATE',NOW())
+;;
+delimiter ;
+CREATE DEFINER = `root`@`localhost` TRIGGER `delete_user_rg_rel` AFTER DELETE ON `security_user_rg_rel` FOR EACH ROW insert hr_oper_log values (UPPER(uuid()),(select USER_CODE from security_user where USER_ID = old.USER_ID),'emp','UPDATE',NOW())
+;;
+delimiter ;
+
