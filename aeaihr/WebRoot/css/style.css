@@ -419,12 +419,12 @@ select{
 	cursor:pointer;
 }
 .submitImgBtn{
-	background: url(../images/save&flow.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	background: url(../images/upload.gif) no-repeat center center; width: 16px; height: 16px; border: none;
 	margin:0px 0px 0px 1px;
 	cursor:pointer;
 }
 .submitImgBtndisabled{
-	background: url(../images/save&flow0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	background: url(../images/upload0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
 	margin:0px 0px 0px 1px;
 	cursor:pointer;
 }
@@ -440,12 +440,12 @@ select{
 	cursor:pointer;
 }
 .reSubmittedImgBtn{
-	background: url(../images/submitted.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	background: url(../images/download.gif) no-repeat center center; width: 16px; height: 16px; border: none;
 	margin:0px 0px 0px 1px;
 	cursor:pointer;
 }
 .reSubmittedImgBtndisabled{
-	background: url(../images/submitted0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	background: url(../images/download0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
 	margin:0px 0px 0px 1px;
 	cursor:pointer;
 }
@@ -481,6 +481,26 @@ select{
 }
 .syncSecurityImgBtndisabled{
 	background: url(../images/ruff0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.salaryImgBtn{
+	background: url(../images/salary.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.salaryImgBtndisabled{
+	background: url(../images/salary0.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.validdaysImgBtn{
+	background: url(../images/validdays.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.validdaysImgBtndisabled{
+	background: url(../images/validdays0.png) no-repeat center center; width: 16px; height: 16px; border: none;
 	margin:0px 0px 0px 1px;
 	cursor:pointer;
 }
