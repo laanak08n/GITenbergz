@@ -64,7 +64,13 @@ function save(){
 </tr>
 <tr>
 	<th width="100" nowrap>请假类型</th>
-	<td><select id="LEA_TYPE" label="请假类型" name="LEA_TYPE" class="select"><%=pageBean.selectValue("LEA_TYPE")%></select>
+	<td>
+	<%if("drafe".equals(pageBean.selectedValue("STATE"))){%>
+		<select id="LEA_TYPE" label="请假类型" name="LEA_TYPE" class="select"><%=pageBean.selectValue("LEA_TYPE")%></select>
+	<%}else{ %>	
+		<input id="LEA_TYPE_TEXT" label="请假类型" name="LEA_TYPE_TEXT" type="text" value="<%=pageBean.selectedText("LEA_TYPE")%>" size="24"  class="text" readonly="readonly"/>
+		<input id="LEA_TYPE" label="请假类型" name="LEA_TYPE" type="hidden" value="<%=pageBean.selectedValue("LEA_TYPE")%>" />
+	<%} %>
 </td>
 </tr>
 <tr>
@@ -93,8 +99,7 @@ function save(){
 	<td><textarea id="LEA_CAUSE" label="请假原因" name="LEA_CAUSE" cols="60" rows="5" class="textarea"><%=pageBean.inputValue("LEA_CAUSE")%></textarea>
 </td>
 </tr>
-<%if(pageBean.getBoolValue("doSignIn")){
-	%>
+<%if(pageBean.getBoolValue("doSignIn")){%>
 <tr>
 	<th width="100" nowrap>核准人</th>
 <td><input name="LEA_APPOVER_NAME" type="text" class="text"
@@ -114,7 +119,13 @@ function save(){
 </tr>
 <tr>
 	<th width="100" nowrap>核准结果</th>
-	<td><select id="APP_RESULT" label="核准结果" name="APP_RESULT" class="select"><%=pageBean.selectValue("APP_RESULT")%></select>
+	<td>
+	<%if("approved".equals(pageBean.selectedValue("STATE"))){%> 
+		<input id="APP_RESULT_TEXT" label="核准结果" name="APP_RESULT_TEXT" type="text" value="<%=pageBean.selectedText("APP_RESULT")%>" size="24"  class="text" readonly="readonly"/>
+		<input id="APP_RESULT" label="核准结果" name="APP_RESULT" type="hidden" value="<%=pageBean.selectedValue("APP_RESULT")%>" />
+	<%}else{ %>
+		<select id="APP_RESULT" label="核准结果" name="APP_RESULT" class="select"><%=pageBean.selectValue("APP_RESULT")%></select>
+	<%} %>	
 </td>
 </tr>
 <tr>

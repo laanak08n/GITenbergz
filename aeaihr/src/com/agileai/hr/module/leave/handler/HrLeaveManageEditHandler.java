@@ -12,6 +12,7 @@ import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
+import com.agileai.hr.common.PrivilegeHelper;
 import com.agileai.hr.cxmodule.HrLeaveManage;
 import com.agileai.util.DateUtil;
 
@@ -84,6 +85,10 @@ public class HrLeaveManageEditHandler
 					if(record.get("STATE").equals("submitted")){
 						setAttribute("doApprove",true);
 						setAttribute("doSignIn", true);
+						PrivilegeHelper privilegeHelper = new PrivilegeHelper(user);
+						if(!privilegeHelper.isApprove()){
+							setAttribute("doSignIn", false);
+						}
 						DataRow records = getService().getNowRecord(param);
 						this.setAttributes(records);
 						this.setAttribute(
