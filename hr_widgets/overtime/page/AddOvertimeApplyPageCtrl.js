@@ -12,7 +12,7 @@ angular.module('${menuCode}')
 		AppKit.isLogin().success(function(data, status, headers, config){
 			if (data.result=='true'){
 				$scope.userLogin = "isLogin";
-				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/m1/index.cv#/tab/home",
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/${navCode}/index.cv#/tab/home",
 					"success":function(){
 						var url = "/aeaihr/services/Overtime/rest/add-overtime-info";
 						AppKit.postJsonApi(url,JSON.stringify($scope.info)).then(function(response){

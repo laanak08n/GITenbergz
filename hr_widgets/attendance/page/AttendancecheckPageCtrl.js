@@ -18,7 +18,7 @@ angular.module('${menuCode}')
 		AppKit.isLogin().success(function(data, status, headers, config){
 			if (data.result=='true'){
 				$scope.userLogin = "isLogin";
-				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/m1/index.cv#/tab/home",
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/${navCode}/index.cv#/tab/home",
 					"success":function(){
 						$scope.currentDayParam = $filter("date")($scope.currentDay, "yyyy-MM-dd");
 						var url = '/aeaihr/services/Attendance/rest/find-signin-infos/'+$scope.currentDayParam;
@@ -37,7 +37,7 @@ angular.module('${menuCode}')
 		AppKit.isLogin().success(function(data, status, headers, config){
 			if (data.result=='true'){
 				$scope.userLogin = "isLogin";
-				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/m1/index.cv#/tab/home",
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/${navCode}/index.cv#/tab/home",
 					"success":function(){
 						$scope.currentMonthParam = $filter("date")($scope.currentMonth, "yyyy-MM");
 						var url = '/aeaihr/services/Attendance/rest/find-location-infos/'+$scope.currentMonthParam+'/undefined';
