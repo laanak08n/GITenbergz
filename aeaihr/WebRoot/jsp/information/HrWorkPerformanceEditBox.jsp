@@ -65,6 +65,8 @@ initCalendar('PER_IN_TIME','%Y-%m-%d','PER_IN_TIMEPicker');
 initCalendar('PER_NOW_TIME','%Y-%m-%d','PER_NOW_TIMEPicker');
 datetimeValidators[0].set("yyyy-MM-dd").add("PER_IN_TIME");
 datetimeValidators[1].set("yyyy-MM-dd").add("PER_NOW_TIME");
+requiredValidator.add("PER_IN_TIME");
+requiredValidator.add("PER_NOW_TIME");
 initDetailOpertionImage();
 </script>
 </body>

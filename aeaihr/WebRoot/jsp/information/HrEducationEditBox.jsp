@@ -65,6 +65,8 @@ initCalendar('EDU_IN_TIME','%Y-%m-%d','EDU_IN_TIMEPicker');
 initCalendar('EDU_OUT_TIME','%Y-%m-%d','EDU_OUT_TIMEPicker');
 datetimeValidators[0].set("yyyy-MM-dd").add("EDU_IN_TIME");
 datetimeValidators[1].set("yyyy-MM-dd").add("EDU_OUT_TIME");
+requiredValidator.add("EDU_IN_TIME");
+requiredValidator.add("EDU_OUT_TIME");
 initDetailOpertionImage();
 </script>
 </body>

@@ -65,6 +65,8 @@ initCalendar('EXP_IN_TIME','%Y-%m-%d','EXP_IN_TIMEPicker');
 initCalendar('EXP_OUT_TIME','%Y-%m-%d','EXP_OUT_TIMEPicker');
 datetimeValidators[0].set("yyyy-MM-dd").add("EXP_IN_TIME");
 datetimeValidators[1].set("yyyy-MM-dd").add("EXP_OUT_TIME");
+requiredValidator.add("EXP_IN_TIME");
+requiredValidator.add("EXP_OUT_TIME");
 initDetailOpertionImage();
 </script>
 </body>
