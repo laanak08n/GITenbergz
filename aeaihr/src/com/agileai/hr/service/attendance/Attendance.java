@@ -20,7 +20,7 @@ public interface Attendance {
     @POST
     @Path("/signIn")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_HTML)
 	public String signIn(String info);
     
     @GET  
@@ -94,5 +94,20 @@ public interface Attendance {
     @Path("/find-active-userId/{userCode}")
     @Produces(MediaType.TEXT_PLAIN)
 	public String findActiveUserId(@PathParam("userCode") String userCode);
+    
+    @GET  
+    @Path("/get-signin-state/{todyTime}")
+    @Produces(MediaType.TEXT_PLAIN)
+	public String getSigninState(@PathParam("todyTime") String todyTime);
+    
+    @GET  
+    @Path("/find-location-infos/{currentMonth}/{paramUserId}")
+    @Produces(MediaType.TEXT_PLAIN)
+	public String findLocationInfos(@PathParam("currentMonth")String currentMonth,@PathParam("paramUserId")String paramUserId);
+
+    @GET  
+    @Path("/find-signin-infos/{currentDay}") 
+    @Produces(MediaType.TEXT_PLAIN)
+	public String findSigninInfos(@PathParam("currentDay")String currentDay);
 
 }

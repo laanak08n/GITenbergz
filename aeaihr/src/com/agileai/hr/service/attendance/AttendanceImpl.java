@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.mozilla.javascript.Undefined;
 
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
@@ -581,4 +583,117 @@ public class AttendanceImpl extends BaseRestService implements Attendance {
 	protected HrAttendanceManage getService() {
 		return (HrAttendanceManage) this.lookupService(HrAttendanceManage.class);
 	}
+	
+	@Override
+	public String getSigninState(String todyTime) {
+		String responseText = "";
+		User user = (User)this.getUser();
+		String	userId = user.getUserId();
+		DataParam param=new DataParam("userId",userId);
+		param.put("todyTime", todyTime);
+		DataRow row=this.getService().getSigninState(param);
+		JSONObject jsonOTemp = new JSONObject();
+		try {
+			if(row!=null){
+				jsonOTemp.put("isSign", true);
+				String atdOutTime= row.stringValue("ATD_OUT_TIME");
+				if(StringUtil.isNotNullNotEmpty(atdOutTime)){
+					jsonOTemp.put("isSignOut", true);
+				}else{
+					jsonOTemp.put("isSignOut", false);
+				}
+			}else{
+				jsonOTemp.put("isSign", false);
+				jsonOTemp.put("isSignOut", true);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		responseText=jsonOTemp.toString();
+		return responseText;
+	}
+
+	@Override
+	public String findLocationInfos(String currentMonth,String paramUserId) {
+		String responseText = "";
+		String userId="";
+    	try {
+    		User user = (User)this.getUser();
+    		if("null".equals(userId)){
+    			userId = user.getUserId();
+    		}
+    		DataParam param=new DataParam("currentMonth",currentMonth);
+    		if(!"undefined".equals(paramUserId)){
+    			param.put("paramUserId", paramUserId);
+    		}else{
+    			param.put("isgroup", true);
+    		}
+    		List<DataRow> records = getService().findLocationInfos(param);
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+			for(DataRow row:records){
+				JSONObject jsonOTemp = new JSONObject();
+				String userName = row.stringValue("USER_NAME");
+				String theUserId = row.stringValue("USER_ID");
+				String grpName = row.stringValue("GRP_NAME");
+				String locatTime = row.stringValue("LOCAT_TIME");
+				String locatHouse = row.stringValue("LOCAT_HOUSE");
+				String locatPlace = row.stringValue("LOCAT_PLACE");
+				
+				jsonOTemp.put("theUserId", theUserId);
+				jsonOTemp.put("userName", userName);
+				jsonOTemp.put("grpName", grpName);
+				jsonOTemp.put("locatTime", locatTime);
+				jsonOTemp.put("locatHouse", locatHouse);
+				jsonOTemp.put("locatPlace", locatPlace);
+				jsonArray.put(jsonOTemp);
+			}    		
+    		jsonObject.put("locationInfos", jsonArray);
+        	responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return responseText;
+	}
+
+	@Override
+	public String findSigninInfos(String currentDay) {
+		String responseText = "";
+		String userId="";
+    	try {
+    		User user = (User)this.getUser();
+    		if("null".equals(userId)){
+    			userId = user.getUserId();
+    		}
+    		DataParam param=new DataParam("currentDay",currentDay);
+    		List<DataRow> records = getService().findSigninInfos(param);
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+			for(DataRow row:records){
+				JSONObject jsonOTemp = new JSONObject();
+				String userName = row.stringValue("USER_NAME");
+				String grpName = row.stringValue("GRP_NAME");
+				String atdInTime = row.stringValue("ATD_IN_TIME");
+				String atdOutTime = row.stringValue("ATD_OUT_TIME");
+				String atdInHouse = row.stringValue("ATD_IN_HOUSE");
+				String atdInPlace = atdInHouse+row.stringValue("ATD_IN_PLACE");
+				String atdOutHouse = row.stringValue("ATD_OUT_HOUSE");
+				String atdOutPlace = atdOutHouse+row.stringValue("ATD_OUT_PLACE");
+				
+				jsonOTemp.put("userName", userName);
+				jsonOTemp.put("grpName", grpName);
+				jsonOTemp.put("atdInTime", atdInTime);
+				jsonOTemp.put("atdOutTime", atdOutTime);
+				jsonOTemp.put("atdInPlace", atdInPlace);
+				jsonOTemp.put("atdOutPlace", atdOutPlace);
+				jsonArray.put(jsonOTemp);
+			}    	 
+    		jsonObject.put("signinInfos", jsonArray);
+        	responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return responseText;
+	}
+
 }

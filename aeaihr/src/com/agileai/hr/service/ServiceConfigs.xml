@@ -2,42 +2,42 @@
 <beans>
 	<service id="HelloWorld" type="Soap" implClass="com.agileai.hr.service.demo.HelloWorldImpl" address="/HelloWorld">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1</property>
+			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
 		</auth>
 	</service>
 	<service id="RestWorld" type="Rest" implClass="com.agileai.hr.service.demo.RestWorldImpl" address="/RestWorld">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1</property>
+			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
 		</auth>
 	</service>
 	<service id="BonusPenalty" type="Rest" implClass="com.agileai.hr.service.bonuspenalty.BonusPenaltyImpl" address="/BonusPenalty">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1</property>
+			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
 		</auth>
 	</service>
 	<service id="Leave" type="Rest" implClass="com.agileai.hr.service.leave.LeaveImpl" address="/Leave">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1</property>
+			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
 		</auth>
 	</service>
 	<service id="Overtime" type="Rest" implClass="com.agileai.hr.service.overtime.OvertimeImpl" address="/Overtime">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1</property>
+			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
 		</auth>
 	</service>
 	<service id="Salary" type="Rest" implClass="com.agileai.hr.service.salary.SalaryImpl" address="/Salary">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1</property>
+			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
 		</auth>
 	</service>	
 	<service id="Attendance" type="Rest" implClass="com.agileai.hr.service.attendance.AttendanceImpl" address="/Attendance">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1</property>
+			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
 		</auth>
 	</service>					
 	<service id="FormSelectUtil" type="Rest" implClass="com.agileai.hr.service.common.FormSelectUtilImpl" address="/FormSelectUtil">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1</property>
+			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
 		</auth>
 	</service>		
 </beans>

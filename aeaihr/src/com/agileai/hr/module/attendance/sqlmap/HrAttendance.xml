@@ -78,7 +78,7 @@
 		where 1 = 1
 		and USER_ID = #userId#
 		ORDER BY LOCAT_TIME Desc limit 20
-	</select>
+	</select>  
 	<select id="getAttendanceStatInfoRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
 		select DISTINCT USER_NAME,USER_CODE,ifnull(c.nums, 0) as lastNums,ifnull(e.nums, 0) as leaveNums,ifnull(g.nums, 0) as overWorkNums from security_user a 
@@ -142,5 +142,44 @@
 	from security_user 
 	where 1 = 1
 	 and USER_CODE = #userCode#
+	</select>
+	<select id="findLocationInfos" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+		SELECT b.USER_NAME,a.LOCAT_ID,a.USER_ID, MAX(a.LOCAT_TIME) LOCAT_TIME,a.LOCAT_PLACE,a.LOCAT_HOUSE,b.USER_ID,b.USER_NAME,b.USER_SEX,b.USER_SORT,b.USER_MAIL,b.USER_PHONE,
+		b.USER_WX_OPENID,b.USER_CODE,b.USER_PWD,b.USER_DESC,b.USER_STATE,
+		GROUP_CONCAT(DISTINCT d.GRP_NAME SEPARATOR ',' )   GRP_NAME
+		FROM hr_location   a 
+		LEFT JOIN security_user   b on a.USER_ID=b.USER_ID
+		LEFT JOIN security_user_group_rel c on c.USER_ID=a.USER_ID
+		LEFT JOIN security_group d on d.GRP_ID=c.GRP_ID
+		where 1=1
+		and   date_format(a.LOCAT_TIME,'%Y-%m')=#currentMonth#
+		<isNotEmpty prepend=" " property="paramUserId">
+		and a.USER_ID=#paramUserId#
+		GROUP BY a.LOCAT_ID
+		</isNotEmpty>	
+		<isNotEmpty prepend=" " property="isgroup">
+		GROUP BY a.USER_ID
+		</isNotEmpty>
+		ORDER BY a.LOCAT_TIME Desc limit 20
+	</select>  
+	<select id="findSigninInfos" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+		SELECT b.USER_NAME, a.ATD_ID,a.ATD_DATE,a.USER_ID,a.ATD_IN_TIME,a.ATD_IN_PLACE,a.ATD_IN_HOUSE,a.ATD_IN_COORDINATE,a.ATD_OUT_TIME,a.ATD_OUT_PLACE,a.ATD_OUT_HOUSE,a.ATD_OUT_COORDINATE,
+		GROUP_CONCAT(d.GRP_NAME SEPARATOR ',' )   GRP_NAME
+		FROM hr_attendance   a 
+		LEFT JOIN security_user   b on a.USER_ID=b.USER_ID
+		LEFT JOIN security_user_group_rel c on c.USER_ID=a.USER_ID
+		LEFT JOIN security_group d on d.GRP_ID=c.GRP_ID
+		where 1=1
+		and  DATEDIFF(a.ATD_IN_TIME,#currentDay#)=0
+		GROUP BY a.ATD_ID   
+		ORDER BY a.ATD_IN_TIME Desc limit 20
+	</select>  
+	<select id="getSigninState" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+		SELECT a.ATD_ID,a.ATD_DATE,a.USER_ID,a.ATD_IN_TIME,a.ATD_IN_PLACE,a.ATD_IN_HOUSE,a.ATD_IN_COORDINATE,a.ATD_OUT_TIME,a.ATD_OUT_PLACE,a.ATD_OUT_HOUSE,a.ATD_OUT_COORDINATE
+		FROM
+		hr_attendance   a
+		where 1=1
+		and USER_ID=#userId#
+		and a.ATD_DATE=#todyTime#
 	</select>
 </sqlMap>
