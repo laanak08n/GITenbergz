@@ -9,11 +9,20 @@ angular.module('${menuCode}')
 	$scope.currentMonth=$stateParams.currentMonth;
  
 	$scope.LoadLocationInfos=function(){
-		var url = '/aeaihr/services/Attendance/rest/find-location-infos/'+$scope.currentMonth+'/'+$scope.userId;
-		var promise = AppKit.getJsonApi(url);
-		promise.success(function(rspJson){
-			$scope.locationInfos = rspJson.locationInfos
-		});
+		AppKit.isLogin().success(function(data, status, headers, config){
+			if (data.result=='true'){
+				$scope.userLogin = "isLogin";
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/hr/index.cv#/tab/home",
+					"success":function(){
+						var url = '/aeaihr/services/Attendance/rest/find-location-infos/'+$scope.currentMonth+'/'+$scope.userId;
+						var promise = AppKit.getJsonApi(url);
+						promise.success(function(rspJson){
+							$scope.locationInfos = rspJson.locationInfos
+						});
+					}
+				})
+			}
+		})
 	}
 	$scope.LoadLocationInfos();
 	

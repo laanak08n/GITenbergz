@@ -15,22 +15,40 @@ angular.module('${menuCode}')
 	$scope.currentMonth=new Date();
 	
 	$scope.LoadSigninInfos=function(){
-		$scope.currentDayParam = $filter("date")($scope.currentDay, "yyyy-MM-dd");
-		var url = '/aeaihr/services/Attendance/rest/find-signin-infos/'+$scope.currentDayParam;
-		var promise = AppKit.getJsonApi(url);
-		promise.success(function(rspJson){
-			$scope.signinInfos = rspJson.signinInfos
-		});
+		AppKit.isLogin().success(function(data, status, headers, config){
+			if (data.result=='true'){
+				$scope.userLogin = "isLogin";
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/hr/index.cv#/tab/home",
+					"success":function(){
+						$scope.currentDayParam = $filter("date")($scope.currentDay, "yyyy-MM-dd");
+						var url = '/aeaihr/services/Attendance/rest/find-signin-infos/'+$scope.currentDayParam;
+						var promise = AppKit.getJsonApi(url);
+						promise.success(function(rspJson){
+							$scope.signinInfos = rspJson.signinInfos
+						});
+					}
+				})
+			}
+		})
 	}
 	$scope.LoadSigninInfos();
 	
 	$scope.LoadLocationInfos=function(){
-		$scope.currentMonthParam = $filter("date")($scope.currentMonth, "yyyy-MM");
-		var url = '/aeaihr/services/Attendance/rest/find-location-infos/'+$scope.currentMonthParam+'/undefined';
-		var promise = AppKit.getJsonApi(url);
-		promise.success(function(rspJson){
-			$scope.locationInfos = rspJson.locationInfos
-		});
+		AppKit.isLogin().success(function(data, status, headers, config){
+			if (data.result=='true'){
+				$scope.userLogin = "isLogin";
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/hr/index.cv#/tab/home",
+					"success":function(){
+						$scope.currentMonthParam = $filter("date")($scope.currentMonth, "yyyy-MM");
+						var url = '/aeaihr/services/Attendance/rest/find-location-infos/'+$scope.currentMonthParam+'/undefined';
+						var promise = AppKit.getJsonApi(url);
+						promise.success(function(rspJson){
+							$scope.locationInfos = rspJson.locationInfos
+						});
+					}
+				})
+			}
+		})
 	}
 	$scope.LoadLocationInfos();
 	

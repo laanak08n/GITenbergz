@@ -2,13 +2,22 @@ angular.module('${menuCode}')
 .controller("${widgetCode}Ctrl",function($scope,$state,AppKit,$rootScope,$filter){
 	
 	$scope.getSignOutState=function(){
-		$scope.tadyTime=new Date();
-		$scope.tadyTime = $filter("date")($scope.tadyTime, "yyyy-MM-dd");
-		var url = '/aeaihr/services/Attendance/rest/get-signin-state/'+$scope.tadyTime;
-		var promise = AppKit.getJsonApi(url);
-		promise.success(function(rspJson){
-			$scope.isSignOut = rspJson.isSignOut
-		});
+		AppKit.isLogin().success(function(data, status, headers, config){
+			if (data.result=='true'){
+				$scope.userLogin = "isLogin";
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/hr/index.cv#/tab/home",
+					"success":function(){
+						$scope.tadyTime=new Date();
+						$scope.tadyTime = $filter("date")($scope.tadyTime, "yyyy-MM-dd");
+						var url = '/aeaihr/services/Attendance/rest/get-signin-state/'+$scope.tadyTime;
+						var promise = AppKit.getJsonApi(url);
+						promise.success(function(rspJson){
+							$scope.isSignOut = rspJson.isSignOut
+						});
+					}
+				})
+			}
+		})
 	}
 	$scope.getSignOutState();
 	
