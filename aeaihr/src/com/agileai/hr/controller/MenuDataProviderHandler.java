@@ -50,7 +50,6 @@ public class MenuDataProviderHandler extends BaseHandler{
 			BeanFactory beanFactory = BeanFactory.instance();
 			AppConfig appConfig = beanFactory.getAppConfig();
 			String menuURLPrefix = appConfig.getConfig("GlobalConfig","MenuURLPrefix");
-//			String menuURLPrefix = "http://@USER-20150405WP:6060/aeaihr/";
 			
 			for (int i = 0; i < treeModels.size(); i++) {
 				TreeModel topChildModel = treeModels.get(i);
@@ -149,7 +148,7 @@ public class MenuDataProviderHandler extends BaseHandler{
 		for (int i = 0; i < funcMenuList.size(); i++) {
 			FuncMenu funcMenu = funcMenuList.get(i);
 			String curFuncId = funcMenu.getFuncId();
-			if(funcMenuList.contains(curFuncId)){
+			if(funcMenuIdList.contains(curFuncId)){
 				HashMap<String,Resource> menuResources = getResourceRef(user,Resource.Type.Menu);
 				Resource menuResource = new Resource();
 				menuResource.setResouceType(Resource.Type.Menu);
