@@ -252,9 +252,11 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			DataRow proOfMonthLeaveRow = this.daoHelper.getRecord(
 					statementId, new DataParam("userCode",userCode,"beginTime",DateUtil.getDateAdd(date, DateUtil.DAY, -1),"endTime",regularDate));
 			BigDecimal proOfMonthLeaveDays = new BigDecimal(proOfMonthLeaveRow.getInt("SAL_YEAR_LEAVE"));
-			salTotal = salProbationDayMoney.multiply(currentMonthAttendDays.add(proOfMonthLeaveDays));
+			salBasic = salProbation;
+			salTotal = salProbationDayMoney.multiply(currentMonthAttendDays.add(proOfMonthLeaveDays));	
 		}
 		if(inductionDate.compareTo(date)<=0 && regularDate.compareTo(DateUtil.getEndOfMonth(date))>0){
+			salBasic = salProbation;
 			salTotal = salProbation;
 		}
 		dataParam.put("SAL_TOTAL", salTotal);
@@ -262,7 +264,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		dataParam.put("SAL_USER", userCode);
 		dataParam.put("SAL_YEAR", year);
 		dataParam.put("SAL_MONTH", month);
-		dataParam.put("SAL_BASIC", row.get("EMP_BASIC"));
+		dataParam.put("SAL_BASIC", salBasic);
 		dataParam.put("SAL_PERFORMANCE", row.get("EMP_PERFORMANCE"));
 		dataParam.put("SAL_SUBSIDY", row.get("EMP_SUBSIDY"));
 		dataParam.put("SAL_INSURE", salInsure);
