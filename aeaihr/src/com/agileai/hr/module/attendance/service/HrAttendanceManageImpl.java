@@ -155,4 +155,25 @@ public class HrAttendanceManageImpl
 		String statementId = sqlNameSpace+"."+"findActiveUserId";
 		return this.daoHelper.getRecord(statementId, param);
 	}
+
+	@Override
+	public List<DataRow> findLocationInfos(DataParam param) {
+		String statementId = sqlNameSpace+"."+"findLocationInfos";
+		List<DataRow> records = this.daoHelper.queryRecords(statementId, param);
+		return records;
+	}
+
+	@Override
+	public List<DataRow> findSigninInfos(DataParam param) {
+		String statementId = sqlNameSpace+"."+"findSigninInfos";
+		List<DataRow> records = this.daoHelper.queryRecords(statementId, param);
+		return records;
+	}
+
+	@Override
+	public DataRow  getSigninState(DataParam param) {
+		String statementId = sqlNameSpace+"."+"getSigninState";
+		DataRow result = this.daoHelper.getRecord(statementId, param);
+		return result;
+	}
 }
