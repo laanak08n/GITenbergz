@@ -659,6 +659,13 @@ CREATE TABLE `sys_codelist` (
 -- ----------------------------
 -- Records of sys_codelist
 -- ----------------------------
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Bottom', 'BottomHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Building', 'BuildingHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Homepage', 'HomepageHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Logo', 'LogoHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'MainWin', 'MainWinHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'MenuTree', 'MenuTreeHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Navigater', 'NavigaterHandler', '', '1', '1');
 INSERT INTO `sys_codelist` VALUES ('APP_RESULT', 'NO', '不同意', '', '2', '1');
 INSERT INTO `sys_codelist` VALUES ('APP_RESULT', 'YES', '同意', '', '1', '1');
 INSERT INTO `sys_codelist` VALUES ('BOOL_DEFINE', 'N', '否', '', '2', '1');
@@ -745,6 +752,7 @@ CREATE TABLE `sys_codetype` (
 -- ----------------------------
 -- Records of sys_codetype
 -- ----------------------------
+INSERT INTO `sys_codetype` VALUES ('AuthedHandlerId', '认证Handler定义', 'sys_code_define', '', 'Y', 'Y', 'Y', '', 'B', 'N', '', '');
 INSERT INTO `sys_codetype` VALUES ('APP_RESULT', '核准結果', 'sys_code_define', '', 'Y', 'Y', 'Y', '10', '', null, null, null);
 INSERT INTO `sys_codetype` VALUES ('BOOL_DEFINE', '布尔定义', 'sys_code_define', '', 'Y', 'Y', 'Y', '1', 'C', '', '', '');
 INSERT INTO `sys_codetype` VALUES ('CODE_TYPE_GROUP', '编码类型分组', 'app_code_define', '编码类型分组', null, null, null, null, null, null, null, null);
