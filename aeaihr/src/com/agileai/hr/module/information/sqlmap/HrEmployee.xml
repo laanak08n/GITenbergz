@@ -213,6 +213,12 @@
 		(#GRP_ID#,#USER_ID#)
 	</insert>
 
+	<select id="getSecurityUserCode" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select USER_CODE
+		from security_user
+		where USER_CODE=#userCode#
+	</select>
 	<insert id="insertSecurityUserRecord" parameterClass="com.agileai.domain.DataParam">
 		insert into
 		security_user
