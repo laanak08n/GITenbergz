@@ -288,7 +288,7 @@
 	<update id="updateOffsetVacationrecord" parameterClass="com.agileai.domain.DataParam">
 		update
 		hr_salary
-		set SAL_OFFSET_VACATION=#SAL_OFFSET_VACATION:DECIMAL#
+		set SAL_OFFSET_VACATION=#SAL_OFFSET_VACATION:DECIMAL#,SAL_OVERTIME=#SAL_OVERTIME:DECIMAL#,SAL_LEAVE=#SAL_LEAVE:DECIMAL#
 		where
 		SAL_ID=#SAL_ID#
 	</update>			

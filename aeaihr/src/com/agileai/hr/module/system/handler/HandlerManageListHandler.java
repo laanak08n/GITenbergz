@@ -16,6 +16,7 @@ public class HandlerManageListHandler
     }
 
     protected void processPageAttributes(DataParam param) {
+    	this.setAttribute("FUNC_ID", param.get("funcId"));
         initMappingItem("HANLER_TYPE",
                         FormSelectFactory.create("HANDLER_TYPE").getContent());
     }

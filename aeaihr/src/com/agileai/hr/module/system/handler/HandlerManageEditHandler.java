@@ -22,6 +22,7 @@ public class HandlerManageEditHandler
     }
 
     protected void processPageAttributes(DataParam param) {
+    	this.setAttribute("FUNC_ID", param.get("FUNC_ID"));
         setAttribute("HANLER_TYPE",
                      FormSelectFactory.create("HANDLER_TYPE")
                                       .addSelectedValue(getOperaAttributeValue("HANLER_TYPE",

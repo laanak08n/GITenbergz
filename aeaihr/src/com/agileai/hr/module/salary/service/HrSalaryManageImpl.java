@@ -271,21 +271,35 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			statementId = sqlNameSpace+"."+"getMonthlyInfo";
 			DataRow monthlyInfoRow = this.daoHelper.getRecord(statementId, new DataParam("year",year,"month",dateStr,"userId",userId));
 			if(monthlyInfoRow != null){
-				BigDecimal salLeaveDecimal = (BigDecimal)monthlyInfoRow.get("SAL_LEAVE");
-				BigDecimal overtimeDecimal = (BigDecimal)monthlyInfoRow.get("SAL_OVERTIME");
+				
+				statementId = sqlNameSpace+"."+"leaveDayRecords";
+				DataRow leaveDaysRow = this.daoHelper.getRecord(statementId, new DataParam("yearMonth",year+"-"+dateStr,"userCode",userId));
+				double leaveDaysDouble = 0.0;
+				if(leaveDaysRow != null){
+					leaveDaysDouble = (Double) leaveDaysRow.get("LEAVE_DAYS");
+				}
+				BigDecimal salLeaveDecimal = new BigDecimal(leaveDaysDouble);
+				
+				statementId = sqlNameSpace+"."+"overTimeDayRecords";
+				DataRow overTimeDaysRow = this.daoHelper.getRecord(statementId, new DataParam("yearMonth",year+"-"+dateStr,"userCode",userId));
+				double overTimeDaysDouble = 0.0;
+				if(overTimeDaysRow != null){
+					overTimeDaysDouble = (Double) overTimeDaysRow.get("WOT_DAYS");
+				}
+				BigDecimal overtimeDecimal = new BigDecimal(overTimeDaysDouble);
+				
+				
 				annualLeaveDaysDecimal = annualLeaveDaysDecimal.subtract(salLeaveDecimal).add(overtimeDecimal);
-				statementId = sqlNameSpace+"."+"updateOffsetVacationrecord";
-				this.daoHelper.updateRecord(statementId, new DataParam("SAL_ID",monthlyInfoRow.get("SAL_ID"),"SAL_OFFSET_VACATION",annualLeaveDaysDecimal));
+				
+				if(i == monthInt-1){
+					statementId = sqlNameSpace+"."+"updateOffsetVacationrecord";
+					this.daoHelper.updateRecord(statementId, new DataParam("SAL_ID",monthlyInfoRow.get("SAL_ID"),"SAL_OFFSET_VACATION",annualLeaveDaysDecimal,"SAL_OVERTIME",overtimeDecimal,"SAL_LEAVE",salLeaveDecimal));
+				}
+				
 				if(annualLeaveDaysDecimal.compareTo(new BigDecimal("0.0")) == -1){
 					annualLeaveDaysDecimal = new BigDecimal("0.0");
 				}
-
-				log.info(annualLeaveDaysDecimal);
 			}
 		}
-		
-		
-		
 	}
-
 }

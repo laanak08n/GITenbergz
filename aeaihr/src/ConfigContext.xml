@@ -14,6 +14,10 @@
 	             <property name="key" value="MenuURLPrefix"/>  
 	             <property name="value" value="http://localhost:6060/aeaihr/"/> 
 	           </bean> 
+	           <bean class="com.agileai.common.KeyValuePair"> 
+              	 <property name="key" value="FileStorePath"/>  
+                 <property name="value" value="D:/work/agileai/product"/> 
+               </bean>
 	         </list> 
 	       </entry> 
 	     </map> 

@@ -65,6 +65,7 @@ height="300px"
 </ec:table>
 <input type="hidden" name="HANLER_ID" id="HANLER_ID" value="" />
 <input type="hidden" name="actionType" id="actionType" />
+<input type="hidden" id="FUNC_ID" name="FUNC_ID" value="<%=pageBean.inputValue("FUNC_ID")%>" />
 <script language="JavaScript">
 setRsIdTag('HANLER_ID');
 var ectableMenu = new EctableMenu('contextMenu','ec_table');

@@ -22,7 +22,7 @@ img {
 	padding:0px;
 	margin:0px;
 	text-align:left;
-font-family: "ËÎÌå","Verdana","Arial","Helvetica","sans-serif";
+font-family: "ï¿½ï¿½ï¿½ï¿½","Verdana","Arial","Helvetica","sans-serif";
 
 
 }
@@ -283,8 +283,8 @@ overflow:hidden;
 
 .ecSide  .bodyZone {
 border :0px solid #aac0dd;
-border-left:1px white solid;
-border-right:1px white solid;
+border-left:0px white solid;
+border-right:0px white solid;
 width:100%;
 overflow:auto;
 

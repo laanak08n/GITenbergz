@@ -50,18 +50,24 @@ public class ResourseUploaderHandler extends FileUploadHandler{
 			String fileFullPath = null;
 			
 			File filePath = null;
+			String columnId = null;
 			while (it.hasNext()) {
 				FileItem item = (FileItem) it.next();
 				if (item.isFormField()){
 					String fieldName = item.getFieldName();
 					if (fieldName.equals("columnId")){
-						String columnId = item.getString();
+						columnId = item.getString();
 						resourceParam.put("GRP_ID",columnId);
 						filePath = this.buildResourseSavePath(columnId);						
 					}
 					continue;
 				}
 				name = item.getName();
+				
+				WcmGeneralGroup8ContentManage resourseManage = this.lookupService(WcmGeneralGroup8ContentManage.class);
+				DataParam queryParam = new DataParam("GRP_ID",columnId);
+				DataRow row = resourseManage.queryTreeRecord(queryParam);
+				String resTypeExts = row.stringValue("GRP_RES_TYPE_EXTS");
 				
 				resourceParam.put("RES_NAME",name);
 				String location = resourceRelativePath + "/" + name;
@@ -71,6 +77,9 @@ public class ResourseUploaderHandler extends FileUploadHandler{
 				long resourceSize = item.getSize();
 				resourceParam.put("RES_SIZE",String.valueOf(resourceSize));
 				String suffix = name.substring(name.lastIndexOf("."));
+				
+				this.checkSuffix(suffix, resTypeExts);
+				
 				resourceParam.put("RES_SUFFIX",suffix);
 				resourceParam.put("RES_SHAREABLE","Y");
 				File tempFile = new File(fileFullPath);
