@@ -350,6 +350,7 @@ function initDetailOpertionImage(){
 		$(tdObj).attr('onclick','');
 		$(tdObj).attr('onmouseout','');		
 		$(tdObj).attr('onmouseover','');
+		$(tdObj).css('background-color','');
 		$(tdObj).unbind();
 	}else{
 		if (!ele(modifyImgBtnTagId)){
@@ -366,6 +367,7 @@ function initDetailOpertionImage(){
 		$(tdObj).attr('onclick','');
 		$(tdObj).attr('onmouseout','');		
 		$(tdObj).attr('onmouseover','');
+		$(tdObj).css('background-color','');
 		$(tdObj).unbind();
 	}
 }
