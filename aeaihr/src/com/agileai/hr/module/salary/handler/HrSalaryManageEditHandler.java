@@ -62,13 +62,15 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 		BigDecimal validDays = (BigDecimal) record.get("SAL_VALID_DAYS");
 		BigDecimal salProbationDayMoney = new BigDecimal("0.0");
 		BigDecimal salRegularDayMoney = new BigDecimal("0.0");
+		BigDecimal salPerformance = (BigDecimal) record.get("SAL_PERFORMANCE");
+		BigDecimal salSubsidy = (BigDecimal)record.get("SAL_SUBSIDY");
 		if(DateUtil.getDateDiff(regularDate, salDate, DateUtil.DAY) >= 0){
-			salRegularDayMoney = salTotal.divide(validDays,2,RoundingMode.HALF_UP);
+			salRegularDayMoney = salTotal.divide(validDays,4,RoundingMode.HALF_UP);
 		}else if(DateUtil.getDateDiff(regularDate, salDate, DateUtil.MONTH) == 0){
-			salProbationDayMoney = salProbation.divide(validDays, 2, RoundingMode.HALF_UP);
-			salRegularDayMoney = salRegular.divide(validDays, 2, RoundingMode.HALF_UP);
+			salProbationDayMoney = salProbation.divide(validDays, 4, RoundingMode.HALF_UP);
+			salRegularDayMoney = (salRegular.add(salPerformance).add(salSubsidy)).divide(validDays, 4, RoundingMode.HALF_UP);
 		}else{
-			salProbationDayMoney = salProbation.divide(validDays, 2, RoundingMode.HALF_UP);
+			salProbationDayMoney = salProbation.divide(validDays, 4, RoundingMode.HALF_UP);
 		}		
 		this.setAttribute("salProbationDayMoney", salProbationDayMoney);
 		this.setAttribute("salRegularDayMoney", salRegularDayMoney);
