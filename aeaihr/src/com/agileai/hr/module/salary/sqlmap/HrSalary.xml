@@ -37,9 +37,6 @@
 		a.SAL_OVERTIME,a.SAL_LEAVE,a.SAL_PROBATION as SAL_PROBATION,a.SAL_BASIC as SAL_BASIC,a.SAL_PERFORMANCE,
 		a.SAL_SUBSIDY,a.SAL_BONUS,a.SAL_TOTAL as SAL_TOTAL,a.SAL_STATE,a.SAL_INSURE,a.SAL_TAX,SAL_REMARKS,
 		a.SAL_ACTUAL,SAL_OFFSET_VACATION,a.SAL_YEAR_LEAVE,a.SAL_SHOULD,a.SAL_HOUSING_FUND
-		<!-- round(a.SAL_PROBATION/a.SAL_VALID_DAYS,2) as SAL_PROBATION_MONEY,
-		round(a.SAL_BASIC/a.SAL_VALID_DAYS,2) as SAL_BASIC_MONEY,
-		round(a.SAL_TOTAL/a.SAL_VALID_DAYS,2) as SAL_DAY_MONEY -->
 		from hr_salary a LEFT JOIN security_user b ON a.SAL_USER=b.USER_ID 
 		LEFT JOIN hr_employee c ON b.USER_CODE=c.EMP_CODE
 		where 1=1
@@ -183,6 +180,7 @@
 		SELECT USER_ID,SUM(LEA_DAYS) as LEAVE_DAYS
 		FROM hr_leave
 		WHERE 1=1
+		and STATE = 'approved'
 		<isNotEmpty prepend=" " property="userCode">
 			and USER_ID = #userCode#
 		</isNotEmpty>
@@ -197,7 +195,7 @@
 		SELECT USER_ID,SUM(WOT_TIME) as WOT_DAYS
 		FROM hr_work_overtime
 		WHERE
-		1=1
+		1=1 and STATE = 'approved'
 		<isNotEmpty prepend=" " property="userCode">
 			and USER_ID = #userCode#
 		</isNotEmpty>
@@ -213,6 +211,7 @@
 		FROM hr_leave
 		WHERE 1=1
 		and LEA_SDATE BETWEEN #beginYear# AND #currentDate#
+		and STATE = 'approved'
 		<isNotEmpty prepend=" " property="userCode">
 			and USER_ID = #userCode#
 		</isNotEmpty>
@@ -273,6 +272,7 @@
 		and USER_ID = #userCode#
 		and LEA_DATE &gt; #beginTime# 
 		and LEA_DATE &lt; #endTime#
+		and STATE = 'approved'
 	</select>
 	<select id="getUserAnnualLeaveDays" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
