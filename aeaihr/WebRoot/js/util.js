@@ -300,6 +300,8 @@ function selectRow(rowObj,params)
 			$("#"+itm).val(obj[itm]);
 		}
 	}
+	
+	clearSelection();
 }
 
 function resetBoxPostion(boxId,targetInputId){
