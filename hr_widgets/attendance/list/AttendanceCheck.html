@@ -1,3 +1,31 @@
+<style>
+.lable-first{
+    width: 50%;
+    border: 1px solid dodgerblue;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 15% 0 0 15%;
+}
+.lable-second {
+    width: 50%;
+    border: 1px solid dodgerblue;
+    display: inline-block;
+    float: right;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 0 15% 15% 0;
+}
+.lable-active{
+	background: dodgerblue;
+    color: white;
+}
+.attendance-list {
+    margin-bottom: 0 !important;
+}
+</style>
 <div style="background: white;padding: 1px 1px;border: 1px solid white;">
 	<div style="width: 50%;margin: auto;">
 		<a class="lable-first" ng-class="{'lable-active':isActive}" ng-click="setActive('first')">考勤</a>
@@ -6,31 +34,37 @@
 </div>
 <p ng-if="isActive" class="item view-detail-center font-size ng-binding" style="margin-top: 0px">{{currentDay|date:'EEEE' }}<span class="margin-left ng-binding">{{currentDay|date:'MM-dd' }}</span>
 	<span class="right-link-item">
-		<a   ng-click="findLastDaySigninInfos();" class="" style="">
-			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastday.png"  >
+		<a ng-click="findLastDaySigninInfos();" class="" style="">
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastday.png" ng-show="lastDay" >
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastday.png" ng-hide="lastDay" >
 		</a>
 		
-		<a   ng-click="findCurrentDaySigninInfos();" style="margin-left: 10px;" >
-			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curday.png"  >
+		<a ng-click="findCurrentDaySigninInfos();" style="margin-left: 10px;" >
+			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curday.png" ng-show="currentDay"  >
+			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curday.png" ng-hide="currentDay" >
 		</a>
 		
-		<a   ng-click="findFollowDaySigninInfos();" style="margin-left: 10px;" class="">
-			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextday.png"  >
+		<a ng-click="findFollowDaySigninInfos();" style="margin-left: 10px;" class="">
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextday.png" ng-show="nextDay"  >
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextday.png" ng-hide="nextDay" >
 		</a>
 	</span>
 </p>
 <p ng-if="!isActive" class="item view-detail-center font-size ng-binding">当前月份：{{currentMonth|date:'yyyy-MM' }}</span>
 	<span class="right-link-item">
-		<a   ng-click="findLastMonthLocations();" class="" style="">
-			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastMonth.png" >
+		<a ng-click="findLastMonthLocations();" class="" style="">
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastMonth.png" ng-show='lastMonth' />
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastMonth.png" ng-hide='lastMonth' />
 		</a>
 		
-		<a   ng-click="findThisMonthLocations();" style="margin-left: 10px;" >
-			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curMonth.png" >
+		<a ng-click="findThisMonthLocations();" style="margin-left: 10px;" >
+			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curMonth.png" ng-show='currentMonth' >
+			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curMonth.png" ng-hide='currentMonth' >
 		</a>
 		
-		<a   ng-click="findNextMonthLocations();" style="margin-left: 10px;" class="">
-			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextMonth.png">
+		<a ng-click="findNextMonthLocations();" style="margin-left: 10px;" class="">
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextMonth.png" ng-show='nextMonth'>
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextMonth.png" ng-hide='nextMonth'>
 		</a>
 	</span>
 </p>
@@ -75,7 +109,7 @@
 			      </div>
 			</div>
 			
-			<div class="row  ">
+			<div class="row">
 			      <div class="col">
 			        <div class="col-demo">签退时间：</div>
 			      </div>
@@ -84,7 +118,7 @@
 			      </div>
 			</div>
 			
-			<div class="row  ">
+			<div class="row">
 			      <div class="col">
 			        <div class="col-demo">签退地点：</div>
 			      </div>
