@@ -300,8 +300,6 @@ function selectRow(rowObj,params)
 			$("#"+itm).val(obj[itm]);
 		}
 	}
-	
-	clearSelection();
 }
 
 function resetBoxPostion(boxId,targetInputId){
@@ -1472,5 +1470,10 @@ function banBackSpace(e){
 window.onload=function(){
   document.onkeypress=banBackSpace;
   document.onkeydown=banBackSpace;
-  __processForms__();
 }
+
+$(function(){
+	$(document).dblclick(function(){
+		clearSelection();
+	});	
+})
