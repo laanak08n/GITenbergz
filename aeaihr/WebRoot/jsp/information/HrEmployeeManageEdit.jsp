@@ -57,9 +57,13 @@ function saveMasterRecord(){
 	}
 }
 function changeSubTable(subTableId){
+	if(!validate()){
+		tabComponent.interrupt();
+		return;
+	}
 	$('#currentSubTableId').val(subTableId);
 	doSubmit({actionType:'changeSubTable'});
-}
+} 
 function refreshPage(){
 	doSubmit({actionType:'changeSubTable'});
 }
@@ -346,7 +350,7 @@ function revokeApproval(){
 </div>
 <%if (!"insert".equals(pageBean.getOperaType())){%>
 <%if ("HrEducation".equals(currentSubTableId)){ %>
-<div class="photobox newarticlebox" id="Layer2" style="height:auto;">
+<div class="photobox newarticlebox" id="Layer1" style="height:auto;">
 <div id="__ToolBar__">
 <table border="0" cellpadding="0" cellspacing="1">
 <tr>
@@ -436,7 +440,7 @@ setRsIdTag('EXP_ID');
 <%}%>
 
 <%if ("HrWorkPerformance".equals(currentSubTableId)){ %>
-<div class="photobox newarticlebox" id="Layer2" style="height:auto;">
+<div class="photobox newarticlebox" id="Layer3" style="height:auto;">
 <div id="__ToolBar__">
 <table border="0" cellpadding="0" cellspacing="1">
 <tr>
@@ -489,7 +493,7 @@ $("#Layer0").hide();
 <%}%>
 <%}%>
 <script language="javascript">
-new Tab('tab','tabHeader','Layer',<%=currentSubTableIndex%>);
+var tabComponent=new Tab('tab','tabHeader','Layer',<%=currentSubTableIndex%>);
 <%if (!"_base".equals(pageBean.inputValue("currentSubTableId"))){%>
 $("#Layer0").hide();
 <%}%>
