@@ -625,10 +625,10 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		BigDecimal probationOverRunSalary = salProbationDayMoney.multiply(BigDecimal.valueOf(probationOffsetVacationDay));   
 		BigDecimal regulartionOverRunSalary = salRegularDayMoney.multiply(BigDecimal.valueOf(regulartionOffsetVacationDay));
 		
-		if(DateUtil.getDateDiff(date, regularTime, DateUtil.MONTH)==0&&DateUtil.getDateDiff(date, regularTime, DateUtil.DAY)>0){
+		if(DateUtil.getDateDiff(date, regularTime, DateUtil.MONTH)==0&&date.compareTo(regularTime)==-1){
 			probationSalary = salProbationDayMoney.multiply(BigDecimal.valueOf(probationDays));
 			regulartionSalary = salRegularDayMoney.multiply(BigDecimal.valueOf(regularDays));
-			salTotal = salTotal.add(probationSalary).add(regulartionSalary).add(salPerformance).add(salSubsidy);
+			salTotal = salTotal.add(probationSalary).add(regulartionSalary);
 		}else if(DateUtil.getDateDiff(date, inductionDate, DateUtil.MONTH)==0){
 			probationSalary = salProbationDayMoney.multiply(BigDecimal.valueOf(probationDays));
 			salTotal = salTotal.add(probationSalary);
