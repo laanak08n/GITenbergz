@@ -106,7 +106,7 @@ public class LeaveImpl extends BaseRestService implements Leave {
         	String userId = user.getUserId();
         	
         	String id = jsonObject.get("leaId").toString();
-        	String type = jsonObject.get("leatype").toString();
+        	String type = jsonObject.get("leaType").toString();
         	
         	String leaDate = DateUtil.format(DateUtil.YYMMDDHHMI_HORIZONTAL, new Date());
         	
