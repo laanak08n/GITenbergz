@@ -5,4 +5,9 @@
 			<property name="IpAddress">localhost,127.0.0.1</property>
 		</auth>
 	</service>
+	<service id="FormSelectUtil" type="Rest" implClass="com.agileai.hr.module.leave.exteral.FormSelectUtilImpl" address="/FormSelectUtil">
+		<auth type="IpWhiteList">
+			<property name="IpAddress">localhost,127.0.0.1</property>
+		</auth>
+	</service>
 </beans>
