@@ -4,8 +4,6 @@ angular.module('${menuCode}')
 	    return $sce.trustAsHtml(text);
 	};
 }])
-.controller("${widgetCode}Ctrl",function($scope,AppKit,$state){
-	$scope.createInfo = function() {
-		$state.go("tab.rawards-punishment-add");
-	}; 	
+.controller("${widgetCode}Ctrl",function($scope,AppKit){
+
 });

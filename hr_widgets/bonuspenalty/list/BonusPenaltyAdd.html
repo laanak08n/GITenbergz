@@ -1,0 +1,28 @@
+<div class="content">
+  <div class="list">
+  	<label class="item item-input info-nosideline">
+  		姓名
+      <input class="input-size" type="text" ng-model="info.userName">
+    </label>
+  	<label class="item item-input info-nosideline">
+  		日期
+      <input class="input-size" type="date" ng-model="info.bpDate">
+    </label>
+  	<label class="item item-input info-nosideline">
+  		类型
+  		<select class="select-full-item" ng-model="info.bpType">
+	        <option value="selected">请选择</option>
+	        <option value="PUNISHMENT">惩罚</option>
+	        <option value="REWARD">奖励</option>
+		</select>
+    </label>    
+    <label class="item item-input">
+    	金额
+      <input class="input-size" type="text" ng-model="info.bpMonry">
+    </label>
+    
+    <label class="item item-input">
+      <textarea class="placeholder-font-size" rows="5" ng-model="info.bpDesc" placeholder="描述"></textarea>
+    </label>           
+  </div>
+</div>

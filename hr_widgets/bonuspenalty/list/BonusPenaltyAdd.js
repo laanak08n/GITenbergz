@@ -5,5 +5,7 @@ angular.module('${menuCode}')
 //		$scope.listInfo = rspJson.listinfo;
 //	});	
 	
-	$scope.info = {"user_Name":"","bp_Type":"","bp_Date": ""," bp_Monry ":""," bp_Desc ",""};
+	$scope.info = {"userName":"","bpType":"selected","bpDate": "","bpMonry":"","bpDesc":""};
+	
+	
 });
