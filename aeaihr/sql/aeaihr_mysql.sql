@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50151
 File Encoding         : 65001
 
-Date: 2018-03-07 11:04:20
+Date: 2018-03-09 15:50:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -207,9 +207,6 @@ CREATE TABLE `hr_leave` (
 -- ----------------------------
 -- Records of hr_leave
 -- ----------------------------
-INSERT INTO `hr_leave` VALUES ('96D9E92A-B53F-4007-B874-D260679B6ED6', '57ECFB2D-1F40-4136-AD2F-87D37A9AEFB5', '2018-02-27 00:00:00', null, null, '', '', '', 'drafe', null, null, null, null);
-INSERT INTO `hr_leave` VALUES ('CBDAA64F-0509-4CA1-827A-7E6585A6D8BC', '57ECFB2D-1F40-4136-AD2F-87D37A9AEFB5', '2018-02-27 17:39:00', null, null, '', '', '', 'drafe', null, null, null, null);
-INSERT INTO `hr_leave` VALUES ('EE66685B-CF66-4711-A774-33BE7C7E3377', '57ECFB2D-1F40-4136-AD2F-87D37A9AEFB5', '2018-03-05 11:43:00', '2018-03-13', '2018-03-13', '', '0', '', 'drafe', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for hr_location
