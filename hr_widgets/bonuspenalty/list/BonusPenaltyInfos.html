@@ -1,7 +1,10 @@
-<div class="content padding-top">
+<div class="content">
   <div class="list">
-     <a class="item" ng-repeat="x in listInfo" ng-click="showActionSheet()">
-      {{x.bp_Id}} - {{x.user_Name}}
+     <a class="item" ng-repeat="x in listInfo" ng-click="showDetails('{{x.bp_Id}}')">
+      <span class="list-display ng-binding">{{x.user_Name}}</span>
+      <span class="list-display ng-binding">{{x.bp_Date}}</span>
+      <span class="list-display ng-binding">{{x.bp_Type}}</span>
+      <span class="list-display ng-binding">{{x.bp_Monry}}</span>
      </a>
    </div>
 </div>

@@ -5,5 +5,7 @@ angular.module('${menuCode}')
 	};
 }])
 .controller("${widgetCode}Ctrl",function($scope,AppKit){
-
+	$scope.createInfo = function() {
+		alert('新增');
+	}; 	
 });

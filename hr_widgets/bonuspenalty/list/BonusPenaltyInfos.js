@@ -5,30 +5,7 @@ angular.module('${menuCode}')
 		$scope.listInfo = rspJson;
 	});	
 	
-	$scope.showActionSheet = function() {
-	      var hideSheet = $ionicActionSheet.show({
-	          buttons: [
-	            { text: '<b>发布</b> ' },
-	            { text: '<b>删除</b>'  }
-	          ],
-	          titleText: '请选择您的操作',
-	          cancelText: '取消',
-	          cancel: function() {
-	               // add cancel code..
-	          },
-	          buttonClicked: function(index) {
-	        	  if(index==0){
-	        		  AppKit.successPopup({"title":"发布成功!"});
-	        	  }
-	        	  else if(index==1){
-	        		  AppKit.successPopup({"title":"删除成功!"});
-	        	  }
-	            return true; 
-	          }
-	      });
-	
-	      $timeout(function() {
-	          hideSheet();
-	      }, 5000); 
-	  }; 	
+	$scope.showDetails = function(id) {
+		alert(id);
+	}; 	
 });
