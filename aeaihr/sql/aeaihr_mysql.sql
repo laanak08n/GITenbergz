@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : MySQL
+Source Server         : local_mysql
 Source Server Version : 50151
 Source Host           : localhost:3306
-Source Database       : aeaihr
+Source Database       : hrtemp
 
 Target Server Type    : MYSQL
 Target Server Version : 50151
 File Encoding         : 65001
 
-Date: 2016-03-15 16:59:43
+Date: 2015-11-25 11:42:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -187,13 +187,6 @@ CREATE TABLE `hr_leave` (
 -- ----------------------------
 -- Records of hr_leave
 -- ----------------------------
-INSERT INTO `hr_leave` VALUES ('14ECCEEE-E78E-4D10-B262-F37F11AF4092', '7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', '2016-02-04 13:52', '2016-02-12 00:00:00', '2016-02-05 00:00:00', '1234', '0', '1234', 'drafe', null, null, null, null);
-INSERT INTO `hr_leave` VALUES ('7F5A633E-5D79-4D8F-882F-6754F9AB5FBF', '7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', '2016-02-04 14:35', '2016-02-05 00:00:00', '2016-02-03 00:00:00', '1', '0', '1', 'drafe', null, null, null, null);
-INSERT INTO `hr_leave` VALUES ('87A94549-A2E0-47E6-8B44-60C3E56648A5', '7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', '2016-02-04 13:51', '2016-02-04 00:00:00', '2016-02-05 00:00:00', '1', '0', '1', 'approved', '7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', '2016-02-04 13:54:00', '', 'YES');
-INSERT INTO `hr_leave` VALUES ('96DABFCD-47D1-4BD4-9D9F-BC4CDC4EECD9', 'E011D0E7-C777-4CC8-BEBD-EBC8E63E797D', '2016-02-04 09:33', '2016-02-01 00:00:00', '2016-02-04 00:00:00', '1', '0', '1', 'drafe', null, null, null, null);
-INSERT INTO `hr_leave` VALUES ('A0A0F9AC-439F-438C-8B46-CDF878A4A1FF', '9C548347-0732-4D83-B860-11531C2B58E5', '2016-02-04 09:33', '2016-02-01 00:00:00', '2016-02-04 00:00:00', '1', '0', '1', 'drafe', null, null, null, null);
-INSERT INTO `hr_leave` VALUES ('CE3CF81C-00C1-45FF-9331-35EAA8AC90E2', '7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', '2016-02-04 14:34', '2016-02-05 00:00:00', '2016-02-05 00:00:00', '1', '0', 'a', 'submitted', null, null, null, null);
-INSERT INTO `hr_leave` VALUES ('FDFC188C-48D2-4401-9C8F-A546A9478737', 'B9E0DDB0-F0A3-4CF8-94A4-C806FFA868D0', '2016-02-04 09:30', '2016-02-05 00:00:00', '2016-02-05 00:00:00', '5', '0', '5', 'drafe', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for hr_salary
@@ -239,7 +232,6 @@ CREATE TABLE `hr_valid` (
 -- Records of hr_valid
 -- ----------------------------
 INSERT INTO `hr_valid` VALUES ('2015', '03', '24.0');
-INSERT INTO `hr_valid` VALUES ('2016', '02', '12.0');
 
 -- ----------------------------
 -- Table structure for hr_work_overtime
@@ -266,13 +258,6 @@ CREATE TABLE `hr_work_overtime` (
 -- ----------------------------
 -- Records of hr_work_overtime
 -- ----------------------------
-INSERT INTO `hr_work_overtime` VALUES ('19B7C3B8-1E00-40D5-AD05-23A646BB198E', '7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', '2016-02-04 09:07', '123', '公司', '123', '2016-02-05', '0', null, null, null, null, 'drafe', 'hour');
-INSERT INTO `hr_work_overtime` VALUES ('23DFE6E9-E827-45AB-89E8-75FF7C09B483', '7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', '2016-02-04 13:52', '123', '123', '123', '2016-02-04', '0', null, null, null, null, 'drafe', 'hour');
-INSERT INTO `hr_work_overtime` VALUES ('2522076D-0BD7-4CEC-BA6B-008A072717E2', '7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', '2016-02-04 09:07', '孙小三', '测试地点', '孙小三', '2016-02-04', '1', null, null, null, null, 'drafe', 'hour');
-INSERT INTO `hr_work_overtime` VALUES ('36D65F08-FBCC-4D14-B51C-C125344D7C9A', '7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', '2016-02-04 14:00', '123', '123', '123', '2016-02-12', '0', null, null, null, null, 'drafe', 'hour');
-INSERT INTO `hr_work_overtime` VALUES ('7B4D0F14-C57C-4362-9287-A81443540835', 'B9E0DDB0-F0A3-4CF8-94A4-C806FFA868D0', '2016-02-04 09:15', '', '公司', '啊', '2016-02-04', '1', null, null, null, null, 'drafe', 'hour');
-INSERT INTO `hr_work_overtime` VALUES ('9DE50D4E-F476-4790-B33E-8FC8C936F614', '9C548347-0732-4D83-B860-11531C2B58E5', '2016-02-04 09:17', '1', '公司', '1', '2016-02-02', '0', null, null, null, null, 'drafe', 'hour');
-INSERT INTO `hr_work_overtime` VALUES ('BD6509E0-1BDA-4D24-8E46-C780AFE47FCB', 'E011D0E7-C777-4CC8-BEBD-EBC8E63E797D', '2016-02-04 09:19', '1', '111', '1', '2016-02-03', '1', null, null, null, null, 'drafe', 'day');
 
 -- ----------------------------
 -- Table structure for hr_work_performance
@@ -499,9 +484,9 @@ CREATE TABLE `security_user` (
 -- Records of security_user
 -- ----------------------------
 INSERT INTO `security_user` VALUES ('57ECFB2D-1F40-4136-AD2F-87D37A9AEFB5', 'CS01', '张老大', 'DAE6CDC2B49F7C32164BE2AF1A7916AA', 'M', '普通用户', '1', '3', '', '', null);
-INSERT INTO `security_user` VALUES ('7DE6ED51-3F4B-4BE6-84A6-17BC6186CC24', 'admin', '管理员', '21232F297A57A5A743894A0E4A801FC3', 'M', '内置账户，勿删！！', '1', '1', null, null, null);
 INSERT INTO `security_user` VALUES ('9C548347-0732-4D83-B860-11531C2B58E5', 'CS04', '赵小四', 'FBAF749E6A085DCBBE41FF5C030EBF98', 'M', '普通用户', '1', '0', '', '', null);
 INSERT INTO `security_user` VALUES ('B9E0DDB0-F0A3-4CF8-94A4-C806FFA868D0', 'CS03', '孙小三', '25EC07853BDC7B87DD021F5580C70855', 'M', '普通用户', '1', '0', '', '', null);
+INSERT INTO `security_user` VALUES ('D67622CD-EBA3-48B0-BBF4-46D3BFD567F2', 'admin', '管理员', '21232F297A57A5A743894A0E4A801FC3', 'M', '内置账户，勿删！！', '1', '1', null, null, null);
 INSERT INTO `security_user` VALUES ('E011D0E7-C777-4CC8-BEBD-EBC8E63E797D', 'CS02', '赵小二', '39661AF3C6AFE19E95700A0E7373446A', 'M', '普通用户', '1', '0', '', '', null);
 
 -- ----------------------------
@@ -715,6 +700,13 @@ INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '4', '4', '', '5', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '5', '5', '', '6', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME_COMPANY', 'day', '天', '', '2', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME_COMPANY', 'hour', '小时', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Bottom', 'BottomHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Building', 'BuildingHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Homepage', 'HomepageHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Logo', 'LogoHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'MainWin', 'MainWinHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'MenuTree', 'MenuTreeHandler', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('AuthedHandlerId', 'Navigater', 'NavigaterHandler', '', '1', '1');
 
 -- ----------------------------
 -- Table structure for sys_codetype
@@ -761,6 +753,7 @@ INSERT INTO `sys_codetype` VALUES ('UNIT_TYPE', '单位类型', 'app_code_define
 INSERT INTO `sys_codetype` VALUES ('USER_SEX', '性别类型', 'sys_code_define', '', 'N', 'Y', 'Y', '16', 'C', null, null, null);
 INSERT INTO `sys_codetype` VALUES ('WOT_TIME', '加班时间', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('WOT_TIME_COMPANY', '加班时长单位', 'sys_code_define', '', 'Y', 'Y', 'Y', '20', '', 'N', '', '');
+INSERT INTO `sys_codetype` VALUES ('AuthedHandlerId', '认证Handler定义', 'sys_code_define', '', 'Y', 'Y', 'Y', '', 'B', 'N', '', '');
 
 -- ----------------------------
 -- Table structure for sys_function
@@ -791,7 +784,7 @@ INSERT INTO `sys_function` VALUES ('697BF588-ED62-43BB-B30E-3A7E40E7F1F1', '薪�
 INSERT INTO `sys_function` VALUES ('8C84B439-2788-4608-89C4-8F5AA076D124', '组织机构', 'funcnode', '439949F0-C6B7-49FF-8ED1-2A1B5062E7B9', '00000000-0000-0000-00000000000000001', '1', '1', null);
 INSERT INTO `sys_function` VALUES ('99EAA89A-59E6-4866-9980-21164DA571F2', '考勤管理', 'funcnode', '67CF818A-7AB6-43CB-BDD5-A57B5FC2C512', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '2', '');
 INSERT INTO `sys_function` VALUES ('A0334956-426E-4E49-831B-EB00E37285FD', '编码类型', 'funcnode', '9A16D554-F989-438A-B92D-C8C8AC6BF9B8', '00000000-0000-0000-00000000000000001', '1', '4', null);
-INSERT INTO `sys_function` VALUES ('AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '业务功能', 'funcmenu', '', '00000000-0000-0000-00000000000000000', '1', '99', '');
+INSERT INTO `sys_function` VALUES ('AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '人力资源', 'funcmenu', '', '00000000-0000-0000-00000000000000000', '1', '99', '');
 INSERT INTO `sys_function` VALUES ('B29FEBDB-F5D9-41AE-8C2D-451A00B2C51F', '请假申请', 'funcnode', '642BCD38-28C1-4FF1-A194-535BFAB10679', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '4', '');
 INSERT INTO `sys_function` VALUES ('C977BC31-C78F-4B16-B0C6-769783E46A06', '功能管理', 'funcnode', '46C52D33-8797-4251-951F-F7CA23C76BD7', '00000000-0000-0000-00000000000000001', '1', '3', null);
 INSERT INTO `sys_function` VALUES ('D3582A2A-3173-4F92-B1AD-2F999A2CBE18', '修改密码', 'funcnode', '88882DB9-967F-430E-BA9C-D0BBBBD2BD0C', '00000000-0000-0000-00000000000000001', '1', '8', '');
@@ -827,14 +820,12 @@ INSERT INTO `sys_handler` VALUES ('4878413D-5A54-464A-8ECE-59E78D43F2D1', 'HrLea
 INSERT INTO `sys_handler` VALUES ('494DF09B-7573-4CCA-85C1-97F4DC58C86B', 'SysLogQueryList', 'MAIN', null, '67BA273A-DD31-48D0-B78C-1D60D5316074');
 INSERT INTO `sys_handler` VALUES ('4F0BC221-A2D0-4500-907A-EC116B48AC74', 'HrWorkOvertimeManageEdit', 'OTHER', '', 'F8C4DC47-8F58-4420-8FC4-4DB1CE35C0F6');
 INSERT INTO `sys_handler` VALUES ('4F7D78BE-CEF2-4B71-9F43-EEF3ABADC5A1', 'HrEmployeeManageList', 'MAIN', null, '49F49293-5270-4C72-B7EE-02562627BF03');
-INSERT INTO `sys_handler` VALUES ('62EA8181-C838-4E46-9A2E-82E94D866EFF', 'UserListSelectList', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
 INSERT INTO `sys_handler` VALUES ('642BCD38-28C1-4FF1-A194-535BFAB10679', 'HrLeaveManageList', 'MAIN', null, 'B29FEBDB-F5D9-41AE-8C2D-451A00B2C51F');
 INSERT INTO `sys_handler` VALUES ('67CF818A-7AB6-43CB-BDD5-A57B5FC2C512', 'HrAttendanceManageList', 'MAIN', null, '99EAA89A-59E6-4866-9980-21164DA571F2');
 INSERT INTO `sys_handler` VALUES ('7782AD69-8FDC-4F5D-8510-36FD8D3BF249', 'HrWorkOvertimeManageList', 'MAIN', null, 'F8C4DC47-8F58-4420-8FC4-4DB1CE35C0F6');
 INSERT INTO `sys_handler` VALUES ('7D03AFCE-974A-45B8-B163-34002C7CE07B', 'HrExperienceEditBox', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
 INSERT INTO `sys_handler` VALUES ('86C0B8E5-92FE-4FB7-ACBF-1C63243B5D30', 'HrWorkPerformanceEditBox', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
 INSERT INTO `sys_handler` VALUES ('88882DB9-967F-430E-BA9C-D0BBBBD2BD0C', 'ModifyPassword', 'MAIN', null, 'D3582A2A-3173-4F92-B1AD-2F999A2CBE18');
-INSERT INTO `sys_handler` VALUES ('89E26739-44ED-4BF5-9CA1-D950052F07A9', 'UserListSelectList', 'OTHER', '', 'B29FEBDB-F5D9-41AE-8C2D-451A00B2C51F');
 INSERT INTO `sys_handler` VALUES ('98733F5B-A599-41A9-B135-33F480BDE062', 'HrEmployeeManageEdit', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
 INSERT INTO `sys_handler` VALUES ('9A16D554-F989-438A-B92D-C8C8AC6BF9B8', 'CodeTypeManageList', 'MAIN', null, 'A0334956-426E-4E49-831B-EB00E37285FD');
 INSERT INTO `sys_handler` VALUES ('A2E1E8E7-EAC9-45F7-AAEE-D08C89BDEE0A', 'UserListSelectList', 'OTHER', '', 'F8C4DC47-8F58-4420-8FC4-4DB1CE35C0F6');
@@ -859,37 +850,6 @@ CREATE TABLE `sys_log` (
 -- Records of sys_log
 -- ----------------------------
 INSERT INTO `sys_log` VALUES ('8FC62FDE-2D17-4EA6-9E89-72DA2D37B58A', '2015-03-24 11:05:30', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('FD0CD6E0-4375-4085-815F-B6BA485D5F19', '2016-02-04 09:14:50', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('12AF36BB-F032-4BC4-A382-2ADD26C0EC79', '2016-02-04 09:15:45', '127.0.0.1', 'CS03', '孙小三', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('E33150D8-65FF-4328-9F64-2D4FD87ED88B', '2016-02-04 09:16:58', '127.0.0.1', 'CS04', '赵小四', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('8514CE49-807E-4296-B73D-3C625077E884', '2016-02-04 09:17:52', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('D72B7794-7566-4E98-9F31-0E244AA4C197', '2016-02-04 09:19:33', '127.0.0.1', 'admin', '管理员', '退出系统', 'logout');
-INSERT INTO `sys_log` VALUES ('63D3E19F-804A-45D5-B68A-A1ADF4D18514', '2016-02-04 09:19:43', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('AF45279C-D17C-4D02-B2F5-B1F77D928BE0', '2016-02-04 09:25:30', '127.0.0.1', 'CS03', '孙小三', '退出系统', 'logout');
-INSERT INTO `sys_log` VALUES ('2D596D13-739F-4A79-B1D4-224674AF1C69', '2016-02-04 09:25:35', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('9D5A816B-6B72-405B-B0E6-41B9658FD096', '2016-02-04 09:26:08', '127.0.0.1', 'CS02', '赵小二', '退出系统', 'logout');
-INSERT INTO `sys_log` VALUES ('05351ED6-F3F0-4C5F-8E68-2C9B00A83021', '2016-02-04 09:26:16', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('E4B93630-3807-47C3-B5F9-FA49EC86D402', '2016-02-04 09:29:49', '127.0.0.1', 'CS03', '孙小三', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('F04F6143-4782-43FC-9C5A-CC9EBFEAEF51', '2016-02-04 09:30:43', '127.0.0.1', 'CS02', '赵小二', '退出系统', 'logout');
-INSERT INTO `sys_log` VALUES ('205A02DF-2F0D-449B-9442-CF9A23264555', '2016-02-04 09:30:50', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('77E743EF-867B-445C-A53A-64B42FE6F6A5', '2016-02-04 09:32:05', '127.0.0.1', 'CS03', '孙小三', '退出系统', 'logout');
-INSERT INTO `sys_log` VALUES ('F86F8C71-2BDB-4093-B420-118AC479344F', '2016-02-04 09:32:13', '127.0.0.1', 'CS03', '孙小三', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('60391D66-EA28-45C2-8703-9BC400A383D9', '2016-02-04 09:32:39', '127.0.0.1', 'CS02', '赵小二', '退出系统', 'logout');
-INSERT INTO `sys_log` VALUES ('DD4981E3-3A99-4158-A7D4-EE169D494624', '2016-02-04 09:32:52', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('A64E4075-2CEC-4E73-9946-245876049B58', '2016-02-04 10:32:40', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('5E0440E8-1BD8-44E2-A023-7750712B0EBC', '2016-02-04 11:41:25', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('6C815E94-7ECF-40B9-97A2-06AB748D0969', '2016-02-04 13:43:47', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('FA427528-DAD3-4003-B828-846DB1C1E5C1', '2016-02-04 14:09:07', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('29567583-07D2-4377-8F84-7D47EFC45ECA', '2016-03-14 17:28:21', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('3C70754D-2174-4C04-9CC6-DB7033D640D9', '2016-03-14 17:32:40', '127.0.0.1', 'admin', '管理员', '退出系统', 'logout');
-INSERT INTO `sys_log` VALUES ('D8E01D73-C1AF-4C59-A6F8-5BB6E257B128', '2016-03-14 17:32:47', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('08212CD8-B82A-475D-9647-85EA9973DAAA', '2016-03-15 08:43:12', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('C997839D-33E7-4EB1-94BF-76C537C60A39', '2016-03-15 08:44:28', '127.0.0.1', 'admin', '管理员', '退出系统', 'logout');
-INSERT INTO `sys_log` VALUES ('0AAC1B8A-FD98-4959-BA0B-EE4491B12527', '2016-03-15 08:44:36', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('45BAEE97-88E1-4249-9A76-954F18ED0C3F', '2016-03-15 09:17:25', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('CC54D5C4-2771-4095-9694-19AB0CF39D79', '2016-03-15 13:15:32', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('EAE38677-AF03-4949-8A6C-85CE94465AC7', '2016-03-15 13:55:13', '127.0.0.1', 'admin', '管理员', '系统登陆', 'login');
-INSERT INTO `sys_log` VALUES ('C046CDA2-C8E1-4846-B68E-FED1A47744F7', '2016-03-15 16:59:07', '127.0.0.1', 'CS02', '赵小二', '系统登陆', 'login');
 
 -- ----------------------------
 -- Table structure for sys_onlinecount
