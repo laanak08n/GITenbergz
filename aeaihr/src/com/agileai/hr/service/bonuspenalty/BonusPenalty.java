@@ -33,4 +33,9 @@ public interface BonusPenalty {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
 	public String updatePunInfo(String info);
+    
+    @GET  
+    @Path("/delete-pun-info/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+	public String deletePunRecord(@PathParam("id") String id);
 }

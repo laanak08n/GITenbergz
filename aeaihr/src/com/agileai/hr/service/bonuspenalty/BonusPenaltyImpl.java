@@ -102,5 +102,13 @@ public class BonusPenaltyImpl extends BaseRestService implements BonusPenalty {
         return (HrBonusPenaltyManage) this.lookupService(HrBonusPenaltyManage.class);
     }
 
+	@Override
+	public String deletePunRecord(String id) {
+		String responseText = "";
+		getService().deletRecord(new DataParam("BP_ID",id));
+		responseText = "success";
+		return responseText;
+	}
+
 
 }
