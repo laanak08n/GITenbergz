@@ -27,7 +27,7 @@ function controlUpdateBtn(stateResult){
 		<%}%>
 		enableButton("detailImgBtn");
 		disableButton("deleteImgBtn");
-		
+		disableButton("editImgBtn");
 	}
 }
 function revokeApproval(){
