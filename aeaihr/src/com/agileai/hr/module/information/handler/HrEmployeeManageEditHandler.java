@@ -152,6 +152,7 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 
 	@PageAction
 	public ViewRenderer approve(DataParam param) {
+		doSaveMasterRecordAction(param);
 		param.put("EMP_STATE", "approved");
 		String guId = KeyGenerator.instance().genKey();
 		param.put("GU_ID",guId);
