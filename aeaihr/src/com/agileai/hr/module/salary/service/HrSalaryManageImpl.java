@@ -133,7 +133,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			String lastYear = lastYearMonth.substring(0,4);
 			String lastMonth = lastYearMonth.substring(5,7);
 			
-			BigDecimal offsetVacation = new BigDecimal(row.getInt("EMP_ANNUAL_LEAVE_DAYS"));
+			BigDecimal offsetVacation = new BigDecimal(row.getInt("EMP_ANNUAL_LEAVE_DAYS",0));
 			
 			DataRow totalLeaveOfYearRow = totalLeaveOfYearMap.get(userCode);
 			BigDecimal totalLeaveDecimal = new BigDecimal("0.0");
@@ -156,7 +156,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			BigDecimal leaveDaysDecimal = (BigDecimal)leaveDaysNum;
 			Number overTimeDaysNum = (Number) dataParam.getObject("SAL_OVERTIME");
 			BigDecimal overTimeDaysDecimal = (BigDecimal)overTimeDaysNum;
-			if(lastOffsetVacationRow.size() == 0){
+			if(lastOffsetVacationRow == null || lastOffsetVacationRow.size() == 0){
 				dataParam.put("SAL_OFFSET_VACATION", offsetVacation.subtract(totalLeaveDecimal).add(totalOverTimeDecimal)); 
 			}else{
 				BigDecimal lastOffsetVacationDecimal = (BigDecimal) lastOffsetVacationRow.get("SAL_OFFSET_VACATION");
