@@ -8,6 +8,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
+import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.ws.BaseRestService;
 import com.agileai.hr.cxmodule.HrBonusPenaltyManage;
 
@@ -27,7 +28,8 @@ public class BonusPenaltyImpl extends BaseRestService implements BonusPenalty {
 				jsonObject.put("bp_Id", dataRow.get("BP_ID"));
 				jsonObject.put("user_Name", dataRow.get("USER_NAME"));
 				jsonObject.put("bp_Date", dataRow.get("BP_DATE"));
-				jsonObject.put("bp_Type", dataRow.get("BP_TYPE"));
+				String bpType = FormSelectFactory.create("BP_TYPE").getText((String) dataRow.get("BP_TYPE"));
+				jsonObject.put("bp_Type", bpType);
 				jsonObject.put("bp_Monry", dataRow.get("BP_MONEY"));
 				jsonArray.put(jsonObject);
 			} 
