@@ -56,7 +56,8 @@ function revokeApproval(){
 </div>
 <div id="__ParamBar__">
 <table class="queryTable"><tr><td>
-&nbsp;年月<input id="salDate" label="时间" name="salDate" type="text" value="<%=pageBean.inputValue("salDate")%>"  size="5" class="text" readonly="readonly"/>
+&nbsp;年月<input id="salDate" label="时间" name="salDate" type="text" value="<%=pageBean.inputValue("salDate")%>"  size="5" class="text" readonly="readonly" />
+&nbsp;<img id="salDatePicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框"  />
 &nbsp;<input type="submit" name="button" id="button" value="上一月" class="formbutton" onclick="doSubmit({actionType:'beforeMonth'})" />
 &nbsp;<input type="submit" name="button" id="button" value="本月" class="formbutton" onclick="doSubmit({actionType:'currentMonth'})" />
 &nbsp;<input type="submit" name="button" id="button" value="下一月" class="formbutton" onclick="doSubmit({actionType:'nextMonth'})" />
@@ -119,6 +120,7 @@ if (stateResult == '1'){
 }
 setRsIdTag('SAL_ID');
 var ectableMenu = new EctableMenu('contextMenu','ec_table');
+initCalendar('salDate','%Y-%m','salDatePicker');
 </script>
 </form>
 </body>
