@@ -307,10 +307,12 @@
 	</select>
 	<select id="getUserAnnualLeaveDays" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		select EMP_ANNUAL_LEAVE_DAYS,EMP_ID,EMP_CODE,EMP_INDUCTION_TIME,EMP_CREATE_TIME,EMP_REGULAR_TIME
+		select EMP_ANNUAL_LEAVE_DAYS,EMP_ID,EMP_CODE,EMP_INDUCTION_TIME,EMP_CREATE_TIME,EMP_REGULAR_TIME,c.USER_ID
 		from hr_employee a LEFT JOIN security_user c ON a.EMP_CODE = c.USER_CODE
 		where 1=1
-		and c.USER_ID = #userId#
+		<isNotEmpty prepend=" " property="userId">
+			and c.USER_ID = #userId#
+		</isNotEmpty>
 	</select>	
 	<select id="getMonthlyInfo" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
@@ -320,7 +322,9 @@
 		where 1=1
 		and SAL_YEAR = #year#
 		and SAL_MONTH = #month#
-		and SAL_USER = #userId#
+		<isnotEmpty prepend=" " property="userId">
+			and SAL_USER = #userId#
+		</isnotEmpty>
 	</select>
 	<update id="updateOffsetVacationrecord" parameterClass="com.agileai.domain.DataParam">
 		update
