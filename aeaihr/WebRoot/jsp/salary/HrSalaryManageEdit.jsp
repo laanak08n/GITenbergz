@@ -9,11 +9,11 @@
 <%@include file="/jsp/inc/resource.inc.jsp"%>
 <style type="text/css">
 .markable{
-	background-color:yellow;
+	background-color:yellow !important;
 	color:black;
 }
 .markable0{
-	background-color:red;
+	background-color:red !important;
 	color:white;
 }
 </style>
