@@ -24,4 +24,5 @@ public interface HrAttendanceManage
 	public List<DataRow> findLocationInfos(DataParam param);
 	List<DataRow> findSigninInfos(DataParam param);
 	public DataRow getSigninState(DataParam param);
+	public void addAttendance(String atdId, String userId, String atdInDate, String atdInPlace);
 }

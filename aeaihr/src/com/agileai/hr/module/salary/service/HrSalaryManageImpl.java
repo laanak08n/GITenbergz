@@ -12,8 +12,10 @@ import com.agileai.common.KeyGenerator;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.bizmoduler.core.StandardServiceImpl;
+import com.agileai.hr.common.EmpInfoHelper;
 import com.agileai.hr.cxmodule.HrSalaryManage;
 import com.agileai.util.DateUtil;
+import com.agileai.util.MapUtil;
 
 public class HrSalaryManageImpl extends StandardServiceImpl implements
 		HrSalaryManage {
@@ -28,7 +30,15 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		DataRow row = this.daoHelper.getRecord(statementId, param);
 		return row;
 	}
-
+	
+	@Override
+	public DataRow getInductionAndCreateTime(String userId){
+		DataParam param = new DataParam("userId",userId);
+		String statementId = sqlNameSpace + "." + "getUserAnnualLeaveDays";
+		DataRow row = this.daoHelper.getRecord(statementId, param);
+		return row;
+	}
+	
 	public void createValidDayRecord(DataParam param) {
 		String statementId = sqlNameSpace + "." + "insertValidDaysRecord";
 		processDataType(param, tableName);
@@ -140,6 +150,18 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			
 			dataParam.put("SAL_STATE", "0");
 			BigDecimal sal_basic = (BigDecimal) row.get("EMP_BASIC");
+			Date inductionTime = (Date)row.get("EMP_INDUCTION_TIME");
+			EmpInfoHelper empInfoHelper = new EmpInfoHelper();			
+			boolean isCalSalary = empInfoHelper.isInductionAboveMonth(inductionTime, DateUtil.getDateByType(9, date));
+			if(isCalSalary){
+				BigDecimal sal_day = sal_basic.divide((BigDecimal) validDaysRow.get("VALID_DAYS"),6,RoundingMode.HALF_UP);
+				if(!MapUtil.isNullOrEmpty(workDaysRow)){
+					long workDays = (long) workDaysRow.get("WORK_DAYS");
+					sal_basic = sal_day.multiply(new BigDecimal(workDays));
+				}else{
+					sal_basic = new BigDecimal("0.00");
+				}
+			}
 			if(sal_basic == null){
 				sal_basic = new BigDecimal("0.0");
 			}
@@ -244,7 +266,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			}
 
 			BigDecimal sal_fulltime_award = new BigDecimal("0.0");
-			if(leaveDaysRow == null){
+			if(leaveDaysRow == null && regularTime.compareTo(date) == -1){
 				statementId = sqlNameSpace + "." + "getFulltimeAwardRecord";
 				DataRow dataRow = this.daoHelper.getRecord(statementId, new DataParam());
 				sal_fulltime_award = new BigDecimal(dataRow.getString("TYPE_NAME"));

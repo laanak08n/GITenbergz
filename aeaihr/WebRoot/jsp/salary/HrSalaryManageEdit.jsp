@@ -17,6 +17,20 @@
 	color:white;
 }
 </style>
+<script type="text/javascript">
+var addAttendanceBox;
+function addAttendance(){
+	var title = '添加考勤';
+	if(!addAttendanceBox){
+		addAttendanceBox = new PopupBox('addAttendanceBox',title,{size:'normal',height:'300px',top:'10px',scroll:'yes'});
+	}
+	var salUser = $("#SAL_USER").val();
+	var year = $("#SAL_YEAR").val();
+	var month = $("#SAL_MONTH").val();
+	var url = "index?AddAttendance&actionType=prepareDisplay&salYear="+year+"&salMonth="+month+"&salUser="+salUser;
+	addAttendanceBox.sendRequest(url);
+}
+</script>
 </head>
 <body>
 <form action="<%=pageBean.getHandlerURL()%>" name="form1" id="form1" method="post">
@@ -35,8 +49,9 @@
    <aeai:previlege code="approve"><td  align="center"class="bartdx"onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="approveImgBtn" id="SAL_STATE"  title="核准" />核准</td></aeai:previlege>
    <%}else{%>
    <aeai:previlege code="revokeApproval"><td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td></aeai:previlege>
-   <%}%>
-  <%}%>
+   <%}if(pageBean.getBoolValue("isAddAttendance")){%>
+   <aeai:previlege code="addAttendance"><td align="center" class="bartdx" onclick="addAttendance()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="createImgBtn" id="addAttendance" title="添加考勤" />添加考勤</td></aeai:previlege>
+  <%}}%>
    <aeai:previlege code="back"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="goToBack();"><input value="&nbsp;" type="button" class="backImgBtn" title="返回" />返回</td></aeai:previlege>
 </tr>
 </table>

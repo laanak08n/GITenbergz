@@ -10,7 +10,7 @@ public interface HrSalaryManage
         extends StandardService {
 	
 	public DataRow retrieveValidDays(String year,String month);
-	
+	public DataRow getInductionAndCreateTime(String userId);
 	public void createValidDayRecord(DataParam param);
 	public void updateValidDayRecord(DataParam param);
 	

@@ -41,6 +41,11 @@
 		(ATD_ID,ATD_DATE,USER_ID,ATD_IN_TIME,ATD_IN_PLACE,ATD_IN_HOUSE,ATD_IN_COORDINATE)values
 		(#ATD_ID:CHAR#,#ATD_DATE:DATETIME#,#USER_ID:CHAR#,#ATD_IN_TIME:DATETIME#,#ATD_IN_PLACE:VARCHAR#,#ATD_IN_HOUSE:VARCHAR#,#ATD_IN_COORDINATE:VARCHAR#)
 	</insert>
+	<insert id="addAtdRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into hr_attendance
+		(ATD_ID,ATD_DATE,USER_ID,ATD_IN_TIME,ATD_IN_PLACE,ATD_OUT_TIME,ATD_OUT_PLACE)values
+		(#ATD_ID:CHAR#,#ATD_DATE:DATETIME#,#USER_ID:CHAR#,#ATD_IN_TIME:DATETIME#,#ATD_IN_PLACE:VARCHAR#,#ATD_OUT_TIME:DATETIME#,#ATD_OUT_PLACE:VARCHAR#)
+	</insert>
 	<update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
 		update hr_attendance
 		set

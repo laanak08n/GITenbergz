@@ -55,7 +55,7 @@
 		EMP_REFERENCE_TIME,EMP_NOW_DEPT,EMP_NOW_JOB,EMP_INDUCTION_TIME,EMP_EMAIL,
 		EMP_REGULAR_TIME,EMP_EDUCATION,EMP_BASIC,c.USER_ID,
 		EMP_PERFORMANCE,EMP_SUBSIDY,EMP_INSURE,EMP_TAX,EMP_DIMISSION_TIME,EMP_WORK_STATE,
-		EMP_HOUSING_FUND,EMP_PAY_INSURE
+		EMP_HOUSING_FUND,EMP_PAY_INSURE,EMP_CREATE_TIME
 		from hr_employee a LEFT JOIN security_user c ON a.EMP_CODE = c.USER_CODE
 		where 1=1 
 		and EMP_PARTICIPATE_SALARY = 'Y'
@@ -276,7 +276,7 @@
 	</select>
 	<select id="getUserAnnualLeaveDays" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		select EMP_ANNUAL_LEAVE_DAYS
+		select EMP_ANNUAL_LEAVE_DAYS,EMP_ID,EMP_CODE,EMP_INDUCTION_TIME,EMP_CREATE_TIME
 		from hr_employee a LEFT JOIN security_user c ON a.EMP_CODE = c.USER_CODE
 		where 1=1
 		and c.USER_ID = #userId#
