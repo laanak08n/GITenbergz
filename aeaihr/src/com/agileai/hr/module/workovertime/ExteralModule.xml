@@ -2,7 +2,7 @@
 <beans>
 	<service id="Overtime" type="Rest" implClass="com.agileai.hr.module.workovertime.exteral.OvertimeImpl" address="/Overtime">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
+			<property name="IpAddress">localhost,127.0.0.1</property>
 		</auth>
 	</service>	
 </beans>

@@ -2,7 +2,7 @@
 <beans>
 	<service id="BonusPenalty" type="Rest" implClass="com.agileai.hr.module.bonuspenalty.exteral.BonusPenaltyImpl" address="/BonusPenalty">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
+			<property name="IpAddress">localhost,127.0.0.1</property>
 		</auth>
 	</service>
 </beans>

@@ -2,7 +2,7 @@
 <beans>
 	<service id="Leave" type="Rest" implClass="com.agileai.hr.module.leave.exteral.LeaveImpl" address="/Leave">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
+			<property name="IpAddress">localhost,127.0.0.1</property>
 		</auth>
 	</service>
 </beans>

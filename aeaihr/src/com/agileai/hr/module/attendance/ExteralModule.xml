@@ -2,7 +2,7 @@
 <beans>
 	<service id="Attendance" type="Rest" implClass="com.agileai.hr.module.attendance.exteral.AttendanceImpl" address="/Attendance">
 		<auth type="IpWhiteList">
-			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
+			<property name="IpAddress">localhost,127.0.0.1</property>
 		</auth>
 	</service>	
 </beans>
