@@ -12,7 +12,7 @@ import com.agileai.common.KeyGenerator;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.bizmoduler.core.StandardServiceImpl;
-import com.agileai.hr.common.EmpInfoHelper;
+import com.agileai.hr.common.DateHelper;
 import com.agileai.hr.cxmodule.HrSalaryManage;
 import com.agileai.util.DateUtil;
 import com.agileai.util.MapUtil;
@@ -85,8 +85,10 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		HashMap<String, DataRow> totalLeaveTimeMap = this.daoHelper.queryRecords(
 				"USER_ID", statementId, new DataParam("edate",currentDate));
 		statementId = "HrAttendance"+"."+"attendanceStatisticsRecords";
+		
 		HashMap<String, DataRow> currentMonthAttendMap = this.daoHelper.queryRecords(
 				"USER_ID", statementId, new DataParam("sdate",date,"edate",currentDate));
+		
 		List<DataParam> insertParamList = new ArrayList<DataParam>();
 		List<DataParam> updateParamList = new ArrayList<DataParam>();
 		for (int i = 0; i < basicRecords.size(); i++) {
@@ -96,7 +98,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			String userCode = row.getString("USER_ID");
 			DataRow currentMonthAttendRow = currentMonthAttendMap.get(userCode);
 			DataRow leaveDaysRow = totalLeaveTimeMap.get(userCode);
-			dataParam = calculateTotalSalary(workDaysMap,leaveDaysMap,overTimeDaysMap,userCode,dataParam,validDaysRow,year,month,row,date);
+			dataParam = calculateTotalSalary(workDaysMap,leaveDaysMap,overTimeDaysMap,currentMonthAttendRow,userCode,dataParam,validDaysRow,year,month,row,date);
 			Date regularTime = (Date)row.get("EMP_REGULAR_TIME");
 			dataParam = calculateOverRunDays(totalLeaveOfYearMap,totalOverTimeOfYearMap,date,row,userCode,dataParam,regularTime,yearMonth);
 			BigDecimal salTotal = (BigDecimal) dataParam.getObject("SAL_TOTAL");
@@ -104,6 +106,9 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			BigDecimal salTax = (BigDecimal) dataParam.getObject("SAL_TAX");
 			BigDecimal salHousingFund =(BigDecimal) dataParam.getObject("SAL_HOUSING_FUND");
 			BigDecimal salShould = salTotal.subtract(salInsure).subtract(salTax).subtract(salHousingFund);
+			if(regularTime.compareTo(DateUtil.getDateAdd(date, DateUtil.MONTH, 1))>=0){
+				salShould = salTotal;
+			}			
 			dataParam.put("SAL_SHOULD", salShould);
 			statementId = sqlNameSpace + "." + "getPunishmentRecord";
 			DataRow punishmentRow = this.daoHelper.getRecord(statementId, new DataParam("USER_ID",userCode,"yearMonth",yearMonth));
@@ -161,7 +166,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		}
 	}
 	private DataParam calculateTotalSalary(HashMap<String,DataRow> workDaysMap,
-			HashMap<String,DataRow> leaveDaysMap,HashMap<String,DataRow>overTimeDaysMap,String userCode,DataParam dataParam,
+			HashMap<String,DataRow> leaveDaysMap,HashMap<String,DataRow> overTimeDaysMap,DataRow currentMonthAttendRow,String userCode,DataParam dataParam,
 			DataRow validDaysRow,String year,String month,DataRow row,Date date){
 		DataRow workDaysRow = workDaysMap.get(userCode);
 		if(workDaysRow == null){
@@ -195,32 +200,97 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		if(salHousingFund == null){
 			salHousingFund = new BigDecimal("0.0");
 		}
-		BigDecimal salBasic = (BigDecimal) row.get("EMP_BASIC");
-		Date inductionTime = (Date)row.get("EMP_INDUCTION_TIME");
-		EmpInfoHelper empInfoHelper = new EmpInfoHelper();			
-		boolean isCalSalary = empInfoHelper.isInductionAboveMonth(inductionTime, DateUtil.getDateByType(9, date));
-		if(isCalSalary){
-			BigDecimal salDay = salBasic.divide((BigDecimal) validDaysRow.get("VALID_DAYS"),6,RoundingMode.HALF_UP);
-			if(!MapUtil.isNullOrEmpty(workDaysRow)){
-				long workDays = (long) workDaysRow.get("WORK_DAYS");
-				salBasic = salDay.multiply(new BigDecimal(workDays));
-			}else{
-				salBasic = new BigDecimal("0.00");
-			}
+		BigDecimal salProbation = (BigDecimal) row.get("EMP_PROBATION");
+		if(salProbation == null){
+			salProbation = new BigDecimal("0.0");
 		}
-		if(salBasic == null){
-			salBasic = new BigDecimal("0.0");
+		BigDecimal salBasic = (BigDecimal) row.get("EMP_BASIC");		
+		BigDecimal salTotal = new BigDecimal("0.0");
+		BigDecimal salProDay = salProbation.divide((BigDecimal) validDaysRow.get("VALID_DAYS"),6, RoundingMode.HALF_UP);
+		BigDecimal salRegDay = salBasic.divide((BigDecimal) validDaysRow.get("VALID_DAYS"),6, RoundingMode.HALF_UP);		
+		Date inductionDate = (Date)row.get("EMP_INDUCTION_TIME");
+		Date regularDate = (Date)row.get("EMP_REGULAR_TIME");
+		Date proCalEndDate = DateUtil.getDateAdd(regularDate, DateUtil.DAY, -1);
+		BigDecimal currentMonthAttendDays = new BigDecimal("0.0");
+		if(currentMonthAttendRow != null){
+			currentMonthAttendDays = BigDecimal.valueOf(currentMonthAttendRow.getInt("IN_NUM"));
 		}
-		BigDecimal salPerformance = (BigDecimal) row.get("EMP_PERFORMANCE");
+		/*String statementId = "HrAttendance"+"."+"attendanceStatisticsRecords";
+		HashMap<String, DataRow> proOfMonthAtdMap = this.daoHelper.queryRecords(
+				"USER_ID", statementId, new DataParam("sdate",date,"edate",proCalEndDate));*/
+		/*BigDecimal proOfMonthAtdDays = new BigDecimal("0.0");
+		if(!proOfMonthAtdMap.isEmpty()){
+			proOfMonthAtdDays = BigDecimal.valueOf(proOfMonthAtdMap.get(userCode).getInt("IN_NUM"));	
+		}
+		BigDecimal regOfMonthAtdDays = (new BigDecimal(currentMonthAttendRow.getInt("IN_NUM"))).subtract(proOfMonthAtdDays);		
+		statementId = sqlNameSpace + "." + "getSalYearLeaveInfo";
+		DataRow proOfMonthLeaveRow = this.daoHelper.getRecord(
+				statementId, new DataParam("userCode",userCode,"beginTime",DateUtil.getDateAdd(date, DateUtil.DAY, -1),"endTime",regularDate));
+		BigDecimal proOfMonthLeaveDays = new BigDecimal(proOfMonthLeaveRow.getInt("SAL_YEAR_LEAVE"));
+		DataRow regOfMonthLeaveRow = this.daoHelper.getRecord(
+				statementId, new DataParam("userCode",userCode,"beginTime",proCalEndDate,"endTime",DateUtil.getDateAdd(date, DateUtil.MONTH, 1)));	
+		BigDecimal regOfMonthLeaveDays = new BigDecimal(regOfMonthLeaveRow.getInt("SAL_YEAR_LEAVE"));	*/	
+		BigDecimal salPerformance = (BigDecimal) row.get("EMP_PERFORMANCE");		
 		if(salPerformance == null){
 			salPerformance = new BigDecimal("0.0");
-		}
+		}		
 		BigDecimal salSubsidy = (BigDecimal) row.get("EMP_SUBSIDY");
 		if(salSubsidy == null){
 			salSubsidy = new BigDecimal("0.0");
 		}
-		BigDecimal sal_total = salBasic.add(salPerformance).add(salSubsidy);
-		dataParam.put("SAL_TOTAL", sal_total);
+		
+		DateHelper dateHelper = new DateHelper();
+		if(dateHelper.dateDuringMonth(regularDate, year+"-"+month)){
+			String statementId = "HrAttendance"+"."+"attendanceStatisticsRecords";
+			HashMap<String, DataRow> regOfMonthAtdMap = this.daoHelper.queryRecords(
+					"USER_ID", statementId, new DataParam("sdate",regularDate,"edate",DateUtil.getEndOfMonth(date)));
+			BigDecimal regOfMonthAtdDays = new BigDecimal(regOfMonthAtdMap.get(userCode).getInt("IN_NUM"));
+			BigDecimal proOfMonthAtdDays = (currentMonthAttendDays.subtract(regOfMonthAtdDays));
+			
+			statementId = sqlNameSpace + "." + "getSalYearLeaveInfo";
+			DataRow proOfMonthLeaveRow = this.daoHelper.getRecord(
+					statementId, new DataParam("userCode",userCode,"beginTime",DateUtil.getDateAdd(date, DateUtil.DAY, -1),"endTime",regularDate));
+			BigDecimal proOfMonthLeaveDays = new BigDecimal(proOfMonthLeaveRow.getInt("SAL_YEAR_LEAVE"));
+			DataRow regOfMonthLeaveRow = this.daoHelper.getRecord(
+					statementId, new DataParam("userCode",userCode,"beginTime",proCalEndDate,"endTime",DateUtil.getDateAdd(date, DateUtil.MONTH, 1)));	
+			BigDecimal regOfMonthLeaveDays = new BigDecimal(regOfMonthLeaveRow.getInt("SAL_YEAR_LEAVE"));		
+			salTotal = salProDay.multiply(proOfMonthAtdDays.add(proOfMonthLeaveDays)).add(salRegDay.multiply(regOfMonthAtdDays.add(regOfMonthLeaveDays)));
+		}
+		if(regularDate.compareTo(date)<=0){
+			salTotal = salBasic.add(salPerformance).add(salSubsidy);
+		}
+		if(dateHelper.dateDuringMonth(inductionDate, year+"-"+month)){
+			String statementId = sqlNameSpace + "." + "getSalYearLeaveInfo";
+			DataRow proOfMonthLeaveRow = this.daoHelper.getRecord(
+					statementId, new DataParam("userCode",userCode,"beginTime",DateUtil.getDateAdd(date, DateUtil.DAY, -1),"endTime",regularDate));
+			BigDecimal proOfMonthLeaveDays = new BigDecimal(proOfMonthLeaveRow.getInt("SAL_YEAR_LEAVE"));
+			salTotal = salProDay.multiply(currentMonthAttendDays.add(proOfMonthLeaveDays));
+		}
+		if(inductionDate.compareTo(date)<=0 && regularDate.compareTo(DateUtil.getEndOfMonth(date))>0){
+			salTotal = salProbation;
+		}
+//		DateHelper dateHelper = new DateHelper();
+//		if(dateHelper.dateDuringMonth(regularDate, year+"-"+month) || dateHelper.dateDuringMonth(inductionDate, year+"-"+month)){
+////			BigDecimal proOfMonthAtdDays = new BigDecimal("0.0");
+////			if(!proOfMonthAtdMap.isEmpty()){
+////				proOfMonthAtdDays = BigDecimal.valueOf(proOfMonthAtdMap.get(userCode).getInt("IN_NUM"));	
+////			}
+//			String statementId = "HrAttendance"+"."+"attendanceStatisticsRecords";
+//			HashMap<String, DataRow> proOfMonthAtdMap = this.daoHelper.queryRecords(
+//					"USER_ID", statementId, new DataParam("sdate",date,"edate",proCalEndDate));
+//			BigDecimal proOfMonthAtdDays = new BigDecimal(proOfMonthAtdMap.get(userCode).getInt("IN_NUM"));
+//			BigDecimal regOfMonthAtdDays = (new BigDecimal(currentMonthAttendRow.getInt("IN_NUM"))).subtract(proOfMonthAtdDays);		
+//			
+//			statementId = sqlNameSpace + "." + "getSalYearLeaveInfo";
+//			DataRow proOfMonthLeaveRow = this.daoHelper.getRecord(
+//					statementId, new DataParam("userCode",userCode,"beginTime",DateUtil.getDateAdd(date, DateUtil.DAY, -1),"endTime",regularDate));
+//			BigDecimal proOfMonthLeaveDays = new BigDecimal(proOfMonthLeaveRow.getInt("SAL_YEAR_LEAVE"));
+//			DataRow regOfMonthLeaveRow = this.daoHelper.getRecord(
+//					statementId, new DataParam("userCode",userCode,"beginTime",proCalEndDate,"endTime",DateUtil.getDateAdd(date, DateUtil.MONTH, 1)));	
+//			BigDecimal regOfMonthLeaveDays = new BigDecimal(regOfMonthLeaveRow.getInt("SAL_YEAR_LEAVE"));		
+//			salTotal = salProDay.multiply(proOfMonthAtdDays.add(proOfMonthLeaveDays)).add(salRegDay.multiply(regOfMonthAtdDays.add(regOfMonthLeaveDays)));
+//		}
+		dataParam.put("SAL_TOTAL", salTotal);
 		dataParam.put("SAL_VALID_DAYS", validDaysRow.get("VALID_DAYS"));
 		dataParam.put("SAL_USER", userCode);
 		dataParam.put("SAL_YEAR", year);
