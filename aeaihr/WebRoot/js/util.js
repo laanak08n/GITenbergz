@@ -1470,6 +1470,7 @@ function banBackSpace(e){
 window.onload=function(){
   document.onkeypress=banBackSpace;
   document.onkeydown=banBackSpace;
+//__processForms__();
 }
 
 $(function(){
