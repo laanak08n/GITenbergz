@@ -43,9 +43,10 @@ angular.module('${menuCode}')
 	$scope.getSignOutState();
 	
 	$scope.setPosition=function(obj){
-		$scope.mapOptions={"lng":obj.location.lng,"lat":obj.location.lat};
-		$scope.lng=obj.location.lng;
-		$scope.lat=obj.location.lat;
+		var locationArr = obj.location;
+		$scope.mapOptions={"lng":locationArr[0],"lat":locationArr[1]};
+		$scope.lng=locationArr[0];
+		$scope.lat=locationArr[1];
 		$scope.atdInTime=new Date();
 		$scope.titleName=obj.name;
 		$scope.titleAddress=obj.address;
@@ -58,16 +59,26 @@ angular.module('${menuCode}')
 				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/${navCode}/index.cv#/tab/home",
 					"success":function(){
 						if($scope.atdInTime&&$scope.titleName){
-							var parameterJson={"lng":$scope.lng,"lat":$scope.lat,"name":$scope.titleName,"address":$scope.titleAddress};
-							var parameter=JSON.stringify(parameterJson); 
-							var url ='/aeaihr/services/Attendance/rest/signOut';
-							AppKit.postJsonApi(url,parameter).then(function(rspJson){
-								if("success"==rspJson.data){
-									AppKit.successPopup({"title":"签退成功!"});
+							var url ='/aeaihr/services/Attendance/rest/get-signOut-info/';
+							var promise = AppKit.getJsonApi(url);
+							promise.success(function(rspJson){
+								var isSignInOpera = rspJson.isSignInOpera;
+								if("N"==isSignInOpera){
+									AppKit.errorPopup({"title":"没有签到不能签退!"});
 									$state.go("tab.home");
+								}else{
+									var parameterJson={"lng":$scope.lng,"lat":$scope.lat,"name":$scope.titleName,"address":$scope.titleAddress};
+									var parameter=JSON.stringify(parameterJson); 
+									var url ='/aeaihr/services/Attendance/rest/signOut';
+									AppKit.postJsonApi(url,parameter).then(function(rspJson){
+										if("success"==rspJson.data){
+											AppKit.successPopup({"title":"签退成功!"});
+											$state.go("tab.home");
+										}
+										AppKit.hideMask();
+									}); 
 								}
-								AppKit.hideMask();
-							}); 
+							});
 						}else{
 							AppKit.successPopup({"title":"地址不能为空!"});
 						}
@@ -76,7 +87,6 @@ angular.module('${menuCode}')
 			}
 		})
 	}
-	
 });
 
 
