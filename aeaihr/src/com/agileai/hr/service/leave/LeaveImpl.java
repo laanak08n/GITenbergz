@@ -36,6 +36,13 @@ public class LeaveImpl extends BaseRestService implements Leave {
 				String date = DateUtil.getDateByType(DateUtil.YYMMDDHHMI_SLANTING, leaDate);
 				jsonObject1.put("leaDate", date.substring(5));
 				jsonObject1.put("leaState", dataRow.get("STATE"));
+				
+				if(dataRow.get("STATE").equals("已提交")){
+					jsonObject1.put("recordState",false);
+				}else{
+					jsonObject1.put("recordState", true);
+				}
+				
 				jsonArray.put(jsonObject1);
 			}
 			responseText = jsonArray.toString();
@@ -89,7 +96,7 @@ public class LeaveImpl extends BaseRestService implements Leave {
     		jsonObject.put("leaEdate", dataRow.get("LEA_EDATE"));
     		jsonObject.put("leaDays", dataRow.get("LEA_DAYS"));
     		jsonObject.put("leaCause", dataRow.get("LEA_CAUSE"));
-    		
+    		jsonObject.put("leaState", dataRow.get("STATE"));
     		responseText = jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);

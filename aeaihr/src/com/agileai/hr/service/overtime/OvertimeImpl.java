@@ -37,6 +37,11 @@ public class OvertimeImpl extends BaseRestService implements Overtime {
 				String date = DateUtil.getDateByType(DateUtil.YYMMDD_SLANTING, overtimeDate);
 				jsonObject1.put("wotOverTimeDate", date);
 				jsonObject1.put("wotOverTimeState", dataRow.get("STATE"));
+				if(dataRow.get("STATE").equals("已提交")){
+					jsonObject1.put("recordState", false);
+				}else{
+					jsonObject1.put("recordState", true);
+				}
 				jsonArray.put(jsonObject1);
 			}
 			jsonObject.put("datas", jsonArray);
@@ -89,6 +94,7 @@ public class OvertimeImpl extends BaseRestService implements Overtime {
     		jsonObject.put("wotTime", dataRow.get("WOT_TIME"));
     		jsonObject.put("wotParticipant", dataRow.get("WOT_PARTICIPANT"));
     		jsonObject.put("wotDesc", dataRow.get("WOT_DESC"));
+    		jsonObject.put("wotState", dataRow.get("STATE"));
 
     		responseText = jsonObject.toString();
 		} catch (Exception e) {

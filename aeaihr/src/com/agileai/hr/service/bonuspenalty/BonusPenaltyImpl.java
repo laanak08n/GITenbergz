@@ -1,5 +1,6 @@
 package com.agileai.hr.service.bonuspenalty;
 
+
 import java.util.List;
 
 import org.codehaus.jettison.json.JSONArray;
@@ -12,6 +13,7 @@ import com.agileai.domain.DataRow;
 import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.ws.BaseRestService;
 import com.agileai.hr.cxmodule.HrBonusPenaltyManage;
+
 
 public class BonusPenaltyImpl extends BaseRestService implements BonusPenalty {
 
@@ -30,6 +32,7 @@ public class BonusPenaltyImpl extends BaseRestService implements BonusPenalty {
 				String bpType = FormSelectFactory.create("BP_TYPE").getText((String) dataRow.get("BP_TYPE"));
 				jsonObject.put("bp_Type", bpType);
 				jsonObject.put("bp_Monry", dataRow.get("BP_MONEY"));
+				
 				jsonArray.put(jsonObject);
 			} 
 			responseText = jsonArray.toString();
