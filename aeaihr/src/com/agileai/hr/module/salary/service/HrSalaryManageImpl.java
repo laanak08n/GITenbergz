@@ -108,6 +108,9 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				salShould = salTotal;
 			}			
 			dataParam.put("SAL_SHOULD", salShould);
+			BigDecimal salFulltimeAward = calculateFullTimeAward(leaveDaysRow,currentMonthAttendRow,userCode,regularTime,date,dataParam);
+			dataParam = calculateOverRunSalary(dataParam,validDaysRow,userCode,date,regularTime);
+			BigDecimal salOverRunMoneyTotal = (BigDecimal)dataParam.getObject("salOverRunMoneyTotal");
 			statementId = sqlNameSpace + "." + "getPunishmentRecord";
 			DataRow punishmentRow = this.daoHelper.getRecord(statementId, new DataParam("USER_ID",userCode,"yearMonth",yearMonth));
 			BigDecimal punishmentMoneyDecimal = new BigDecimal("0.0");
@@ -120,9 +123,6 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			if(!rewardtRow.isEmpty()){
 				rewardMoneyDecimal = (BigDecimal) rewardtRow.get("MONEY");
 			}
-			BigDecimal salFulltimeAward = calculateFullTimeAward(leaveDaysRow,currentMonthAttendRow,userCode,regularTime,date,dataParam);
-			dataParam = calculateOverRunSalary(dataParam,validDaysRow,userCode,date,regularTime);
-			BigDecimal salOverRunMoneyTotal = (BigDecimal)dataParam.getObject("salOverRunMoneyTotal");
 			BigDecimal salBonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal).subtract(salOverRunMoneyTotal).add(salFulltimeAward);
 			dataParam.put("SAL_BONUS", salBonus);
 			BigDecimal salActual  = salShould.add(salBonus);
@@ -381,6 +381,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		BigDecimal lastOffsetVacationDecimal = new BigDecimal("0");
 		BigDecimal probationOverTimeDecimal =  new BigDecimal("0.0");
 		BigDecimal regularOverTimeDecimal = new BigDecimal("0.0");
+		BigDecimal regularAnnualLaveAward =  new BigDecimal("0.00");
 		if(!MapUtil.isNullOrEmpty(lastOffsetVacationRow)){
 			lastOffsetVacationDecimal = (BigDecimal) lastOffsetVacationRow.get("SAL_OFFSET_VACATION");
 		}
@@ -405,6 +406,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			BigDecimal vacationRemainDecimal = beforeYearDecVacationDecimal.subtract(totalLeaveDecimal).add(leaveDaysDecimal);
 			if(vacationRemainDecimal.compareTo(BigDecimal.ZERO)>=0){
 				dataParam.put("SAL_OFFSET_VACATION",nowAnnualLeaveDecimal.add(totalOverTimeDecimal).subtract(totalLeaveDecimal));
+				regularAnnualLaveAward = vacationRemainDecimal;
 			}else{
 				dataParam.put("SAL_OFFSET_VACATION",nowAnnualLeaveDecimal.add(beforeYearDecVacationDecimal).add(vacationRemainDecimal)
 						.add(totalOverTimeDecimal).subtract(leaveDaysDecimal));
@@ -421,6 +423,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			dataParam.put("probationOverRunDays",beforeRegularLeaveDays.subtract(probationOverTimeDecimal));
 			dataParam.put("regularOverRunDays",regularLeaveDays.subtract(regularOverTimeDecimal));
 		}
+		dataParam.put("regularAnnualLaveAward",regularAnnualLaveAward);
 		return dataParam;  
 	}
 	private DataParam calculateOverRunSalary(DataParam dataParam,DataRow validDaysRow,
@@ -429,9 +432,11 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		BigDecimal salOffsetVacation = (BigDecimal) dataParam.getObject("SAL_OFFSET_VACATION");
 		BigDecimal salProbationDayMoney = (BigDecimal) dataParam.getObject("salProbationDayMoney");
 		BigDecimal salRegularDayMoney = (BigDecimal) dataParam.getObject("salRegularDayMoney");
+		BigDecimal regularAnnualLaveAward = (BigDecimal) dataParam.getObject("regularAnnualLaveAward");
 		BigDecimal salDayMoneyTotal = new BigDecimal("0.0");
 		BigDecimal salProbationDayMoneyTotal = new BigDecimal("0.0");
 		BigDecimal salOverRunMoneyTotal = new BigDecimal("0.00");
+		String statementId = "";
 		if(salOffsetVacation.compareTo(new BigDecimal("0")) == -1){
 			bonusPenaltyParam.put("BP_ID", KeyGenerator.instance().genKey());
 			bonusPenaltyParam.put("USER_ID", userCode);
@@ -453,7 +458,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				salOverRunMoneyTotal = salDayMoneyTotal.abs();
 				bonusPenaltyParam.put("BP_MONEY",salOverRunMoneyTotal);
 			}
-			String statementId = sqlNameSpace + "." + "getBonusPenaltyRecord";
+			statementId = sqlNameSpace + "." + "getBonusPenaltyRecord";
 			DataRow bonusPenaltyRow = this.daoHelper.getRecord(statementId, bonusPenaltyParam);
 			if(!MapUtil.isNullOrEmpty(bonusPenaltyRow)){
 				statementId = sqlNameSpace + "." + "updateBonusPenaltyRecord";
@@ -462,6 +467,16 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				statementId = sqlNameSpace + "." + "insertBonusPenaltyRecord";
 				this.daoHelper.insertRecord(statementId, bonusPenaltyParam);
 			}
+		}
+		if(regularAnnualLaveAward.compareTo(new BigDecimal("0.00"))>0){
+			DataParam param = new DataParam();
+			param.put("BP_ID", KeyGenerator.instance().genKey());
+			param.put("USER_ID", userCode);
+			param.put("BP_DATE", date);
+			param.put("BP_TYPE","REWARD");
+			bonusPenaltyParam.put("BP_MONEY", salRegularDayMoney.multiply(regularAnnualLaveAward));
+			statementId = sqlNameSpace + "." + "insertBonusPenaltyRecord";
+			this.daoHelper.insertRecord(statementId, bonusPenaltyParam);
 		}
 		dataParam.put("salOverRunMoneyTotal",salOverRunMoneyTotal);
 		return dataParam;
