@@ -45,15 +45,33 @@ public class BonusPenaltyImpl extends BaseRestService implements BonusPenalty {
 		try {
 			JSONObject jsonObject = new JSONObject(info);
 			DataParam param = new DataParam();
-			//BP_ID,USER_ID,BP_DATE,BP_TYPE,BP_MONEY,BP_DESC
 			param.put("BP_ID", KeyGenerator.instance().genKey());
-			param.put("USER_ID", jsonObject.getString("userName"));
+			param.put("USER_ID", jsonObject.getString("userId"));
 			param.put("BP_DATE", jsonObject.getString("bpDate").substring(0, 10));
 			param.put("BP_TYPE", jsonObject.getString("bpType"));
 			param.put("BP_MONEY", jsonObject.getString("bpMonry"));
 			param.put("BP_DESC", jsonObject.getString("bpDesc"));
 			getService().createRecord(param);
 			responseText = "success";
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+		return responseText;
+	}
+	
+	@Override
+	public String findAllPunRecord(String id) {
+		String responseText = "fail";
+		try {
+			DataRow dataRow = getService().getRecord(new DataParam("BP_ID",id));
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("bpId", dataRow.get("BP_ID"));
+			jsonObject.put("userName", dataRow.get("USER_ID"));
+			jsonObject.put("bpDate", dataRow.get("BP_DATE"));
+			jsonObject.put("bpType", dataRow.get("BP_TYPE"));
+			jsonObject.put("bpMonry", dataRow.get("BP_MONEY"));
+			jsonObject.put("bpDesc", dataRow.get("BP_DESC"));
+			responseText = jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
