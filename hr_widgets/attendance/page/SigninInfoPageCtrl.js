@@ -1,7 +1,6 @@
 angular.module('${menuCode}')
 .controller("${widgetCode}Ctrl",function($scope,$state,AppKit,$rootScope,$filter,$http){
 	$scope.initSignInInfo=function(){
-		
 		var location = "123.432588,41.795673";
 		if($scope.options&&$scope.options.lng&&$scope.options.lat){
 			location = $scope.options.lng+","+$scope.options.lat;
@@ -17,6 +16,8 @@ angular.module('${menuCode}')
 				$scope.titleAddress=$scope.positioninfos.pois[0].address;
 				var locationArr = $scope.positioninfos.pois[0].location.split(",");
 				$scope.mapOptions={"lng":locationArr[0],"lat":locationArr[1]};
+				$scope.lng = locationArr[0];
+				$scope.lat = locationArr[1];
 			} 
 		});
 	}
@@ -33,7 +34,7 @@ angular.module('${menuCode}')
 						var url = '/aeaihr/services/Attendance/rest/get-signin-state/'+$scope.tadyTime;
 						var promise = AppKit.getJsonApi(url);
 						promise.success(function(rspJson){
-							$scope.isSign = rspJson.isSign
+							$scope.isSign = rspJson.isSign;
 						});
 					}
 				})
@@ -50,7 +51,8 @@ angular.module('${menuCode}')
 		$scope.atdInTime=new Date();
 		$scope.titleName=obj.name;
 		$scope.titleAddress=obj.address;
-		//$scope.mapOptions={"lng":locationArr[0],"lat":locationArr[1]};
+		$scope.lng = locationArr[0];
+		$scope.lat = locationArr[1];
 	}
 	
 	$scope.doConfirm=function(){
@@ -79,18 +81,6 @@ angular.module('${menuCode}')
 		})
 	}
 	
-	 var watcher=$rootScope.$watch("cpoint",function(newVal,oldVal){
-		   if($rootScope.cpoint){
-			   $scope.results=$rootScope.cpoint.poiList.pois
-			   $scope.titleName=$scope.results[0].name;
-			   $scope.titleAddress=$scope.results[0].address;
-			   $scope.results[0].isSignIn='y';
-			   $scope.atdInTime=new Date();
-			   $scope.mapOptions={"lng":$scope.results[0].location.lng,"lat":$scope.results[0].location.lat};
-			   $scope.lng=$scope.results[0].location.lng;
-			   $scope.lat=$scope.results[0].location.lat;
-		   }
-	 })
 });
 
 
