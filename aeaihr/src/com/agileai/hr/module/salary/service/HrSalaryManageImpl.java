@@ -818,10 +818,13 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 		Date befroreRegularMonth = DateUtil.getDateAdd(DateUtil.getBeginOfMonth(regularTime), DateUtil.DAY, -1);
 		String regularYearMonth = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, regularTime);
 		Date regularYearDecember = DateUtil.getDateAdd(DateUtil.getBeginOfYear(regularTime), DateUtil.MONTH, 11);
+		String inductionDateStr = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, inductionDate);
+		String inductionYear = inductionDateStr.substring(0,4);
 		String regularYearStr = regularYearMonth.substring(0,4);
 		String regularMonthStr = regularYearMonth.substring(5,7);
 		int regularYear = Integer.parseInt(regularYearStr);
 		int regularMonth = Integer.parseInt(regularMonthStr);
+		int inductionYearInt = Integer.parseInt(inductionYear);
 		if(!MapUtil.isNullOrEmpty(beforeYearOffesetVationDaysMap)){
 			List<DataRow> beforeYearOffesetVationDayList = beforeYearOffesetVationDaysMap.get(userId);
 			for(int i=0;i<beforeYearOffesetVationDayList.size();i++){
@@ -831,15 +834,17 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 				String salYear = (String) beforeYearOffesetVationDayRow.get("SAL_YEAR");
 				int salMonthInt = Integer.parseInt(salMonth);
 				int salYearInt = Integer.parseInt(salYear);
-				if(salYearInt!=regularYear){
+				if(salYearInt!=regularYear&&salYearInt!=inductionYearInt){
 					break;
 				}
-				if(salMonthInt<regularMonth){
+				if(inductionYearInt==salYearInt){
 					beforeYearTotalOffsetVationDay = beforeYearTotalOffsetVationDay.add(offsetDecimal);
-				}else if(salMonthInt==regularMonth){
+				}else if(salMonthInt==regularMonth&&salYearInt==regularYear){
 					empProbation =(BigDecimal) beforeYearOffesetVationDayRow.get("EMP_PROBATION"); 
 					validDays = (BigDecimal) beforeYearOffesetVationDayRow.get("SAL_VALID_DAYS");
 					continue;
+				}else if(salYearInt==regularYear&&salMonthInt<regularMonth){
+					beforeYearTotalOffsetVationDay = beforeYearTotalOffsetVationDay.add(offsetDecimal);
 				}else{
 					continue;
 				}
