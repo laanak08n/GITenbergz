@@ -31,7 +31,6 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 		if ("insert".equals(operaType)) {
 			setAttribute("doDetail", true);
 			setAttribute("onlyRead", "");
-			
 		}
 		if ("update".equals(operaType)) {
 			setAttribute("doDetail", true);
@@ -129,9 +128,6 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 		if (this.getAttribute("EMP_ALLOWANCE") == null) {
 			this.setAttribute("EMP_ALLOWANCE", empMoney);
 		}
-		if (this.getAttribute("EMP_ANNUAL_LEAVE_DAYS") == null) {
-			this.setAttribute("EMP_ANNUAL_LEAVE_DAYS", "0");
-		}
 		
 	}
 
@@ -168,10 +164,6 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 	public ViewRenderer doSaveMasterRecordAction(DataParam param) {
 		String operateType = param.get(OperaType.KEY);
 		String responseText = "fail";
-		String annualLeaveDays = param.get("EMP_ANNUAL_LEAVE_DAYS");
-		if(annualLeaveDays == null || annualLeaveDays.isEmpty()){
-			param.put("EMP_ANNUAL_LEAVE_DAYS", "0");
-		}
 		if (OperaType.CREATE.equals(operateType)) {
 			String empCode = param.get("EMP_CODE");
 			DataParam repeatParam = new DataParam("EMP_CODE", empCode);
