@@ -101,6 +101,7 @@
 		and f.STATE = 'approved'
 		group by USER_ID
 		)g on a.USER_ID = g.USER_ID
+		where a.user_code != 'admin' and a.USER_ID not in (select s.USER_ID from security_user_role_rel s LEFT JOIN security_role t on s.role_id = t.role_id where t.role_code='Leader')
 	</select>		
 	
 	<select id="getAttendContentDataRecords" parameterClass="com.agileai.domain.DataParam"
