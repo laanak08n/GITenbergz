@@ -236,6 +236,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 						jsonObject11.put("inTime", inTime);
 					}
 					jsonObject11.put("inPlace", row.stringValue("ATD_IN_PLACE"));
+					jsonObject11.put("inHouse", row.stringValue("ATD_IN_HOUSE"));
 					jsonArray.put(jsonObject11);
 				}
 			}else{
@@ -284,6 +285,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 						jsonObject11.put("inTime", inTime);
 					}
 					jsonObject11.put("inPlace", row.stringValue("ATD_IN_PLACE"));
+					jsonObject11.put("inHouse", row.stringValue("ATD_IN_HOUSE"));
 					jsonArray.put(jsonObject11);
 				}
 			}else{
@@ -332,6 +334,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 						jsonObject11.put("inTime", inTime);
 					}
 					jsonObject11.put("inPlace", row.stringValue("ATD_IN_PLACE"));
+					jsonObject11.put("inHouse", row.stringValue("ATD_IN_HOUSE"));
 					jsonArray.put(jsonObject11);
 				}
 			}else{
@@ -382,6 +385,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 						jsonObject11.put("outTime", outTime);
 					}
 					jsonObject11.put("outPlace", row.stringValue("ATD_OUT_PLACE"));
+					jsonObject11.put("outHouse", row.stringValue("ATD_OUT_HOUSE"));
 					jsonArray.put(jsonObject11);
 				}
 			}else{
@@ -424,6 +428,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 						jsonObject11.put("outTime", outTime);
 					}
 					jsonObject11.put("outPlace", row.stringValue("ATD_OUT_PLACE"));
+					jsonObject11.put("outHouse", row.stringValue("ATD_OUT_HOUSE"));
 					jsonArray.put(jsonObject11);
 				}
 			}else{
@@ -472,6 +477,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 						jsonObject11.put("outTime", outTime);
 					}
 					jsonObject11.put("outPlace", row.stringValue("ATD_OUT_PLACE"));
+					jsonObject11.put("outHouse", row.stringValue("ATD_OUT_HOUSE"));
 					jsonArray.put(jsonObject11);
 				}
 			}else{
