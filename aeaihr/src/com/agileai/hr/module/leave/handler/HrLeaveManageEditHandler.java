@@ -149,7 +149,7 @@ public class HrLeaveManageEditHandler
     	String leaDays = param.get("LEA_DAYS");
     	Double leaDay = Double.parseDouble(leaDays);
     	Long dateDiff = DateUtil.getDateDiff(DateUtil.getDate(leaSdate), DateUtil.getDate(leaEdate), DateUtil.DAY);
-    	if(dateDiff.intValue()<leaDay.intValue()){
+    	if(dateDiff.intValue()+1<leaDay.intValue()){
     		return new AjaxRenderer("leaveDayTooLong");
     	}
 		if (OperaType.CREATE.equals(operateType)){
