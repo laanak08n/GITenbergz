@@ -95,7 +95,7 @@ function saveMasterRecord(){
 </tr>
 <tr>
 	<th width="100" nowrap>加班时长</th>
-	<td><select id="WOT_TIME" label="加班时长" name="WOT_TIME" class="select"><%=pageBean.selectValue("WOT_TIME")%></select>
+	<td><select id="WOT_TIME" label="加班时长" name="WOT_TIME" class="select"><%=pageBean.selectValue("WOT_TIME")%></select>天
 </td>
 </tr>
 <tr>
