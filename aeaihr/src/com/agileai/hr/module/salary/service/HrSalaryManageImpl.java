@@ -520,7 +520,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		DataRow beforeYearDecemberOffsetVationDayRow = beforeYearDecemberOffsetVationDaysMap.get(userId);
 		int annualLeaveDay = row.getInt("EMP_ANNUAL_LEAVE_DAYS",0);
 		Date jan = DateUtil.getBeginOfYear(date);
- 		if(!MapUtil.isNullOrEmpty(beforeMonthOffsetVationDaysMap)){
+ 		if(!MapUtil.isNullOrEmpty(beforeMonthOffSetRow)){
 			beforeMonthOffsetVacationDay = (BigDecimal) beforeMonthOffSetRow.get("SAL_OFFSET_VACATION");
 			if(beforeMonthOffsetVacationDay.compareTo(BigDecimal.ZERO)<0){
 				beforeMonthOffsetVacationDay  = new BigDecimal("0.0");
