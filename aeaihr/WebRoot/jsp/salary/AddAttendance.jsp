@@ -22,18 +22,12 @@ function addDateRow(days,nextDate){
 	initCalendar('EMP_INDUCTION_TIME'+days,'%Y-%m-%d','EMP_INDUCTION_TIMEPicker'+days);
 	datetimeValidators[days].set("yyyy-MM-dd").add("EMP_INDUCTION_TIME"+days);	
 }
-
 function addAttendance(){
 	var days = $("#atdDay tr").length;
-	if(days > 0){
-		var lastDate = $("#EMP_INDUCTION_TIME"+(days-1)).val();
-	}else{
-		
-	}
+	var lastDate = $("#EMP_INDUCTION_TIME"+(days-1)).val();
 	var nextDate = addDay(lastDate);
 	addDateRow(days,nextDate);
 }
-
 function saveAttendance(){
 	var days = $("#atdDay tr").length;
 	for(var i=0; i<days; i++){
@@ -46,6 +40,10 @@ function saveAttendance(){
 		}
 		$("#atdPlace").val($("#attendancePlace").val());
 	}
+	if(checkDate()){
+		showMessage('日期重复，请检查！');
+		return;
+	}
 	var addDay = $("#atdDay tr").length;
 	var data = 'addDay='+addDay;
 	postRequest('form1',{actionType:'save',data:data,onComplete:function(responseText){
@@ -56,7 +54,18 @@ function saveAttendance(){
 		}
 	}});
 }
-
+function checkDate(){
+	var days = $("#atdDay tr").length;
+	for(var i=0; i<days; i++){
+		for(var j=i+1; j<days; j++){
+			if($("#attendanceDate"+i).val() == $("#attendanceDate"+j).val()){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
+}
 function addDay(dateStr){
 	var date = new Date(dateStr);
 	date.setDate(date.getDate()+1);
