@@ -37,7 +37,9 @@ public class MobileOvertimeHandler extends BaseHandler {
 				jsonObject1.put("place", dataRow.get("WOT_PLACE"));
 				jsonObject1.put("time", dataRow.get("WOT_TIME"));
 				jsonObject1.put("timeCompany", dataRow.get("WOT_TIME_COMPANY"));
-				jsonObject1.put("overtimeDate", dataRow.get("WOT_OVERTIME_DATE"));
+				Date overtimeDate = (Date) dataRow.get("WOT_OVERTIME_DATE");
+				String date = DateUtil.getDateByType(DateUtil.YYMMDD_SLANTING, overtimeDate);
+				jsonObject1.put("overtimeDate", date);
 				jsonObject1.put("state", dataRow.get("STATE"));
 				jsonArray.put(jsonObject1);
 			}
