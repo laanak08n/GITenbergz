@@ -312,7 +312,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		if(inAttendDecimal.compareTo(validDay)==-1||outAttendDecimal.compareTo(validDay)==-1){
 			isFullAttend = false;
 		}
-		if(!isLeave&&isFullAttend||DateUtil.getDateDiff(regularTime, date, DateUtil.MONTH)== 0){
+		if(!isLeave&&isFullAttend&&DateUtil.getDateDiff(regularTime, date, DateUtil.MONTH)>0){
 			statementId = sqlNameSpace + "." + "getFulltimeAwardRecord";
 			DataRow dataRow = this.daoHelper.getRecord(statementId, new DataParam());
 			salFullTimeAward = new BigDecimal(dataRow.getString("TYPE_NAME"));
