@@ -15,13 +15,24 @@ angular.module('${menuCode}')
 		$scope.userList = rspJson;
 	});
 	
-	$scope.info = {"userId":"","bpType":"","bpDate": "","bpMonry":"","bpDesc":""};
+	$scope.info = {"bpId":"","userId":"","bpType":"","bpDate": "","bpMonry":"","bpDesc":""};
 	
 	var url = '/aeaihr/services/BonusPenalty/rest/get-record/'+$stateParams.bpId;
 	var promise = AppKit.getJsonApi(url);
 	promise.success(function(rspJson){
 		$scope.info = rspJson;
+		alert($scope.info.userId)
 		$scope.info.bpDate = new Date($scope.info.bpDate);
 	});
-	$stateParams.piId;
+	
+	$scope.updateInfo = function (){
+		var url = "/aeaihr/services/BonusPenalty/rest/update-pun-info/";
+		AppKit.postJsonApi(url,JSON.stringify($scope.info)).then(function(response){
+			if ("success" == response.data){
+				AppKit.successPopup();		
+			}else{
+				AppKit.errorPopup();
+			}
+		});
+	}
 });
