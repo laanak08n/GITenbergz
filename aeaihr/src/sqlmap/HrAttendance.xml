@@ -14,6 +14,12 @@
 		<isNotEmpty prepend=" " property="adtDate">
 			and ATD_DATE=#adtDate#
 		</isNotEmpty>
+		<isNotEmpty prepend=" " property="sdate">
+			and ATD_DATE &gt;= #sdate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="edate">
+			and ATD_DATE &lt;= #edate#
+		</isNotEmpty>
 		<isNotEmpty prepend=" " property="expression">
 			$expression$ order by ATD_OUT_TIME
 		</isNotEmpty>		
