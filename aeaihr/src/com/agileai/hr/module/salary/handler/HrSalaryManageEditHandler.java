@@ -64,10 +64,12 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 		BigDecimal salRegularDayMoney = new BigDecimal("0.0000");
 		BigDecimal salPerformance = (BigDecimal) record.get("SAL_PERFORMANCE");
 		BigDecimal salSubsidy = (BigDecimal)record.get("SAL_SUBSIDY");
-		if(DateUtil.getDateDiff(regularDate, salDate, DateUtil.DAY) >= 0){
+		if(DateUtil.getDateDiff(regularDate, salDate, DateUtil.MONTH) > 0){
 			salRegularDayMoney = salTotal.divide(validDays,4,RoundingMode.HALF_UP);
 		}else if(DateUtil.getDateDiff(regularDate, salDate, DateUtil.MONTH) == 0){
-			salProbationDayMoney = salProbation.divide(validDays, 4, RoundingMode.HALF_UP);
+			if (regularDate.compareTo(salDate) != -1){
+				salProbationDayMoney = salProbation.divide(validDays, 4, RoundingMode.HALF_UP);
+			}
 			salRegularDayMoney = (salRegular.add(salPerformance).add(salSubsidy)).divide(validDays, 4, RoundingMode.HALF_UP);
 		}else{
 			salProbationDayMoney = salProbation.divide(validDays, 4, RoundingMode.HALF_UP);
