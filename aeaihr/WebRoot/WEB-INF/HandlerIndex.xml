@@ -55,10 +55,13 @@
 	<bean id="HrWorkPerformanceEditBox" module="information" ></bean>
 	<bean id="HrLeaveManageList" module="leave" ></bean>
 	<bean id="HrLeaveManageEdit" module="leave" ></bean>
+	<bean id="MobileLeave" module="leave" ></bean>
 	<bean id="HrSalaryManageList" module="salary" ></bean>
 	<bean id="HrSalaryManageEdit" module="salary" ></bean>
 	<bean id="HrValidDays" module="salary" ></bean>
+	<bean id="MobileSalary" module="salary" ></bean>
 	<bean id="HrWorkOvertimeManageList" module="workovertime" ></bean>
 	<bean id="HrWorkOvertimeManageEdit" module="workovertime" ></bean>
 	<bean id="UserListSelectList" module="workovertime" ></bean>
+	<bean id="MobileOvertime" module="workovertime" ></bean>
 </Handlers>
