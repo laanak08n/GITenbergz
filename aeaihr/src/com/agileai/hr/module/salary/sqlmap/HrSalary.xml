@@ -411,4 +411,19 @@ where USER_ID = #USER_ID# and BP_DATE = #BP_DATE# and BP_TYPE = #BP_TYPE#
 		and date_format(BP_DATE,'%Y-%m') = #yearMonth#
 		and BP_DATE !=#date#
 	</select>	   					
+	<select id="getBonusFulltimeRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select BP_ID,USER_ID,BP_DATE,BP_TYPE,BP_MONEY,BP_DESC
+		from hr_bonus_penalty
+		where 1=1
+		and BP_TYPE = 'FULLTIME'
+		and USER_ID = #USER_ID#
+		and date_format(BP_DATE,'%Y%m') = #yearMonth#
+	</select>
+	<delete id="deleteBonusFulltimeRecord" parameterClass="com.agileai.domain.DataParam">
+		delete from hr_bonus_penalty
+		where USER_ID = #USER_ID#
+		and date_format(BP_DATE,'%Y%m') = #yearMonth#
+		and BP_TYPE = 'FULLTIME'
+	</delete>	   					
 </sqlMap>

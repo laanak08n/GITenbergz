@@ -79,7 +79,8 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 	public void gatherData(String year, String month) {
 		String statementId = "";
 		String yearMonth = year + "-" + month;
-		Date date = DateUtil.getDate(yearMonth + "-01");
+		String yearMonthDay = yearMonth + "-01";
+		Date date = DateUtil.getDate(yearMonthDay);
 		String  currentDate = yearMonth + "-31";
 		Date lastDateMonth = DateUtil.getDate(currentDate);
 		String beginOfYearDate = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getBeginOfYear(date));
@@ -149,7 +150,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				"USER_ID", statementId, new DataParam("BP_DATE",date,"BP_TYPE","ADDITIONALVATION"));
 		statementId = sqlNameSpace+ "." + "findAttendanceRecords";
 		HashMap<String,DataRow> attendanceRecordMap = this.daoHelper.queryRecords(
-				"USER_ID",statementId, new DataParam("sdate",date,"edate",currentDate));
+				"USER_ID",statementId, new DataParam("sdate",yearMonthDay,"edate",currentDate));
 		statementId = sqlNameSpace+ "." +"getFulltimeAwardRecord";
 		DataRow fulltimeAward = this.daoHelper.getRecord(statementId, new DataParam());
 		BigDecimal validDayDecimal = (BigDecimal) validDaysRow.get("VALID_DAYS");
@@ -764,14 +765,26 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 		BigDecimal probationAdditionalVationSalary = (BigDecimal) dataParam.getObject("probationAdditionalVationSalary");
 		BigDecimal totalOffsetDays = (BigDecimal) dataParam.getObject("salOffsetVacation");
 		boolean isCanOverRun  = (totalOffsetDays.compareTo(BigDecimal.ZERO)<0);
+		
+		String statementId = sqlNameSpace+"."+"getBonusFulltimeRecord";
+		DataParam queryParam = new DataParam();
+		queryParam.put("USER_ID", userId);
+		queryParam.put("yearMonth", DateUtil.getDateByType(13, date));
+		DataRow result = this.daoHelper.getRecord(statementId, queryParam);
 		if(!isLeave&&isFullTime&&isRegular){
 			salAuthal = salAuthal.add(fullTimeAward);
-			fullTimeParam.put("BP_ID",KeyGenerator.instance().genKey());
-			fullTimeParam.put("USER_ID",userId);
-			fullTimeParam.put("BP_DATE",date);
-			fullTimeParam.put("BP_TYPE","FULLTIME");
-			fullTimeParam.put("BP_MONEY",fulltimeAwardMoney);
 			salBonus = salBonus.add(BigDecimal.valueOf(fulltimeAwardMoney));
+			
+			if (MapUtil.isNullOrEmpty(result)){
+				fullTimeParam.put("BP_ID",KeyGenerator.instance().genKey());
+				fullTimeParam.put("USER_ID",userId);
+				fullTimeParam.put("BP_DATE",date);
+				fullTimeParam.put("BP_TYPE","FULLTIME");
+				fullTimeParam.put("BP_MONEY",fulltimeAwardMoney);
+			}
+		} else {
+			statementId = sqlNameSpace+"."+"deleteBonusFulltimeRecord";
+			this.daoHelper.deleteRecords(statementId, queryParam);
 		}
 		if(isFeb&&isAutoAdditionalVation){
 			additionalVationParam.put("BP_ID",KeyGenerator.instance().genKey());
