@@ -65,7 +65,6 @@
 		  SELECT USER_ID,USER_NAME,USER_CODE
 		from security_user
 		where 1 = 1
-		and USER_ID != #userId#
 		order by USER_CODE 
 	</select>
 	

@@ -17,7 +17,7 @@ public interface HrAttendanceManage
 	public List<DataRow> getOverworkContentData(String code, String date);
 	public void createLocationRecord(DataParam param);
 	public List<DataRow> findCurrentDaySigninInfos (String adtDate);
-	public List<DataRow> findUserInfos(String userId);
+	public List<DataRow> findUserInfos();
 	public List<DataRow> findSignLocationInfos(String userId);
 	public List<DataRow> findCurrentDaySignOutInfos(String expression,String adtDate);
 }

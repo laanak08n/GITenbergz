@@ -487,9 +487,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     public ViewRenderer findUserInfos(DataParam param){
     	String responseText = null;
     	try {
-    		User user = (User)this.getUser();
-    		String userId = user.getUserId();
-    		List<DataRow> records = getService().findUserInfos(userId);
+    		List<DataRow> records = getService().findUserInfos();
     		JSONObject jsonObject = new JSONObject();
     		JSONArray jsonArray = new JSONArray();
     		if(records.size() != 0){
@@ -506,13 +504,6 @@ public class MobileAttendanceHandler extends BaseHandler {
 				jsonObject11.put("userName", "无");
 				jsonArray.put(jsonObject11);
 			}
-    		JSONArray jsonArray1 = new JSONArray();
-    		JSONObject jsonObject1 = new JSONObject();
-    		jsonObject1.put("userName", user.getUserName());
-    		jsonObject1.put("userCode", user.getUserCode());
-    		jsonObject1.put("userId", userId);
-    		jsonArray1.put(jsonObject1);
-    		jsonObject.put("user", jsonArray1);
     		jsonObject.put("userInfos", jsonArray);
         	responseText = jsonObject.toString();
 		} catch (Exception e) {

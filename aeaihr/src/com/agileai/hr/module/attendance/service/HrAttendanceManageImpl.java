@@ -119,10 +119,9 @@ public class HrAttendanceManageImpl
 	}
 
 	@Override
-	public List<DataRow> findUserInfos(String userId) {
-		DataParam param = new DataParam("userId",userId);
+	public List<DataRow> findUserInfos() {
 		String statementId = sqlNameSpace+"."+"findUserInfos";
-		List<DataRow> records = this.daoHelper.queryRecords(statementId, param);
+		List<DataRow> records = this.daoHelper.queryRecords(statementId, new DataParam());
 		return records;
 	}
 
