@@ -160,6 +160,13 @@ public class HrSalaryManageListHandler extends StandardListHandler {
 		getService().revokeApprovalRecords(salId);
 		return prepareDisplay(param);
 	}
+	@PageAction
+	public ViewRenderer annualLeaveRecalculation(DataParam param){
+		String year = param.get("SAL_YEAR");
+		String month = param.get("SAL_MONTH");
+		getService().recalculation(year,month,null);
+		return prepareDisplay(param);
+	}
 
 	
 }

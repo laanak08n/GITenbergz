@@ -18,6 +18,7 @@ import com.agileai.hr.cxmodule.HrSalaryManage;
 import com.agileai.util.DateUtil;
 import com.agileai.util.ListUtil;
 import com.agileai.util.MapUtil;
+import com.agileai.util.StringUtil;
 
 public class HrSalaryManageImpl extends StandardServiceImpl implements
 		HrSalaryManage {
@@ -989,7 +990,7 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 	}
 
 	@Override
-	public void recalculation(String year,String month,String userId) {
+	public void recalculation(String year,String month,String userId){
 		DataParam updateParam = new DataParam();
 		String dateStr = year+"-"+month+"-31";
 		String currentDateStr = year+"-"+month+"-01";
@@ -1007,106 +1008,7 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 		String beginOfYearDateStr = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, jan);
 		String beforeMonthLastDayStr = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL,beforeMonthLastDay);
 		String beforeMonth = beforeMonthLastDayStr.substring(0,7);
-		String statementId = sqlNameSpace+"."+"getUserAnnualLeaveDays";
-		DataRow userAnnualLeaveDaysRow = this.daoHelper.getRecord(statementId, new DataParam("userId",userId));
-		statementId = sqlNameSpace + "." + "currentMonthLeaveDayRecords";
-		HashMap<String,List<DataRow>> currentMonthDaysMap = queryRecords(
-				"USER_ID", statementId, new DataParam("yearMonth",yearMonth));
-		statementId = sqlNameSpace + "." + "findOverTimeRecords";
-		HashMap<String,List<DataRow>> overTimeRecordMap = queryRecords(
-				"USER_ID",statementId, new DataParam("yearMonth",yearMonth));
-		HashMap<String,List<DataRow>> beforeMonthOverTimeRecordsMap = queryRecords(
-				"USER_ID", statementId, new DataParam("yearMonth",beforeMonth));
-		statementId = sqlNameSpace+"."+"leaveDayRecords";
-		DataRow leaveDaysRow = this.daoHelper.getRecord(statementId, new DataParam("userId",userId,"sdate",beginOfYearDateStr,"edate",beforeMonthLastDayStr));
-		statementId = sqlNameSpace+"."+"overTimeDayRecords";
-		DataRow overTimeRow = this.daoHelper.getRecord(statementId, new DataParam("userId",userId,"sdate",beginOfYearDateStr,"edate",beforeMonthLastDayStr));
-		HashMap<String,DataRow> totalOverTimeDaysMap =  this.daoHelper.queryRecords("USER_ID", statementId, new DataParam("yearMonth",yearMonth));
-		statementId = sqlNameSpace+"."+"getMonthlyInfo";
-		DataRow monthlyInfoRow = this.daoHelper.getRecord(statementId, new DataParam("year",year,"month",month,"userId",userId));
-		Date regularTime = (Date)userAnnualLeaveDaysRow.get("EMP_REGULAR_TIME");
-		String annualLeaveDays = (String) userAnnualLeaveDaysRow.get("EMP_ANNUAL_LEAVE_DAYS");
-		BigDecimal annualLeaveDaysDecimal = new BigDecimal(annualLeaveDays);
-		List<DataRow> beforeMonthOverTimeRecords = null;
-		DataParam param = new DataParam();
-		if(!MapUtil.isNullOrEmpty(overTimeRow)){
-			totalOverTimeDays = (Double) overTimeRow.get("WOT_DAYS");
-		}
-		if(!MapUtil.isNullOrEmpty(leaveDaysRow)){
-			totalLeaveDays = (Double) leaveDaysRow.get("LEAVE_DAYS");
-		}
-		param = calculateLeaveDays(param, regularTime,userId,null,null,currentMonthDaysMap);
-		param = buildOverTimeRecords(param,regularTime,date,currentDate, userId,totalOverTimeDaysMap,overTimeRecordMap,null);
-		BigDecimal thisMonthTotalOverDayDecimal = (BigDecimal) param.getObject("thisMonthTotalOverDayDecimal");
-		Double totalRegulationOverTime = (Double) param.getObject("totalRegulationOverTime");
-		Double totalProbationOverTime = (Double) param.getObject("totalProbationOverTime");
-		Double regulationLeaveDay = (Double) param.getObject("regulationLeaveDay");
-		Double probationLeaveDay = (Double) param.getObject("probationLeaveDay");
-		Double totalLeaveDay = (Double) param.getObject("totalLeaveDay");
-		if(DateUtil.getDateDiff(jan, date, DateUtil.DAY)==0){
-			totalOffsetDayDecimal = BigDecimal.valueOf(totalOverTimeDays-totalLeaveDays).add(annualLeaveDaysDecimal);
-		}else if(DateUtil.getDateDiff(regularTime, date, DateUtil.MONTH)>0){
-			totalOffsetDayDecimal = thisMonthTotalOverDayDecimal.subtract(BigDecimal.valueOf(totalLeaveDay)).subtract(BigDecimal.valueOf(totalLeaveDays)).add(annualLeaveDaysDecimal).add(BigDecimal.valueOf(totalOverTimeDays));
-		}else if(DateUtil.getDateDiff(regularTime, date, DateUtil.MONTH)==0){
-			Double probationOffsetVacationDay = totalProbationOverTime-probationLeaveDay;
-			Double regulartionOffsetVacationDay = totalRegulationOverTime-regulationLeaveDay+annualLeaveDaysDecimal.doubleValue();
-			if(probationOffsetVacationDay<0){
-				probationOffsetVacationDay = probationOffsetVacationDay+totalOverTimeDays-totalLeaveDays;
-				if(probationOffsetVacationDay<0){
-					totalOffsetDayDecimal = BigDecimal.valueOf(regulartionOffsetVacationDay);
-				}else{
-					totalOffsetDayDecimal = thisMonthTotalOverDayDecimal.subtract(BigDecimal.valueOf(totalLeaveDay)).subtract(BigDecimal.valueOf(totalLeaveDays)).add(annualLeaveDaysDecimal).add(BigDecimal.valueOf(totalOverTimeDays));
-				}
-			}else{
-				totalOffsetDayDecimal = thisMonthTotalOverDayDecimal.subtract(BigDecimal.valueOf(totalLeaveDay)).subtract(BigDecimal.valueOf(totalLeaveDays)).add(annualLeaveDaysDecimal).add(BigDecimal.valueOf(totalOverTimeDays));
-			}	
-		}else{
-			totalOffsetDayDecimal = thisMonthTotalOverDayDecimal.subtract(BigDecimal.valueOf(totalLeaveDay)).subtract(BigDecimal.valueOf(totalLeaveDays)).add(BigDecimal.valueOf(totalOverTimeDays));
-		}
-		if(!MapUtil.isNullOrEmpty(beforeMonthOverTimeRecordsMap)){
-			beforeMonthOverTimeRecords = beforeMonthOverTimeRecordsMap.get(userId);
-		}
-		if(!ListUtil.isNullOrEmpty(beforeMonthOverTimeRecords)){
-			DataRow beforeMonthOverTimeRow = beforeMonthOverTimeRecords.get(beforeMonthOverTimeRecords.size()-1);
-			String beforeMonthOverTimeStr = beforeMonthOverTimeRow.getString("WOT_TIME");
-			beforeMonthWotDate = (Date) beforeMonthOverTimeRow.get("WOT_DATE");
-			beforeMonthWotTime = Double.parseDouble(beforeMonthOverTimeStr);
-			if(beforeMonthWotTime>=2){
-				Date beforeMonthOverTimeDate = DateUtil.getDateAdd(beforeMonthWotDate, DateUtil.DAY, beforeMonthWotTime.intValue());
-				Long beforeMonthOverDay = DateUtil.getDateDiff(date,beforeMonthOverTimeDate, DateUtil.DAY);
-				if(beforeMonthOverDay>0){
-					beforeMonthOverDayDecimal = BigDecimal.valueOf(beforeMonthOverDay+1);
-				}
-			}else{
-				beforeMonthOverDayDecimal = new BigDecimal("0.0");
-			}
-		}
-		updateParam.put("SAL_ID",monthlyInfoRow.get("SAL_ID"));
-		updateParam.put("SAL_OFFSET_VACATION",totalOffsetDayDecimal);
-		updateParam.put("SAL_OVERTIME",thisMonthTotalOverDayDecimal.add(beforeMonthOverDayDecimal));
-		updateParam.put("SAL_LEAVE",totalLeaveDay);
-		statementId = sqlNameSpace+"."+"updateOffsetVacationrecord";
-		this.daoHelper.updateRecord(statementId, updateParam);
-	}
-	@Override
-	public void recalculation(String year,String month){
-		DataParam updateParam = new DataParam();
-		String dateStr = year+"-"+month+"-31";
-		String currentDateStr = year+"-"+month+"-01";
-		Date date = DateUtil.getDate(currentDateStr);
-		Date jan = DateUtil.getBeginOfYear(date);
-		Double totalOverTimeDays = 0.0;
-		Double totalLeaveDays = 0.0;
-		BigDecimal totalOffsetDayDecimal = new BigDecimal(0.0);
-		BigDecimal beforeMonthOverDayDecimal = new BigDecimal(0.0);
-		Date beforeMonthWotDate = new Date();
-		Double beforeMonthWotTime = 0.0;
-		Date currentDate = DateUtil.getDate(dateStr);
-		Date beforeMonthLastDay = DateUtil.getDateAdd(date, DateUtil.DAY, -1);
-		String yearMonth = year+"-"+month;
-		String beginOfYearDateStr = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, jan);
-		String beforeMonthLastDayStr = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL,beforeMonthLastDay);
-		String beforeMonth = beforeMonthLastDayStr.substring(0,7);
+		
 		String statementId =  sqlNameSpace+"."+"findMasterDaysRecords";
 		List<DataRow> empList = this.daoHelper.queryRecords(statementId, new DataParam("year",year,"month",month));
 		statementId = sqlNameSpace+"."+"getUserAnnualLeaveDays";
@@ -1129,7 +1031,12 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 		List<DataParam> updateParamList = new ArrayList<DataParam>();
 		for(int i=0;i<empList.size();i++){
 			DataRow row = empList.get(i);
-			String userId = row.getString("USER_ID");
+			String newUserId = row.getString("USER_ID");
+			if(!StringUtil.isNullOrEmpty(userId)&&!newUserId.equals(userId)){
+				continue;
+			}else if(StringUtil.isNullOrEmpty(userId)){
+				userId = newUserId;
+			}
 			DataRow userAnnualLeaveDaysRow = new DataRow();
 			DataRow overTimeRow = new DataRow();
 			DataRow leaveDaysRow = new DataRow();
