@@ -50,7 +50,8 @@ function revokeApproval(){
    <aeai:previlege code="validDays"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="setValidDays()" ><input value="&nbsp;" title="设置有效天数" type="button" class="validdaysImgBtn" />设置有效天数</td></aeai:previlege>
    <aeai:previlege code="delete"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input id="deleteImgBtn" value="&nbsp;" title="删除"  type="button"  class="delImgBtn" />删除</td></aeai:previlege>
    <%}%>
-   <aeai:previlege code="detail"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td></aeai:previlege>    
+   <aeai:previlege code="detail"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td></aeai:previlege>
+   <aeai:previlege code="reset"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="doSubmit({actionType:'annualLeaveRecalculation'})"><input value="&nbsp;" type="button" class="resetPasswordImgBtn" id="resetPasswordImgBtn" title="抵扣假期重新计算" />抵扣假期重新计算</td></aeai:previlege>    
 </tr>
 </table>
 </div>
