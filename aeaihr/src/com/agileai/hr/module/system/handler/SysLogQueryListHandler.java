@@ -23,7 +23,7 @@ public class SysLogQueryListHandler extends QueryModelListHandler{
 		User user = (User) getUser();
 		String userCode = user.getUserCode();
 		if(!"admin".equals(userCode)){
-			param.put("userId", userCode);
+			param.put("USER_ID", userCode);
 		}
 		mergeParam(param);
 		initParameters(param);
