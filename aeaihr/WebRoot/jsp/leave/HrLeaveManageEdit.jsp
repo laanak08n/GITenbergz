@@ -25,12 +25,12 @@ function save(){
 		showMessage("日期错误，不能进行跨月请假");
 	}else{
 		postRequest('form1',{actionType:'save',onComplete:function(responseText){
-			if ("success" == responseText){
+			if("leaveDayTooLong"== responseText){
+				showMessage("请假时长过长，请确认！");
+			}else if ("fail" != responseText){
 				$('#operaType').val('update');
 				$('#LEA_ID').val(responseText);
 				doSubmit({actionType:'prepareDisplay'});
-			}else if("leaveDayTooLong"== responseText){
-				showMessage("请假时长过长，请确认！");
 			}
 		}});
 	}
