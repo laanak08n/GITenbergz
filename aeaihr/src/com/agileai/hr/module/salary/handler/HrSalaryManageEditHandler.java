@@ -21,7 +21,6 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 	public ViewRenderer prepareDisplay(DataParam param) {
 		String operaType = param.get(OperaType.KEY);
 		DataRow record = getService().getRecord(param);
-		
 		if ("approve".equals(operaType)) {
 			setAttribute("isComeFromApprove", true);
 
@@ -46,7 +45,7 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 			}
 			setAttribute("hasRight", true);
 		}
-		Date salDate = DateUtil.getDate(param.get("salDate")+"-01");
+		Date salDate = DateUtil.getDate(param.get("salYear")+"-"+param.get("salMonth")+"-01");
 		Date inductionDate = (Date)record.get("EMP_INDUCTION_TIME");
 		Date regularDate = (Date)record.get("EMP_REGULAR_TIME");
 		BigDecimal salProbation = (BigDecimal) record.get("SAL_PROBATION");
