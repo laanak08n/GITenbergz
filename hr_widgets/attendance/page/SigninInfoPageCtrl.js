@@ -32,20 +32,29 @@ angular.module('${menuCode}')
 	}
 	
 	$scope.doConfirm=function(){
-		if($scope.atdInTime&&$scope.titleName){
-			var parameterJson={"lng":$scope.lng,"lat":$scope.lat,"name":$scope.titleName,"address":$scope.titleAddress};
-			var parameter=JSON.stringify(parameterJson); 
-			var url ='/aeaihr/services/Attendance/rest/signIn';
-			AppKit.postJsonApi(url,parameter).then(function(rspJson){
-				if("success"==rspJson.data){
-					AppKit.successPopup({"title":"签到成功!"});
-					$state.go("tab.home");
-				}
-				AppKit.hideMask();
-			}); 
-		}else{
-			AppKit.successPopup({"title":"地址不能为空!"});
-		}
+		AppKit.isLogin().success(function(data, status, headers, config){
+			if (data.result=='true'){
+				$scope.userLogin = "isLogin";
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/hr/index.cv#/tab/home",
+					"success":function(){
+						if($scope.atdInTime&&$scope.titleName){
+							var parameterJson={"lng":$scope.lng,"lat":$scope.lat,"name":$scope.titleName,"address":$scope.titleAddress};
+							var parameter=JSON.stringify(parameterJson); 
+							var url ='/aeaihr/services/Attendance/rest/signIn';
+							AppKit.postJsonApi(url,parameter).then(function(rspJson){
+								if("success"==rspJson.data){
+									AppKit.successPopup({"title":"签到成功!"});
+									$state.go("tab.home");
+								}
+								AppKit.hideMask();
+							}); 
+						}else{
+							AppKit.successPopup({"title":"地址不能为空!"});
+						}
+					}
+				})
+			}
+		})
 	}
 	
 	 var watcher=$rootScope.$watch("cpoint",function(newVal,oldVal){
