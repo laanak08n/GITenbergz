@@ -162,8 +162,9 @@ public class HrSalaryManageListHandler extends StandardListHandler {
 	}
 	@PageAction
 	public ViewRenderer annualLeaveRecalculation(DataParam param){
-		String year = param.get("SAL_YEAR");
-		String month = param.get("SAL_MONTH");
+		String salDate = param.get("salDate");
+		String year = salDate.substring(0,4);
+		String month = salDate.substring(5,7);
 		getService().recalculation(year,month,null);
 		return prepareDisplay(param);
 	}

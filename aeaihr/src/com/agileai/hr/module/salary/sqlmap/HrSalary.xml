@@ -343,10 +343,9 @@
 	</select>
 	<select id="findRewardtRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		select SUM(BP_MONEY) as MONEY
+		select SUM(BP_MONEY) as MONEY,USER_ID
 		from hr_bonus_penalty
 		where 1=1
-		and USER_ID = #USER_ID#
 		and BP_TYPE = 'REWARD'
 		and date_format(BP_DATE,'%Y-%m') = #yearMonth#
 	</select>
@@ -401,5 +400,13 @@ where USER_ID = #USER_ID# and BP_DATE = #BP_DATE# and BP_TYPE = #BP_TYPE#
 		and ATD_DATE &lt;= #edate#
 		group by USER_ID
 	</select>
-		   					
+	<select id="findAdditionalVationRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select SUM(BP_MONEY) as MONEY,USER_ID
+		from hr_bonus_penalty
+		where 1=1
+		and BP_TYPE = 'REWARD'
+		and date_format(BP_DATE,'%Y-%m') = #yearMonth#
+		and BP_DATE !=#date#
+	</select>	   					
 </sqlMap>
