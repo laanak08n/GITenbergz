@@ -5,7 +5,7 @@ import java.util.List;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.bizmoduler.core.StandardServiceImpl;
-import com.agileai.hr.module.leave.service.HrLeaveManage;
+import com.agileai.hr.cxmodule.HrLeaveManage;
 
 public class HrLeaveManageImpl
         extends StandardServiceImpl

@@ -14,7 +14,7 @@ import com.agileai.hotweb.controller.core.BaseHandler;
 import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.module.leave.service.HrLeaveManage;
+import com.agileai.hr.cxmodule.HrLeaveManage;
 import com.agileai.util.DateUtil;
 
 public class MobileLeaveHandler extends BaseHandler {

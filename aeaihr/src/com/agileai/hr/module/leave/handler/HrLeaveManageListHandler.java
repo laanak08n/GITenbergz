@@ -12,7 +12,7 @@ import com.agileai.hotweb.renders.DispatchRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.common.PrivilegeHelper;
-import com.agileai.hr.module.leave.service.HrLeaveManage;
+import com.agileai.hr.cxmodule.HrLeaveManage;
 import com.agileai.util.DateUtil;
 
 public class HrLeaveManageListHandler
