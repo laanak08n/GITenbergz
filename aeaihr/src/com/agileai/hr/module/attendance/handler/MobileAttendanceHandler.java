@@ -1,7 +1,9 @@
 package com.agileai.hr.module.attendance.handler;
 
 import java.util.Date;
+import java.util.List;
 
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.agileai.domain.DataParam;
@@ -175,6 +177,343 @@ public class MobileAttendanceHandler extends BaseHandler {
     		String locatTime = DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, new Date());
     		jsonObject.put("locatTime", locatTime);
     		
+        	responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return new AjaxRenderer(responseText);
+    }
+    
+    @PageAction
+    public ViewRenderer findCurrentDaySigninInfos(DataParam param){
+    	String responseText = null;
+    	try {
+    		String currentDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,new Date());
+    		String weekText = DateUtil.getWeekText(new Date());
+    		List<DataRow> records = getService().findCurrentDaySigninInfos(currentDate);
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+    		if(records.size() != 0){
+				for(int i=0;i<records.size();i++){
+					DataRow row = records.get(i);
+					JSONObject jsonObject11 = new JSONObject();
+					jsonObject11.put("name", row.stringValue("USER_ID_NAME"));
+					String inTime = row.stringValue("ATD_IN_TIME");
+					if(!inTime.isEmpty()){
+						jsonObject11.put("inTime", inTime.substring(11, 16));
+					}else{
+						jsonObject11.put("inTime", inTime);
+					}
+					jsonObject11.put("inPlace", row.stringValue("ATD_IN_PLACE"));
+					jsonArray.put(jsonObject11);
+				}
+			}else{
+				JSONObject jsonObject11 = new JSONObject();
+				jsonObject11.put("name", "无");
+				jsonArray.put(jsonObject11);
+			}
+    		
+    		jsonObject.put("signInfos", jsonArray);
+    		jsonObject.put("signInDate", currentDate);
+    		jsonObject.put("weekText", weekText);
+        	responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return new AjaxRenderer(responseText);
+    }
+    
+    @PageAction
+    public ViewRenderer findLastDaySigninInfos(DataParam param){
+    	String responseText = null;
+    	try {
+    		String date = param.get("date");
+    		if("null".equals(date) || null == date){
+    			date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,DateUtil.getDateAdd(new Date(), DateUtil.DAY, -1));
+    		}else{
+    			date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,DateUtil.getDateAdd(DateUtil.getDateTime(date), DateUtil.DAY, -1));
+    		}
+    		String weekText = DateUtil.getWeekText(DateUtil.getDateTime(date));
+    		List<DataRow> records = getService().findCurrentDaySigninInfos(date);
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+    		if(records.size() != 0){
+				for(int i=0;i<records.size();i++){
+					DataRow row = records.get(i);
+					JSONObject jsonObject11 = new JSONObject();
+					jsonObject11.put("name", row.stringValue("USER_ID_NAME"));
+					String inTime = row.stringValue("ATD_IN_TIME");
+					if(!inTime.isEmpty()){
+						jsonObject11.put("inTime", inTime.substring(11, 16));
+					}else{
+						jsonObject11.put("inTime", inTime);
+					}
+					jsonObject11.put("inPlace", row.stringValue("ATD_IN_PLACE"));
+					jsonArray.put(jsonObject11);
+				}
+			}else{
+				JSONObject jsonObject11 = new JSONObject();
+				jsonObject11.put("name", "无");
+				jsonArray.put(jsonObject11);
+			}
+    		
+    		jsonObject.put("signInfos", jsonArray);
+    		jsonObject.put("signInDate", date);
+    		jsonObject.put("weekText", weekText);
+        	responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return new AjaxRenderer(responseText);
+    }
+    
+    @PageAction
+    public ViewRenderer findFollowDaySigninInfos(DataParam param){
+    	String responseText = null;
+    	try {
+    		String date = param.get("date");
+    		if("null".equals(date) || null == date){
+    			date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,DateUtil.getDateAdd(new Date(), DateUtil.DAY, 1));
+    		}else{
+    			date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,DateUtil.getDateAdd(DateUtil.getDateTime(date), DateUtil.DAY, 1));
+    		}
+    		String weekText = DateUtil.getWeekText(DateUtil.getDateTime(date));
+    		List<DataRow> records = getService().findCurrentDaySigninInfos(date);
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+    		if(records.size() != 0){
+				for(int i=0;i<records.size();i++){
+					DataRow row = records.get(i);
+					JSONObject jsonObject11 = new JSONObject();
+					jsonObject11.put("name", row.stringValue("USER_ID_NAME"));
+					String inTime = row.stringValue("ATD_IN_TIME");
+					if(!inTime.isEmpty()){
+						jsonObject11.put("inTime", inTime.substring(11, 16));
+					}else{
+						jsonObject11.put("inTime", inTime);
+					}
+					jsonObject11.put("inPlace", row.stringValue("ATD_IN_PLACE"));
+					jsonArray.put(jsonObject11);
+				}
+			}else{
+				JSONObject jsonObject11 = new JSONObject();
+				jsonObject11.put("name", "无");
+				jsonArray.put(jsonObject11);
+			}
+    		
+    		jsonObject.put("signInfos", jsonArray);
+    		jsonObject.put("signInDate", date);
+    		jsonObject.put("weekText", weekText);
+        	responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return new AjaxRenderer(responseText);
+    }
+    
+    
+    @PageAction
+    public ViewRenderer findLastDaySignOutInfos(DataParam param){
+    	String responseText = null;
+    	try {
+    		String date = param.get("date");
+    		if("null".equals(date) || null == date){
+    			date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,DateUtil.getDateAdd(new Date(), DateUtil.DAY, -1));
+    		}else{
+    			date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,DateUtil.getDateAdd(DateUtil.getDateTime(date), DateUtil.DAY, -1));
+    		}
+    		String weekText = DateUtil.getWeekText(DateUtil.getDateTime(date));
+    		String expression = "and ATD_OUT_TIME is not null";
+    		List<DataRow> records = getService().findCurrentDaySignOutInfos(expression,date);
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+    		if(records.size() != 0){
+				for(int i=0;i<records.size();i++){
+					DataRow row = records.get(i);
+					JSONObject jsonObject11 = new JSONObject();
+					jsonObject11.put("name", row.stringValue("USER_ID_NAME"));
+					String outTime = row.stringValue("ATD_OUT_TIME");
+					if(!outTime.isEmpty()){
+						jsonObject11.put("outTime", outTime.substring(11, 16));
+					}else{
+						jsonObject11.put("outTime", outTime);
+					}
+					jsonObject11.put("outPlace", row.stringValue("ATD_OUT_PLACE"));
+					jsonArray.put(jsonObject11);
+				}
+			}else{
+				JSONObject jsonObject11 = new JSONObject();
+				jsonObject11.put("name", "无");
+				jsonArray.put(jsonObject11);
+			}
+    		
+    		jsonObject.put("signOutInfos", jsonArray);
+    		jsonObject.put("signOutDate", date);
+    		jsonObject.put("outWeekText", weekText);
+        	responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return new AjaxRenderer(responseText);
+    }
+    
+    @PageAction
+    public ViewRenderer findCurrentDaySignOutInfos(DataParam param){
+    	String responseText = null;
+    	try {
+    		String currentDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,new Date());
+    		String weekText = DateUtil.getWeekText(new Date());
+    		String expression = "and ATD_OUT_TIME is not null";
+    		List<DataRow> records = getService().findCurrentDaySignOutInfos(expression,currentDate);
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+    		if(records.size() != 0){
+				for(int i=0;i<records.size();i++){
+					DataRow row = records.get(i);
+					JSONObject jsonObject11 = new JSONObject();
+					jsonObject11.put("name", row.stringValue("USER_ID_NAME"));
+					String outTime = row.stringValue("ATD_OUT_TIME");
+					if(!outTime.isEmpty()){
+						jsonObject11.put("outTime", outTime.substring(11, 16));
+					}else{
+						jsonObject11.put("outTime", outTime);
+					}
+					jsonObject11.put("outPlace", row.stringValue("ATD_OUT_PLACE"));
+					jsonArray.put(jsonObject11);
+				}
+			}else{
+				JSONObject jsonObject11 = new JSONObject();
+				jsonObject11.put("name", "无");
+				jsonArray.put(jsonObject11);
+			}
+    		
+    		jsonObject.put("signOutInfos", jsonArray);
+    		jsonObject.put("signOutDate", currentDate);
+    		jsonObject.put("outWeekText", weekText);
+        	responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return new AjaxRenderer(responseText);
+    }
+    
+    @PageAction
+    public ViewRenderer findFollowDaySignOutInfos(DataParam param){
+    	String responseText = null;
+    	try {
+    		String date = param.get("date");
+    		if("null".equals(date) || null == date){
+    			date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,DateUtil.getDateAdd(new Date(), DateUtil.DAY, 1));
+    		}else{
+    			date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,DateUtil.getDateAdd(DateUtil.getDateTime(date), DateUtil.DAY, 1));
+    		}
+    		String weekText = DateUtil.getWeekText(DateUtil.getDateTime(date));
+    		List<DataRow> records = getService().findCurrentDaySigninInfos(date);
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+    		if(records.size() != 0){
+				for(int i=0;i<records.size();i++){
+					DataRow row = records.get(i);
+					JSONObject jsonObject11 = new JSONObject();
+					jsonObject11.put("name", row.stringValue("USER_ID_NAME"));
+					String outTime = row.stringValue("ATD_OUT_TIME");
+					if(!outTime.isEmpty()){
+						jsonObject11.put("outTime", outTime.substring(11, 16));
+					}else{
+						jsonObject11.put("outTime", outTime);
+					}
+					jsonObject11.put("outPlace", row.stringValue("ATD_OUT_PLACE"));
+					jsonArray.put(jsonObject11);
+				}
+			}else{
+				JSONObject jsonObject11 = new JSONObject();
+				jsonObject11.put("name", "无");
+				jsonArray.put(jsonObject11);
+			}
+    		
+    		jsonObject.put("signOutInfos", jsonArray);
+    		jsonObject.put("signOutDate", date);
+    		jsonObject.put("outWeekText", weekText);
+        	responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return new AjaxRenderer(responseText);
+    }
+    
+    
+    @PageAction
+    public ViewRenderer findSignLocationInfos(DataParam param){
+    	String responseText = null;
+    	try {
+    		User user = (User)this.getUser();
+    		String userId = param.get("userId");
+    		if("null".equals(userId)){
+    			userId = user.getUserId();
+    		}
+    		List<DataRow> records = getService().findSignLocationInfos(userId);
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+    		if(records.size() != 0){
+				for(int i=0;i<records.size();i++){
+					DataRow row = records.get(i);
+					JSONObject jsonObject11 = new JSONObject();
+					String time = row.stringValue("LOCAT_TIME");
+					String weekText = DateUtil.getWeekText(DateUtil.getDateTime(time.substring(0,10)));
+					if(!time.isEmpty()){
+						jsonObject11.put("time", time.substring(0, 16));
+					}else{
+						jsonObject11.put("time", time);
+					}
+					jsonObject11.put("place", row.stringValue("LOCAT_PLACE"));
+					jsonObject11.put("weekText", weekText);
+					jsonArray.put(jsonObject11);
+				}
+			}else{
+				JSONObject jsonObject11 = new JSONObject();
+				jsonObject11.put("time", "无");
+				jsonArray.put(jsonObject11);
+			}
+    		
+    		jsonObject.put("locationInfos", jsonArray);
+        	responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return new AjaxRenderer(responseText);
+    }
+    
+    @PageAction
+    public ViewRenderer findUserInfos(DataParam param){
+    	String responseText = null;
+    	try {
+    		User user = (User)this.getUser();
+    		String userId = user.getUserId();
+    		List<DataRow> records = getService().findUserInfos(userId);
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+    		if(records.size() != 0){
+				for(int i=0;i<records.size();i++){
+					DataRow row = records.get(i);
+					JSONObject jsonObject11 = new JSONObject();
+					jsonObject11.put("userId", row.stringValue("USER_ID"));
+					jsonObject11.put("userName", row.stringValue("USER_NAME"));
+					jsonObject11.put("userCode", row.stringValue("USER_CODE"));
+					jsonArray.put(jsonObject11);
+				}
+			}else{
+				JSONObject jsonObject11 = new JSONObject();
+				jsonObject11.put("userName", "无");
+				jsonArray.put(jsonObject11);
+			}
+    		JSONArray jsonArray1 = new JSONArray();
+    		JSONObject jsonObject1 = new JSONObject();
+    		jsonObject1.put("userName", user.getUserName());
+    		jsonObject1.put("userCode", user.getUserCode());
+    		jsonObject1.put("userId", userId);
+    		jsonArray1.put(jsonObject1);
+    		jsonObject.put("user", jsonArray1);
+    		jsonObject.put("userInfos", jsonArray);
         	responseText = jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);

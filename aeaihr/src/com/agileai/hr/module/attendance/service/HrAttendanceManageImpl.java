@@ -43,4 +43,37 @@ public class HrAttendanceManageImpl
 		param.put("LOCAT_ID", KeyGenerator.instance().genKey());
 		this.daoHelper.insertRecord(statementId, param);
 	}
+
+	@Override
+	public List<DataRow> findCurrentDaySigninInfos(String adtDate) {
+		DataParam param = new DataParam("adtDate",adtDate);
+		String statementId = sqlNameSpace+"."+"findRecords";
+		List<DataRow> records = this.daoHelper.queryRecords(statementId, param);
+		return records;
+	}
+
+	@Override
+	public List<DataRow> findUserInfos(String userId) {
+		DataParam param = new DataParam("userId",userId);
+		String statementId = sqlNameSpace+"."+"findUserInfos";
+		List<DataRow> records = this.daoHelper.queryRecords(statementId, param);
+		return records;
+	}
+
+	@Override
+	public List<DataRow> findSignLocationInfos(String userId) {
+		DataParam param = new DataParam("userId",userId);
+		String statementId = sqlNameSpace+"."+"findSignLocationInfos";
+		List<DataRow> records = this.daoHelper.queryRecords(statementId, param);
+		return records;
+	}
+
+	@Override
+	public List<DataRow> findCurrentDaySignOutInfos(String expression,
+			String adtDate) {
+		DataParam param = new DataParam("expression",expression,"adtDate",adtDate);
+		String statementId = sqlNameSpace+"."+"findRecords";
+		List<DataRow> records = this.daoHelper.queryRecords(statementId, param);
+		return records;
+	}
 }

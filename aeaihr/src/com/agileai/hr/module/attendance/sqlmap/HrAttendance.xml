@@ -59,4 +59,22 @@
 		(LOCAT_ID,USER_ID,LOCAT_TIME,LOCAT_PLACE) values
 		(#LOCAT_ID:CHAR#,#USER_ID:CHAR#,#LOCAT_TIME:DATETIME#,#LOCAT_PLACE:VARCHAR#)
 	</insert>	
+	
+	<select id="findUserInfos" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		  SELECT USER_ID,USER_NAME,USER_CODE
+		from security_user
+		where 1 = 1
+		and USER_ID != #userId#
+		order by USER_CODE 
+	</select>
+	
+	<select id="findSignLocationInfos" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		  SELECT LOCAT_ID,USER_ID,LOCAT_TIME,LOCAT_PLACE
+		FROM hr_location
+		where 1 = 1
+		and USER_ID = #userId#
+		ORDER BY LOCAT_TIME Desc 
+	</select>
 </sqlMap>
