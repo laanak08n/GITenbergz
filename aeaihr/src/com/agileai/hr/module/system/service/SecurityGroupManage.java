@@ -11,7 +11,7 @@ public interface SecurityGroupManage
 	
 	public void deleteTreeRecords(String currentId);
 	void delGroupTreeRelation(DataParam param);
-	public List<DataRow> queryRelationRecords (String currentId);
 	public List<DataRow> queryTreeorgNameRecords (String currentId);
 	public List<DataRow> queryTreeTypeRecords (DataParam param);
+	public List<DataRow> findRoleGroupAuthRecords(String grpId,String roleId);
 }

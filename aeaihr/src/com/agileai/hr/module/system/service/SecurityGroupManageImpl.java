@@ -40,13 +40,6 @@ public class SecurityGroupManageImpl
 	}
 
 	@Override
-	public List<DataRow> queryRelationRecords(String currentId) {
-		String statementId = this.sqlNameSpace+"."+"queryRelationRecords";
-		return this.daoHelper.queryRecords(statementId,currentId);
-		
-	}
-	
-	@Override
 	public void createTreeRecord(DataParam param) {
 		String statementId = sqlNameSpace+"."+"insertTreeRecord";
 		processDataType(param, tableName);
@@ -74,4 +67,12 @@ public class SecurityGroupManageImpl
 		
 	}
 	
+	@Override
+	public List<DataRow> findRoleGroupAuthRecords(String grpId,String roleId){
+		DataParam param = new DataParam();
+		param.put("grpId",grpId);
+		param.put("roleId",roleId);
+		String statementId = sqlNameSpace+"."+"findRoleGroupAuthRecords";
+		return this.daoHelper.queryRecords(statementId, param);
+	}
 }

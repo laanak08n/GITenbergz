@@ -5,81 +5,81 @@
 <sqlMap namespace="SecurityGroup8Associates">  
   <select id="queryTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK
-from security_group order by GRP_PID,GRP_SORT
+	from security_group order by GRP_PID,GRP_SORT
   </select>
   <select id="queryPickTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK
-from security_group order by GRP_PID,GRP_SORT
+	from security_group order by GRP_PID,GRP_SORT
   </select>
   <select id="queryTreeRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK
-from security_group
-where 1=1 
-<isNotEmpty prepend="and " property="GRP_ID">
-GRP_ID=#GRP_ID#
-</isNotEmpty>
-<isNotEmpty prepend="and " property="GRP_CODE">
-GRP_CODE=#GRP_CODE#
-</isNotEmpty>
+	from security_group
+	where 1=1 
+	<isNotEmpty prepend="and " property="GRP_ID">
+	GRP_ID=#GRP_ID#
+	</isNotEmpty>
+	<isNotEmpty prepend="and " property="GRP_CODE">
+	GRP_CODE=#GRP_CODE#
+	</isNotEmpty>
   </select> 
   <select id="queryTreeorgNameRecords"  parameterClass="String" resultClass="com.agileai.domain.DataRow">
 	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK
-from security_group
-where 1=1 
-where  GRP_ID=#value#
+	from security_group
+	where 1=1 
+	where  GRP_ID=#value#
   </select>
    <select id="queryTreeTypeRecords"  parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">	
 	SELECT GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK
-FROM security_group
+	FROM security_group
   </select>
   <select id="findPositionRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	SELECT b.ROLE_ID,b.ROLE_CODE,b.ROLE_NAME,b.ROLE_PID,b.ROLE_DESC,b.ROLE_STATE,b.ROLE_SORT,c.GRP_ID,c.GRP_CODE,a.RG_ID
-FROM
-security_role_group_rel AS a
-INNER JOIN security_role AS b ON b.ROLE_ID = a.ROLE_ID
-INNER JOIN security_group AS c ON a.GRP_ID = c.GRP_ID
-<isNotEmpty prepend=" " property="columnId">
-and a.GRP_ID=#columnId#
-</isNotEmpty>
+	FROM
+	security_role_group_rel AS a
+	INNER JOIN security_role AS b ON b.ROLE_ID = a.ROLE_ID
+	INNER JOIN security_group AS c ON a.GRP_ID = c.GRP_ID
+	<isNotEmpty prepend=" " property="columnId">
+	and a.GRP_ID=#columnId#
+	</isNotEmpty>
   </select>
   <insert id="insertTreeRecord" parameterClass="com.agileai.domain.DataParam">
     insert into security_group (GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK) values (#GRP_ID#,#GRP_CODE#,#GRP_NAME#,#GRP_PID#,#GRP_DESC#,#GRP_STATE#,#GRP_SORT#,#GRP_TYPE#,#GRP_RANK#)
   </insert>  
   <update id="updateTreeRecord" parameterClass="com.agileai.domain.DataParam">
 	update security_group
-set GRP_CODE=#GRP_CODE#,GRP_NAME=#GRP_NAME#,GRP_PID=#GRP_PID#,GRP_DESC=#GRP_DESC#,GRP_STATE=#GRP_STATE#,GRP_SORT=#GRP_SORT#
-where GRP_ID=#GRP_ID#
+	set GRP_CODE=#GRP_CODE#,GRP_NAME=#GRP_NAME#,GRP_PID=#GRP_PID#,GRP_DESC=#GRP_DESC#,GRP_STATE=#GRP_STATE#,GRP_SORT=#GRP_SORT#
+	where GRP_ID=#GRP_ID#
   </update>
   <delete id="deleteTreeRecord" parameterClass="String">
     delete from security_group where GRP_ID = #value#
   </delete> 
   <select id="queryChildTreeRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
     select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT
-from security_group where GRP_PID = #value# order by GRP_SORT
+	from security_group where GRP_PID = #value# order by GRP_SORT
   </select>
   <select id="queryMaxSortId" parameterClass="String" resultClass="com.agileai.domain.DataRow">
 	select max(GRP_SORT) as MAX_GRP_SORT from security_group where GRP_PID = #value#
   </select>
   <select id="queryCurLevelRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
 	select b.GRP_ID,b.GRP_CODE,b.GRP_NAME,b.GRP_PID,b.GRP_DESC,b.GRP_STATE,b.GRP_SORT
-from security_group a left join security_group b 
-on a.GRP_PID=b.GRP_PID
-where a.GRP_ID=#value#
-order by b.GRP_SORT
+	from security_group a left join security_group b 
+	on a.GRP_PID=b.GRP_PID
+	where a.GRP_ID=#value#
+	order by b.GRP_SORT
   </select>  
  <delete id="delGroupTreeRelation" parameterClass="com.agileai.domain.DataParam">
     delete from security_role_group_rel where ROLE_ID = #ROLE_ID# and GRP_ID = #groupId#
   </delete> 
   <select id="getSecurityUserRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	select USER_ID,USER_CODE,USER_NAME,USER_PWD,USER_SEX,USER_DESC,USER_STATE,USER_SORT,USER_MAIL,USER_PHONE
-from security_user
-where 1=1 
-<isNotEmpty prepend="and " property="USER_ID">
-USER_ID=#USER_ID#
-</isNotEmpty>
-<isNotEmpty prepend="and " property="USER_CODE">
-USER_CODE=#USER_CODE#
-</isNotEmpty>
+	from security_user
+	where 1=1 
+	<isNotEmpty prepend="and " property="USER_ID">
+	USER_ID=#USER_ID#
+	</isNotEmpty>
+	<isNotEmpty prepend="and " property="USER_CODE">
+	USER_CODE=#USER_CODE#
+	</isNotEmpty>
   </select>
   <insert id="insertSecurityUserRecord" parameterClass="com.agileai.domain.DataParam">
 	insert into security_user (USER_ID,USER_CODE,USER_NAME,USER_PWD,USER_SEX,USER_DESC,USER_STATE,USER_SORT,USER_MAIL,USER_PHONE) 
@@ -87,9 +87,9 @@ USER_CODE=#USER_CODE#
   </insert>
   <update id="updateSecurityUserRecord" parameterClass="com.agileai.domain.DataParam">
     update security_user
-set USER_CODE=#USER_CODE#,USER_NAME=#USER_NAME#,USER_SEX=#USER_SEX#,USER_DESC=#USER_DESC#,USER_STATE=#USER_STATE#,USER_SORT=#USER_SORT#
-,USER_MAIL=#USER_MAIL#,USER_PHONE=#USER_PHONE#
-where USER_ID=#USER_ID#
+	set USER_CODE=#USER_CODE#,USER_NAME=#USER_NAME#,USER_SEX=#USER_SEX#,USER_DESC=#USER_DESC#,USER_STATE=#USER_STATE#,USER_SORT=#USER_SORT#
+	,USER_MAIL=#USER_MAIL#,USER_PHONE=#USER_PHONE#
+	where USER_ID=#USER_ID#
   </update>
    <update id="updateSecurityUserPassword" parameterClass="com.agileai.domain.DataParam">
     update security_user set USER_PWD=#USER_PWD# where USER_CODE=#USER_CODE#
@@ -99,9 +99,9 @@ where USER_ID=#USER_ID#
   </delete>
   <select id="querySecurityUserRelation" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	select GRP_ID,USER_ID
-from security_user_group_rel
-where GRP_ID=#GRP_ID#
-and USER_ID=#USER_ID#
+	from security_user_group_rel
+	where GRP_ID=#GRP_ID#
+	and USER_ID=#USER_ID#
   </select>
   <insert id="insertSecurityUserRelation" parameterClass="com.agileai.domain.DataParam">
 	insert into security_user_group_rel (GRP_ID,USER_ID) values (#GRP_ID#,#USER_ID#)
@@ -111,12 +111,31 @@ and USER_ID=#USER_ID#
   </update>
   <delete id="deleteSecurityUserRelation" parameterClass="com.agileai.domain.DataParam">
 	delete from security_user_group_rel
-where GRP_ID=#GRP_ID#
-and USER_ID=#USER_ID#
+	where GRP_ID=#GRP_ID#
+	and USER_ID=#USER_ID#
   </delete>
-   <select id="queryRelationRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
-	select RG_ID,GRP_ID,ROLE_ID
-from security_role_group_rel
-where GRP_ID=#value#
-  </select> 
+  
+  <select id="findUserRelationRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select GU_ID
+	from security_user_group_rel
+	where GRP_ID=#columnId#
+  </select>
+  
+  <select id="findUserRoleRelationRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select b.URG_ID
+	from security_role_group_rel a
+	inner join security_user_rg_rel b on a.RG_ID = b.RG_ID
+	where 1=1
+	and a.ROLE_ID=#roleId# 
+	and a.GRP_ID=#grpId#
+  </select>
+  
+  <select id = "findRoleGroupAuthRecords"  parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	select a.RG_AUTH_ID
+  	from security_rg_auth a
+  	left join security_role_group_rel b on a.RG_ID = b.RG_ID
+  	where 1=1
+  	and b.GRP_ID = #grpId#
+  	and b.ROLE_ID = #roleId#
+  </select>
 </sqlMap>

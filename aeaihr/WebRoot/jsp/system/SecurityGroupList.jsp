@@ -23,8 +23,7 @@ function openContentRequestBox(operaType,title,handlerId,subPKField,tableMode){
 		if ('insert' == operaType){
 			columnIdValue = $("#columnId").val();
 		}
-	}
-	else{
+	}else{
 		columnIdValue = $("#columnId").val();	
 	}
 	var url = 'index?'+handlerId+'&GRP_ID='+columnIdValue+'&operaType='+operaType+'&'+subPKField+'='+$("#"+subPKField).val();
@@ -103,21 +102,25 @@ function deleteTreeNode(){
 		writeErrorMsg('请先选中一个树节点!');
 		return;
 	}
-	if (confirm('确定要进行节点删除操做吗？')){
-		
+	jConfirm('确定要进行节点删除操做吗？',function(r){
+		if (r){
 			postRequest('form1',{actionType:'deleteTreeNode',onComplete:function(responseText){
 				if (responseText == 'success'){
 					$('#columnId').val("");
 					doQuery();
 				}else if (responseText == 'hasChild'){
 					writeErrorMsg('该节点还有子节点，不能删除！');
-				}else if (responseText == 'hasContent'){
-					writeErrorMsg('有信息关联该分组，不能删除！');
+				}else if(responseText == 'hasContent'){
+					writeErrorMsg('有关联人员以及角色，不能删除！');
+				}else if (responseText == 'roleContent'){
+					writeErrorMsg('有关联角色，不能删除！');
 				}else if (responseText == 'empContent'){
-					writeErrorMsg('有信息关联人员，不能删除！');
+					writeErrorMsg('有关联人员，不能删除！');
 				}  
 			}});			
-	};
+		};
+	});
+
 }
 var targetTreeBox;
 function openTargetTreeBox(curAction){
@@ -126,20 +129,42 @@ function openTargetTreeBox(curAction){
 		writeErrorMsg('请先选中一个树节点!');
 		return;
 	}
-	if (curAction == 'copyContent' || curAction == 'moveContent'){
-		if (!isSelectedRow()){
-			writeErrorMsg('请先选中一条记录!');
-			return;
-		}
-		columnIdValue = $("#curColumnId").val()
-	}	
 	if (!targetTreeBox){
 		targetTreeBox = new PopupBox('targetTreeBox','请选择目标分组',{size:'normal',width:'300px',top:'2px'});
 	}
 	var handlerId = "SecurityGroupPick";
 	var url = 'index?'+handlerId+'&GRP_ID='+columnIdValue;
-	targetTreeBox.sendRequest(url);
-	$("#actionType").val(curAction);
+	postRequest('form1',{actionType:'moveTree',onComplete:function(responseText){
+		if (responseText == 'hasContent'){
+			jConfirm("该部门有角色以及人员关联，是否迁移？",function(r){
+				if(r){
+					targetTreeBox.sendRequest(url);
+					$("#actionType").val(curAction);
+				}
+			});
+	    }else if(responseText == 'roleContent'){
+			jConfirm("该部门有角色关联，是否迁移？",function(r){
+				if(r){
+					targetTreeBox.sendRequest(url);
+					$("#actionType").val(curAction);
+				}
+			});
+	    }else if(responseText == 'empContent'){
+	    	jConfirm("该部门有人员关联，是否迁移？",function(r){
+				if(r){
+					targetTreeBox.sendRequest(url);
+					$("#actionType").val(curAction);
+				}
+			});
+	    }else if(responseText == 'success'){
+	    	targetTreeBox.sendRequest(url);
+			$("#actionType").val(curAction);
+	    }else if (responseText == 'hasChild'){
+			writeErrorMsg('该部门下还有部门，不能迁移！');
+		}else if (responseText == 'isCompany'){
+			writeErrorMsg('公司不能迁移！');
+		}
+	}});
 }
 function doChangeParent(){
 	var curAction = $('#actionType').val();
@@ -147,20 +172,12 @@ function doChangeParent(){
 		if (responseText == 'success'){
 			if (curAction == 'moveTree'){
 				refreshTree();	
-			}
-			else{
+			}else{
 				refreshContent($("#targetParentId").val());		
-			}}
-			else if (responseText == 'hasContent'){
-				writeErrorMsg('该部门有角色，不能迁移！');
-		    }else if (responseText == 'hasChild'){
-				writeErrorMsg('该公司还有部门，不能迁移！');
-			}else if (responseText == 'isCompany'){
-				writeErrorMsg('公司不能迁移！');
 			}
-		     else {
-				writeErrorMsg('迁移父节点出错啦！');
-			}
+		}else{
+			writeErrorMsg('迁移父节点出错啦！');
+		}
 	}});
 }
 
@@ -189,21 +206,45 @@ function saveTreeBaseRecord(){
 	postRequest('form1',{actionType:'saveTreeBaseRecord',onComplete:function(responseText){
 		 if (responseText == 'success'){
 			refreshTree();
-			
-		}
-		else {
+		}else {
 			writeErrorMsg('保存基本信息出错啦！');
 		}
 	}});	
 }
 function checkSave(){
 	var result = false;
-if (validation.checkNull($('#GRP_NAME').val())){
-	return true;
-}
+	if (validation.checkNull($('#GRP_NAME').val())){
+		return true;
+	}
 	return result;
 }
 
+function doDelete(){
+	var roleId = $('#'+rsIdTagId).val()
+	if (!isValid(roleId)){
+		writeErrorMsg('请先选中一条记录!');
+		return;
+	}
+	jConfirm("您确认要删除这条数据吗？",function(r){
+		if (r){
+			$("#actionType").val('delete');
+			postRequest('form1',{actionType:'delete',onComplete:function(responseText){
+				if(responseText == 'hasEmpContent8Auth'){
+					writeErrorMsg('该实际角色下有关联人员和资源，不能删除！');
+				}else if(responseText == 'hasAuth'){
+					writeErrorMsg('该实际角色下有关联资源，不能删除！');
+				}else if(responseText =='empContent'){
+					writeErrorMsg('该实际角色下有关联人员，不能删除！');
+				}else if (responseText == 'success'){
+					 $("#ROLE_ID").val("");
+					 refreshTree();
+				}else {
+					writeErrorMsg('删除组织角色关联出错啦！');
+				}
+			}});	
+		}
+	});
+}
 </script>
 </head>
 <body>
@@ -285,7 +326,7 @@ if (validation.checkNull($('#GRP_NAME').val())){
 <tr>
 
    <td  onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="openposIdBox();" ><input value="&nbsp;" type="button" class="addImgBtn" id="addImgBtn" title="添加" />添加</td>
-   <td  onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input value="&nbsp;" title="删除" type="button" id="deleImgBtn" class="delImgBtn" />删除</td>
+   <td  onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete();"><input value="&nbsp;" title="删除" type="button" id="deleImgBtn" class="delImgBtn" />删除</td>
 </tr>
 </table>
 </div>

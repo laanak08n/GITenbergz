@@ -110,23 +110,16 @@ public class SecurityGroupListHandler
 		String columnId = param.get("columnId");
 		String targetParentId = param.get("targetParentId");
 		TreeAndContentManage service = this.getService();
-		int newMaxSortId = service.retrieveNewMaxSort(targetParentId);
-		DataParam queryParam = new DataParam(columnIdField,columnId);
-		DataRow row = service.queryTreeRecord(queryParam);
-		List<DataRow> childRecords =  service.queryChildTreeRecords(columnId);
-		row.put(this.columnSortField,newMaxSortId);
-		row.put(this.columnParentIdField,targetParentId);
-		String grpType=param.get("GRP_TYPE");
-		List<DataRow> records = getService().queryRelationRecords(columnId);
-		if (!ListUtil.isNullOrEmpty(records)){
-			rspText = "hasContent";
-		}else if (!ListUtil.isNullOrEmpty(childRecords)){
-    		rspText = "hasChild";	
-    	}else if(grpType.equals("company")){
-    		rspText = "isCompany";	
-    	}
-		else{
-		service.updateTreeRecord(row.toDataParam(true));
+		String grpType = param.get("GRP_TYPE");
+		if(StringUtil.isNullOrEmpty(targetParentId)){
+			rspText = buildRelationResults(columnId,grpType,null);
+		}else{
+			int newMaxSortId = service.retrieveNewMaxSort(targetParentId);
+			DataParam queryParam = new DataParam(columnIdField,columnId);
+			DataRow row = service.queryTreeRecord(queryParam);
+			row.put(this.columnSortField,newMaxSortId);
+			row.put(this.columnParentIdField,targetParentId);
+    		service.updateTreeRecord(row.toDataParam(true));
 		}
 		return new AjaxRenderer(rspText);
 	}
@@ -136,7 +129,6 @@ public class SecurityGroupListHandler
         List<String> result = new ArrayList<String>();
         result.add(TreeAndContentManage.BASE_TAB_ID);
         result.add("Position");
-
         return result;
     }
     
@@ -145,11 +137,9 @@ public class SecurityGroupListHandler
     	String rspText = SUCCESS;
     	try {
         	getService().updateTreeRecord(param); 	
-		
 		} catch (Exception e) {
 				log.error(e.getLocalizedMessage(), e);
 		}
-    	
     	return new AjaxRenderer(rspText);
     }  
      
@@ -161,40 +151,35 @@ public class SecurityGroupListHandler
     	try {
     		String columnId = param.get("columnId");
     		TreeAndContentManage service = this.getService();
-    		List<DataRow> childRecords =  service.queryChildTreeRecords(columnId);
-    		if (!ListUtil.isNullOrEmpty(childRecords)){
-    			rspText = "hasChild";
+    		rspText = buildRelationResults(columnId,null,null);
+    		if(!SUCCESS.equals(rspText)){
     			return new AjaxRenderer(rspText);
+    		}else{
+    			service.deleteTreeRecord(columnId);
     		}
-    		List<String> tabList = this.getTabList();
-    		for (int i=0;i < tabList.size();i++){
-    			String tabId = tabList.get(i);
-    			if (TreeAndContentManage.BASE_TAB_ID.equals(tabId))continue;
-    			List<DataRow> records = service.findContentRecords(null,tabId, new DataParam("columnId",columnId));
-    			if (!ListUtil.isNullOrEmpty(records)){
-    				rspText = "hasContent";
-    				return new AjaxRenderer(rspText);
-    			}			
-    		}			
-    		service.deleteTreeRecord(columnId);
-    		
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
-    	
 		return new AjaxRenderer(rspText);
 	}
 
     @Override
     public ViewRenderer doDeleteAction(DataParam param){
+    	String rspText = SUCCESS;
     	try {
     		String grpId = param.get("columnId");
+    		String roleId = param.get("ROLE_ID");
     		param.put("groupId",grpId);
-    		getService().delGroupTreeRelation(param);	
+    		rspText = buildRelationResults(grpId,null,roleId);
+    		if(!SUCCESS.equals(rspText)){
+    			return new AjaxRenderer(rspText);
+    		}else{
+    			getService().delGroupTreeRelation(param);
+    		}
     	} catch (Exception e) {
     		log.error(e.getLocalizedMessage(), e);
 		}
-    	return prepareDisplay(param);
+    	return new AjaxRenderer(rspText);
 	}
     
     protected boolean isRootColumnId(DataParam param) {
@@ -203,14 +188,12 @@ public class SecurityGroupListHandler
                                   this.rootColumnId);
         DataParam queryParam = new DataParam(this.columnIdField, nodeId);
         DataRow row = this.getService().queryTreeRecord(queryParam);
-
         if (row == null) {
             result = false;
         } else {
             String parentId = row.stringValue("GRP_PID");
             result = StringUtil.isNullOrEmpty(parentId);
         }
-
         return result;
     } 
     
@@ -269,4 +252,57 @@ public class SecurityGroupListHandler
     protected SecurityGroupManage getService() {
         return (SecurityGroupManage) this.lookupService(this.getServiceId());
     }
+    
+    private String buildRelationResults(String grpId,String grpType,String roleId){
+    	String rspText = SUCCESS;
+    	SecurityGroupManage service = this.getService();
+    	DataParam queryParam = new DataParam();
+    	queryParam.put("columnId",grpId);
+    	queryParam.put("grpId",grpId);
+    	List<DataRow> childRecords = service.queryChildTreeRecords(grpId);
+		List<DataRow> positionRelationRecords = service.findContentRecords(null,"position", queryParam);
+		List<DataRow> userRelationRecords = service.findContentRecords(null,"userRelation",queryParam);
+		List<DataRow> userRoleRelationRecords = null;
+		List<DataRow> roleAuthRecords = null;
+		boolean isDeleteGroup = false;
+		boolean isDeleteRoleGroupRelation = false;
+		if(!StringUtil.isNullOrEmpty(roleId)){
+			isDeleteGroup = true;
+			isDeleteRoleGroupRelation = true;
+			queryParam.put("roleId",roleId);
+			userRoleRelationRecords = service.findContentRecords(null,"userRoleRelation",queryParam);
+			roleAuthRecords = service.findRoleGroupAuthRecords(grpId,roleId);
+		}
+		rspText = buildResult(grpType, rspText, childRecords,
+				positionRelationRecords, userRelationRecords,
+				userRoleRelationRecords, roleAuthRecords, isDeleteGroup,
+				isDeleteRoleGroupRelation);
+		return rspText;
+	}
+
+	private String buildResult(String grpType, String rspText,
+			List<DataRow> childRecords, List<DataRow> positionRelationRecords,
+			List<DataRow> userRelationRecords,
+			List<DataRow> userRoleRelationRecords,
+			List<DataRow> roleAuthRecords, boolean isDeleteGroup,
+			boolean isDeleteRoleGroupRelation) {
+		if (!isDeleteRoleGroupRelation&&!ListUtil.isNullOrEmpty(positionRelationRecords)&&!ListUtil.isNullOrEmpty(userRelationRecords)){
+			rspText = "hasContent";
+		}else if(!isDeleteRoleGroupRelation&&!ListUtil.isNullOrEmpty(positionRelationRecords)){
+			rspText = "roleContent";
+		}else if(!isDeleteRoleGroupRelation&&!ListUtil.isNullOrEmpty(userRelationRecords)){
+			rspText = "empContent";
+		}else if (!isDeleteRoleGroupRelation&&!ListUtil.isNullOrEmpty(childRecords)){
+			rspText = "hasChild";	
+		}else if(isDeleteRoleGroupRelation&&!ListUtil.isNullOrEmpty(roleAuthRecords)&&!ListUtil.isNullOrEmpty(userRoleRelationRecords)){
+			rspText = "hasEmpContent8Auth";
+		}else if(isDeleteRoleGroupRelation&&!ListUtil.isNullOrEmpty(roleAuthRecords)){
+			rspText = "hasAuth";
+		}else if(isDeleteRoleGroupRelation&&!ListUtil.isNullOrEmpty(userRoleRelationRecords)){
+			rspText = "empContent";
+		}else if(!isDeleteGroup&&!isDeleteRoleGroupRelation&&!StringUtil.isNullOrEmpty(grpType)&&"company".equals(grpType)){
+			rspText = "isCompany";	
+		}
+		return rspText;
+	}
 }

@@ -18,7 +18,8 @@ public class SecurityRoleTreeManageHandler
         extends TreeManageHandler {
 	private static String deleteRelErrorMsg = "该节点有关联群组，不能删除！";
 	private static String deleteAuthErrorMsg = "该节点有关联资源，不能删除！";
-    public SecurityRoleTreeManageHandler() {
+	private static String deleteRel8AuthErrorMsg = "该节点有关联组织以及权限，不能删除！";
+	public SecurityRoleTreeManageHandler() {
         super();
         this.serviceId = buildServiceId(SecurityRoleTreeManage.class);
         this.nodeIdField = "ROLE_ID";
@@ -28,9 +29,6 @@ public class SecurityRoleTreeManageHandler
         this.deleteErrorMsg = "该节点还有子节点，不能删除！";
         
     }
-     
-    
-    
     
     protected TreeBuilder provideTreeBuilder(DataParam param) {
         SecurityRoleTreeManage service = this.getService();
@@ -94,27 +92,25 @@ public class SecurityRoleTreeManageHandler
     @Override
     public ViewRenderer doDeleteAction(DataParam param){
 		String nodeId = param.get(this.nodeIdField);
-		SecurityGroupQuery securityGroupQuery=this.lookupService(SecurityGroupQuery.class);
+		SecurityGroupQuery securityGroupQuery = this.lookupService(SecurityGroupQuery.class);
 		List<DataRow> childRecords = getService().queryChildRecords(nodeId);
-		if (ListUtil.isNullOrEmpty(childRecords)){
-			DataParam tempParam = new DataParam();
-			tempParam.put("roleId",param.get("ROLE_ID"));
-			List<DataRow> tempList=securityGroupQuery.findRecords(tempParam);
-			List<DataRow> roleList =getService().queryAuthRecords(param);
-			if(ListUtil.isNullOrEmpty(tempList)){
-				if(ListUtil.isNullOrEmpty(roleList)){
-					getService().deleteCurrentRecord(nodeId);
-					param.remove(this.nodeIdField);
-					param.put(this.nodeIdField,param.get(this.nodePIdField));
-				}else{
-					this.setErrorMsg(deleteAuthErrorMsg);
-				}
-			}else{
-				this.setErrorMsg(deleteRelErrorMsg);
-			}
-		}else{
+		DataParam tempParam = new DataParam();
+		tempParam.put("roleId",param.get("ROLE_ID"));
+		List<DataRow> tempList = securityGroupQuery.findRecords(tempParam);
+		List<DataRow> roleList = getService().queryAuthRecords(param);
+		if (!ListUtil.isNullOrEmpty(childRecords)){
 			this.setErrorMsg(deleteErrorMsg);
-		}
+		}else if(!ListUtil.isNullOrEmpty(tempList)&&!ListUtil.isNullOrEmpty(roleList)){
+			this.setErrorMsg(deleteRel8AuthErrorMsg);
+		}else if(!ListUtil.isNullOrEmpty(tempList)){
+			this.setErrorMsg(deleteRelErrorMsg);
+		}else if(!ListUtil.isNullOrEmpty(roleList)){
+			this.setErrorMsg(deleteAuthErrorMsg);
+		}else{
+			getService().deleteCurrentRecord(nodeId);
+			param.remove(this.nodeIdField);
+			param.put(this.nodeIdField,param.get(this.nodePIdField));
+		}	
 		return prepareDisplay(param);
 	}
     
