@@ -160,16 +160,23 @@
 	</select>
 	<select id="workDayRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		SELECT USER_ID,COUNT(ATD_DATE) as WORK_DAYS
-		FROM hr_attendance
-		WHERE
-		1=1
-		<isNotEmpty prepend=" " property="userCode">
-			and USER_ID = #userCode#
+		SELECT a.USER_ID,COUNT(ATD_DATE) as WORK_DAYS
+		FROM hr_attendance a
+		LEFT JOIN security_user b on a.USER_ID = b.USER_ID
+		LEFT JOIN hr_employee c on c.EMP_CODE = b.USER_CODE
+		WHERE 1=1
+		<isNotEmpty prepend=" " property="userId">
+			and USER_ID = #userId#
 		</isNotEmpty>
 		<isNotEmpty prepend=" " property="yearMonth">
 			and LEFT(ATD_DATE,7) =
 			#yearMonth#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="sdate">
+			and LEFT(ATD_DATE,10) between #sdate# and c.EMP_REGULAR_TIME
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="edate">
+			and LEFT(ATD_DATE,10) between c.EMP_REGULAR_TIME and #edate#
 		</isNotEmpty>
 		GROUP BY USER_ID
 	</select>
@@ -179,12 +186,18 @@
 		FROM hr_leave
 		WHERE 1=1
 		and STATE = 'approved'
-		<isNotEmpty prepend=" " property="userCode">
-			and USER_ID = #userCode#
+		<isNotEmpty prepend=" " property="userId">
+			and USER_ID = #userId#
 		</isNotEmpty>
 		<isNotEmpty prepend=" " property="yearMonth">
 			and LEFT(LEA_SDATE,7) =
 			#yearMonth#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="sdate">
+			and LEA_SDATE &gt;= #sdate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="edate">
+			and LEA_EDATE &lt;= #edate#
 		</isNotEmpty>
 		GROUP BY USER_ID
 	</select>
@@ -192,41 +205,49 @@
 		resultClass="com.agileai.domain.DataRow">
 		SELECT USER_ID,SUM(WOT_TIME) as WOT_DAYS
 		FROM hr_work_overtime
-		WHERE
-		1=1 and STATE = 'approved'
-		<isNotEmpty prepend=" " property="userCode">
-			and USER_ID = #userCode#
+		WHERE 1=1 
+		and STATE = 'approved'
+		<isNotEmpty prepend=" " property="userId">
+			and USER_ID = #userId#
 		</isNotEmpty>
 		<isNotEmpty prepend=" " property="yearMonth">
-			and LEFT(WOT_DATE,7) =
+			and LEFT(WOT_OVERTIME_DATE,7) =
 			#yearMonth#
 		</isNotEmpty>
 		GROUP BY USER_ID
 	</select>
-	<select id="totalLeaveOfYearRecords" parameterClass="com.agileai.domain.DataParam"
+	<select id="currentMonthLeaveDayRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		SELECT USER_ID,SUM(LEA_DAYS) as LEAVE_DAYS
-		FROM hr_leave
+		SELECT USER_ID,LEA_SDATE,LEA_EDATE,LEA_DAYS
+		FROM hr_leave  
 		WHERE 1=1
-		and LEA_SDATE BETWEEN #beginYear# AND #currentDate#
-		and STATE = 'approved'
-		<isNotEmpty prepend=" " property="userCode">
-			and USER_ID = #userCode#
+		<isNotEmpty prepend=" " property="yearMonth">
+			and LEFT(LEA_SDATE,7) =
+			#yearMonth#
 		</isNotEmpty>
-		GROUP BY USER_ID
+		<isNotEmpty prepend=" " property="year">
+			and LEFT(LEA_SDATE,4) =
+			#year#
+		</isNotEmpty>
+		AND STATE = 'approved'
+		ORDER BY LEA_SDATE
 	</select>
-	<select id="totalOverTimeOfYearRecords" parameterClass="com.agileai.domain.DataParam"
+	<select id="findOverTimeRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		SELECT USER_ID,SUM(WOT_TIME) as WOT_DAYS
-		FROM hr_work_overtime
-		WHERE
-		1=1
-		and WOT_DATE BETWEEN #beginYear# AND #currentDate#
-		<isNotEmpty prepend=" " property="userCode">
-			and USER_ID = #userCode#
+		SELECT USER_ID,WOT_TIME,WOT_OVERTIME_DATE as WOT_DATE
+		FROM hr_work_overtime  
+		WHERE 1=1
+		<isNotEmpty prepend=" " property="yearMonth">
+			and LEFT(WOT_OVERTIME_DATE,7) =
+			#yearMonth#
 		</isNotEmpty>
-		GROUP BY USER_ID
-	</select>		
+		 <isNotEmpty prepend=" " property="year">
+			and LEFT(WOT_OVERTIME_DATE,4) =
+			#year#
+		</isNotEmpty>
+		AND STATE = 'approved'
+		ORDER BY WOT_OVERTIME_DATE
+	</select>
 	<update id="updateBonusRecord" parameterClass="com.agileai.domain.DataParam">
 		update
 		hr_salary
@@ -253,14 +274,15 @@
 		order by SAL_YEAR desc ,SAL_MONTH desc
 		limit 1
 	</select>
-	<select id="getLastOffsetVacationInfo" parameterClass="com.agileai.domain.DataParam"
+	<select id="findOffsetVacationDayRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		select SAL_OFFSET_VACATION
+		select SAL_OFFSET_VACATION,SAL_USER,SAL_YEAR,SAL_MONTH
 		from hr_salary
 		where 1=1
-		and SAL_YEAR = #lastYear#
-		and SAL_MONTH = #lastMonth#
-		and SAL_USER = #userCode#
+		and SAL_YEAR = #year#
+		<isNotEmpty prepend=" " property="month">
+		and SAL_MONTH = #month#
+		</isNotEmpty>
 	</select>
 	<select id="getSalYearLeaveInfo" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
@@ -274,7 +296,7 @@
 	</select>
 	<select id="getUserAnnualLeaveDays" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		select EMP_ANNUAL_LEAVE_DAYS,EMP_ID,EMP_CODE,EMP_INDUCTION_TIME,EMP_CREATE_TIME
+		select EMP_ANNUAL_LEAVE_DAYS,EMP_ID,EMP_CODE,EMP_INDUCTION_TIME,EMP_CREATE_TIME,EMP_REGULAR_TIME
 		from hr_employee a LEFT JOIN security_user c ON a.EMP_CODE = c.USER_CODE
 		where 1=1
 		and c.USER_ID = #userId#
@@ -296,16 +318,15 @@
 		where
 		SAL_ID=#SAL_ID#
 	</update>
-	<select id="getPunishmentRecord" parameterClass="com.agileai.domain.DataParam"
+	<select id="findPunishmentRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		select SUM(BP_MONEY) as MONEY
+		select SUM(BP_MONEY) as MONEY,USER_ID
 		from hr_bonus_penalty
 		where 1=1
-		and USER_ID = #USER_ID#
 		and BP_TYPE = 'PUNISHMENT'
 		and date_format(BP_DATE,'%Y-%m') = #yearMonth#
 	</select>
-	<select id="getRewardtRecord" parameterClass="com.agileai.domain.DataParam"
+	<select id="findRewardtRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
 		select SUM(BP_MONEY) as MONEY
 		from hr_bonus_penalty
@@ -348,5 +369,26 @@ where USER_ID = #USER_ID# and BP_DATE = #BP_DATE# and BP_TYPE = #BP_TYPE#
 		and SAL_USER = #userId#
 		order by SAL_YEAR,SAL_MONTH
 		limit 5
+	</select>
+	<select id="findWorkOverTimeByTimeRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+	select USER_ID,WOT_TIME,WOT_OVERTIME_DATE
+	and WOT_OVERTIME_DATE &gt;= #sdate#
+	and WOT_OVERTIME_DATE &lt;= #edate#
+	order by WOT_OVERTIME_DATE desc
+	</select>
+	<select id="findAttendanceRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+	SELECT a.USER_ID,COUNT(a.USER_ID) as DAYS 
+	FROM hr_attendance a
+	WHERE 1=1
+	and LEFT(ATD_IN_TIME,10) BETWEEN #sdate# and #edate#
+	GROUP BY a.USER_ID
+	union
+	SELECT a.USER_ID,COUNT(a.ATD_OUT_TIME) as DAYS
+	FROM hr_attendance a
+	WHERE 1=1
+	and LEFT(ATD_OUT_TIME,10) BETWEEN #sdate# and #edate#
+	GROUP BY a.USER_ID
 	</select>	   					
 </sqlMap>

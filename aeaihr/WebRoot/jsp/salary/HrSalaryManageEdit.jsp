@@ -43,7 +43,7 @@ function addAttendance(){
   <%if(pageBean.getBoolValue("doEdit&Save")){%>
    <aeai:previlege code="edit"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="enableSave()" ><input value="&nbsp;" type="button" class="editImgBtn" id="modifyImgBtn" title="编辑" />编辑</td></aeai:previlege>
    <aeai:previlege code="save"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="doSubmit({actionType:'save'})"><input value="&nbsp;" type="button" class="saveImgBtn" id="saveImgBtn" title="保存" />保存</td></aeai:previlege>
-   <aeai:previlege code="reset"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="doSubmit({actionType:'annualLeaveRecalculation'})"><input value="&nbsp;" type="button" class="resetPasswordImgBtn" id="resetPasswordImgBtn" title="年假重新计算" />年假重新计算</td></aeai:previlege>
+   <aeai:previlege code="reset"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="doSubmit({actionType:'annualLeaveRecalculation'})"><input value="&nbsp;" type="button" class="resetPasswordImgBtn" id="resetPasswordImgBtn" title="抵扣假期重新计算" />抵扣假期重新计算</td></aeai:previlege>
 	<%}%>   
   <%if((pageBean.selectedValue("SAL_STATE")).equals("0")){%>
    <aeai:previlege code="approve"><td  align="center"class="bartdx"onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="approveImgBtn" id="SAL_STATE"  title="核准" />核准</td></aeai:previlege>
