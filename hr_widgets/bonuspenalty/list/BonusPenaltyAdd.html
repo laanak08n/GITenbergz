@@ -8,14 +8,16 @@
   		日期
       <input class="input-size" type="date" ng-model="info.bpDate">
     </label>
-  	<label class="item item-input info-nosideline">
-  		类型
+    
+  	<label class="item item-input item-select">
+  		<div class="input-label">类型</div>
   		<select class="select-full-item" ng-model="info.bpType">
 	        <option value="selected">请选择</option>
 	        <option value="PUNISHMENT">惩罚</option>
 	        <option value="REWARD">奖励</option>
 		</select>
-    </label>    
+    </label>
+       
     <label class="item item-input">
     	金额
       <input class="input-size" type="text" ng-model="info.bpMonry">
