@@ -198,8 +198,12 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			BigDecimal leaveDaysDecimal = (BigDecimal)leaveDaysNum;
 			Number overTimeDaysNum = (Number) dataParam.getObject("SAL_OVERTIME");
 			BigDecimal overTimeDaysDecimal = (BigDecimal)overTimeDaysNum;
+			Date regularTime = (Date) row.get("EMP_REGULAR_TIME");
+			String regularTimeStr = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, regularTime);
 			if(lastOffsetVacationRow == null || lastOffsetVacationRow.size() == 0 || lastMonth.equals("12")){
 				dataParam.put("SAL_OFFSET_VACATION", offsetVacation.subtract(totalLeaveDecimal).add(totalOverTimeDecimal)); 
+			}else if(yearMonth.equals(regularTimeStr.substring(0, 7))){
+				dataParam.put("SAL_OFFSET_VACATION", offsetVacation.subtract(leaveDaysDecimal).add(overTimeDaysDecimal));
 			}else{
 				lastOffsetVacationDecimal = (BigDecimal) lastOffsetVacationRow.get("SAL_OFFSET_VACATION");
 				if(lastOffsetVacationDecimal.compareTo(new BigDecimal("0"))==1 || lastOffsetVacationDecimal.compareTo(new BigDecimal("0"))==0){
