@@ -9,10 +9,11 @@ import com.agileai.hotweb.bizmoduler.core.SystemLogService;
 import com.agileai.hotweb.bizmoduler.frame.SecurityAuthorizationConfig;
 import com.agileai.hotweb.common.Constants;
 import com.agileai.hotweb.common.Constants.FrameHandlers;
-import com.agileai.hotweb.common.HotwebAuthHelper;
+import com.agileai.hotweb.common.HttpRequestHelper;
 import com.agileai.hotweb.controller.core.BaseHandler;
 import com.agileai.hotweb.domain.core.Profile;
 import com.agileai.hotweb.domain.core.User;
+import com.agileai.hotweb.filter.HotwebUserCacher;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
@@ -62,12 +63,15 @@ public class LoginHandler  extends BaseHandler{
 				String userPwdTemp = String.valueOf(userRow.get("USER_PWD"));
 				String encryptedPassword = CryptionUtil.md5Hex(userPwd);
 				if (userPwdTemp.equals(encryptedPassword)){
-					User user = new User();
-					String fromIpAddress = request.getLocalAddr();
+					
+					String appName = request.getContextPath().substring(1);
+					HotwebUserCacher userCacher = HotwebUserCacher.getInstance(appName);
+					User user = userCacher.getUser(userId);
+					
+					String fromIpAddress = HttpRequestHelper.getRemoteHost(request);
 					Profile profile = new Profile(userId,fromIpAddress,user);
 					request.getSession().setAttribute(Profile.PROFILE_KEY, profile);
-					HotwebAuthHelper hotwebAuthHelper = new HotwebAuthHelper(user);
-					hotwebAuthHelper.initAuthedUser(userRow,user);
+					
 					writeSystemLog("系统登陆",getActionType());
 					result = new RedirectRenderer(getHandlerURL(Constants.FrameHandlers.HomepageHandlerId));
 				}

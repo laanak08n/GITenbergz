@@ -13,6 +13,7 @@ import com.agileai.hotweb.domain.core.Resource;
 import com.agileai.hotweb.domain.system.FuncHandler;
 import com.agileai.hotweb.domain.system.FuncMenu;
 import com.agileai.hotweb.domain.system.Operation;
+import com.agileai.hotweb.filter.HotwebUserCacher;
 import com.agileai.util.StringUtil;
 
 public class FunctionTreeManageImpl
@@ -23,6 +24,9 @@ public class FunctionTreeManageImpl
 	private static final String funcMenuListCacheKey = "funcMenuList";
 	private static final String operationMapCacheKey = "operationMap";
 	private static final String handlerMapCacheKey = "handlerMap";
+	private static final String functionIdListMapCacheKey = "functionIdListMap";
+	
+	protected String appName = null;
 	
     public FunctionTreeManageImpl() {
         super();
@@ -51,8 +55,13 @@ public class FunctionTreeManageImpl
     	HashMap<String,FuncHandler> handlerMap = (HashMap<String,FuncHandler>)GlobalCacheManager.getCacheValue(handlerMapCacheKey);
     	return handlerMap;
     }
-    
-	public FuncMenu getFunction(String functionId){
+    @SuppressWarnings("unchecked")
+	private HashMap<String,List<String>> getCacheFunctionIdListMap(){
+    	HashMap<String,List<String>> functionIdListMap = (HashMap<String,List<String>>)GlobalCacheManager.getCacheValue(functionIdListMapCacheKey);
+    	return functionIdListMap;
+    }
+
+    public FuncMenu getFunction(String functionId){
 		this.init();
 		return getCacheFunctionMap().get(functionId);
 	}
@@ -107,6 +116,8 @@ public class FunctionTreeManageImpl
 		String statementId = "syshandler.findMasterRecords";
 		List<DataRow> handlerRecords = this.daoHelper.queryRecords(statementId, new DataParam());
 		HashMap<String,FuncHandler> handlerMap = new HashMap<String,FuncHandler>();
+		HashMap<String,List<String>> functionIdListMap = new HashMap<String,List<String>>();
+		
 		if (handlerRecords != null){
 			for (int i=0;i < handlerRecords.size();i++){
 				DataRow row = handlerRecords.get(i);
@@ -124,6 +135,10 @@ public class FunctionTreeManageImpl
 				
 				handlerMap.put(handlerId, handler);
 				
+				List<String> functionIdList = buildFunctionIdList(functionIdListMap,handlerCode);
+				if (!functionIdList.contains(funcId)){
+					functionIdList.add(funcId);
+				}
 				
 				HashMap<String,FuncMenu> functionMap = getCacheFunctionMap();
 				FuncMenu funcMenu = functionMap.get(funcId);
@@ -134,6 +149,15 @@ public class FunctionTreeManageImpl
 		}
 		
 		GlobalCacheManager.putCacheValue(handlerMapCacheKey, handlerMap);
+		GlobalCacheManager.putCacheValue(functionIdListMapCacheKey, functionIdListMap);
+	}
+	
+	private List<String> buildFunctionIdList(HashMap<String,List<String>> functionIdListMap,String handlerCode){
+		if (!functionIdListMap.containsKey(handlerCode)){
+			List<String> functionIdList = new ArrayList<String>();
+			functionIdListMap.put(handlerCode, functionIdList);
+		}
+		return functionIdListMap.get(handlerCode);
 	}
 	
 	private synchronized void initOperatons(){
@@ -234,11 +258,13 @@ public class FunctionTreeManageImpl
 		HashMap<String,FuncMenu> functionMap = getCacheFunctionMap();
 		HashMap<String,Operation> operationMap = getCacheOperationMap();
 		HashMap<String,FuncHandler> handlerMap = getCacheHandlerMap();
+		HashMap<String,List<String>> functionIdList = getCacheFunctionIdListMap();
 		
 		if (functionMap == null || functionMap.isEmpty()){
 			this.initFuntions();
 		}
-		if (handlerMap == null || handlerMap.isEmpty()){
+		if (handlerMap == null || handlerMap.isEmpty()
+				|| functionIdList == null || functionIdList.isEmpty()){
 			this.initHandlers();
 		}
 		if (operationMap == null || operationMap.isEmpty()){
@@ -254,6 +280,13 @@ public class FunctionTreeManageImpl
 	}
 
 	@Override
+	public List<String> getFunctionIdList(String handlerCode) {
+		this.init();
+		HashMap<String,List<String>> functionIdList = getCacheFunctionIdListMap();
+		return functionIdList.get(handlerCode);
+	}	
+	
+	@Override
 	public Operation getOperation(String operationId) {
 		this.init();
 		HashMap<String,Operation> operationMap = getCacheOperationMap();
@@ -266,10 +299,20 @@ public class FunctionTreeManageImpl
 		HashMap<String,Operation> operationMap = getCacheOperationMap();
 		HashMap<String,FuncHandler> handlerMap = getCacheHandlerMap();
 		List<FuncMenu> funcMenuList = getCacheFuncMenuList();
+		HashMap<String,List<String>> functionIdList = getCacheFunctionIdListMap();
 		
 		funcMenuList.clear();
 		functionMap.clear();
 		handlerMap.clear();
 		operationMap.clear();
+		functionIdList.clear();
+		
+		HotwebUserCacher.getInstance(appName).truncateUsers();
+	}
+	@Override
+	public void setAppName(String appName) {
+		if (StringUtil.isNullOrEmpty(this.appName)){
+			this.appName = appName;
+		}
 	}
 }

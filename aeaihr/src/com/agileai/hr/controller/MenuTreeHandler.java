@@ -14,14 +14,16 @@ import com.agileai.util.StringUtil;
 public class MenuTreeHandler extends BaseHandler{
 	public static final String FUNC_ID_TAG = "funcId";
 	
+	private HotwebAuthHelper authHelper = null;
+	
 	public MenuTreeHandler(){
 		super();
 	}
 	
 	public ViewRenderer prepareDisplay(DataParam param){
 		User user = (User)this.getUser();
-		HotwebAuthHelper menuHelper = new HotwebAuthHelper(user);
-		String menuTreeSyntax = menuHelper.getTreeSyntax();
+		authHelper = new HotwebAuthHelper(user);
+		String menuTreeSyntax = authHelper.getTreeSyntax();
 		this.setAttribute("menuTreeSyntax", menuTreeSyntax);
 		return new LocalRenderer(getPage());
 	}
@@ -30,9 +32,8 @@ public class MenuTreeHandler extends BaseHandler{
 	public ViewRenderer showFunction(DataParam param){
 		String funcId = param.get(FUNC_ID_TAG);
 		User user = (User)getUser();
-		HotwebAuthHelper userHelper = new HotwebAuthHelper(user);
-		userHelper.setCurrentFuncId(funcId);
-		FuncMenu function = userHelper.getFunction(funcId);
+		authHelper = new HotwebAuthHelper(user);
+		FuncMenu function = authHelper.getFunction(funcId);
 		
 		String funcURL = function.getFuncUrl();
 		String handlerURL = funcURL;				
@@ -82,9 +83,7 @@ public class MenuTreeHandler extends BaseHandler{
 		path.insert(0, temp.toString());
 		String funcParentId = function.getFuncPid();
 		if (!StringUtil.isNullOrEmpty(funcParentId)){
-			User user = (User)getUser();
-			HotwebAuthHelper userHelper = new HotwebAuthHelper(user);
-			FuncMenu parent = userHelper.getFunction(funcParentId);
+			FuncMenu parent = authHelper.getFunction(funcParentId);
 			this.uploopMenuItem(path,parent);
 		}
 	}
