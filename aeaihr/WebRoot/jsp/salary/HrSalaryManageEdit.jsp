@@ -22,7 +22,7 @@ var addAttendanceBox;
 function addAttendance(){
 	var title = '添加考勤';
 	if(!addAttendanceBox){
-		addAttendanceBox = new PopupBox('addAttendanceBox',title,{size:'normal',width:'400px',height:'300px',top:'10px',scroll:'yes'});
+		addAttendanceBox = new PopupBox('addAttendanceBox',title,{size:'normal',width:'600px',height:'400px',top:'10px',scroll:'yes'});
 	}
 	var salUser = $("#SAL_USER").val();
 	var year = $("#SAL_YEAR").val();
@@ -160,7 +160,7 @@ function addAttendance(){
 </form>
 <script language="javascript">
 $('#SAL_REMARKS').inputlimiter({
-	limit: 100,
+	limit: 512,
 	remText: '还可以输入  %n 字 /',
 	limitText: '%n 字',
 	zeroPlural: false

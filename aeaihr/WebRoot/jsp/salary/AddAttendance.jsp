@@ -10,11 +10,12 @@
 <title>添加考勤</title>
 <%@include file="/jsp/inc/resource.inc.jsp"%>
 <script type="text/javascript">
-function addDateRow(days,nextDate){
+function addDateRow(days,nextDate,week){
 	$("#atdDay tbody").append('<tr id="day'+days+'"></tr>');
 	$("#atdDay tr:last").append('<th width="100" nowrap="nowrap">第'+(days+1)+'天</th>');
-	$("#atdDay tr:last").append('<td width="10" nowrap="nowrap"><input name="EMP_INDUCTION_TIME'+days+'" type="text" class="text" id="EMP_INDUCTION_TIME'+days+'" value="'+nextDate+'" size="16" readonly="readonly" label="日期" /></td>');
+	$("#atdDay tr:last").append('<td width="10" nowrap="nowrap"><input name="EMP_INDUCTION_TIME'+days+'" type="text" class="text" id="EMP_INDUCTION_TIME'+days+'" value="'+nextDate+'" size="16" onchange="changeWeek('+days+')" readonly="readonly" label="日期" /></td>');
 	$("#atdDay tr:last").append('<td>&nbsp;&nbsp;<img id="EMP_INDUCTION_TIMEPicker'+days+'" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" /></td>');	
+	$("#atdDay tr:last").append('<td width="10" nowrap="nowrap"><input name="EMP_INDUCTION_WEEK'+days+'" type="text" class="text" id="EMP_INDUCTION_WEEK'+days+'" value="'+week+'" size="16" readonly="readonly" label="日期" /></td>');
 	$("#atdDay tr:last").append('<td>&nbsp;<img id="delImgBtn" style="display: inline;" src="images/delete.gif" width="16" height="16" onclick="deleteDate('+days+')"></td>')
 	
 	$("#atdDay").append('<input type="hidden" name="attendanceDate'+days+'" id="attendanceDate'+days+'" value="'+nextDate+'" />');
@@ -23,10 +24,13 @@ function addDateRow(days,nextDate){
 	datetimeValidators[days].set("yyyy-MM-dd").add("EMP_INDUCTION_TIME"+days);	
 }
 function addAttendance(){
+	var a = ["日", "一", "二", "三", "四", "五", "六"]; 
 	var days = $("#atdDay tr").length;
 	var lastDate = $("#EMP_INDUCTION_TIME"+(days-1)).val();
 	var nextDate = addDay(lastDate);
-	addDateRow(days,nextDate);
+	var day = new Date(nextDate).getDay();
+	var week = "星期"+ a[day];
+	addDateRow(days,nextDate,week);
 }
 function saveAttendance(){
 	var days = $("#atdDay tr").length;
@@ -45,14 +49,18 @@ function saveAttendance(){
 		return;
 	}
 	var addDay = $("#atdDay tr").length;
-	var data = 'addDay='+addDay;
-	postRequest('form1',{actionType:'save',data:data,onComplete:function(responseText){
-		if (responseText == 'success'){
-			window.parent.location.reload();
-		}else{
-			showMessage('添加考勤出错！');
+	var data = 'addDay='+addDay;	
+  	jConfirm("确认提交"+days+"条数据？",function(r){
+		if(r){
+			postRequest('form1',{actionType:'save',data:data,onComplete:function(responseText){
+				if (responseText == 'success'){
+					window.parent.location.reload();
+				}else{
+					showMessage('添加考勤出错！');
+				}
+			}});
 		}
-	}});
+	});
 }
 function checkDate(){
 	var days = $("#atdDay tr").length;
@@ -94,8 +102,18 @@ function deleteDate(n){
 	}
 	for(addDays; addDays<rows-1; addDays++){
 		var curDate = addDay(curDate);
-		addDateRow(addDays,curDate);
+		var a = ["日", "一", "二", "三", "四", "五", "六"]; 
+		var day = new Date(curDate).getDay();
+		var week = "星期"+ a[day];
+		addDateRow(addDays,curDate,week);
 	}
+}
+function changeWeek(n){
+	var a = ["日", "一", "二", "三", "四", "五", "六"]; 
+	var curDate = $("#EMP_INDUCTION_TIME"+n).val();
+	var day = new Date(curDate).getDay();
+	var week = "星期"+ a[day];
+	$("#EMP_INDUCTION_WEEK"+n).val(week);
 }
 </script>
 </head>
@@ -126,11 +144,13 @@ function deleteDate(n){
   	for(int i = 0; i<addDate; i++){
   		Date nextDate = DateUtil.getDateAdd(inductionDate, 1, i);
   		String nextDay = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, nextDate);
+  		String nextWeek = DateUtil.getWeekText(nextDate);
   	%>
   	  <tr id="day<%=i%>">
 	    <th width="100" nowrap="nowrap">第<%=i+1%>天</th>
-	    <td width="10" nowrap="nowrap"><input name="EMP_INDUCTION_TIME<%=i%>" type="text" class="text" id="EMP_INDUCTION_TIME<%=i%>" value="<%=nextDay%>" size="16" readonly="readonly" label="日期" /></td>
+	    <td width="10" nowrap="nowrap"><input name="EMP_INDUCTION_TIME<%=i%>" type="text" class="text" id="EMP_INDUCTION_TIME<%=i%>" value="<%=nextDay%>" size="16" onchange="changeWeek(<%=i%>)" readonly="readonly" label="日期" /></td>
 	    <td>&nbsp;&nbsp;<img id="EMP_INDUCTION_TIMEPicker<%=i%>" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" /></td>
+	    <td width="10px" nowrap="nowrap"><input name="EMP_INDUCTION_WEEK<%=i%>" type="text" class="text" id="EMP_INDUCTION_WEEK<%=i%>" value="<%=nextWeek%>" size="16" readonly="readonly" label="日期" /></td>
 	    <td>&nbsp;<img id="delImgBtn" style="display: inline;" src="images/delete.gif" width="16" height="16" onclick="deleteDate(<%=i%>)"></td>
 	  </tr>
 	  <input type="hidden" name="attendanceDate<%=i%>" id="attendanceDate<%=i%>" value="<%=nextDay%>" />

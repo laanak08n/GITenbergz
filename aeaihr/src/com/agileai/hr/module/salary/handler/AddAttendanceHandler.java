@@ -26,7 +26,7 @@ public class AddAttendanceHandler extends SimpleHandler{
 		Date inductionDate = (Date) row.get("EMP_INDUCTION_TIME");
 		Date createDate = (Date) row.get("EMP_CREATE_TIME");
 		Date beginMonthDate = DateUtil.getBeginOfMonth(DateUtil.getDate(param.get("salYear")+"-"+param.get("salMonth")+"-01"));
-		if(DateUtil.getDateDiff(beginMonthDate, inductionDate, DateUtil.MONTH) == 0 && DateUtil.getDateDiff(beginMonthDate, inductionDate, DateUtil.DAY) > 0){
+		if(DateUtil.getDateDiff(beginMonthDate, inductionDate, DateUtil.MONTH) == 0){
 			setAttribute("EMP_INDUCTION_TIME", inductionDate);
 			setAttribute("dateDiff", DateUtil.getDateDiff(inductionDate, createDate, DateUtil.DAY));
 		}

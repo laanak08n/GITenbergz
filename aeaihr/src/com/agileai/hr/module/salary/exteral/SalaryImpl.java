@@ -76,7 +76,8 @@ public class SalaryImpl extends BaseRestService implements Salary {
 			jsonArray.put(0, dataRow.get("SAL_BASIC"));
 			jsonArray.put(1, dataRow.get("SAL_PERFORMANCE"));
 			jsonArray.put(2, dataRow.get("SAL_SUBSIDY"));
-
+			jsonArray.put(3, dataRow.get("SAL_BONUS"));
+			
 			responseText = jsonArray.toString();
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(),e);

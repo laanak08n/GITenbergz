@@ -75,7 +75,7 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 		this.setAttribute("salProbationDayMoney", salProbationDayMoney);
 		this.setAttribute("salRegularDayMoney", salRegularDayMoney);
 		boolean isAddAttendance = false;
-		if(DateUtil.getDateDiff(salDate, inductionDate, DateUtil.MONTH) == 0 && DateUtil.getDateDiff(salDate, inductionDate, DateUtil.DAY) > 0){
+		if(DateUtil.getDateDiff(salDate, inductionDate, DateUtil.MONTH) == 0 ){
 			isAddAttendance = true;
 		}	
 		setAttribute("isAddAttendance", isAddAttendance);

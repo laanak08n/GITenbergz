@@ -173,7 +173,7 @@
 			#yearMonth#
 		</isNotEmpty>
 		<isNotEmpty prepend=" " property="sdate">
-			and LEFT(ATD_DATE,10) between #sdate# and c.EMP_REGULAR_TIME
+			and LEFT(ATD_DATE,10) between #sdate# and DATE_SUB(c.EMP_REGULAR_TIME,INTERVAL 1 day)
 		</isNotEmpty>
 		<isNotEmpty prepend=" " property="edate">
 			and LEFT(ATD_DATE,10) between c.EMP_REGULAR_TIME and #edate#
@@ -340,6 +340,7 @@
 		where 1=1
 		and BP_TYPE = 'PUNISHMENT'
 		and date_format(BP_DATE,'%Y-%m') = #yearMonth#
+		group by USER_ID
 	</select>
 	<select id="findRewardtRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
@@ -348,6 +349,7 @@
 		where 1=1
 		and BP_TYPE = 'REWARD'
 		and date_format(BP_DATE,'%Y-%m') = #yearMonth#
+		group by USER_ID
 	</select>
 	<select id="findBonusPenaltyRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
