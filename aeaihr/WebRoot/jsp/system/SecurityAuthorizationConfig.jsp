@@ -6,6 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>安全管理</title>
 <%@include file="/jsp/inc/resource.inc.jsp"%>
+<%
+String height = pageBean.getStringValue("height", "350");
+%>
 <script language="javascript">
 var addUserTreeBox;
 function showAddUserTreeBoxBox(){
@@ -96,7 +99,7 @@ function emptyRelation(param){
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="emptyRelation({actionType:'delRoleAuthRelations'});"><input value="&nbsp;" type="button" class="cancelImgBtn" id="cancelImgBtn" title="刷新" />清空</td>   
 </tr>
 </table>
-<select name="roleList" size="20" id="roleList" style="width:100%;height:350px;">
+<select name="roleList" size="20" id="roleList" style="width:100%;height:<%=height%>px">
 <%=pageBean.selectValue("roleList") %>
 </select>
 	</fieldset>          
@@ -111,7 +114,7 @@ function emptyRelation(param){
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="emptyRelation({actionType:'delUserAuthRelations'});"><input value="&nbsp;" type="button" class="cancelImgBtn" id="cancelImgBtn" title="刷新" />清空</td>   
 </tr>
 </table>
-<select name="userList" size="20" id="userList" style="width:100%;height:350px;">
+<select name="userList" size="20" id="userList" style="width:100%;height:<%=height%>px">
 <%=pageBean.selectValue("userList") %>
 </select>      
 	</fieldset>      
@@ -126,7 +129,7 @@ function emptyRelation(param){
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="emptyRelation({actionType:'delGroupAuthRelations'});"><input value="&nbsp;" type="button" class="cancelImgBtn" id="cancelImgBtn" title="刷新" />清空</td>   
 </tr>
 </table>
-<select name="groupList" size="20" id="groupList" style="width:100%;height:350px;">
+<select name="groupList" size="20" id="groupList" style="width:100%;height:<%=height%>px">
 <%=pageBean.selectValue("groupList") %>
 </select>      
 	</fieldset>      

@@ -474,6 +474,16 @@ select{
 	margin:0px 0px 0px 1px;
 	cursor:pointer;
 }
+.syncSecurityImgBtn{
+	background: url(../images/ruff.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.syncSecurityImgBtndisabled{
+	background: url(../images/ruff0.gif) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
 /************************************************************
 Tab begin
 ***************************************************************/

@@ -7,6 +7,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>控制器列表</title>
 <%@include file="/jsp/inc/resource.inc.jsp"%>
+<script language="javascript">
+var configSecurityBox;
+function configSecurityRequest(){
+	if (!isSelectedRow()){
+		writeErrorMsg('请先选中一条记录!');
+		return;
+	}
+	var operationId = $("#HANLER_ID").val();
+	if (!configSecurityBox){
+		configSecurityBox = new PopupBox('configSecurityBox','安全配置',{size:'normal',width:'700px',height:'450px',top:'2px'});
+	}
+	var url = 'index?SecurityAuthorizationConfig&resourceType=Handler&height=320&resourceId='+operationId;
+	configSecurityBox.sendRequest(url);	
+}
+</script>
 </head>
 <body>
 <form action="<%=pageBean.getHandlerURL()%>" name="form1" id="form1" method="post">
@@ -24,6 +39,9 @@
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="C" align="center" onclick="doRequest('copyRequest')"><input value="&nbsp;" title="复制" type="button" class="copyImgBtn" />复制</td>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td>   
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input value="&nbsp;" title="删除" type="button" class="delImgBtn" />删除</td>
+   <td onmouseover="onMover(this);" onmouseout="onMout(this);" onclick="doSubmit({actionType:'synchronousSecurity'});" class="bartdx" align="center"><input id="syncSecurityImgBtn" value="&nbsp;" title="同步权限" type="button" class="syncSecurityImgBtn" style="margin-right:0px;" />同步权限</td>         
+   <td onmouseover="onMover(this);" onmouseout="onMout(this);" onclick="configSecurityRequest()" class="bartdx" align="center"><input id="assignImgBtn" value="&nbsp;" title="安全设置" type="button" class="assignImgBtn" style="margin-right:0px;" />安全设置</td>         
+   
 </tr>
 </table>
 </div>

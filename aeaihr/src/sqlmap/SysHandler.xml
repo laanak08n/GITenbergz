@@ -49,5 +49,28 @@
     update sys_operation
 	set HANLER_ID=#HANLER_ID#,OPER_CODE=#OPER_CODE#,OPER_NAME=#OPER_NAME#,OPER_ACTIONTPYE=#OPER_ACTIONTPYE#,OPER_SORT=#OPER_SORT#
 	where OPER_ID=#OPER_ID#
-   </update>       
+   </update> 
+  <select id="retrieveHanlerIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select HANLER_ID
+	from sys_handler
+	where FUNC_ID=#funcId#
+  </select>   
+  
+  <select id="retrieveUserIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	select USER_ID 
+	from security_user_auth
+	where RES_ID=#funcId#
+  </select>  
+  
+  <select id="retrieveRoleIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	select ROLE_ID 
+	from security_role_auth
+	where RES_ID=#funcId#
+  </select>  
+  
+  <select id="retrieveGroupIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	select GRP_ID 
+	from security_group_auth
+	where RES_ID=#funcId#
+  </select>          
 </sqlMap>
