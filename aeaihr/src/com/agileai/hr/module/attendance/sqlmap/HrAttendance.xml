@@ -58,8 +58,8 @@
 	</select>
 	<insert id="createLocationRecord" parameterClass="com.agileai.domain.DataParam">
 		insert into hr_location
-		(LOCAT_ID,USER_ID,LOCAT_TIME,LOCAT_PLACE) values
-		(#LOCAT_ID:CHAR#,#USER_ID:CHAR#,#LOCAT_TIME:DATETIME#,#LOCAT_PLACE:VARCHAR#)
+		(LOCAT_ID,USER_ID,LOCAT_TIME,LOCAT_PLACE,LOCAT_HOUSE) values
+		(#LOCAT_ID:CHAR#,#USER_ID:CHAR#,#LOCAT_TIME:DATETIME#,#LOCAT_PLACE:VARCHAR#,#LOCAT_HOUSE:VARCHAR#)
 	</insert>	
 	
 	<select id="findUserInfos" parameterClass="com.agileai.domain.DataParam"
