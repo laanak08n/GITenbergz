@@ -13,6 +13,7 @@ import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.cxmodule.HrAttendanceManage;
 import com.agileai.util.DateUtil;
+import com.agileai.util.StringUtil;
 
 public class MobileAttendanceStatHandler extends SimpleHandler{
 	public MobileAttendanceStatHandler(){
@@ -24,7 +25,8 @@ public class MobileAttendanceStatHandler extends SimpleHandler{
 		String responseText = FAIL;
 		try {
 			HrAttendanceManage hrAttendanceManage = this.lookupService(HrAttendanceManage.class);
-			List<DataRow> records = hrAttendanceManage.getAttendanceStatInfo();
+			String date = DateUtil.getYear()+"-"+DateUtil.getMonth();
+			List<DataRow> records = hrAttendanceManage.getAttendanceStatInfo(date);
 			JSONArray jsonArray1 = new JSONArray();
 			JSONArray jsonArray2 = new JSONArray();
 			JSONArray lastNums = new JSONArray();
@@ -60,8 +62,35 @@ public class MobileAttendanceStatHandler extends SimpleHandler{
 	public ViewRenderer getAttendanceInfoSheet(DataParam param){
 		String responseText = FAIL;
 		try {
+			String date = param.getString("month");
+			String mark = param.getString("mark");
+			if(StringUtil.isNotNullNotEmpty(date)){
+				date = date+"-01";
+				if("Last".equals(mark)){
+					if(date.endsWith("01")){
+						String tempDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.YEAR,-1));
+						date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(tempDate),DateUtil.MONTH,11));
+					}else{
+						date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.MONTH,-1));
+					}
+				}else if("Next".equals(mark)){
+					if(date.endsWith("12")){
+						String tempDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.YEAR,1));
+						date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(tempDate),DateUtil.MONTH,-11));
+					}else{
+						date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.MONTH,1));
+					}
+				}else{
+					if("Current".equals(mark)){
+						date = DateUtil.getYear()+"-"+DateUtil.getMonth();
+					}
+				}
+			}else{
+				date = DateUtil.getYear()+"-"+DateUtil.getMonth();
+			}
+			date = date.substring(0,7);
 			HrAttendanceManage hrAttendanceManage = this.lookupService(HrAttendanceManage.class);
-			List<DataRow> records = hrAttendanceManage.getAttendanceStatInfo();
+			List<DataRow> records = hrAttendanceManage.getAttendanceStatInfo(date);
 			JSONArray jsonArray = new JSONArray();
 			for(int i=0;i<records.size();i++){
 				DataRow row = records.get(i);
@@ -75,6 +104,7 @@ public class MobileAttendanceStatHandler extends SimpleHandler{
 			}
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("attendanceInfoList", jsonArray);
+			jsonObject.put("month", date);
 			responseText = jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
@@ -89,20 +119,24 @@ public class MobileAttendanceStatHandler extends SimpleHandler{
 			String date = param.getString("month");
 			String code = param.getString("code");
 			String mark = param.getString("mark");
-			date = date+"-01";
-			if("Last".equals(mark)){
-				if(date.endsWith("01")){
-					String tempDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.YEAR,-1));
-					date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(tempDate),DateUtil.MONTH,11));
-				}else{
-					date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.MONTH,-1));
-				}
-			}else if("Next".equals(mark)){
-				if(date.endsWith("12")){
-					String tempDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.YEAR,1));
-					date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(tempDate),DateUtil.MONTH,-11));
-				}else{
-					date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.MONTH,1));
+			if(StringUtil.isNotNullNotEmpty(date)){
+				date = date+"-01";
+				if("Last".equals(mark)){
+					if(date.endsWith("01")){
+						String tempDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.YEAR,-1));
+						date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(tempDate),DateUtil.MONTH,11));
+					}else{
+						date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.MONTH,-1));
+					}
+				}else if("Next".equals(mark)){
+					if(date.endsWith("12")){
+						String tempDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.YEAR,1));
+						date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(tempDate),DateUtil.MONTH,-11));
+					}else{
+						date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(date),DateUtil.MONTH,1));
+					}
+				}else if("Current".equals(mark)){
+					date = DateUtil.getYear()+"-"+DateUtil.getMonth();
 				}
 			}else{
 				date = DateUtil.getYear()+"-"+DateUtil.getMonth();
