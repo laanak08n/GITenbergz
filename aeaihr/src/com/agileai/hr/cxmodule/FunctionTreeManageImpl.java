@@ -311,4 +311,10 @@ public class FunctionTreeManageImpl
 			this.appName = appName;
 		}
 	}
+
+	@Override
+	public FuncHandler retrieveFuncHandler(String handlerCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

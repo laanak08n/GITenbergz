@@ -41,17 +41,18 @@ public class HotwebUserCasFilter implements Filter{
 				
 				profile = new Profile(loginName,fromIpAddress,user);
 				HttpSession session = httpRequest.getSession(true);
-				session.setAttribute(Profile.PROFILE_KEY, profile);
+				session.setAttribute(appName + "." + Profile.PROFILE_KEY, profile);
 	        }
 	    }
 	    chain.doFilter(request, response);		
 	}
 	
-	protected Profile getProfile(HttpServletRequest request){
+	protected Profile getProfile(HttpServletRequest request) {
 		Profile profile = null;
 		HttpSession session = request.getSession(false);
-		if (session != null){
-			profile = (Profile)session.getAttribute(Profile.PROFILE_KEY);	
+		if (session != null) {
+			String appName = request.getContextPath().substring(1);
+			profile = (Profile) session.getAttribute(appName + "." + Profile.PROFILE_KEY);
 		}
 		return profile;
 	}
