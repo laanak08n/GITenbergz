@@ -23,6 +23,9 @@ and BP_TYPE=#bpType#
 <isNotEmpty prepend=" " property="userId">
 and a.USER_ID = #userId#
 </isNotEmpty>
+<isNotEmpty prepend=" " property="userName_like">
+and u.USER_NAME like #userName_like#
+</isNotEmpty>
   </select>
   <select id="getRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
     select a.BP_ID,u.USER_NAME,a.USER_ID,a.BP_DATE,a.BP_TYPE,a.BP_MONEY,a.BP_DESC

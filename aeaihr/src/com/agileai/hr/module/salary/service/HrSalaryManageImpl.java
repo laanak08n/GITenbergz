@@ -276,7 +276,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			BigDecimal sal_bonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal).add(sal_day_money_total).add(sal_fulltime_award);
 			dataParam.put("SAL_BONUS", sal_bonus);
 			
-			BigDecimal sal_actual  = sal_should.add(sal_bonus).add(sal_day_money_total).add(sal_fulltime_award);
+			BigDecimal sal_actual  = sal_should.add(sal_bonus);
 			dataParam.put("SAL_ACTUAL", sal_actual);
 			
 			statementId = sqlNameSpace + "." + "getSalYearLeaveInfo";
