@@ -432,7 +432,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		BigDecimal salRegularDayMoney = (BigDecimal) dataParam.getObject("salRegularDayMoney");
 		BigDecimal salDayMoneyTotal = new BigDecimal("0.0");
 		BigDecimal salProbationDayMoneyTotal = new BigDecimal("0.0");
-
+		BigDecimal salOverRunMoneyTotal = new BigDecimal("0.00");
 		if(salOffsetVacation.compareTo(new BigDecimal("0")) == -1){
 			bonusPenaltyParam.put("BP_ID", KeyGenerator.instance().genKey());
 			bonusPenaltyParam.put("USER_ID", userCode);
@@ -440,16 +440,19 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			bonusPenaltyParam.put("BP_TYPE", "OVERRUN");
 			if(DateUtil.getDateDiff(regularTime,date , DateUtil.MONTH)<0){
 				salProbationDayMoneyTotal = salOffsetVacation.multiply(salProbationDayMoney);
-				bonusPenaltyParam.put("BP_MONEY", salProbationDayMoneyTotal.abs());
+				salOverRunMoneyTotal = salProbationDayMoneyTotal.abs();
+				bonusPenaltyParam.put("BP_MONEY", salOverRunMoneyTotal);
 			}else if(DateUtil.getDateDiff(regularTime,date, DateUtil.MONTH)==0){
 				BigDecimal probationOverRunDays = (BigDecimal) dataParam.getObject("probationOverRunDays");
 				BigDecimal regularOverRunDays = (BigDecimal) dataParam.getObject("regularOverRunDays");
 				salProbationDayMoneyTotal = probationOverRunDays.multiply(salProbationDayMoney);
 				salDayMoneyTotal = regularOverRunDays.multiply(salRegularDayMoney);
-				bonusPenaltyParam.put("BP_MONEY", salProbationDayMoneyTotal.abs().add(salDayMoneyTotal.abs()));
+				salOverRunMoneyTotal = salProbationDayMoneyTotal.abs().add(salDayMoneyTotal.abs());
+				bonusPenaltyParam.put("BP_MONEY", salOverRunMoneyTotal);
 			}else{
 				salDayMoneyTotal = salOffsetVacation.multiply(salRegularDayMoney);
-				bonusPenaltyParam.put("BP_MONEY", salDayMoneyTotal.abs());
+				salOverRunMoneyTotal = salDayMoneyTotal.abs();
+				bonusPenaltyParam.put("BP_MONEY",salOverRunMoneyTotal);
 			}
 			String statementId = sqlNameSpace + "." + "getBonusPenaltyRecord";
 			DataRow bonusPenaltyRow = this.daoHelper.getRecord(statementId, bonusPenaltyParam);
@@ -461,7 +464,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				this.daoHelper.insertRecord(statementId, bonusPenaltyParam);
 			}
 		}
-		dataParam.put("salDayMoneyTotal",salDayMoneyTotal);
+		dataParam.put("salOverRunMoneyTotal",salOverRunMoneyTotal);
 		return dataParam;
 	}
 	@Override
