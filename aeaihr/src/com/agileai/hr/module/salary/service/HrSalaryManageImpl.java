@@ -127,8 +127,6 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		statementId = sqlNameSpace + "." + "findMasterDaysRecords";
 		List<DataRow> basicRecords = this.daoHelper.queryRecords(statementId,
 				new DataParam("year",year,"month",month));
-		HashMap<String,DataRow> beforeYearDecemberSalaryRecords = this.daoHelper.queryRecords(
-				"USER_ID",statementId,new DataParam("year",beforeYear,"month",beforeYearDecember));
 		statementId = sqlNameSpace + "." + "findPunishmentRecords";
 		HashMap<String,DataRow> punishmentMap = this.daoHelper.queryRecords(
 				"USER_ID",statementId, new DataParam("yearMonth",yearMonth));
@@ -138,6 +136,8 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		statementId = sqlNameSpace+ "." + "findRecords";
 		HashMap<String,DataRow> salaryRecordMap = this.daoHelper.queryRecords(
 				"SAL_USER", statementId, new DataParam("salYear",year,"salMonth",month));
+		HashMap<String,DataRow> beforeYearDecemberSalaryRecords = this.daoHelper.queryRecords(
+				"SAL_USER",statementId,new DataParam("salYear",beforeYear,"salMonth",beforeYearDecember));
 		statementId = sqlNameSpace+ "." + "findBonusPenaltyRecords";
 		HashMap<String,DataRow> overRunDayRecordMap = this.daoHelper.queryRecords(
 				"USER_ID", statementId, new DataParam("BP_DATE",date,"BP_TYPE","OVERRUN"));
@@ -146,7 +146,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		HashMap<String,DataRow> additionalVationRecordMap = this.daoHelper.queryRecords(
 				"USER_ID", statementId, new DataParam("BP_DATE",date,"BP_TYPE","ADDITIONALVATION"));
 		statementId = sqlNameSpace+ "." + "findAttendanceRecords";
-		HashMap<String,List<DataRow>> attendanceRecordMap = this.queryRecords(
+		HashMap<String,DataRow> attendanceRecordMap = this.daoHelper.queryRecords(
 				"USER_ID",statementId, new DataParam("sdate",date,"edate",currentDate));
 		statementId = sqlNameSpace+ "." +"getFulltimeAwardRecord";
 		DataRow fulltimeAward = this.daoHelper.getRecord(statementId, new DataParam());
@@ -269,7 +269,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			HashMap<String,DataRow> rewardMap,HashMap<String,DataRow> salaryRecordMap,HashMap<String,DataRow> overRunDayRecordMap,
 			HashMap<String,DataRow> probationWorkDayMap,HashMap<String,DataRow> regularWorkDayMap,List<DataParam> updateOverRunParamList,
 			List<DataParam> insertOverRunParamList,List<DataParam> insertAdditionalVationParamList,List<DataParam> insertFullTimeParamList,
-			List<DataParam> updateFullTimeParamList,HashMap<String,DataRow>fullTimeRecordMap,HashMap<String,List<DataRow>> attendanceRecordMap,Double fulltimeAwardMoney,HashMap<String, List<DataRow>> beforeYearOffesetVationDaysMap,
+			List<DataParam> updateFullTimeParamList,HashMap<String,DataRow>fullTimeRecordMap,HashMap<String,DataRow> attendanceRecordMap,Double fulltimeAwardMoney,HashMap<String, List<DataRow>> beforeYearOffesetVationDaysMap,
 			HashMap<String, List<DataRow>> totalOverTimeRecordsMap,List<DataParam> insertfullTimeParamList,HashMap<String,List<DataRow>> totalLeaveRecordsMap,HashMap<String, DataRow> additionalVationRecordMap,List<DataParam> updateAdditionalVationParamList){
 		BigDecimal salWorkDays = new BigDecimal("0.0");
 		BigDecimal salOvertime = new BigDecimal("0.0");
@@ -369,7 +369,9 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		if(beforeMonthWotTime>=2){
 			Date beforeMonthOverTimeDate = DateUtil.getDateAdd(beforeMonthWotDate, DateUtil.DAY, beforeMonthWotTime.intValue());
 			beforeMonthOverDay = DateUtil.getDateDiff(date,beforeMonthOverTimeDate, DateUtil.DAY);
-			beforeMonthOverDayDecimal = BigDecimal.valueOf(beforeMonthOverDay+1);
+			if(beforeMonthOverDay>0){
+				beforeMonthOverDayDecimal = BigDecimal.valueOf(beforeMonthOverDay+1);
+			}
 		}else{
 			beforeMonthOverDayDecimal = new BigDecimal("0.0");
 		}
@@ -398,6 +400,8 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				if(nextMonthOverDay>0){
 					thisMonthOverDay = currentMonthWotTimeInt-nextMonthOverDay.intValue();
 					thisMonthOverDayDecimal = BigDecimal.valueOf(thisMonthOverDay);
+				}else{
+					thisMonthTotalOverDayDecimal = thisMonthTotalOverDayDecimal.add(BigDecimal.valueOf(currentMonthWotTime));
 				}
 			}
 			thisMonthTotalOverDayDecimal = thisMonthTotalOverDayDecimal.add(thisMonthOverDayDecimal).add(beforeMonthOverDayDecimal);
@@ -420,7 +424,6 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 					probationOverTimeDay = currentMonthWotTime;
 				}else if(currentMonthWotTime>=2&&regularOverTimeDiff>0&&DateUtil.getDateDiff(regularTime,currentMonthWotDate,DateUtil.DAY)<0&&DateUtil.getDateDiff(lastDateMonth,currentMonthOverTimeDate, DateUtil.DAY)<0){
 					probationOverTimeDay = currentMonthWotTime-regularOverTimeDiff;
-					totalProbationOverTime += probationOverTimeDay;
 					regularOverTimeDay = regularOverTimeDiff.doubleValue();
 				}else if(currentMonthWotTime>=2&&regularOverTimeDiff>0&&DateUtil.getDateDiff(regularTime,currentMonthWotDate,DateUtil.DAY)<0&&DateUtil.getDateDiff(lastDateMonth,currentMonthOverTimeDate, DateUtil.DAY)>0){
 					probationOverTimeDay = currentMonthWotTime.doubleValue()-regularOverTimeDiff.doubleValue();
@@ -433,13 +436,13 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 					int currentMonthWotTimeInt = currentMonthWotTime.intValue();
 					nextMonthOverDay = DateUtil.getDateDiff(lastDateMonth,currentMonthOverTimeDate, DateUtil.DAY);
 					thisMonthOverDay = currentMonthWotTimeInt-nextMonthOverDay.intValue();
-					Long dateDiff = DateUtil.getDateDiff(currentMonthWotDate, lastDateMonth, DateUtil.DAY);
-					regularOverTimeDay = dateDiff.doubleValue()-1;
+					regularOverTimeDay = (double) thisMonthOverDay;
 				}
 				totalProbationOverTime += probationOverTimeDay;
 				totalRegulationOverTime += regularOverTimeDay;
 			}
-			thisMonthTotalOverDayDecimal = BigDecimal.valueOf(totalProbationOverTime+totalRegulationOverTime).add(beforeMonthOverDayDecimal);
+			totalProbationOverTime += beforeMonthOverDayDecimal.doubleValue();
+			thisMonthTotalOverDayDecimal = BigDecimal.valueOf(totalProbationOverTime+totalRegulationOverTime);
 		}
 		dataParam.put("thisMonthTotalOverDayDecimal",thisMonthTotalOverDayDecimal);
 		dataParam.put("totalRegulationOverTime",totalRegulationOverTime);
@@ -477,7 +480,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			if(regularDateDiff>0){
 				regulationLeaveDay += leaveDay;
 			}else{
-				if(leaveDayFloorDouble>=2&&regularDateDiff==0&&DateUtil.getDateDiff(beginDate, regularTime, DateUtil.DAY)>0&&DateUtil.getDateDiff(regularTime, endDate, DateUtil.DAY)>0){
+				if(leaveDayFloorDouble>=2&&regularDateDiff==0&&DateUtil.getDateDiff(beginDate, regularTime, DateUtil.DAY)>=0&&DateUtil.getDateDiff(regularTime, endDate, DateUtil.DAY)>0){
 					Date beginDateWeekDay = DateUtil.getBeginOfWeek(beginDate);
 					Long weekDateDiff = DateUtil.getDateDiff(beginDateWeekDay,regularTime, DateUtil.DAY);
 					Long dateDiff = DateUtil.getDateDiff(beginDate,regularTime, DateUtil.DAY);
@@ -554,16 +557,13 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		dataParam.put("regulartionOffsetVacationDay",regulartionOffsetVacationDay);
 		dataParam.put("beforeYearDecemberOffsetVationDay",beforeYearDecemberOffsetVationDay);
 		dataParam.put("salOffsetVacation",BigDecimal.valueOf(totalOffsetVacationDay));
-		System.out.println(dataParam.get("SAL_NAME"));
-		System.out.println(probationOffsetVacationDay);
-		System.out.println(regulartionOffsetVacationDay);
 		return dataParam;
 	}
 	private DataParam calculateTotalSaray(DataParam dataParam,Date regularTime,Date inductionDate,Date date,String userId,Double beforeYearDecemberValidDay,
 			HashMap<String,DataRow> beforeYearDecemberSalaryRecords,HashMap<String,DataRow> overRunDayRecordMap,
 			HashMap<String,DataRow> punishmentMap,HashMap<String,DataRow> rewardMap,
 			List<DataParam> insertAdditionalVationParamList,List<DataParam> updateOverRunParamList,List<DataParam> insertOverRunParamList,
-			HashMap<String,DataRow> probationWorkDayMap,HashMap<String,DataRow> regularWorkDayMap,HashMap<String,List<DataRow>> attendanceRecordMap,List<DataParam> insertfullTimeParamList,List<DataParam> updateFullTimeParamList,
+			HashMap<String,DataRow> probationWorkDayMap,HashMap<String,DataRow> regularWorkDayMap,HashMap<String,DataRow> attendanceRecordMap,List<DataParam> insertfullTimeParamList,List<DataParam> updateFullTimeParamList,
 			HashMap<String,DataRow> fullTimeRecordMap,HashMap<String,DataRow> salaryRecordMap,HashMap<String, List<DataRow>> beforeYearOffesetVationDaysMap,HashMap<String,List<DataRow>> totalLeaveRecordsMap,
 			HashMap<String, List<DataRow>> totalOverTimeRecordsMap,HashMap<String, DataRow> additionalVationRecordMap,List<DataParam> updateAdditionalVationParamList){
 		Date feb = DateUtil.getDateAdd(DateUtil.getBeginOfYear(date), DateUtil.MONTH, 1);
@@ -620,7 +620,7 @@ totalOverTimeRecordsMap,additionalVationRecordMap,updateAdditionalVationParamLis
 			HashMap<String,DataRow> regularWorkDayMap,
 			HashMap<String,DataRow> punishmentMap,
 			HashMap<String,DataRow> rewardMap,
-			HashMap<String,List<DataRow>> attendanceRecordMap,List<DataParam> insertfullTimeParamList,List<DataParam> updateFullTimeParamList
+			HashMap<String,DataRow> attendanceRecordMap,List<DataParam> insertfullTimeParamList,List<DataParam> updateFullTimeParamList
 			,HashMap<String,DataRow> fullTimeRecordMap,HashMap<String,DataRow> salaryRecordMap,BigDecimal salShould,HashMap<String,List<DataRow>> totalLeaveRecordsMap,HashMap<String, List<DataRow>> beforeYearOffesetVationDaysMap,
 			HashMap<String, List<DataRow>> totalOverTimeRecordsMap,HashMap<String, DataRow> additionalVationRecordMap,List<DataParam> updateAdditionalVationParamList) {
 		Double probationDays = 0.0;
@@ -636,6 +636,7 @@ totalOverTimeRecordsMap,additionalVationRecordMap,updateAdditionalVationParamLis
 		int outDays = 0;
 		BigDecimal probationSalary = new BigDecimal("0.00");
 		BigDecimal regulartionSalary = new BigDecimal("0.00");
+		BigDecimal beforeYearDecemberDayMoney =  new BigDecimal("0.0000");
 		DataParam fullTimeParam = new DataParam();
 		if(!MapUtil.isNullOrEmpty(probationWorkDayMap)){
 			DataRow probationWorkDayRow = probationWorkDayMap.get(userId);
@@ -666,16 +667,12 @@ totalOverTimeRecordsMap,additionalVationRecordMap,updateAdditionalVationParamLis
 			}
 		}
 		if(!MapUtil.isNullOrEmpty(attendanceRecordMap)){
-			List<DataRow> attendanceRecordList = attendanceRecordMap.get(userId);
-			if(!ListUtil.isNullOrEmpty(attendanceRecordList)){
-				DataRow attendanceInRow = attendanceRecordList.get(0);
-				Long days = (Long) attendanceInRow.get("DAYS");
-				inDays = days.intValue();
-				if(attendanceRecordList.size()>1){
-					DataRow attendanceOutRow = attendanceRecordList.get(1);
-					days = (Long) attendanceOutRow.get("DAYS");
-					outDays = days.intValue();
-				}
+			DataRow attendanceRecordRow = attendanceRecordMap.get(userId);
+			if(!MapUtil.isNullOrEmpty(attendanceRecordRow)){
+				Long nums = (Long) attendanceRecordRow.get("IN_NUM");
+				inDays = nums.intValue();
+				nums = (Long) attendanceRecordRow.get("OUT_NUM");
+				outDays = nums.intValue();
 			}
 		}
 		boolean isFeb = (DateUtil.getDateDiff(date, feb, DateUtil.MONTH)==0);
@@ -685,50 +682,33 @@ totalOverTimeRecordsMap,additionalVationRecordMap,updateAdditionalVationParamLis
 		if(!MapUtil.isNullOrEmpty(beforeYearDecemberSalaryRecords)){
 			DataRow beforeYearDecemberSalaryRow = beforeYearDecemberSalaryRecords.get(userId);
 			if(!MapUtil.isNullOrEmpty(beforeYearDecemberSalaryRow)){
-				BigDecimal empBasic = (BigDecimal) beforeYearDecemberSalaryRow.get("EMP_BASIC");
-				BigDecimal empPerformance = (BigDecimal) dataParam.getObject("EMP_PERFORMANCE");
-				BigDecimal empSubsidy = (BigDecimal) dataParam.getObject("EMP_SUBSIDY");
-				if(empPerformance==null){
-					empPerformance = new BigDecimal("0.00");
-				}
-				if(empSubsidy==null){
-					empSubsidy = new BigDecimal("0.00");
-				}
-				BigDecimal beforeYearDecemberTotal = empBasic.add(empPerformance).add(empSubsidy);
-				
-				BigDecimal beforeYearDecemberDayMoney = beforeYearDecemberTotal.divide(BigDecimal.valueOf(beforeYearDecemberValidDay),4,RoundingMode.HALF_UP);
+				BigDecimal empTotal = (BigDecimal) beforeYearDecemberSalaryRow.get("SAL_TOTAL");
+				beforeYearDecemberDayMoney = empTotal.divide(BigDecimal.valueOf(beforeYearDecemberValidDay),4,RoundingMode.HALF_UP);
 				beforeYearDecemberRewordSalary = beforeYearDecemberDayMoney.multiply(beforeYearDecemberOffsetVationDay);
 			}
 		}
 		boolean isAutoAdditionalVation = (beforeYearDecemberRewordSalary.compareTo(BigDecimal.ZERO)>0);
 		boolean isProbationOverRun = (probationOverRunSalary.compareTo(BigDecimal.ZERO)<0);
 		boolean isRegularOverRun = (regulartionOverRunSalary.compareTo(BigDecimal.ZERO)<0);
-		if(isProbationOverRun){
-			salAuthal = salAuthal.add(probationOverRunSalary);
-		}
-		if(isRegularOverRun){
-			salAuthal = salAuthal.add(regulartionOverRunSalary);
-		}
-		if(DateUtil.getDateDiff(date, regularTime, DateUtil.MONTH)==0){
+		if(DateUtil.getDateDiff(date, regularTime, DateUtil.MONTH)==0&&DateUtil.getDateDiff(date, regularTime, DateUtil.DAY)>0){
 			probationSalary = salProbationDayMoney.multiply(BigDecimal.valueOf(probationDays));
 			regulartionSalary = salRegularDayMoney.multiply(BigDecimal.valueOf(regularDays));
 			salAuthal = salAuthal.add(probationSalary).add(regulartionSalary);
-			if(isProbationOverRun){
-				salAuthal = salAuthal.add(probationOverRunSalary);
-			}
 		}else if(DateUtil.getDateDiff(date, inductionDate, DateUtil.MONTH)==0){
 			probationSalary = salProbationDayMoney.multiply(BigDecimal.valueOf(probationDays));
 			salAuthal = salAuthal.add(probationSalary);
 		}else{
-			salAuthal = salAuthal.add(regulartionSalary);
+			salAuthal = salAuthal.add(salShould);
 		}
 		salAuthal = salAuthal.add(rewardSalary).subtract(punishmentSalary);
+		dataParam.put("beforeYearDecemberRewordSalary",beforeYearDecemberRewordSalary);
+		dataParam.put("beforeYearDecemberOffsetVationDay",beforeYearDecemberOffsetVationDay);
+		dataParam.put("beforeYearDecemberDayMoney",beforeYearDecemberDayMoney);
 		dataParam = buildRewordList(dataParam,regularTime,date,userId,overRunDayRecordMap,additionalVationRecordMap,insertAdditionalVationParamList,updateAdditionalVationParamList,updateOverRunParamList,
 				insertOverRunParamList,beforeYearDecemberRewordSalary,salAuthal,insertAdditionalVationParam,overRunParam,
 probationOverRunSalary,regulartionOverRunSalary,insertfullTimeParamList,fullTimeAward,fullTimeParam,isFeb,isRegular,isFullTime,isLeave,isAutoAdditionalVation,isProbationOverRun,
 isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,totalLeaveRecordsMap,beforeYearOffesetVationDaysMap,totalOverTimeRecordsMap,salProbationDayMoney);
 		salAuthal = (BigDecimal)dataParam.getObject("salActual");
-		salAuthal = salAuthal.add(salShould);
 		dataParam.put("salActual",salAuthal);
 		dataParam.put("beforeYearDecemberRewordSalary",beforeYearDecemberRewordSalary);
 		return dataParam;
@@ -753,8 +733,11 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 			HashMap<String, List<DataRow>> totalOverTimeRecordsMap,BigDecimal salProbationDayMoney) {
 		BigDecimal salBonus = new BigDecimal("0.00");
 		dataParam = calculateBeforeYearProbationDays(dataParam,regularTime,userId,totalLeaveRecordsMap,beforeYearOffesetVationDaysMap,totalOverTimeRecordsMap); 
-		Double probationAdditionalVationDays = (Double) dataParam.getObject("probationAdditionalVationDays");
-		if(isLeave&&isFullTime&&isRegular){
+		beforeYearDecemberRewordSalary = (BigDecimal) dataParam.getObject("beforeYearDecemberRewordSalary");
+		BigDecimal probationAdditionalVationSalary = (BigDecimal) dataParam.getObject("probationAdditionalVationSalary");
+		BigDecimal totalOffsetDays = (BigDecimal) dataParam.getObject("salOffsetVacation");
+		boolean isCanOverRun  = (totalOffsetDays.compareTo(BigDecimal.ZERO)<0);
+		if(!isLeave&&isFullTime&&isRegular){
 			salAuthal = salAuthal.add(fullTimeAward);
 			fullTimeParam.put("BP_ID",KeyGenerator.instance().genKey());
 			fullTimeParam.put("USER_ID",userId);
@@ -772,29 +755,32 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 			salAuthal = salAuthal.add(beforeYearDecemberRewordSalary);
 			salBonus = salBonus.add(beforeYearDecemberRewordSalary);
 		}
-		if(isFeb&&probationAdditionalVationDays>0){
+		if(isFeb&&probationAdditionalVationSalary.compareTo(BigDecimal.ZERO)>0){
 			additionalVationParam.put("BP_ID",KeyGenerator.instance().genKey());
 			additionalVationParam.put("USER_ID",userId);
 			additionalVationParam.put("BP_DATE",date);
 			additionalVationParam.put("BP_TYPE","ADDITIONALVATION");
-			additionalVationParam.put("BP_MONEY",salProbationDayMoney.multiply(salProbationDayMoney));
-			salAuthal = salAuthal.add(salProbationDayMoney.multiply(salProbationDayMoney));
-			salBonus = salBonus.add(salProbationDayMoney.multiply(salProbationDayMoney));
+			additionalVationParam.put("BP_MONEY",probationAdditionalVationSalary.doubleValue());
+			salAuthal = salAuthal.add(probationAdditionalVationSalary);
+			salBonus = salBonus.add(probationAdditionalVationSalary);
 		}
 		if(isProbationOverRun||isRegularOverRun){
 			overRunParam.put("BP_ID",KeyGenerator.instance().genKey());
 			overRunParam.put("USER_ID",userId);
 			overRunParam.put("BP_DATE",date);
 			overRunParam.put("BP_TYPE","OVERRUN");
-			if(isProbationOverRun&&isRegularOverRun){
+			if(isProbationOverRun&&isRegularOverRun&&isCanOverRun){
 				overRunParam.put("BP_MONEY",(probationOverRunSalary.add(regulartionOverRunSalary)).abs());
 				salBonus = salBonus.add(probationOverRunSalary.add(regulartionOverRunSalary));
-			}else if(isProbationOverRun){
+				salAuthal = salAuthal.add(regulartionOverRunSalary).add(probationOverRunSalary);
+			}else if(isProbationOverRun&&!isCanOverRun){
 				overRunParam.put("BP_MONEY",probationOverRunSalary.abs());
+				salAuthal = salAuthal.add(probationOverRunSalary);
 				salBonus = salBonus.add(probationOverRunSalary);
-			}else if(isRegularOverRun){
+			}else if(isRegularOverRun&&isCanOverRun){
 				overRunParam.put("BP_MONEY",regulartionOverRunSalary.abs());
 				salBonus = salBonus.add(regulartionOverRunSalary);
+				salAuthal = salAuthal.add(regulartionOverRunSalary);
 			}
 		}
 		if(!MapUtil.isNullOrEmpty(overRunDayRecordMap)&&overRunDayRecordMap.containsKey(userId)){
@@ -819,10 +805,17 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 	private DataParam calculateBeforeYearProbationDays(DataParam dataParam,Date regularTime,
 			String userId, HashMap<String, List<DataRow>> totalLeaveRecordsMap, HashMap<String, List<DataRow>> beforeYearOffesetVationDaysMap,
 			HashMap<String, List<DataRow>> totalOverTimeRecordsMap) {
+		BigDecimal beforeYearDecemberRewordSalary = (BigDecimal) dataParam.getObject("beforeYearDecemberRewordSalary");
+		BigDecimal beforeYearDecemberOffsetVationDay = (BigDecimal) dataParam.getObject("beforeYearDecemberOffsetVationDay");
+		BigDecimal beforeYearDecemberDayMoney = (BigDecimal) dataParam.getObject("beforeYearDecemberDayMoney");
 		Double probationAdditionalVationDays = 0.0;
 		BigDecimal beforeYearTotalOffsetVationDay = new BigDecimal("0.0");
+		BigDecimal empProbation = new BigDecimal("0.0");
+		BigDecimal validDays = new BigDecimal("0.0");
+		BigDecimal probationAdditionalVationSalary = new BigDecimal("0.00");
 		Double totalRegularLeaveDay = 0.0;
 		Double totalOverTime = 0.0;
+		Date befroreRegularMonth = DateUtil.getDateAdd(DateUtil.getBeginOfMonth(regularTime), DateUtil.DAY, -1);
 		String regularYearMonth = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, regularTime);
 		String regularYearStr = regularYearMonth.substring(0,4);
 		String regularMonthStr = regularYearMonth.substring(5,7);
@@ -842,6 +835,10 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 				}
 				if(salMonthInt<regularMonth){
 					beforeYearTotalOffsetVationDay = beforeYearTotalOffsetVationDay.add(offsetDecimal);
+				}else if(salMonthInt==regularMonth){
+					empProbation =(BigDecimal) beforeYearOffesetVationDayRow.get("EMP_PROBATION"); 
+					validDays = (BigDecimal) beforeYearOffesetVationDayRow.get("SAL_VALID_DAYS");
+					continue;
 				}else{
 					continue;
 				}
@@ -856,23 +853,25 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 					String wotTimeStr = (String) beforeYearOffesetVationDayRow.get("WOT_TIME");
 					Double wotTime = Double.parseDouble(wotTimeStr);
 					Date workOverToDate = DateUtil.getDateAdd(wotDate, DateUtil.DAY,wotTime.intValue());
-					
 					if(DateUtil.getDateDiff(wotDate, regularTime, DateUtil.YEAR)!=0){
 						break;
 					}
-					if(DateUtil.getDateDiff(wotDate, regularTime, DateUtil.MONTH)!=0){
-						continue;
-					}else{
+					if(DateUtil.getDateDiff(befroreRegularMonth,wotDate,DateUtil.MONTH)==0&&DateUtil.getDateDiff(befroreRegularMonth,workOverToDate,DateUtil.DAY)>0){
+						Long dateDiff = DateUtil.getDateDiff(befroreRegularMonth,workOverToDate,DateUtil.DAY);
+						totalOverTime+=dateDiff.doubleValue();
+					}else if(DateUtil.getDateDiff(wotDate, regularTime, DateUtil.MONTH)==0){
 						if(DateUtil.getDateDiff(regularTime,wotDate,DateUtil.DAY)>=0){
 							continue;
 						}else if(DateUtil.getDateDiff(regularTime,wotDate,DateUtil.DAY)<0&&DateUtil.getDateDiff(regularTime,workOverToDate,DateUtil.DAY)>0){
-							Long dateDiff = DateUtil.getDateDiff(regularTime,wotDate,DateUtil.DAY);
-							totalOverTime+=dateDiff.doubleValue();
-						}else if(DateUtil.getDateDiff(regularTime,wotDate,DateUtil.DAY)<0&&DateUtil.getDateDiff(regularTime,workOverToDate,DateUtil.DAY)==0){
+							Long dateDiff = DateUtil.getDateDiff(regularTime,workOverToDate,DateUtil.DAY);
+							totalOverTime+=wotTime-dateDiff.doubleValue();
+						}else if(DateUtil.getDateDiff(regularTime,wotDate,DateUtil.DAY)<0&&DateUtil.getDateDiff(regularTime,workOverToDate,DateUtil.DAY)<=0){
 							totalOverTime+=wotTime;
 						}else{
 							continue;
 						}
+					}else{
+						continue;
 					}
 				}
 			}
@@ -909,7 +908,16 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 			}
 		}
 		probationAdditionalVationDays = beforeYearTotalOffsetVationDay.doubleValue()+totalOverTime-totalRegularLeaveDay;
+		if(validDays.compareTo(BigDecimal.ZERO)!=0){
+			probationAdditionalVationSalary = empProbation.divide(validDays, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(probationAdditionalVationDays));
+		}
+		if(probationAdditionalVationDays>0){
+			beforeYearDecemberOffsetVationDay = beforeYearDecemberOffsetVationDay.subtract(BigDecimal.valueOf(probationAdditionalVationDays));
+			beforeYearDecemberRewordSalary = beforeYearDecemberDayMoney.multiply(beforeYearDecemberOffsetVationDay);
+		}
 		dataParam.put("probationAdditionalVationDays",probationAdditionalVationDays);
+		dataParam.put("probationAdditionalVationSalary",probationAdditionalVationSalary);
+		dataParam.put("beforeYearDecemberRewordSalary",beforeYearDecemberRewordSalary);
 		return dataParam;
 	}
 	
@@ -1035,7 +1043,10 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 		statementId = sqlNameSpace+"."+"updateOffsetVacationrecord";
 		this.daoHelper.updateRecord(statementId, updateParam);
 	}
-
+	@Override
+	public void recalculation(String year,String month){
+		
+	}
 	@Override
 	public List<DataRow> findFiveMonthsSalayInfos(DataParam param) {
 		String statementId = sqlNameSpace+"."+"findFiveMonthsSalayInfos";
