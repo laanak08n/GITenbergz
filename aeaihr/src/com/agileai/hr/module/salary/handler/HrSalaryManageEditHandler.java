@@ -123,10 +123,10 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 	
 	@PageAction
 	public ViewRenderer annualLeaveRecalculation(DataParam param){
-		String yaer = param.get("SAL_YEAR");
+		String year = param.get("SAL_YEAR");
 		String month = param.get("SAL_MONTH");
 		String userId = param.get("SAL_USER");
-		getService().recalculation(yaer,month,userId);
+		getService().recalculation(year,month,userId);
 		return prepareDisplay(param);
 	}
 	

@@ -136,7 +136,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			}
 			if (existsDataMap.containsKey(userCode)){
 				updateParamList.add(dataParam);
-			}else{
+			}else if(DateUtil.getDateDiff(date, (Date)row.get("EMP_INDUCTION_TIME"), DateUtil.MONTH) <= 0){
 				insertParamList.add(dataParam);
 			}
 		}
