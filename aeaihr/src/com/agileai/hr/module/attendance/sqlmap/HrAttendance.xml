@@ -81,7 +81,7 @@
 		resultClass="com.agileai.domain.DataRow">
 		select DISTINCT USER_NAME,USER_CODE,ifnull(c.nums, 0) as lastNums,ifnull(e.nums, 0) as leaveNums,ifnull(g.nums, 0) as overWorkNums from security_user a 
 		left JOIN 
-		(select USER_ID,SUM(b.ATD_ID) as nums from hr_attendance b
+		(select USER_ID,count(b.ATD_ID) as nums from hr_attendance b
 		where 1=1
 		and b.ATD_DATE &gt;= #startDate# and b.ATD_DATE &lt;= #endDate#
 		and date_format(b.ATD_IN_TIME , '%H:%i') > date_format(now(),'09:00')
