@@ -44,4 +44,15 @@ angular.module('${menuCode}')
 			});
 		}});
 	}
+	
+	$scope.isValidSaveInfo = function(){
+		var info = $scope.info;
+		if (info.userId && info.userId != '' && info.bpType && info.bpType!='' && info.bpDate && info.bpDate!='' 
+			&& info.bpMonry && info.bpMonry!=''){
+			return true;
+		}
+		else{
+			return false;
+		}
+	};
 });

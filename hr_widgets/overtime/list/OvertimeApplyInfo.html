@@ -1,0 +1,24 @@
+<div class="content">
+  <div class="list" >
+    <label class="item item-input info-nosideline">
+  		加班地点
+      <input class="input-size" type="text" ng-model="info.wotPlace">
+    </label>   
+    <label class="item item-input info-nosideline">
+  		加班日期
+      <input class="input-size" type="date" ng-model="info.wotOverTimeDate">
+    </label>   
+    <label class="item item-input">
+    	时长
+      <input class="input-size" type="text" ng-model="info.wotTime">
+    </label>
+    <label class="item item-input">
+    	参与人
+      <input class="input-size" type="text" ng-model="info.wotParticipant">
+    </label>
+    <label class="item item-input">
+      <textarea class="placeholder-font-size" rows="10" ng-model="info.wotDesc" placeholder="事由"></textarea>
+    </label>       
+    <input class="input-size" type="hidden" ng-model="info.wotId">
+  </div>
+</div>

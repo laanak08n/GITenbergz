@@ -5,7 +5,7 @@ angular.module('${menuCode}')
 	};
 }])
 .controller("${widgetCode}Ctrl",function($scope,AppKit,$state){
-	$scope.creatInfo = function(){
-		$state.go("tab.leave-creat-info");
-	};
+	$scope.createInfo = function() {
+		$state.go("tab.overtime-add");
+	}; 	
 });

@@ -1,7 +1,13 @@
-<div class="content padding-top">
+<div class="content">
   <div class="list">
-     <a class="item" ng-repeat="x in listInfo" ng-click="showActionSheet()">
-      {{ x.name }}
+  	<a class="item" ng-repeat="x in listInfo" ng-click="showDetails('{{x.salId}}')">    
+		      月份：<span class="list-display ng-binding">{{x.salYear}}年{{x.salMonth}}月</span><br>
+		      基本工资：<span class="list-display ng-binding">{{x.salBasic}}</span><br>
+		      绩效工资：<span class="list-display ng-binding">{{x.salPerformance}}</span><br>
+		      补贴：<span class="list-display ng-binding">{{x.salSubsidy}}</span><br>
+		      奖金：<span class="list-display ng-binding">{{x.salBonus}}</span><br>
+		      保险：<span class="list-display ng-binding">{{x.salInsure}}</span><br>
+		     <input type="hidden" value="{{x.salId}}">
      </a>
    </div>
 </div>

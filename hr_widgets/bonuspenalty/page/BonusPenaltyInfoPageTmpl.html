@@ -1,5 +1,5 @@
 <ion-nav-buttons side="right">
 	<button class="button button-assertive update-button" ng-click="deleteInfo()">删除</button>
 	&nbsp;&nbsp;
-	<button class="button button-positive update-button" ng-click="updateInfo()">保存</button>
+	<button class="button button-positive update-button" ng-click="updateInfo()" ng-disabled="!isValidSaveInfo()">保存</button>
 </ion-nav-buttons>

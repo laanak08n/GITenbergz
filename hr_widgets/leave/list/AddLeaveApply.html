@@ -1,33 +1,28 @@
 <div class="content">
   <div class="list">
+  	<input type="hidden" value="userId">
   	<label class="item item-input item-select">
-  		<div class="input-label">姓名</div>
-  		<select class="select-full-item" ng-model="info.userId">
+  		<div class="input-label">请假类型</div>
+  		<select class="select-full-item" ng-model="info.leaType">
 	        <option value="">请选择</option>
-	        <option ng-repeat="x in userList" value="{{x.value}}">{{x.key}}</option>
+	        <option value="0">病假</option>
+	        <option value="1">事假</option>
 		</select>
     </label>
-  	<label class="item item-input info-nosideline">
-  		日期
-      <input class="input-size" type="date" ng-model="info.bpDate">
-    </label>
-    
-  	<label class="item item-input item-select">
-  		<div class="input-label">类型</div>
-  		<select class="select-full-item" ng-model="info.bpType">
-	        <option value="">请选择</option>
-	        <option value="PUNISHMENT">惩罚</option>
-	        <option value="REWARD">奖励</option>
-		</select>
-    </label>
-       
+    <label class="item item-input info-nosideline">
+  		开始日期
+      <input class="input-size" type="date" ng-model="info.leaSdate">
+    </label>   
+    <label class="item item-input info-nosideline">
+  		结束日期
+      <input class="input-size" type="date" ng-model="info.leaEdate">
+    </label>   
     <label class="item item-input">
-    	金额
-      <input class="input-size" type="text" ng-model="info.bpMonry">
+    	天数
+      <input class="input-size" type="number" ng-model="info.leaDays">
     </label>
-    
     <label class="item item-input">
-      <textarea class="placeholder-font-size" rows="5" ng-model="info.bpDesc" placeholder="描述"></textarea>
+      <textarea class="placeholder-font-size" rows="5" ng-model="info.leaCause" placeholder="事由"></textarea>
     </label>           
   </div>
 </div>

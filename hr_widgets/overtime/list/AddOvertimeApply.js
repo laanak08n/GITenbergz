@@ -4,8 +4,6 @@ angular.module('${menuCode}')
 	    return $sce.trustAsHtml(text);
 	};
 }])
-.controller("${widgetCode}Ctrl",function($scope,AppKit,$state){
-	$scope.creatInfo = function(){
-		$state.go("tab.leave-creat-info");
-	};
+.controller("${widgetCode}Ctrl",function($scope,AppKit){
+	
 });

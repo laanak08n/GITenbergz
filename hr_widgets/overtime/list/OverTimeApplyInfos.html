@@ -1,7 +1,10 @@
-<div class="content padding-top">
+<div class="content">
   <div class="list">
-     <a class="item" ng-repeat="x in listInfo" ng-click="showActionSheet()">
-      {{ x.name }}
+     <a class="item" ng-repeat="x in listInfo" ng-click="showDetails('{{x.wotId}}')">
+      <span class="list-display ng-binding">{{x.wotPlace}}</span>
+      <span class="list-display ng-binding">{{x.wotTime}}</span>
+      <span class="list-display ng-binding">{{x.wotOverTimeDate}}</span>
+      <span class="list-display ng-binding">{{x.wotOverTimeState}}</span>
      </a>
    </div>
 </div>

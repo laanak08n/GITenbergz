@@ -1,7 +1,27 @@
-<div class="content padding-top">
+<div class="content">
   <div class="list">
-     <a class="item" ng-repeat="x in listInfo" ng-click="showActionSheet()">
-      {{ x.name }}
-     </a>
-   </div>
+  	<label class="item item-input item-select">
+  		<div class="input-label">请假类型</div>
+  		<select class="select-full-item" ng-model="info.leaType">
+	        <option value="">请选择</option>
+	        <option value="0">病假</option>
+	        <option value="1">事假</option>
+		</select>
+    </label>
+    <label class="item item-input info-nosideline">
+  		开始日期
+      <input class="input-size" type="date" ng-model="info.leaSdate">
+    </label>   
+    <label class="item item-input info-nosideline">
+  		结束日期
+      <input class="input-size" type="date" ng-model="info.leaEdate">
+    </label>   
+    <label class="item item-input">
+    	天数
+      <input class="input-size" type="number" ng-model="info.leaDays">
+    </label>
+    <label class="item item-input">
+      <textarea class="placeholder-font-size" rows="5" ng-model="info.leaCause" placeholder="事由"></textarea>
+    </label>           
+  </div>
 </div>
