@@ -6,7 +6,7 @@ import com.agileai.util.DateUtil;
 
 public class DateHelper {
 	
-	public boolean isInductionAboveMonth(Date inductionDate, String currentDate){
+	public boolean dateDuringMonth(Date inductionDate, String currentDate){
 		if(currentDate.length() < 10){
 			currentDate = currentDate + "-01";
 		}
