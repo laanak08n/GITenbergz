@@ -86,7 +86,7 @@ height="390px"
 	<ec:column width="100" property="USER_ID_NAME" title="加班人"   />
 	<ec:column width="100" property="WOT_OVERTIME_DATE" title="加班日期"   />
 	<ec:column width="100" property="WOT_PLACE" title="加班地点"   />
-	<ec:column width="100" property="WOT_TIME" title="加班时长"  />
+	<ec:column width="100" property="WOT_TIME" title="加班时长"  mappingItem="WOT_TIME"/>
 	<ec:column width="100" property="WOT_PARTICIPANT" title="参与人"   />
 	<ec:column width="100" property="STATE" title="状态" mappingItem="STATE"/>
 	<ec:column width="100" property="WOT_APPROVER_NAME" title="核准人"   />

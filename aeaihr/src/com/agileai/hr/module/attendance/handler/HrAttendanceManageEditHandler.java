@@ -43,9 +43,13 @@ public class HrAttendanceManageEditHandler extends StandardEditHandler {
 
 		if (this.getAttribute("ATD_IN_TIME") == null){
 			this.setAttribute("ATD_IN_TIME", new Date());
+			this.setAttribute("ATD_IN_HOUSE", "电脑签到");
+			this.setAttribute("ATD_IN_COORDINATE", "{&quot;lng&quot;:&quot;0.0&quot;,&quot;lat&quot;:&quot;0.0&quot;}");
 			setAttribute("doSignIn", true);
 		}else{
 			this.setAttribute("ATD_OUT_TIME", new Date());
+			this.setAttribute("ATD_OUT_HOUSE", "电脑签退");
+			this.setAttribute("ATD_OUT_COORDINATE", "{&quot;lng&quot;:&quot;0.0&quot;,&quot;lat&quot;:&quot;0.0&quot;}");
 			setAttribute("doSignIn", false);
 		}
 		

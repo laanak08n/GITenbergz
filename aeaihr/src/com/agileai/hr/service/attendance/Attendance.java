@@ -20,7 +20,7 @@ public interface Attendance {
     @POST
     @Path("/signIn")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.TEXT_PLAIN)
 	public String signIn(String info);
     
     @GET  

@@ -26,6 +26,8 @@ public class HrWorkOvertimeManageListHandler extends StandardListHandler {
 	protected void processPageAttributes(DataParam param) {
 		initMappingItem("APP_RESULT",
 				FormSelectFactory.create("APP_RESULT").getContent());
+		initMappingItem("WOT_TIME",
+				FormSelectFactory.create("WOT_TIME").getContent());
 		initMappingItem("STATE",
                 FormSelectFactory.create("STATE").getContent());
 		setAttribute("STATE", FormSelectFactory.create("STATE")
