@@ -30,9 +30,6 @@ public class CASGeneralCasFilter implements Filter {
 			AttributePrincipal attributePrincipal = (AttributePrincipal)httpRequest.getUserPrincipal();
 			if(attributePrincipal != null){
 				String loginName = attributePrincipal.getName();
-			    if (!"guest".equals(loginName)){
-			    	loginName = "user";
-			    }
 				String fromIpAddress = request.getLocalAddr();
 				HttpSession session = httpRequest.getSession();
 				Profile profile = (Profile)session.getAttribute(Profile.PROFILE_KEY);
