@@ -613,12 +613,7 @@ public class AttendanceImpl extends BaseRestService implements Attendance {
 	@Override
 	public String findLocationInfos(String currentMonth,String paramUserId) {
 		String responseText = "";
-		String userId="";
     	try {
-    		User user = (User)this.getUser();
-    		if("null".equals(userId)){
-    			userId = user.getUserId();
-    		}
     		DataParam param=new DataParam("currentMonth",currentMonth);
     		if(!"undefined".equals(paramUserId)){
     			param.put("paramUserId", paramUserId);
@@ -692,5 +687,4 @@ public class AttendanceImpl extends BaseRestService implements Attendance {
 		}
     	return responseText;
 	}
-
 }
