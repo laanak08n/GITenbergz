@@ -8,14 +8,23 @@
 <title>321</title>
 <%@include file="/jsp/inc/resource.inc.jsp"%>
 <script language="javascript">
-function selectRequest(idValue,nameValue){
-	parent.ele(ele('targetId').value).value= idValue;
-	parent.ele(ele('targetName').value).value= nameValue;
-	parent.PopupBox.closeCurrent();
+function selectRequest(index){
+	setSelectedCheckBox(index);
+	doSelectRequest();
 }
-function setSelectTempValue(idValue,nameValue){
+function setSelectedCheckBox(index){
+	var idInt = parseInt(index);
+	var currentIndex = idInt ;
+	if($("#ec_table tr:eq("+currentIndex+") input[name = 'USER_ID']").is(':checked')){
+		$("#ec_table tr:eq("+currentIndex+") input[name = 'USER_ID']").attr('checked',false);
+	}else{
+		$("#ec_table tr:eq("+currentIndex+") input[name = 'USER_ID']").attr('checked',true);
+	}
+}
+function setSelectTempValue(idValue,nameValue,index){
 	ele('targetIdValue').value = idValue;
 	ele('targetNameValue').value = nameValue;
+	setSelectedCheckBox(index)
 }
 function doSelectRequest(){
 	if (!isValid(ele('targetIdValue').value)){
@@ -79,17 +88,17 @@ ECSideUtil.checkAll=function(checkcontrolObj,checkboxname,formid){
 <ec:table 
 form="form1"
 var="row"
-items="pageBean.rsList" csvFileName="321.csv"
-retrieveRowsCallback="process" xlsFileName="321.xls"
+items="pageBean.rsList" csvFileName="人员信息.csv"
+retrieveRowsCallback="process" xlsFileName="人员信息.xls"
 useAjax="true" sortable="true"
 doPreload="false" toolbarContent="navigation|pagejump |pagesize |export|extend|status"
 width="100%" rowsDisplayed="10"
 listWidth="100%" 
 height="auto" 
 >
-<ec:row styleClass="odd" ondblclick="selectRequest('${row.USER_ID}','${row.USER_NAME}')" onclick="setSelectTempValue('${row.USER_ID}','${row.USER_ID}')">
+<ec:row styleClass="odd" ondblclick="clearSelection();selectRequest('${GLOBALROWCOUNT}');" onclick="setSelectTempValue('${row.USER_ID}','${row.USER_ID}','${GLOBALROWCOUNT}')">
 	<ec:column width="20" style="text-align:center" property="_0" title="序号" value="${GLOBALROWCOUNT}" />
-	<ec:column width="25" style="text-align:center" property="USER_ID" cell="checkbox" headerCell="checkbox" />
+	<ec:column width="25" style="text-align:center" property="USER_ID" cell="checkbox" headerCell="checkbox"  onclick="$(this).parents('tr').trigger('click');"/>
 	<ec:column width="100" property="USER_CODE" title="编码"   />
 	<ec:column width="100" property="USER_NAME" title="姓名"   />
 	<ec:column width="100" property="USER_STATE" title="状态"  mappingItem="USER_STATE" />

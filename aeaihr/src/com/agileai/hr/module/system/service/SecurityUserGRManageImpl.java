@@ -33,9 +33,14 @@ public class SecurityUserGRManageImpl
 	}
 
 	@Override
-	public void  createtURGMContentRecord(DataParam param) {
+	public void createURGMContentRecord(String urgId,String userId,String rgId) {
+		DataParam param = new DataParam();
+		param.put("URG_ID",urgId);
+		param.put("RG_ID",rgId);
+		param.put("USER_ID",userId);
 		String statementId = sqlNameSpace+"."+"insertURGMRecords";
 		this.daoHelper.insertRecord(statementId, param);	
+	
 	}
 
 	@Override

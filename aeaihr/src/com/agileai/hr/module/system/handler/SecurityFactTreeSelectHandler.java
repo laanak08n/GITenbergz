@@ -62,12 +62,12 @@ private static final String ROOT_ROLE_ID = "00000000-0000-0000-00000000000000000
 	    	}
 			records = securityFactTreeSelect.queryPickTreeRecords(new DataParam("orgId",id));
 			if (records != null && !records.isEmpty()){
-				List<String> existUserIds = getExistPosIds(param);
+				List<String> existRgIds = getExistPosIds(param);
 				for (int i=0 ;i < records.size();i++){
 					DataRow row = records.get(i);
 					String roleId = row.stringValue("ROLE_ID");
 					String rgId = row.stringValue("RG_ID");
-					if (existUserIds.contains(roleId)){
+					if (existRgIds.contains(rgId)){
 						continue;
 					}
 					String roleName = row.stringValue("ROLE_NAME");
@@ -88,20 +88,20 @@ private static final String ROOT_ROLE_ID = "00000000-0000-0000-00000000000000000
 	private List<String> getExistPosIds(DataParam param){
 		String resourceType = param.get("resourceType");
     	String resourceId = param.get("resourceId");
-    	List<String> existRoleIds = new ArrayList<String>();
+    	List<String> existRgIds = new ArrayList<String>();
     	if (StringUtil.isNotNullNotEmpty(resourceType) && StringUtil.isNotNullNotEmpty(resourceId)){
     		SecurityFactTreeSelect authorConfig = lookupService(SecurityFactTreeSelect.class);
         	List<DataRow> existsRecords = authorConfig.retrieveFactList(resourceType, resourceId);
         	for (int i=0;i < existsRecords.size();i++){
         		DataRow row = existsRecords.get(i);
-        		String roleId = row.stringValue("ROLE_ID");
-        		if (existRoleIds.contains(roleId)){
+        		String rgId = row.stringValue("RG_ID");
+        		if (existRgIds.contains(rgId)){
         			continue;
         		}
-        		existRoleIds.add(roleId);
+        		existRgIds.add(rgId);
         	}
     	}
-    	return existRoleIds;
+    	return existRgIds;
 	}
 	
     @PageAction

@@ -10,7 +10,7 @@ public interface SecurityUserGRManage
 			extends TreeAndContentManage {
 	public List<DataRow> doQueryEmpAction(DataParam param);
 	public List<DataRow> queryPickFillRecords(DataParam param);
-	void createtURGMContentRecord(DataParam param);
+	void createURGMContentRecord(String urgId,String userId,String rgId);
 	void deletPOSEMPContentRecord(String EOPR_ID);
 	void deletTureContentRecord(String urgId);
 	public DataRow queryURGRelation(DataParam param);

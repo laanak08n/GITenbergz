@@ -21,7 +21,7 @@ a.GRP_PID = #parentId#
 order by a.GRP_SORT
 </select>
   <select id="retrieveFactList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
-SELECT  CONCAT(a.ROLE_NAME,"(",d.GRP_NAME,")") AS ROLE_NAME,a.ROLE_CODE,a.ROLE_ID,c.RG_ID
+SELECT  CONCAT(a.ROLE_NAME,"(",d.GRP_NAME,"-",d.GRP_CODE,")") AS ROLE_NAME,a.ROLE_CODE,a.ROLE_ID,c.RG_ID
 FROM security_role a
 INNER JOIN security_role_group_rel b ON a.ROLE_ID = b.ROLE_ID
 INNER JOIN security_rg_auth c ON b.RG_ID = c.RG_ID
@@ -29,7 +29,6 @@ INNER JOIN security_group d ON b.GRP_ID = d.GRP_ID
 where 1=1
     <isNotEmpty prepend=" AND " property="resourceType">RES_TYPE = #resourceType#</isNotEmpty>
     <isNotEmpty prepend=" AND " property="resourceId">RES_ID = #resourceId#</isNotEmpty>
-GROUP BY ROLE_CODE
   </select>
 <insert id="addFactAuthRelation" parameterClass="com.agileai.domain.DataParam" >
     insert into security_rg_auth (RG_AUTH_ID,RG_ID,RES_TYPE,RES_ID)

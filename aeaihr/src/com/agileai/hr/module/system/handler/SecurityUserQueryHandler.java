@@ -11,6 +11,7 @@ import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.module.system.service.SecurityUserGRManage;
+import com.agileai.util.StringUtil;
 
 
 public class SecurityUserQueryHandler
@@ -44,17 +45,16 @@ public class SecurityUserQueryHandler
     public ViewRenderer doSaveUserAction(DataParam param){
     	SecurityUserGRManage securityUserGRManage=(SecurityUserGRManage) this.lookupService(this.getServiceId());
     	String rspText = SUCCESS;
-    	String USER_IDS=param.get("USER_ID");
-    	String RG_ID=param.getString("RG_ID");
-    	String[]USER=USER_IDS.split(",");
-    	for(int i=0;i<USER.length;i++){
-    		String USER_ID=USER[i];
-    		String URG_ID=KeyGenerator.instance().genKey();
-    		DataParam NParam=new DataParam();
-    		NParam.put("URG_ID",URG_ID);
-    		NParam.put("RG_ID",RG_ID);
-    		NParam.put("USER_ID",USER_ID);
-    		securityUserGRManage.createtURGMContentRecord(NParam);
+    	String userIds = param.get("USER_ID");
+    	String rgId = param.getString("RG_ID");
+        if(StringUtil.isNullOrEmpty(userIds)){
+ 		   userIds = param.get("targetValue");
+        }
+    	String[] userIdArray = userIds.split(",");
+    	for(int i=0;i<userIdArray.length;i++){
+    		String userId = userIdArray[i];
+    		String urgId = KeyGenerator.instance().genKey();
+    		securityUserGRManage.createURGMContentRecord(urgId,userId,rgId);
     	}	
     	
     	return new AjaxRenderer(rspText);
