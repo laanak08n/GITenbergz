@@ -175,7 +175,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			}
 			java.sql.Date inductionSqlDate = (java.sql.Date) row.get("EMP_INDUCTION_TIME");
 			java.util.Date inductionDate = new java.util.Date(inductionSqlDate.getTime());
-			if(DateUtil.getDateDiff(date, inductionDate, DateUtil.DAY)<0){
+			if(DateUtil.getDateDiff(date, inductionDate, DateUtil.MONTH)>0){
 				continue;
 			}
 			BigDecimal nonSal =  new BigDecimal("0.00");
@@ -624,7 +624,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		if(DateUtil.getDateDiff(date, regularTime, DateUtil.MONTH)==0&&DateUtil.getDateDiff(date, regularTime, DateUtil.DAY)>0){
 			probationSalary = salProbationDayMoney.multiply(BigDecimal.valueOf(probationDays));
 			regulartionSalary = salRegularDayMoney.multiply(BigDecimal.valueOf(regularDays));
-			salTotal = salAuthal.add(probationSalary).add(regulartionSalary);
+			salTotal = salTotal.add(probationSalary).add(regulartionSalary).add(salPerformance).add(salSubsidy);
 		}else if(DateUtil.getDateDiff(date, inductionDate, DateUtil.MONTH)==0){
 			probationSalary = salProbationDayMoney.multiply(BigDecimal.valueOf(probationDays));
 			salTotal = salTotal.add(probationSalary);

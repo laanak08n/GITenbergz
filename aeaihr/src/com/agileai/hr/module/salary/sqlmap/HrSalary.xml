@@ -322,9 +322,9 @@
 		where 1=1
 		and SAL_YEAR = #year#
 		and SAL_MONTH = #month#
-		<isnotEmpty prepend=" " property="userId">
+		<isNotEmpty prepend=" " property="userId">
 			and SAL_USER = #userId#
-		</isnotEmpty>
+		</isNotEmpty>
 	</select>
 	<update id="updateOffsetVacationrecord" parameterClass="com.agileai.domain.DataParam">
 		update
