@@ -21,4 +21,5 @@ public interface HrSalaryManage
 	public List<DataRow> findSalaryList(DataParam param);
 	
 	public DataRow getLastSalayInfo(DataParam param);
+	public void recalculation(String year,String month,String userId);
 }

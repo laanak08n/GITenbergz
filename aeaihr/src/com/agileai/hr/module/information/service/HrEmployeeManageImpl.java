@@ -29,7 +29,8 @@ public class HrEmployeeManageImpl
    		this.daoHelper.updateRecord(statementId, param);
    	}
 	
-	public void approveRecord(DataParam param) {
+	public String approveRecord(DataParam param) {
+		String result = "用户信息同步失败";
 		String statementId = sqlNameSpace + "." + "approveRecord";
 		processDataType(param, tableName);
 		this.daoHelper.updateRecord(statementId, param);
@@ -63,6 +64,7 @@ public class HrEmployeeManageImpl
 	   		userParam.put("GRP_ID", param.get("EMP_NOW_DEPT"));
 	   		userParam.put("USER_ID",param.get("USER_ID"));
 	   		this.daoHelper.insertRecord(statementId, userParam);
+	   		result = "用户信息同步成功";
 		}else{
 	   		statementId = sqlNameSpace+"."+"updateSecurityUserRecord";
 	   		DataParam userParam = new DataParam();
@@ -78,7 +80,9 @@ public class HrEmployeeManageImpl
 	   		userParam.put("USER_MAIL",param.get("EMP_EMAIL"));
 	   		userParam.put("USER_PHONE",param.get("EMP_TEL"));
 	   		this.daoHelper.updateRecord(statementId, param);
+	   		result = "用户信息同步成功";
 		}
+		return result;
 	}
 	
 	

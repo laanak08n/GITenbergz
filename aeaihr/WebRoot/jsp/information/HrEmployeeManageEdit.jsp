@@ -141,7 +141,11 @@ function doMoveDown(){
 	
 }
 function stateApprove(){
-	doSubmit({actionType:'approve'});
+	postRequest('form1',{actionType:'approve',onComplete:function(responseText){
+		alert(responseText);
+		$('#operaType').val('detail');
+		doSubmit({actionType:'prepareDisplay'});
+	}});
 }
 function saveRecord(){
 	if (!validate()){

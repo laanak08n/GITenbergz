@@ -1,29 +1,27 @@
 package com.agileai.hr.module.salary.handler;
 
-import com.agileai.domain.*;
+import com.agileai.domain.DataParam;
+import com.agileai.domain.DataRow;
 import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.controller.core.StandardEditHandler;
-import com.agileai.hotweb.domain.*;
+import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.domain.core.User;
-import com.agileai.hotweb.renders.*;
+import com.agileai.hotweb.renders.LocalRenderer;
+import com.agileai.hotweb.renders.RedirectRenderer;
+import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.common.PrivilegeHelper;
 import com.agileai.hr.module.salary.service.HrSalaryManage;
 
 public class HrSalaryManageEditHandler extends StandardEditHandler {
 	public ViewRenderer prepareDisplay(DataParam param) {
 		String operaType = param.get(OperaType.KEY);
+		DataRow record = getService().getRecord(param);
+		
 		if ("approve".equals(operaType)) {
 			setAttribute("isComeFromApprove", true);
-			if (!isReqRecordOperaType(operaType)) {
-				DataRow record = getService().getRecord(param);
-				this.setAttributes(record);
-			}
+
 		} else {
 			setAttribute("isComeFromApprove", false);
-		}
-		if (isReqRecordOperaType(operaType)) {
-			DataRow record = getService().getRecord(param);
-			this.setAttributes(record);
 		}
 		if (operaType.equals("detail")) {
 			setAttribute("isComeFromDetail", false);
@@ -37,11 +35,13 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 		}
 		User user = (User) this.getUser();
 		PrivilegeHelper privilegeHelper = new PrivilegeHelper(user);
-		if (!privilegeHelper.isSalMaster()) {
+		if (privilegeHelper.isSalMaster() ) {
+			if(record.get("SAL_STATE").equals("0")){
+				setAttribute("doEdit&Save", "true");
+			}
 			setAttribute("hasRight", true);
-		} else {
-			setAttribute("hasRight", false);
 		}
+		this.setAttributes(record);
 		this.setOperaType(operaType);
 		processPageAttributes(param);
 		return new LocalRenderer(getPage());
@@ -56,10 +56,6 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 	protected void processPageAttributes(DataParam param) {
 		setAttribute("SAL_STATE", FormSelectFactory.create("SAL_STATE")
 				.addSelectedValue(getOperaAttributeValue("SAL_STATE", "")));
-	}
-
-	protected HrSalaryManage getService() {
-		return (HrSalaryManage) this.lookupService(this.getServiceId());
 	}
 
 	@PageAction
@@ -87,5 +83,19 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 		param.put("SAL_STATE", "0");
 		getService().approveRecord(param);
 		return new RedirectRenderer(getHandlerURL(listHandlerClass));
+	}
+	
+	@PageAction
+	public ViewRenderer annualLeaveRecalculation(DataParam param){
+		String yaer = param.get("SAL_YEAR");
+		String month = param.get("SAL_MONTH");
+		String userId = param.get("SAL_USER");
+		getService().recalculation(yaer,month,userId);
+		return prepareDisplay(param);
+	}
+	
+
+	protected HrSalaryManage getService() {
+		return (HrSalaryManage) this.lookupService(this.getServiceId());
 	}
 }

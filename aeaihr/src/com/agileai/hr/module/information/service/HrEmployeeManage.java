@@ -5,7 +5,7 @@ import com.agileai.hotweb.bizmoduler.core.MasterSubService;
 
 public interface HrEmployeeManage
         extends MasterSubService {
-	void approveRecord(DataParam param);
+	String approveRecord(DataParam param);
 	void revokeApprovalRecords(String empId);
 
 }

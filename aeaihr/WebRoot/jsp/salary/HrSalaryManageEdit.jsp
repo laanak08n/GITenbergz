@@ -25,10 +25,13 @@
 <div id="__ToolBar__">
 <table border="0" cellpadding="0" cellspacing="1">
 <tr>
-<%if(!pageBean.getBoolValue("hasRight")){%>
+<%if(pageBean.getBoolValue("hasRight")){%>
+  <%if(pageBean.getBoolValue("doEdit&Save")){%>
    <aeai:previlege code="edit"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="enableSave()" ><input value="&nbsp;" type="button" class="editImgBtn" id="modifyImgBtn" title="编辑" />编辑</td></aeai:previlege>
    <aeai:previlege code="save"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="doSubmit({actionType:'save'})"><input value="&nbsp;" type="button" class="saveImgBtn" id="saveImgBtn" title="保存" />保存</td></aeai:previlege>
-  <%if(!(pageBean.selectedValue("SAL_STATE")).equals("1")){%>
+   <aeai:previlege code="reset"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="doSubmit({actionType:'annualLeaveRecalculation'})"><input value="&nbsp;" type="button" class="resetPasswordImgBtn" id="resetPasswordImgBtn" title="年假重新计算" />年假重新计算</td></aeai:previlege>
+	<%}%>   
+  <%if((pageBean.selectedValue("SAL_STATE")).equals("0")){%>
    <aeai:previlege code="approve"><td  align="center"class="bartdx"onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="approveImgBtn" id="SAL_STATE"  title="核准" />核准</td></aeai:previlege>
    <%}else{%>
    <aeai:previlege code="revokeApproval"><td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td></aeai:previlege>
@@ -99,9 +102,8 @@
 </td>
 </tr>
 <tr>
-	<th width="100" height="19" nowrap>状态</th>
-    <td><input id="SAL_STATE_NAME" label="状态" name="SAL_STATE_NAME" type="text" value="<%=pageBean.selectedText("SAL_STATE")%>" size="24" class="text" readonly="readonly"/>
-	<input id="SAL_STATE" label="状态" name="SAL_STATE" type="hidden" value="<%=pageBean.selectedValue("SAL_STATE")%>" />
+	<th width="100" height="19" nowrap>年请假数</th>
+    <td><input name="SAL_YEAR_LEAVE" type="text" class="text" id="SAL_YEAR_LEAVE" value="<%=pageBean.inputValue("SAL_YEAR_LEAVE")%>" size="24" readonly="readonly" label="年请假数" />
 </td>
 	<th width="100" nowrap>个人所得税</th>
 	<td colspan="3"><input name="SAL_TAX" type="text" class="text" id="SAL_TAX" value="<%=pageBean.inputValue("SAL_TAX")%>" size="24" readonly="readonly" label="绩效工资" />
@@ -110,6 +112,10 @@
 <tr>
 	<th width="100" nowrap>抵扣假期</th>
 	<td><input name="SAL_OFFSET_VACATION" type="text" class="text" id="SAL_OFFSET_VACATION" value="<%=pageBean.inputValue("SAL_OFFSET_VACATION")%>" size="24" readonly="readonly" label="抵扣假期" />
+</td>
+	<th width="100" height="19" nowrap>状态</th>
+    <td colspan="3"><input id="SAL_STATE_NAME" label="状态" name="SAL_STATE_NAME" type="text" value="<%=pageBean.selectedText("SAL_STATE")%>" size="24" class="text" readonly="readonly"/>
+	<input id="SAL_STATE" label="状态" name="SAL_STATE" type="hidden" value="<%=pageBean.selectedValue("SAL_STATE")%>" />
 </td>
 </tr>
 <tr>

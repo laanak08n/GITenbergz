@@ -13,7 +13,6 @@ import com.agileai.hotweb.controller.core.MasterSubEditMainHandler;
 import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
-import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.module.information.service.HrEmployeeManage;
 
@@ -35,6 +34,7 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 		if ("update".equals(operaType)) {
 			setAttribute("doDetail", true);
 			setAttribute("onlyRead", "readonly");
+			setAttribute("doApprove", true);
 			if (isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getMasterRecord(param);
 				this.setAttributes(record);
@@ -128,14 +128,17 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 		if (this.getAttribute("EMP_ALLOWANCE") == null) {
 			this.setAttribute("EMP_ALLOWANCE", empMoney);
 		}
+		if (this.getAttribute("EMP_ANNUAL_LEAVE_DAYS") == null) {
+			this.setAttribute("EMP_ANNUAL_LEAVE_DAYS", 0);
+		}
 		
 	}
 
 	@PageAction
 	public ViewRenderer approve(DataParam param) {
 		param.put("EMP_STATE", "approved");
-		getService().approveRecord(param);
-		return new RedirectRenderer(getHandlerURL(listHandlerClass));
+		String responseText = getService().approveRecord(param);
+		return new AjaxRenderer(responseText);
 	}
 
 	protected String[] getEntryEditFields(String currentSubTableId) {
@@ -193,6 +196,9 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 				if(param.get("EMP_ALLOWANCE")==""){
 					param.put("EMP_ALLOWANCE", "0.00");
 				}
+				if(param.get("EMP_ANNUAL_LEAVE_DAYS")==""){
+					param.put("EMP_ANNUAL_LEAVE_DAYS", "0");
+				}
 				getService().updateMasterRecord(param);
 				saveSubRecords(param);
 				responseText = param.get(baseTablePK);
@@ -214,6 +220,9 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 			}
 			if(param.get("EMP_ALLOWANCE")==""){
 				param.put("EMP_ALLOWANCE", "0.00");
+			}
+			if(param.get("EMP_ANNUAL_LEAVE_DAYS")==""){
+				param.put("EMP_ANNUAL_LEAVE_DAYS", "0");
 			}
 			getService().updateMasterRecord(param);
 			saveSubRecords(param);

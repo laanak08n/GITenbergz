@@ -58,6 +58,7 @@ function revokeApproval(){
 <table class="queryTable"><tr><td>
 &nbsp;年月<input id="salDate" label="时间" name="salDate" type="text" value="<%=pageBean.inputValue("salDate")%>"  size="10" class="text" />
 &nbsp;<input type="submit" name="button" id="button" value="上一月" class="formbutton" onclick="doSubmit({actionType:'beforeMonth'})" />
+&nbsp;<input type="submit" name="button" id="button" value="本月" class="formbutton" onclick="doSubmit({actionType:'currentMonth'})" />
 &nbsp;<input type="submit" name="button" id="button" value="下一月" class="formbutton" onclick="doSubmit({actionType:'nextMonth'})" />
 &nbsp;&nbsp;
 &nbsp;状态<select id="salState" label="状态" name="salState" class="select" onchange="doQuery()"><%=pageBean.selectValue("salState")%></select>
@@ -83,6 +84,7 @@ height="390px"
 	<ec:column width="100" property="SAL_WORK_DAYS" style="text-align:right;" title="出勤天数"   />
 	<ec:column width="100" property="SAL_OVERTIME" style="text-align:right;" title="加班天数"   />
 	<ec:column width="100" property="SAL_LEAVE" style="text-align:right;" title="请假天数"   />
+	<ec:column width="100" property="SAL_YEAR_LEAVE" style="text-align:right;" title="年请假数"   />
 	<ec:column width="100" property="SAL_BASIC" style="text-align:right;" title="基本工资"   />
 	<ec:column width="100" property="SAL_PERFORMANCE" style="text-align:right;" title="绩效工资"   />
 	<ec:column width="100" property="SAL_SUBSIDY" style="text-align:right;" title="补贴"   />

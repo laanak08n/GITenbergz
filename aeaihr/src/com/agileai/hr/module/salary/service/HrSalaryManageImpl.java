@@ -151,21 +151,31 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			
 			statementId = sqlNameSpace + "." + "getLastOffsetVacationInfo";
 			DataRow lastOffsetVacationRow = this.daoHelper.getRecord(statementId, new DataParam("userCode",userCode,"lastYear",lastYear,"lastMonth",lastMonth));
+			BigDecimal lastOffsetVacationDecimal = new BigDecimal("0");
 			
 			Number leaveDaysNum = (Number) dataParam.getObject("SAL_LEAVE");
 			BigDecimal leaveDaysDecimal = (BigDecimal)leaveDaysNum;
 			Number overTimeDaysNum = (Number) dataParam.getObject("SAL_OVERTIME");
 			BigDecimal overTimeDaysDecimal = (BigDecimal)overTimeDaysNum;
-			if(lastOffsetVacationRow == null || lastOffsetVacationRow.size() == 0){
+			if(lastOffsetVacationRow == null || lastOffsetVacationRow.size() == 0 || lastMonth.equals("12")){
 				dataParam.put("SAL_OFFSET_VACATION", offsetVacation.subtract(totalLeaveDecimal).add(totalOverTimeDecimal)); 
 			}else{
-				BigDecimal lastOffsetVacationDecimal = (BigDecimal) lastOffsetVacationRow.get("SAL_OFFSET_VACATION");
+				lastOffsetVacationDecimal = (BigDecimal) lastOffsetVacationRow.get("SAL_OFFSET_VACATION");
 				if(lastOffsetVacationDecimal.compareTo(new BigDecimal("0"))==1 || lastOffsetVacationDecimal.compareTo(new BigDecimal("0"))==0){
 					dataParam.put("SAL_OFFSET_VACATION", lastOffsetVacationDecimal.subtract(leaveDaysDecimal).add(overTimeDaysDecimal));
 				}else if(lastOffsetVacationDecimal.compareTo(new BigDecimal("0")) == -1){
 					dataParam.put("SAL_OFFSET_VACATION", overTimeDaysDecimal.subtract(leaveDaysDecimal));
 				}
 			}
+			
+			statementId = sqlNameSpace + "." + "getSalYearLeaveInfo";
+			DataRow salYearLeaveRow = this.daoHelper.getRecord(statementId, new DataParam("userCode",userCode,"beginTime",year+"-01-01 00:00:00","endTime",year+"-12-31 23:59:59"));
+			if(salYearLeaveRow == null || salYearLeaveRow.size() == 0){
+				dataParam.put("SAL_YEAR_LEAVE", new BigDecimal("0.0"));
+			}else{
+				dataParam.put("SAL_YEAR_LEAVE", salYearLeaveRow.get("SAL_YEAR_LEAVE"));
+			}
+			
 			
 			if (existsDataMap.containsKey(userCode)){
 				updateParamList.add(dataParam);
@@ -243,6 +253,39 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		String statementId = sqlNameSpace+"."+"getLastSalayInfo";
 		DataRow dataRow = this.daoHelper.getRecord(statementId, param);
 		return dataRow;
+	}
+
+	@Override
+	public void recalculation(String year,String month,String userId) {
+		int monthInt = Integer.parseInt(month);
+		Date beginOfYearDate = DateUtil.getBeginOfYear(new Date());
+		
+		String statementId = sqlNameSpace+"."+"getUserAnnualLeaveDays";
+		DataRow userAnnualLeaveDaysRow = this.daoHelper.getRecord(statementId, new DataParam("userId",userId));
+		String annualLeaveDays = (String) userAnnualLeaveDaysRow.get("EMP_ANNUAL_LEAVE_DAYS");
+		BigDecimal annualLeaveDaysDecimal = new BigDecimal(annualLeaveDays);
+		
+		for(int i=0;i<monthInt;i++){
+			Date date = DateUtil.getDateAdd(beginOfYearDate, DateUtil.MONTH, i);
+			String dateStr = DateUtil.getMonthText(date);
+			statementId = sqlNameSpace+"."+"getMonthlyInfo";
+			DataRow monthlyInfoRow = this.daoHelper.getRecord(statementId, new DataParam("year",year,"month",dateStr,"userId",userId));
+			if(monthlyInfoRow != null){
+				BigDecimal salLeaveDecimal = (BigDecimal)monthlyInfoRow.get("SAL_LEAVE");
+				BigDecimal overtimeDecimal = (BigDecimal)monthlyInfoRow.get("SAL_OVERTIME");
+				annualLeaveDaysDecimal = annualLeaveDaysDecimal.subtract(salLeaveDecimal).add(overtimeDecimal);
+				statementId = sqlNameSpace+"."+"updateOffsetVacationrecord";
+				this.daoHelper.updateRecord(statementId, new DataParam("SAL_ID",monthlyInfoRow.get("SAL_ID"),"SAL_OFFSET_VACATION",annualLeaveDaysDecimal));
+				if(annualLeaveDaysDecimal.compareTo(new BigDecimal("0.0")) == -1){
+					annualLeaveDaysDecimal = new BigDecimal("0.0");
+				}
+
+				log.info(annualLeaveDaysDecimal);
+			}
+		}
+		
+		
+		
 	}
 
 }

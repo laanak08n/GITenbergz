@@ -106,6 +106,14 @@ public class HrSalaryManageListHandler extends StandardListHandler {
 		param.put("salDate", yearMonth);
 		return prepareDisplay(param);
 	}
+	
+	@PageAction
+	public ViewRenderer currentMonth(DataParam param) {
+		String date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, new Date());
+		String yearMonth = date.substring(0, 7);
+		param.put("salDate", yearMonth);
+		return prepareDisplay(param);
+	}
 
 	@PageAction
 	public ViewRenderer nextMonth(DataParam param) {
