@@ -140,7 +140,7 @@ function saveMasterRecord(){
 </tr>
 <tr>
 	<th width="100" nowrap>核准意见</th>
-	<td><textarea id="WOT_APP_OPINION" label="核准意见" name="WOT_APP_OPINION" cols="40" rows="3" class="textarea" style="width:300px"><%=pageBean.inputValue("WOT_APP_OPINION")%></textarea>
+	<td><textarea id="WOT_APP_OPINION" label="核准意见" name="WOT_APP_OPINION" cols="60" rows="3" class="textarea"><%=pageBean.inputValue("WOT_APP_OPINION")%></textarea>
 </td>
 </tr>
 <%} %>
