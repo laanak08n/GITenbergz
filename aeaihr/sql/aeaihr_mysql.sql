@@ -77,51 +77,50 @@ CREATE TABLE `hr_education` (
 -- Table structure for hr_employee
 -- ----------------------------
 DROP TABLE IF EXISTS `hr_employee`;
-CREATE TABLE `hr_employee` (
+CREATE TABLE `hr_employee`  (
   `EMP_ID` char(36) NOT NULL,
-  `EMP_CODE` varchar(32) DEFAULT NULL,
-  `EMP_NAME` varchar(32) DEFAULT NULL,
-  `EMP_SEX` char(1) DEFAULT NULL,
-  `EMP_BIRTHDAY` date DEFAULT NULL,
-  `EMP_NATIONAL` varchar(32) DEFAULT NULL,
-  `EMP_PARTY` char(2) DEFAULT NULL,
-  `EMP_ID_NUMBER` varchar(32) DEFAULT NULL,
-  `EMP_TEL` varchar(32) DEFAULT NULL,
-  `EMP_NATIVE_PLACE` varchar(32) DEFAULT NULL,
-  `EMP_MARITAL_STATUS` varchar(32) DEFAULT NULL,
-  `EMP_REFERENCE_TIME` date DEFAULT NULL,
-  `EMP_NOW_DEPT` char(36) DEFAULT NULL,
-  `EMP_NOW_JOB` varchar(32) DEFAULT NULL,
-  `EMP_INDUCTION_TIME` date DEFAULT NULL,
-  `EMP_EMAIL` varchar(32) DEFAULT NULL,
-  `EMP_REGULAR_TIME` date DEFAULT NULL,
-  `EMP_EDUCATION` varchar(32) DEFAULT NULL,
-  `EMP_STATE` varchar(32) DEFAULT NULL,
-  `EMP_BASIC` decimal(8,2) DEFAULT NULL,
-  `EMP_PERFORMANCE` decimal(8,2) DEFAULT NULL,
-  `EMP_SUBSIDY` decimal(8,2) DEFAULT NULL,
-  `EMP_WORK_STATE` varchar(32) DEFAULT NULL,
-  `EMP_DIMISSION_TIME` date DEFAULT NULL,
-  `EMP_TAX` decimal(8,0) DEFAULT NULL,
-  `EMP_INSURE` decimal(8,0) DEFAULT NULL,
-  `EMP_HOUSING_FUND` decimal(8,2) DEFAULT NULL,
-  `EMP_ANNUAL_LEAVE_DAYS` varchar(5) DEFAULT NULL,
-  `EMP_ALLOWANCE` decimal(8,0) DEFAULT NULL,
-  `EMP_PARTICIPATE_SALARY` varchar(32) DEFAULT NULL,
-  `EMP_PAY_INSURE` varchar(32) DEFAULT NULL,
-  `EMP_PROBATION` decimal(8,2) DEFAULT NULL,
-  `EMP_CREATE_TIME` date DEFAULT NULL,
-  PRIMARY KEY (`EMP_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `EMP_CODE` varchar(32) NULL DEFAULT NULL,
+  `EMP_NAME` varchar(32) NULL DEFAULT NULL,
+  `EMP_SEX` char(1) NULL DEFAULT NULL,
+  `EMP_BIRTHDAY` date NULL DEFAULT NULL,
+  `EMP_NATIONAL` varchar(32) NULL DEFAULT NULL,
+  `EMP_PARTY` char(2) NULL DEFAULT NULL,
+  `EMP_ID_NUMBER` varchar(32) NULL DEFAULT NULL,
+  `EMP_TEL` varchar(32) NULL DEFAULT NULL,
+  `EMP_NATIVE_PLACE` varchar(32) NULL DEFAULT NULL,
+  `EMP_MARITAL_STATUS` varchar(32) NULL DEFAULT NULL,
+  `EMP_REFERENCE_TIME` date NULL DEFAULT NULL,
+  `EMP_NOW_DEPT` char(36) NULL DEFAULT NULL,
+  `EMP_NOW_JOB` varchar(32) NULL DEFAULT NULL,
+  `EMP_INDUCTION_TIME` date NULL DEFAULT NULL,
+  `EMP_EMAIL` varchar(32) NULL DEFAULT NULL,
+  `EMP_REGULAR_TIME` date NULL DEFAULT NULL,
+  `EMP_EDUCATION` varchar(32) NULL DEFAULT NULL,
+  `EMP_STATE` varchar(32) NULL DEFAULT NULL,
+  `EMP_PROBATION` decimal(8, 2) NULL DEFAULT NULL,
+  `EMP_BASIC` decimal(8, 2) NULL DEFAULT NULL,
+  `EMP_PERFORMANCE` decimal(8, 2) NULL DEFAULT NULL,
+  `EMP_SUBSIDY` decimal(8, 2) NULL DEFAULT NULL,
+  `EMP_WORK_STATE` varchar(32) NULL DEFAULT NULL,
+  `EMP_DIMISSION_TIME` date NULL DEFAULT NULL,
+  `EMP_TAX` decimal(8, 0) NULL DEFAULT NULL,
+  `EMP_INSURE` decimal(8, 0) NULL DEFAULT NULL,
+  `EMP_HOUSING_FUND` decimal(8, 2) NULL DEFAULT NULL,
+  `EMP_ANNUAL_LEAVE_DAYS` varchar(5) NULL DEFAULT NULL,
+  `EMP_ALLOWANCE` decimal(8, 0) NULL DEFAULT NULL,
+  `EMP_PARTICIPATE_SALARY` varchar(32) NULL DEFAULT NULL,
+  `EMP_PAY_INSURE` varchar(32) NULL DEFAULT NULL,
+  `EMP_CREATE_TIME` date NULL DEFAULT NULL,
+  PRIMARY KEY (`EMP_ID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 ;
 
 -- ----------------------------
 -- Records of hr_employee
 -- ----------------------------
-INSERT INTO `hr_employee` VALUES ('15B1BB01-783E-4FB1-8BD3-2704193ECC37', 'CS02', '赵小二', 'F', null, '', '', '', '', '', '', null, '0E12268C-BD14-4FCE-A7C0-A8A5D55ED842', '行政总监', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N',null,null);
-INSERT INTO `hr_employee` VALUES ('244DEC90-0509-4785-9BF0-4643E599EAE8', 'CS04', '赵小四', 'M', null, '', '', '', '', '', '', null, '3435DD86-53B8-41DC-BE10-0463428D18D6', '研发总管', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N',null,null);
-INSERT INTO `hr_employee` VALUES ('3A97C063-84B0-4F5B-96BF-C9BF6987467C', 'CS01', '张老大', 'M', null, '', '', '', '', '', '', null, '72A9E7B1-5B47-4822-ACA0-A8CB1EE78506', '总负责人', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N',null,null);
-INSERT INTO `hr_employee` VALUES ('8DFC57A5-E8E8-4796-851D-F60491F74670', 'CS03', '孙小三', 'M', null, '', '', '', '', '', '', null, '72A9E7B1-5B47-4822-ACA0-A8CB1EE78506', '技术经理', null, '', null, '', 'approved', '0.00', '0.00', '0.00', '', null, '0', '0', '0.00', '0', '0', 'Y', 'N',null,null);
-
+INSERT INTO `hr_employee` VALUES ('15B1BB01-783E-4FB1-8BD3-2704193ECC37', 'CS02', '赵小二', 'F', NULL, '', '', '', '', '', '', NULL, '0E12268C-BD14-4FCE-A7C0-A8A5D55ED842', '行政总监', '2014-01-01', '', '2014-01-07', '', 'approved', 0.00, 0.00, 0.00, 0.00, '1', NULL, 0, 0, 0.00, '0', NULL, 'Y', 'N', NULL);
+INSERT INTO `hr_employee` VALUES ('3A97C063-84B0-4F5B-96BF-C9BF6987467C', 'CS01', '张老大', 'M', NULL, '', '', '', '', '', '', NULL, '72A9E7B1-5B47-4822-ACA0-A8CB1EE78506', '总负责人', '2014-01-01', '', '2014-01-07', '', 'approved', 0.00, 0.00, 0.00, 0.00, '1', NULL, 0, 0, 0.00, '0', NULL, 'Y', 'N',NULL);
+INSERT INTO `hr_employee` VALUES ('244DEC90-0509-4785-9BF0-4643E599EAE8', 'CS04', '赵小四', 'M', NULL, '', '', '', '', '', '', NULL, '3435DD86-53B8-41DC-BE10-0463428D18D6', '研发总管', '2015-01-01', '', '2015-01-07', '', 'approved', 0.00, 0.00, 0.00, 0.00, '1', NULL, 0, 0, 0.00, '0', NULL, 'Y', 'N',NULL);
+INSERT INTO `hr_employee` VALUES ('8DFC57A5-E8E8-4796-851D-F60491F74670', 'CS03', '孙小三', 'M', NULL, '', '', '', '', '', '', NULL, '72A9E7B1-5B47-4822-ACA0-A8CB1EE78506', '技术经理', '2015-01-01', '',  '2015-01-07', '', 'approved', 0.00, 0.00, 0.00, 0.00, '1', NULL, 0, 0, 0.00, '0', NULL, 'Y', 'N',NULL);
 -- ----------------------------
 -- Table structure for hr_evection
 -- ----------------------------
@@ -698,6 +697,9 @@ INSERT INTO `sys_codelist` VALUES ('EMP_PARTY', '0', '群众', '', '1', '1');
 INSERT INTO `sys_codelist` VALUES ('EMP_PARTY', '1', '党员', '', '2', '1');
 INSERT INTO `sys_codelist` VALUES ('EMP_STATE', 'approved', '已核准', '', '2', '1');
 INSERT INTO `sys_codelist` VALUES ('EMP_STATE', 'drafe', '草稿', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('EMP_WORK_STATE', '0', '试用', '', 1, '1');
+INSERT INTO `sys_codelist` VALUES ('EMP_WORK_STATE', '1', '转正', '', 2, '1');
+INSERT INTO `sys_codelist` VALUES ('EMP_WORK_STATE', '2', '离职', '', 3, '1');
 INSERT INTO `sys_codelist` VALUES ('EXPE_TRANSPORTATION_WAY', '0', '汽车', '', '1', '1');
 INSERT INTO `sys_codelist` VALUES ('EXPE_TRANSPORTATION_WAY', '1', '火车', '', '2', '1');
 INSERT INTO `sys_codelist` VALUES ('EXPE_TRANSPORTATION_WAY', '2', '轮船', '', '3', '1');
@@ -776,6 +778,8 @@ INSERT INTO `sys_codetype` VALUES ('EMP_EDUCATION', '学历', 'sys_code_define',
 INSERT INTO `sys_codetype` VALUES ('EMP_MARITAL_STATUS', '婚姻状况', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('EMP_PARTY', '政治面貌', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('EMP_STATE', '基本信息状态', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
+INSERT INTO `sys_codetype` VALUES ('EMP_WORK_STATE', '工作状态', 'app_code_define', null, 'Y', 'Y', 'Y', '', '', 'N', '', '');
+
 INSERT INTO `sys_codetype` VALUES ('EXPE_TRANSPORTATION_WAY', '交通方式', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('FULLTIME_AWARD', '60', 'app_code_define', '', 'Y', 'Y', 'Y', '', '', 'N', '', '');
 INSERT INTO `sys_codetype` VALUES ('FUNCTION_TYPE', '功能类型', 'sys_code_define', null, null, null, null, null, null, null, null, null);
