@@ -47,7 +47,6 @@
 	<td>
     <input name="SAL_NAME" type="text" class="text" id="SAL_NAME" value="<%=pageBean.inputValue("SAL_NAME")%>" size="24" readonly="readonly" label="人员姓名" />
     <input id="SAL_USER" label="人员编码" name="SAL_USER" type="hidden" value="<%=pageBean.inputValue("SAL_USER")%>" size="24"  class="text" />
-	  
 </td>
 	<th width="100" nowrap>基本工资</th>
 	<td colspan="3"><input name="SAL_BASIC" type="text" class="text" id="SAL_BASIC" value="<%=pageBean.inputValue("SAL_BASIC")%>" size="24" readonly="readonly" label="基本工资" />
@@ -113,8 +112,8 @@
 	<th width="100" nowrap>抵扣假期</th>
 	<td><input name="SAL_OFFSET_VACATION" type="text" class="text" id="SAL_OFFSET_VACATION" value="<%=pageBean.inputValue("SAL_OFFSET_VACATION")%>" size="24" readonly="readonly" label="抵扣假期" />
 </td>
-	<th width="100" nowrap>实发工资</th>
-	<td colspan="3"><input name="SAL_ACTUAL" type="text" class="text markable" id="SAL_ACTUAL" value="<%=pageBean.inputValue("SAL_ACTUAL")%>" size="24" readonly="readonly" label="补贴" />
+	<th width="100" height="19" nowrap>应发工资</th>
+    <td colspan="3"><input name="SAL_SHOULD" type="text" class="text markable" id="SAL_SHOULD" value="<%=pageBean.inputValue("SAL_SHOULD")%>" size="24" readonly="readonly" label="应发工资" />
 </td>
 </tr>
 <tr>
@@ -122,8 +121,8 @@
 	<td><input id="SAL_STATE_NAME" label="状态" name="SAL_STATE_NAME" type="text" value="<%=pageBean.selectedText("SAL_STATE")%>" size="24" class="text" readonly="readonly"/>
 	<input id="SAL_STATE" label="状态" name="SAL_STATE" type="hidden" value="<%=pageBean.selectedValue("SAL_STATE")%>" />
 </td>
-	<th width="100" height="19" nowrap>应发工资</th>
-    <td colspan="3"><input name="SAL_SHOULD" type="text" class="text markable" id="SAL_SHOULD" value="<%=pageBean.inputValue("SAL_SHOULD")%>" size="24" readonly="readonly" label="应发工资" />
+	<th width="100" nowrap>实发工资</th>
+	<td colspan="3"><input name="SAL_ACTUAL" type="text" class="text markable" id="SAL_ACTUAL" value="<%=pageBean.inputValue("SAL_ACTUAL")%>" size="24" readonly="readonly" label="补贴" />
 </td>
 </tr>
 <tr>
