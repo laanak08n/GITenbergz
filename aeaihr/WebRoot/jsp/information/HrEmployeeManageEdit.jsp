@@ -297,8 +297,8 @@ function revokeApproval(){
 	<th width="100" nowrap>转正时间</th>
 	<td><input id="EMP_REGULAR_TIME" label="转正时间" name="EMP_REGULAR_TIME" type="text" value="<%=pageBean.inputDate("EMP_REGULAR_TIME")%>" size="24" class="text" /><img id="EMP_REGULAR_TIMEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 </td>
-<th width="100" nowrap>个人所得说</th>
-	<td><input name="EMP_TAX" type="text" class="text markable0" id="EMP_TAX" value="<%=pageBean.inputValue("EMP_TAX")%>" size="24"  label="个人所得说" />
+<th width="100" nowrap>个人所得税</th>
+	<td><input name="EMP_TAX" type="text" class="text markable0" id="EMP_TAX" value="<%=pageBean.inputValue("EMP_TAX")%>" size="24"  label="个人所得税" />
 </td>
 </tr>
 <tr>
@@ -325,6 +325,12 @@ function revokeApproval(){
    </td>
 	<th width="100" nowrap>公积金</th>
 	<td><input name="EMP_HOUSING_FUND" type="text" class="text markable0" id="EMP_HOUSING_FUND" value="<%=pageBean.inputValue("EMP_HOUSING_FUND")%>" size="24"  label="公积金" />
+</tr>
+<tr>
+	<th width="100" nowrap>创建时间</th>
+	<td>
+	<input id="EMP_CREATE_TIME" label="创建时间" name="EMP_CREATE_TIME" type="text" value="<%=pageBean.inputValue("EMP_CREATE_TIME")%>" size="24" class="text" readonly="readonly" />
+	</td>
 </tr>
 <tr>
 	<th width="100" nowrap>是否缴纳社会保险</th>
@@ -512,6 +518,7 @@ requiredValidator.add("EMP_CODE");
 requiredValidator.add("EMP_NAME");
 requiredValidator.add("EMP_NOW_DEPT");
 requiredValidator.add("EMP_NOW_JOB");
+requiredValidator.add("EMP_INDUCTION_TIME");
 requiredValidator.add("EMP_REGULAR_TIME");
 numValidator.add("EMP_BASIC");
 numValidator.add("EMP_PERFORMANCE");
