@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://www.ecside.org" prefix="ec"%>
+<%@ taglib uri="http://www.agileai.com" prefix="aeai"%>
 <jsp:useBean id="pageBean" scope="request" class="com.agileai.hotweb.domain.PageBean"/>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,11 +15,10 @@
 <div id="__ToolBar__">
 <table class="toolTable" border="0" cellpadding="0" cellspacing="1">
 <tr>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="A" align="center" onclick="doRequest('insertRequest')"><input value="&nbsp;" title="新增" type="button" class="createImgBtn" />新增</td>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="E" align="center" onclick="doRequest('updateRequest')"><input value="&nbsp;" title="编辑" type="button" class="editImgBtn" />编辑</td>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="C" align="center" onclick="doRequest('copyRequest')"><input value="&nbsp;" title="复制" type="button" class="copyImgBtn" />复制</td>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td>   
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input value="&nbsp;" title="删除" type="button" class="delImgBtn" />删除</td>
+   <aeai:previlege code="create"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="A" align="center" onclick="doRequest('insertRequest')"><input value="&nbsp;" title="新增" type="button" class="createImgBtn" />新增</td></aeai:previlege>
+   <aeai:previlege code="edit"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="E" align="center" onclick="doRequest('updateRequest')"><input value="&nbsp;" title="编辑" type="button" class="editImgBtn" />编辑</td></aeai:previlege>
+   <aeai:previlege code="detail"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td></aeai:previlege>
+   <aeai:previlege code="delete"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input value="&nbsp;" title="删除" type="button" class="delImgBtn" />删除</td></aeai:previlege>
 </tr>
 </table>
 </div>

@@ -17,8 +17,11 @@ and BP_DATE &lt;= #edate#
 <isNotEmpty prepend=" " property="bpType">
 and BP_TYPE=#bpType#
 </isNotEmpty>
-<isNotEmpty prepend=" " property="userName_like">
-and u.USER_NAME like #userName_like#
+<isNotEmpty prepend=" " property="bpType">
+and BP_TYPE=#bpType#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="userId">
+and a.USER_ID = #userId#
 </isNotEmpty>
   </select>
   <select id="getRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">

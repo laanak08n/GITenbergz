@@ -118,4 +118,17 @@ public class HrEmployeeManageImpl
 		String statementId = sqlNameSpace+"."+"updateSalaryLimitRecord";
 		this.daoHelper.updateRecord(statementId, param);
 	}
+
+	@Override
+	public DataRow getFulltimeAwardRecord() {
+		String statementId = sqlNameSpace+"."+"getFulltimeAwardRecord";
+		DataRow dataRow = this.daoHelper.getRecord(statementId, new DataParam());
+		return dataRow;
+	}
+
+	@Override
+	public void updateFulltimeAwardRecord(DataParam param) {
+		String statementId = sqlNameSpace+"."+"updateFulltimeAwardRecord";
+		this.daoHelper.updateRecord(statementId, param);
+	}
 }

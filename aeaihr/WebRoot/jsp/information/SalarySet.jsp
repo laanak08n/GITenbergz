@@ -26,11 +26,17 @@
 	<td><input id="salaryLimit" label="工资额度" name="salaryLimit" type="text" value="<%=pageBean.inputValue("salaryLimit")%>" size="24" class="text" />
 </td>
 </tr>
+<tr>
+	<th width="100" nowrap>满勤奖额度</th>
+	<td><input id="fulltimeAward" label="满勤奖额度" name="fulltimeAward" type="text" value="<%=pageBean.inputValue("fulltimeAward")%>" size="24" class="text" />
+</td>
+</tr>
 </table>
 <input type="hidden" name="actionType" id="actionType" value=""/>
 </form>
 <script language="javascript">
 numValidator.add("salaryLimit");
+numValidator.add("fulltimeAward");
 </script>
 </body>
 </html>

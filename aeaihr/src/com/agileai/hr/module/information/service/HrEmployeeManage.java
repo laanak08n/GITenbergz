@@ -10,4 +10,6 @@ public interface HrEmployeeManage
 	void revokeApprovalRecords(String empId);
 	DataRow getSalaryLimitRecord();
 	void updateSalaryLimitRecord(DataParam param);
+	DataRow getFulltimeAwardRecord();
+	void updateFulltimeAwardRecord(DataParam param);
 }

@@ -315,5 +315,28 @@
 		and USER_ID = #USER_ID#
 		and BP_TYPE = 'REWARD'
 		and date_format(BP_DATE,'%Y-%m') = #yearMonth#
-	</select>					
+	</select>
+	<select id="getBonusPenaltyRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		SELECT BP_ID,USER_ID,BP_DATE,BP_TYPE,BP_MONEY
+		FROM hr_bonus_penalty
+		where 1=1
+		and USER_ID = #USER_ID#
+		and BP_DATE = #BP_DATE#
+		and BP_TYPE = #BP_TYPE#
+	</select>	
+  <insert id="insertBonusPenaltyRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into hr_bonus_penalty (BP_ID,USER_ID,BP_DATE,BP_TYPE,BP_MONEY) values (#BP_ID:CHAR#,#USER_ID:CHAR#,#BP_DATE:DATE#,#BP_TYPE:VARCHAR#,#BP_MONEY:DECIMAL#)
+  </insert>
+  <update id="updateBonusPenaltyRecord" parameterClass="com.agileai.domain.DataParam">
+    update hr_bonus_penalty
+set USER_ID=#USER_ID:CHAR#,BP_DATE=#BP_DATE:DATE#,BP_TYPE=#BP_TYPE:VARCHAR#,BP_MONEY=#BP_MONEY:DECIMAL#
+where USER_ID = #USER_ID# and BP_DATE = #BP_DATE# and BP_TYPE = #BP_TYPE#
+  </update>
+	<select id="getFulltimeAwardRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select TYPE_NAME
+		from sys_codetype
+		where TYPE_ID='FULLTIME_AWARD'
+	</select>    					
 </sqlMap>

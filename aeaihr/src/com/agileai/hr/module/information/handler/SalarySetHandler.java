@@ -16,8 +16,10 @@ public class SalarySetHandler extends SimpleHandler{
 	}
 	
 	public ViewRenderer prepareDisplay(DataParam param) {
-		DataRow dataRow = getService().getSalaryLimitRecord();
-		this.setAttribute("salaryLimit",dataRow.get("TYPE_NAME"));
+		DataRow salaryLimitRow = getService().getSalaryLimitRecord();
+		this.setAttribute("salaryLimit",salaryLimitRow.get("TYPE_NAME"));
+		DataRow fulltimeAwardRow = getService().getFulltimeAwardRecord();
+		this.setAttribute("fulltimeAward",fulltimeAwardRow.get("TYPE_NAME"));
 		this.setAttributes(param);
 		this.processPageAttributes(param);
 		return new LocalRenderer(getPage());
@@ -25,6 +27,7 @@ public class SalarySetHandler extends SimpleHandler{
 	
 	public ViewRenderer doSaveAction(DataParam param){
 		getService().updateSalaryLimitRecord(param);
+		getService().updateFulltimeAwardRecord(param);
 		return prepareDisplay(param);
 	}
 	

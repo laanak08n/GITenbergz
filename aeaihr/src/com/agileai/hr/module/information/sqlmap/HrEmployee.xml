@@ -242,5 +242,47 @@
 		sys_codetype set
 		TYPE_NAME=#salaryLimit#
 		where TYPE_ID='SALARY_LIMIT'
-	</update>	
+	</update>
+	<select id="getFulltimeAwardRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select TYPE_NAME
+		from sys_codetype
+		where TYPE_ID='FULLTIME_AWARD'
+	</select>	
+	<update id="updateFulltimeAwardRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		sys_codetype set
+		TYPE_NAME=#fulltimeAward#
+		where TYPE_ID='FULLTIME_AWARD'
+	</update>
+	<select id="getFulltimeAwardRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select TYPE_NAME
+		from sys_codetype
+		where TYPE_ID='FULLTIME_AWARD'
+	</select>
+	<select id="getSalaryLimitRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select TYPE_NAME
+		from sys_codetype
+		where TYPE_ID='SALARY_LIMIT'
+	</select>	
+	<update id="updateSalaryLimitRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		sys_codetype set
+		TYPE_NAME=#salaryLimit#
+		where TYPE_ID='SALARY_LIMIT'
+	</update>
+	<select id="getFulltimeAwardRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select TYPE_NAME
+		from sys_codetype
+		where TYPE_ID='FULLTIME_AWARD'
+	</select>	
+	<update id="updateFulltimeAwardRecord" parameterClass="com.agileai.domain.DataParam">
+		update
+		sys_codetype set
+		TYPE_NAME=#fulltimeAward#
+		where TYPE_ID='FULLTIME_AWARD'
+	</update>				
 </sqlMap>

@@ -54,7 +54,7 @@ function salarySet(){
    <aeai:previlege code="revokeApproval"><td  onmouseover="onMover(this);" onmouseout="onMout(this);"   align="center" class="bartdx" onclick="revokeApproval()" ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td></aeai:previlege>
    <aeai:previlege code="detail"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input id="detailImgBtn" value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td></aeai:previlege>
    <aeai:previlege code="delete"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input id="deleteImgBtn" value="&nbsp;" title="删除" type="button" class="delImgBtn" />删除</td></aeai:previlege>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="U" align="center" onclick="openSalarySetBox()"><input id="salaryImgBtn" value="&nbsp;" title="工资额度设定" type="button" class="salaryImgBtn"/>工资额度设定</td>
+   <aeai:previlege code="amountSet"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="U" align="center" onclick="openSalarySetBox()"><input id="salaryImgBtn" value="&nbsp;" title="工资额度设定" type="button" class="salaryImgBtn"/>额度设定</td></aeai:previlege>
 </tr>
 </table>
 </div>
@@ -111,7 +111,7 @@ var salarySetBox;
 function openSalarySetBox(){
 	var handlerId = "SalarySet"; 
 	if (!userIdBox){
-		salarySetBox = new PopupBox('salarySetBox','请选择人员      ',{size:'normal',height:'200',width:'400',top:'2px'});
+		salarySetBox = new PopupBox('salarySetBox','额度设定 ',{size:'normal',height:'200',width:'400',top:'2px'});
 	}
 	var url = 'index?'+handlerId;
 	salarySetBox.sendRequest(url);

@@ -1,6 +1,7 @@
 package com.agileai.hr.module.salary.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -168,15 +169,6 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				rewardMoneyDecimal = (BigDecimal) rewardtRow.get("MONEY");
 			}
 			
-			BigDecimal sal_bonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal);
-			dataParam.put("SAL_BONUS", sal_bonus);
-			
-			BigDecimal sal_should = sal_total.subtract(sal_insure).subtract(sal_tax).subtract(sal_housing_fund);
-			dataParam.put("SAL_SHOULD", sal_should);
-			
-			BigDecimal sal_actual  = sal_should.add(sal_bonus);
-			dataParam.put("SAL_ACTUAL", sal_actual);
-			
 			Date lastDate = DateUtil.getDateAdd(date, DateUtil.MONTH, -1);
 			String lastYearMonth = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, lastDate);
 			String lastYear = lastYearMonth.substring(0,4);
@@ -216,6 +208,66 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 					dataParam.put("SAL_OFFSET_VACATION", overTimeDaysDecimal.subtract(leaveDaysDecimal));
 				}
 			}
+			
+			BigDecimal sal_bonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal);
+			dataParam.put("SAL_BONUS", sal_bonus);
+			
+			BigDecimal sal_should = sal_total.subtract(sal_insure).subtract(sal_tax).subtract(sal_housing_fund);
+			dataParam.put("SAL_SHOULD", sal_should);
+			
+			BigDecimal sal_offset_vacation =  (BigDecimal) dataParam.getObject("SAL_OFFSET_VACATION");
+			log.info(sal_offset_vacation);
+			
+			BigDecimal valid_days = (BigDecimal) validDaysRow.get("VALID_DAYS");
+			BigDecimal sal_day_money = sal_total.divide(valid_days,2, RoundingMode.HALF_UP);
+			
+			BigDecimal sal_day_money_total = new BigDecimal("0.0");
+			if(sal_offset_vacation.compareTo(new BigDecimal("0")) == -1){
+				sal_day_money_total = sal_offset_vacation.multiply(sal_day_money);
+				DataParam bonusPenaltyParam = new DataParam();
+				bonusPenaltyParam.put("BP_ID", keyGenerator.genKey());
+				bonusPenaltyParam.put("USER_ID", userCode);
+				bonusPenaltyParam.put("BP_DATE", date);
+				bonusPenaltyParam.put("BP_TYPE", "OVERRUN");
+				bonusPenaltyParam.put("BP_MONEY", sal_day_money_total.abs());
+				
+				statementId = sqlNameSpace + "." + "getBonusPenaltyRecord";
+				DataRow bonusPenaltyRow = this.daoHelper.getRecord(statementId, bonusPenaltyParam);
+				log.info(bonusPenaltyRow);
+				if(bonusPenaltyRow != null && !bonusPenaltyRow.isEmpty()){
+					statementId = sqlNameSpace + "." + "updateBonusPenaltyRecord";
+					this.daoHelper.updateRecord(statementId, bonusPenaltyParam);
+				}else{
+					statementId = sqlNameSpace + "." + "insertBonusPenaltyRecord";
+					this.daoHelper.insertRecord(statementId, bonusPenaltyParam);
+				}
+			}
+
+			BigDecimal sal_fulltime_award = new BigDecimal("0.0");
+			if(leaveDaysRow == null){
+				statementId = sqlNameSpace + "." + "getFulltimeAwardRecord";
+				DataRow dataRow = this.daoHelper.getRecord(statementId, new DataParam());
+				sal_fulltime_award = new BigDecimal(dataRow.getString("TYPE_NAME"));
+				DataParam fulltimeAwardParam = new DataParam();
+				fulltimeAwardParam.put("BP_ID", keyGenerator.genKey());
+				fulltimeAwardParam.put("USER_ID", userCode);
+				fulltimeAwardParam.put("BP_DATE", date);
+				fulltimeAwardParam.put("BP_TYPE", "FULLTIME");
+				fulltimeAwardParam.put("BP_MONEY", sal_fulltime_award);
+				statementId = sqlNameSpace + "." + "getBonusPenaltyRecord";
+				DataRow bonusPenaltyRow = this.daoHelper.getRecord(statementId, fulltimeAwardParam);
+				log.info(bonusPenaltyRow);
+				if(bonusPenaltyRow != null && !bonusPenaltyRow.isEmpty()){
+					statementId = sqlNameSpace + "." + "updateBonusPenaltyRecord";
+					this.daoHelper.updateRecord(statementId, fulltimeAwardParam);
+				}else{
+					statementId = sqlNameSpace + "." + "insertBonusPenaltyRecord";
+					this.daoHelper.insertRecord(statementId, fulltimeAwardParam);
+				}
+				
+			}
+			BigDecimal sal_actual  = sal_should.add(sal_bonus).add(sal_day_money_total).add(sal_fulltime_award);
+			dataParam.put("SAL_ACTUAL", sal_actual);
 			
 			statementId = sqlNameSpace + "." + "getSalYearLeaveInfo";
 			DataRow salYearLeaveRow = this.daoHelper.getRecord(statementId, new DataParam("userCode",userCode,"beginTime",year+"-01-01 00:00:00","endTime",year+"-12-31 23:59:59"));
@@ -262,11 +314,10 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		DataParam param = new DataParam("SAL_ID", masterRecordId);
 		DataRow masterRecord = this.daoHelper.getRecord(statementId, param);
 
-		BigDecimal sal_bonus = (BigDecimal) masterRecord.get("SAL_BONUS");
 		BigDecimal sal_basic = (BigDecimal) masterRecord.get("SAL_BASIC");
 		BigDecimal sal_performance = (BigDecimal) masterRecord.get("SAL_PERFORMANCE");
 		BigDecimal sal_subsidy = (BigDecimal) masterRecord.get("SAL_SUBSIDY");
-		BigDecimal sal_total = sal_bonus.add(sal_basic).add(sal_performance).add(sal_subsidy);
+		BigDecimal sal_total = sal_basic.add(sal_performance).add(sal_subsidy);
 
 		statementId = sqlNameSpace + "." + "updateBonusRecord";
 		DataParam updateParam = new DataParam();
