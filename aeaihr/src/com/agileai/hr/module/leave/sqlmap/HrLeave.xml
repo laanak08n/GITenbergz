@@ -76,10 +76,14 @@ where LEA_ID=#LEA_ID#
   </delete>
 	<select id="findLeaveList" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-	SELECT LEA_ID,LEA_DATE,LEA_DAYS,LEA_TYPE,STATE,USER_NAME
-	FROM hr_leave a left join security_user b on a.USER_ID = b.USER_ID
-	where 1=1
-	and b.USER_CODE = #userCode#
-	order by LEA_DATE desc
+		SELECT LEA_ID,LEA_DATE,LEA_DAYS,d.CODE_NAME as LEA_TYPE,c.CODE_NAME as STATE,USER_NAME
+		FROM hr_leave a left join security_user b on a.USER_ID = b.USER_ID
+		left join sys_codelist c on a.STATE = c.CODE_ID
+		left join sys_codelist d on a.LEA_TYPE = d.CODE_ID
+		where 1=1
+		and b.USER_CODE = #userCode#
+		and c.TYPE_ID = 'STATE'
+		and d.TYPE_ID = 'LEA_TYPE'
+		order by LEA_DATE desc
 	</select>  
 </sqlMap>
