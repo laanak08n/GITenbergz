@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.jasig.cas.client.authentication.AttributePrincipal;
 
 import com.agileai.domain.DataRow;
+import com.agileai.hotweb.bizmoduler.core.SystemLogService;
 import com.agileai.hotweb.bizmoduler.frame.SecurityAuthorizationConfig;
 import com.agileai.hotweb.common.BeanFactory;
 import com.agileai.hotweb.common.HotwebAuthHelper;
@@ -42,10 +43,19 @@ public class CASGeneralCasFilter implements Filter {
 					HotwebAuthHelper hotwebAuthHelper = new HotwebAuthHelper(user);
 					hotwebAuthHelper.initAuthedUser(userRow,user);	
 					
+					this.writeSystemLog(fromIpAddress,user, "CAS认证权限初始化", "initAuth");
+					
 					session.setAttribute(Profile.PROFILE_KEY, profile);
 				}
 			}
 			chain.doFilter(request, response);
+	}
+	
+	protected void writeSystemLog(String ipAddress,User user,String content, String actionType) {
+		String userId = user.getUserCode();
+		String userName = user.getUserName();
+		SystemLogService logService = (SystemLogService) BeanFactory.instance().getBean("sysLogService");
+		logService.insertLogRecord(ipAddress, userId, userName, content,actionType);
 	}
 	
 	@Override
