@@ -194,7 +194,7 @@ function revokeApproval(){
 	<aeai:previlege code="save"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="saveMasterRecord()"><input value="&nbsp;" type="button" class="saveImgBtn" id="saveImgBtn" title="保存" />保存</td></aeai:previlege>
 	<%} %>
 	<%if(pageBean.getBoolValue("doApprove")){ %>
-	<aeai:previlege code="approve"><td  align="center"class="bartdx"onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="approveImgBtn" id="approveImgBtn" title="核准" />核准</td></aeai:previlege>
+	<aeai:previlege code="approve"><td  align="center"class="bartdx" onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="approveImgBtn" id="approveImgBtn" title="核准" />核准</td></aeai:previlege>
 	<%} %>
 	<%if(pageBean.getBoolValue("doRevokeApprove")){ %>
 	<aeai:previlege code="revokeApproval"><td  onmouseover="onMover(this);" onmouseout="onMout(this);"   align="center" class="bartdx" onclick="revokeApproval()" ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td></aeai:previlege>
@@ -293,7 +293,7 @@ function revokeApproval(){
 	<td><input id="EMP_REGULAR_TIME" label="转正" name="EMP_REGULAR_TIME" type="text" value="<%=pageBean.inputDate("EMP_REGULAR_TIME")%>" size="24" class="text" /><img id="EMP_REGULAR_TIMEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 </td>
 <th width="100" nowrap>个人所得说</th>
-	<td><input name="EMP_TAX" type="text" class="text markable0" id="EMP_TAX" value="<%=pageBean.inputValue("EMP_TAX")%>" size="24" maxlength="6" label="基本工资" />
+	<td><input name="EMP_TAX" type="text" class="text markable0" id="EMP_TAX" value="<%=pageBean.inputValue("EMP_TAX")%>" size="24" maxlength="6" label="个人所得说" />
 </td>
 </tr>
 <tr>
@@ -301,7 +301,7 @@ function revokeApproval(){
 	<td><input id="EMP_DIMISSION_TIME" label="上岗时间" name="EMP_DIMISSION_TIME" type="text" value="<%=pageBean.inputDate("EMP_DIMISSION_TIME")%>" size="24" class="text" /><img id="EMP_DIMISSION_TIMEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 </td>
 	<th width="100" nowrap>保险</th>
-	<td><input name="EMP_INSURE" type="text" class="text markable0" id="EMP_INSURE" value="<%=pageBean.inputValue("EMP_INSURE")%>" size="24" maxlength="6" label="基本工资" />
+	<td><input name="EMP_INSURE" type="text" class="text markable0" id="EMP_INSURE" value="<%=pageBean.inputValue("EMP_INSURE")%>" size="24" maxlength="6" label="保险" />
 </td>
 </tr>
 <tr>
@@ -318,7 +318,14 @@ function revokeApproval(){
 	<input id="EMP_STATE_TEXT" label="信息状态" name="EMP_STATE_TEXT" type="text" value="<%=pageBean.selectedText("EMP_STATE")%>" size="24"  class="text" readonly="readonly"/>
 	<input id="EMP_STATE" label="信息状态" name="EMP_STATE" type="hidden" value="<%=pageBean.selectedValue("EMP_STATE")%>" />
    </td>
-<th width="100" nowrap>是否参与薪资汇总</th>
+	<th width="100" nowrap>公积金</th>
+	<td><input name="EMP_HOUSING_FUND" type="text" class="text markable0" id="EMP_HOUSING_FUND" value="<%=pageBean.inputValue("EMP_HOUSING_FUND")%>" size="24" maxlength="6" label="公积金" />
+</tr>
+<tr>
+	<th width="100" nowrap>是否缴纳社会保险</th>
+	<td>&nbsp;<%=pageBean.selectRadio("EMP_PAY_INSURE")%>
+	</td>
+	<th width="100" nowrap>是否参与薪资汇总</th>
 	<td>&nbsp;<%=pageBean.selectRadio("EMP_PARTICIPATE_SALARY")%>
 	</td>
 </tr>
@@ -507,6 +514,7 @@ numValidator.add("EMP_TAX");
 numValidator.add("EMP_INSURE");
 numValidator.add("EMP_ANNUAL_LEAVE_DAYS");
 numValidator.add("EMP_ALLOWANCE");
+numValidator.add("EMP_HOUSING_FUND");
 initDetailOpertionImage();
 $(function(){
 	resetTabHeight(80);
