@@ -5,7 +5,7 @@ angular.module('${menuCode}')
 	};
 }])
 
-.filter('truncate',function(){//自定义过滤器
+.filter('truncate',function(){ 
     return function(str,len){
         return str.substr(0,16);
     }
