@@ -127,6 +127,11 @@ function isSelectedTree(){
 }
 var targetTreeBox;
 function openTargetTreeBox(curAction){
+	if (!targetTreeBox){
+		targetTreeBox = new PopupBox('targetTreeBox','请选择目标分组',{size:'normal',width:'300px',top:'2px'});
+	}
+	var handlerId = "SecurityUserManagerTreePick";
+	var url = 'index?'+handlerId+'&GRP_ID='+columnIdValue+'&USER_ID='+$("#USER_ID").val();
 	var columnIdValue = $("#columnId").val();
 	if (!isSelectedTree()){
 		writeErrorMsg('请先选中一个树节点!');
@@ -138,15 +143,18 @@ function openTargetTreeBox(curAction){
 			return;
 		}
 		columnIdValue = $("#curColumnId").val()
-	}	
-	if (!targetTreeBox){
-		targetTreeBox = new PopupBox('targetTreeBox','请选择目标分组',{size:'normal',width:'300px',top:'2px'});
 	}
-	var handlerId = "SecurityUserManagerTreePick";
-	var url = 'index?'+handlerId+'&GRP_ID='+columnIdValue+'&USER_ID='+$("#USER_ID").val();
-	targetTreeBox.sendRequest(url);
-	$("#actionType").val(curAction);
-	
+	if(curAction == 'moveContent'){
+		postRequest('form1',{actionType:'moveValidation',onComplete:function(responseText){
+			if(responseText == 'success'){
+				writeErrorMsg('该职员在原部门有角色关联，请先删除关联！');
+				return;
+			}else{
+				targetTreeBox.sendRequest(url);
+				$("#actionType").val(curAction);
+			}
+		}});
+	}
 }
 function doChangeParent(){
 	var curAction = $('#actionType').val();

@@ -320,7 +320,18 @@ public class SecurityUserListHandler
 		}
 		return new AjaxRenderer(rspText);
 	}	
-	    
+    
+    public ViewRenderer doMoveValidationAction(DataParam param){
+    	String responseText = "fail";
+    	String grpId = param.get("GRP_ID");
+    	String userId = param.get("USER_ID");
+    	List<DataRow> records = this.getService().findUserRoleGroupRecords(grpId, userId, null);
+    	if(records.size()>0){
+    		responseText = "success";
+    	}
+    	return new AjaxRenderer(responseText);
+    }
+    
 	protected List<String> getTabList() {
     	List<String> result = new ArrayList<String>();
     	result.add(SecurityUserManage.BASE_TAB_ID);
