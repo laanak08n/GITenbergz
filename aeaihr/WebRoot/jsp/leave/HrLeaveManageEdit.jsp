@@ -62,14 +62,14 @@ function save(){
 <table class="detailTable" cellspacing="0" cellpadding="0">
 <tr>
 	<th width="100" nowrap>请假人</th>
-<td><input name="USER_ID_NAME" type="text" class="text"id="USER_ID_NAME"value="<%=pageBean.inputValue("USER_ID_NAME")%>" size="24"readonly="readonly" label="请假申请人" />
+<td><input name="USER_ID_NAME" type="text" class="text"id="USER_ID_NAME"value="<%=pageBean.inputValue("USER_ID_NAME")%>" size="24" readonly="readonly" label="请假申请人" />
     <input id="USER_ID" label="请假人"name="USER_ID" type="hidden"value="<%=pageBean.inputValue("USER_ID")%>" size="24" class="text" />
 </td>
 
 </tr>
 <tr>
 	<th width="100" nowrap>申请时间</th>
-	<td><input id="LEA_DATE" label="申请时间" name="LEA_DATE" type="text" value="<%=pageBean.inputDate("LEA_DATE")%>" size="24" class="text" />
+	<td><input id="LEA_DATE" label="申请时间" name="LEA_DATE" type="text" value="<%=pageBean.inputDate("LEA_DATE")%>" size="24" class="text" readonly="readonly"/>
 </td>
 </tr>
 <tr>
@@ -85,12 +85,12 @@ function save(){
 </tr>
 <tr>
 	<th width="100" nowrap>请假日期</th>
-	<td><input id="LEA_SDATE" label="请假日期" name="LEA_SDATE" type="text" value="<%=pageBean.inputDate("LEA_SDATE")%>" size="24" class="text" /><img id="LEA_SDATEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
+	<td><input id="LEA_SDATE" label="请假日期" name="LEA_SDATE" type="text" value="<%=pageBean.inputDate("LEA_SDATE")%>" size="24" class="text" readonly="readonly"/><img id="LEA_SDATEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 </td>
 </tr>
 <tr>
 	<th width="100" nowrap>结束日期</th>
-	<td><input id="LEA_EDATE" label="结束日期" name="LEA_EDATE" type="text" value="<%=pageBean.inputDate("LEA_EDATE")%>" size="24" class="text" /><img id="LEA_EDATEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
+	<td><input id="LEA_EDATE" label="结束日期" name="LEA_EDATE" type="text" value="<%=pageBean.inputDate("LEA_EDATE")%>" size="24" class="text" readonly="readonly"/><img id="LEA_EDATEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 </td>
 </tr>
 <tr>

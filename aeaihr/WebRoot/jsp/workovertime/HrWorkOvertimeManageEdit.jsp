@@ -91,7 +91,7 @@ function saveMasterRecord(){
 </tr>
 <tr>
 	<th width="100" nowrap>加班日期</th>
-	<td><input id="WOT_OVERTIME_DATE" label="加班日期" name="WOT_OVERTIME_DATE" type="text" value="<%=pageBean.inputDate("WOT_OVERTIME_DATE")%>" size="24" class="text" /><img id="WOT_OVERTIME_DATEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
+	<td><input id="WOT_OVERTIME_DATE" label="加班日期" name="WOT_OVERTIME_DATE" type="text" value="<%=pageBean.inputDate("WOT_OVERTIME_DATE")%>" size="24" class="text" readonly="readonly"/><img id="WOT_OVERTIME_DATEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 </td>
 </tr>
 <tr>

@@ -31,6 +31,12 @@ function openGrpIdBox(){
 }
 
 function saveMasterRecord(){
+	var startDate = new Date(($('#EMP_INDUCTION_TIME').val()).replace(/-/g,"/"));
+	var endDate = new Date(($('#EMP_REGULAR_TIME').val()).replace(/-/g,"/"));
+     if(startDate > endDate){
+	     writeErrorMsg('［上岗时间］必须小于［转正时间］');
+  	     return;
+     }  
 	if (validate()){
 		if (ele("currentSubTableId")){
 			var subTableId = $("#currentSubTableId").val();
