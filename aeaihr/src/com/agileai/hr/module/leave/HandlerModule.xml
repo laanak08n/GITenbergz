@@ -4,4 +4,5 @@
   <bean id="HrLeaveManageList" class="com.agileai.hr.module.leave.handler.HrLeaveManageListHandler" page="leave/HrLeaveManageList.jsp"/>  
   <bean id="HrLeaveManageEdit" class="com.agileai.hr.module.leave.handler.HrLeaveManageEditHandler" page="leave/HrLeaveManageEdit.jsp"/>
   <bean id="UserListSelectList" class="com.agileai.hr.module.leave.handler.UserListSelectListHandler" page="leave/UserListSelectList.jsp"/>
+  <bean id="MobileLeave" class="com.agileai.hr.module.leave.handler.MobileLeaveHandler" page=""/>
 </beans>

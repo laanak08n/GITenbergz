@@ -1,5 +1,7 @@
 package com.agileai.hr.module.leave.service;
 
+import java.util.List;
+
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.bizmoduler.core.StandardServiceImpl;
@@ -26,6 +28,17 @@ public class HrLeaveManageImpl
 	public void approveRecord(DataParam param) {
 		String statementId = sqlNameSpace + "." + "approveRecord";
 		processDataType(param, tableName);
+		this.daoHelper.updateRecord(statementId, param);
+	}
+	@Override
+	public List<DataRow> findLeaveList(DataParam param) {
+		String statementId = sqlNameSpace+"."+"findLeaveList";
+		List<DataRow> result = this.daoHelper.queryRecords(statementId, param);
+		return result;
+	}
+	@Override
+	public void submitRecord(DataParam param) {
+		String statementId = sqlNameSpace+"."+"submitRecord";
 		this.daoHelper.updateRecord(statementId, param);
 	}
 }

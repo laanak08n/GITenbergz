@@ -162,9 +162,9 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 
 	@Override
 	public void approveRecord(DataParam param) {
-			String statementId = sqlNameSpace+"."+"approveRecord";
-			processDataType(param, tableName);
-			this.daoHelper.updateRecord(statementId, param);
+		String statementId = sqlNameSpace+"."+"approveRecord";
+		processDataType(param, tableName);
+		this.daoHelper.updateRecord(statementId, param);
 	}
 
 	@Override
@@ -174,6 +174,13 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		processDataType(param, tableName);
 		this.daoHelper.updateRecord(statementId, param);
 		
+	}
+	
+	@Override
+	public List<DataRow> findSalaryList(String userCode) {
+		String statementId = sqlNameSpace+"."+"findRecords";
+		List<DataRow> result = this.daoHelper.queryRecords(statementId, userCode);
+		return result;
 	}
 
 }

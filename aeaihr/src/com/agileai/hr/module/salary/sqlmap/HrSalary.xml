@@ -28,7 +28,7 @@
 			and a.SAL_USER =
 			#currentUserCode#
 		</isNotEmpty>
-		order by b.USER_CODE
+		order by b.USER_CODE,SAL_YEAR desc,SAL_MONTH desc
 	</select>
 	<select id="getRecord" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
@@ -205,4 +205,12 @@
 		where
 		SAL_ID=#SAL_ID#
 	</update>
+	<select id="findSalaryList" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		SELECT SAL_ID,SAL_YEAR,SAL_MONTH,SAL_BASIC,SAL_PERFORMANCE,SAL_SUBSIDY,SAL_BONUS,SAL_TOTAL
+		FROM hr_salary a left join security_user b on a.SAL_USER = b.USER_ID
+		where 1=1
+		and b.USER_CODE = #userCode#
+		ORDER BY SAL_YEAR desc,SAL_MONTH desc
+	</select>	
 </sqlMap>
