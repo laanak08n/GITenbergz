@@ -183,4 +183,11 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		return result;
 	}
 
+	@Override
+	public DataRow getLastSalayInfo(DataParam param) {
+		String statementId = sqlNameSpace+"."+"getLastSalayInfo";
+		DataRow dataRow = this.daoHelper.getRecord(statementId, param);
+		return dataRow;
+	}
+
 }

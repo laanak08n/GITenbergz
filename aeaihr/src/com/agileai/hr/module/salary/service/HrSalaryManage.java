@@ -19,4 +19,6 @@ public interface HrSalaryManage
 	public void approveRecord(DataParam param);
 	public void revokeApprovalRecords(String salId);
 	public List<DataRow> findSalaryList(String salId);
+	
+	public DataRow getLastSalayInfo(DataParam param);
 }
