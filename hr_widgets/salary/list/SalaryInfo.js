@@ -13,4 +13,12 @@ angular.module('${menuCode}')
 	promise.success(function(rspJson){
 		$scope.info = rspJson;
 	});
+	
+	var url = '/aeaihr/services/Salary/rest/get-map-record/'+$stateParams.salId;
+	var promise = AppKit.getJsonApi(url);
+	promise.success(function(rspJson){
+		$scope.labels = ["基本工资", "绩效工资", "补贴","奖金"];
+		$scope.data = rspJson;
+	});
+
 });

@@ -1,0 +1,13 @@
+<div class="card home-card">
+	<div class="item item-icon-right aeai-card-header">
+	 	<img src="/map/images/demo/maplogo.png" class="card-title-icon">
+		<span>近一月薪资情况</span>
+		<i class="icon ion-android-more-vertical" ng-click="showActionSheet('${widgetCode}')"></i>		 
+	</div>	
+    <div class="item item-text-wrap">
+	<canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-click="showStats"></canvas>  
+		<span style="display:block;text-align:center;">
+	        <span>{{month}}</span>
+        </span>
+    </div>
+</div>

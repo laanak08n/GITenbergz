@@ -1,9 +1,9 @@
 <div class="content">
   <div class="list">
      <a class="item" ng-repeat="x in listInfo" ng-click="showDetails('{{x.leaId}}')">    
-     <span class="list-display ng-binding">{{x.leaType}}</span>
+     <span class="list-display ng-binding" style="min-width: 20%;">{{x.leaType}}</span>
       <span class="list-display ng-binding">{{x.leaDays}}</span>
-      <span class="list-display ng-binding">{{x.leaDate}}</span>
+      <span class="list-display ng-binding" style="min-width: 35%;">{{x.leaDate}}</span>
       <span class="list-display ng-binding">{{x.leaState}}</span>
       <input type="hidden" value="{{x.leaId}}">
      </a>

@@ -12,6 +12,7 @@ angular.module('${menuCode}')
 	var promise = AppKit.getJsonApi(url);
 	promise.success(function(rspJson){
 		$scope.info = rspJson;
+		$scope.info.wotOverTimeDate = new Date($scope.info.wotOverTimeDate);
 	});
 	
 	$scope.updateInfo = function (){

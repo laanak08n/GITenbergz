@@ -1,10 +1,16 @@
-<div class="content">
-  <div class="list">
+<!-- 选择姓名：<div class="content"><div style="float:left;">
+<label class="item item-input item-select">
+  		<div class="input-label">姓名</div> 		
+  		<select style="width:300px;" ng-model="info.userId">
+	        <option value="">请选择</option>
+	        <option ng-repeat="x in userList" value="{{x.value}}">{{x.key}}</option>
+		</select>
+    </label></div><br> -->
+<div class="list">
      <a class="item" ng-repeat="x in listInfo" ng-click="showDetails('{{x.bp_Id}}')">
-      <span class="list-display ng-binding">{{x.user_Name}}</span>
-      <span class="list-display ng-binding">{{x.bp_Date}}</span>
-      <span class="list-display ng-binding">{{x.bp_Type}}</span>
+      <span class="list-display ng-binding" style="min-width: 20%;">{{x.user_Name}}</span>
+      <span class="list-display ng-binding" style="min-width: 30%;">{{x.bp_Date}}</span>
+      <span class="list-display ng-binding" style="min-width: 20%;">{{x.bp_Type}}</span>
       <span class="list-display ng-binding">{{x.bp_Monry}}</span>
      </a>
-   </div>
 </div>
