@@ -14,6 +14,7 @@ import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.common.EmpInfoHelper;
 import com.agileai.hr.common.PrivilegeHelper;
 import com.agileai.hr.cxmodule.HrSalaryManage;
+import com.agileai.util.StringUtil;
 
 public class HrSalaryManageEditHandler extends StandardEditHandler {
 	public ViewRenderer prepareDisplay(DataParam param) {
@@ -51,7 +52,10 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 		Date inductionDate = (Date) empRow.get("EMP_INDUCTION_TIME");
 		String currentDate = param.get("salDate");
 		EmpInfoHelper empInfoHelper = new EmpInfoHelper();
-		boolean isAddAttendance = empInfoHelper.isInductionAboveMonth(inductionDate, currentDate);
+		boolean isAddAttendance = false;
+		if(!StringUtil.isNullOrEmpty(currentDate)){
+			isAddAttendance = empInfoHelper.isInductionAboveMonth(inductionDate, currentDate);
+		}
 		setAttribute("isAddAttendance", isAddAttendance);
 		this.setAttributes(record);
 		this.setOperaType(operaType);

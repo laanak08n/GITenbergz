@@ -95,7 +95,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			BigDecimal salTotal = (BigDecimal) dataParam.getObject("SAL_TOTAL");
 			BigDecimal salInsure = (BigDecimal) dataParam.getObject("SAL_INSURE");
 			BigDecimal salTax = (BigDecimal) dataParam.getObject("SAL_TAX");
-			BigDecimal salHousingFund =(BigDecimal) dataParam.getObject("sal_housing_fund");
+			BigDecimal salHousingFund =(BigDecimal) dataParam.getObject("SAL_HOUSING_FUND");
 			BigDecimal salShould = salTotal.subtract(salInsure).subtract(salTax).subtract(salHousingFund);
 			dataParam.put("SAL_SHOULD", salShould);
 			statementId = sqlNameSpace + "." + "getPunishmentRecord";
