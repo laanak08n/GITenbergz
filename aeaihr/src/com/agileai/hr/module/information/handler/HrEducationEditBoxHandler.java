@@ -39,7 +39,7 @@ public class HrEducationEditBoxHandler
 				setAttribute("doDetail", false);
 			}
 		}
-		if("insert".equals(operaType)){
+		if("insert".equals(operaType)||"copy".equals(operaType)){
 			setAttribute("doDetail", true);
 		}
 			this.setOperaType(operaType);

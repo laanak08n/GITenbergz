@@ -273,7 +273,7 @@ function revokeApproval(){
 	<td><input id="EMP_NATIONAL" label="民族" name="EMP_NATIONAL" type="text" value="<%=pageBean.inputValue("EMP_NATIONAL")%>" size="24" class="text" />
 	</td>
 	<th width="100" nowrap>基本工资</th>
-	<td><input name="EMP_BASIC" type="text" class="text markable0" id="EMP_BASIC" value="<%=pageBean.inputValue("EMP_BASIC")%>" size="24" maxlength="6" label="基本工资" />
+	<td><input name="EMP_BASIC" type="text" class="text markable0" id="EMP_BASIC" value="<%=pageBean.inputValue("EMP_BASIC")%>" size="24"  label="基本工资" />
 </td>
 </tr>
 <tr>
@@ -281,7 +281,7 @@ function revokeApproval(){
 	<td><input id="EMP_REFERENCE_TIME" label="参工时间" name="EMP_REFERENCE_TIME" type="text" value="<%=pageBean.inputDate("EMP_REFERENCE_TIME")%>" size="24" class="text" /><img id="EMP_REFERENCE_TIMEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 </td>
 <th width="100" nowrap>绩效工资</th>
-	<td><input name="EMP_PERFORMANCE" type="text" class="text markable0" id="EMP_PERFORMANCE" value="<%=pageBean.inputValue("EMP_PERFORMANCE")%>" size="24" maxlength="6" label="绩效工资" />
+	<td><input name="EMP_PERFORMANCE" type="text" class="text markable0" id="EMP_PERFORMANCE" value="<%=pageBean.inputValue("EMP_PERFORMANCE")%>" size="24"  label="绩效工资" />
 </td>
 	
 </tr>
@@ -290,7 +290,7 @@ function revokeApproval(){
 	<td><input id="EMP_INDUCTION_TIME" label="上岗时间" name="EMP_INDUCTION_TIME" type="text" value="<%=pageBean.inputDate("EMP_INDUCTION_TIME")%>" size="24" class="text" /><img id="EMP_INDUCTION_TIMEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 </td>
 <th width="100" nowrap>补贴工资</th>
-	<td><input name="EMP_SUBSIDY" type="text" class="text markable0" id="EMP_SUBSIDY" value="<%=pageBean.inputValue("EMP_SUBSIDY")%>" size="24" maxlength="6" label="补贴工资" />
+	<td><input name="EMP_SUBSIDY" type="text" class="text markable0" id="EMP_SUBSIDY" value="<%=pageBean.inputValue("EMP_SUBSIDY")%>" size="24"  label="补贴工资" />
 </td>
 </tr>
 <tr>
@@ -298,7 +298,7 @@ function revokeApproval(){
 	<td><input id="EMP_REGULAR_TIME" label="转正" name="EMP_REGULAR_TIME" type="text" value="<%=pageBean.inputDate("EMP_REGULAR_TIME")%>" size="24" class="text" /><img id="EMP_REGULAR_TIMEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 </td>
 <th width="100" nowrap>个人所得说</th>
-	<td><input name="EMP_TAX" type="text" class="text markable0" id="EMP_TAX" value="<%=pageBean.inputValue("EMP_TAX")%>" size="24" maxlength="6" label="个人所得说" />
+	<td><input name="EMP_TAX" type="text" class="text markable0" id="EMP_TAX" value="<%=pageBean.inputValue("EMP_TAX")%>" size="24"  label="个人所得说" />
 </td>
 </tr>
 <tr>
@@ -306,7 +306,7 @@ function revokeApproval(){
 	<td><input id="EMP_DIMISSION_TIME" label="上岗时间" name="EMP_DIMISSION_TIME" type="text" value="<%=pageBean.inputDate("EMP_DIMISSION_TIME")%>" size="24" class="text" /><img id="EMP_DIMISSION_TIMEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 </td>
 	<th width="100" nowrap>保险</th>
-	<td><input name="EMP_INSURE" type="text" class="text markable0" id="EMP_INSURE" value="<%=pageBean.inputValue("EMP_INSURE")%>" size="24" maxlength="6" label="保险" />
+	<td><input name="EMP_INSURE" type="text" class="text markable0" id="EMP_INSURE" value="<%=pageBean.inputValue("EMP_INSURE")%>" size="24"  label="保险" />
 </td>
 </tr>
 <tr>
@@ -314,7 +314,7 @@ function revokeApproval(){
 	<td><input id="EMP_ANNUAL_LEAVE_DAYS" label="年假天数" name="EMP_ANNUAL_LEAVE_DAYS" type="text" value="<%=pageBean.inputValue("EMP_ANNUAL_LEAVE_DAYS")%>" size="24" class="text" />
 </td>
 <th width="100" nowrap>补助标准</th>
-	<td><input name="EMP_ALLOWANCE" type="text" class="text markable0" id="EMP_ALLOWANCE" value="<%=pageBean.inputValue("EMP_ALLOWANCE")%>" size="24" maxlength="6" label="补助标准" />
+	<td><input name="EMP_ALLOWANCE" type="text" class="text markable0" id="EMP_ALLOWANCE" value="<%=pageBean.inputValue("EMP_ALLOWANCE")%>" size="24"  label="补助标准" />
 </td>
 </tr>
 <tr>
@@ -324,7 +324,7 @@ function revokeApproval(){
 	<input id="EMP_STATE" label="信息状态" name="EMP_STATE" type="hidden" value="<%=pageBean.selectedValue("EMP_STATE")%>" />
    </td>
 	<th width="100" nowrap>公积金</th>
-	<td><input name="EMP_HOUSING_FUND" type="text" class="text markable0" id="EMP_HOUSING_FUND" value="<%=pageBean.inputValue("EMP_HOUSING_FUND")%>" size="24" maxlength="6" label="公积金" />
+	<td><input name="EMP_HOUSING_FUND" type="text" class="text markable0" id="EMP_HOUSING_FUND" value="<%=pageBean.inputValue("EMP_HOUSING_FUND")%>" size="24"  label="公积金" />
 </tr>
 <tr>
 	<th width="100" nowrap>是否缴纳社会保险</th>

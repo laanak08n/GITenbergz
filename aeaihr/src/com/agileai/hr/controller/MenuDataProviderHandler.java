@@ -28,6 +28,7 @@ public class MenuDataProviderHandler extends BaseHandler{
 	
 	public ViewRenderer prepareDisplay(DataParam param){
 		String userId = param.get("userId");
+		String folderId = param.get("folderId");
 		SecurityAuthorizationConfig authorizationConfig = 
 				(SecurityAuthorizationConfig)this.lookupService("securityAuthorizationConfigService");
 		DataRow userRow = authorizationConfig.retrieveUserRecord(userId);
@@ -38,6 +39,7 @@ public class MenuDataProviderHandler extends BaseHandler{
 		TreeBuilder treeBuilder = new TreeBuilder(funcRecords,"funcId","funcName","funcPid");
 		treeBuilder.setTypeKey("funcType");
 		treeBuilder.setPojoList(true);
+		treeBuilder.setRootId(folderId);
 		TreeModel treeModel = treeBuilder.buildTreeModel();
 		List<TreeModel> treeModels = treeModel.getChildren();
 		JSONObject jsonObject = new JSONObject();

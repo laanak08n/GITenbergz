@@ -294,9 +294,9 @@ function selectRow(rowObj,params)
 		}
 	}
 	
-	if (typeof params.keepSelection == 'undefined'){
+/*	if (typeof params.keepSelection == 'undefined'){
 		clearSelection();
-	}
+	}*/
 }
 
 function resetBoxPostion(boxId,targetInputId){
