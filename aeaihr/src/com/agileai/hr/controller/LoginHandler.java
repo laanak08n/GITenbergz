@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
+import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.bizmoduler.core.SystemLogService;
 import com.agileai.hotweb.bizmoduler.frame.SecurityAuthorizationConfig;
 import com.agileai.hotweb.common.Constants;
@@ -14,6 +15,7 @@ import com.agileai.hotweb.controller.core.BaseHandler;
 import com.agileai.hotweb.domain.core.Profile;
 import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.filter.HotwebUserCacher;
+import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
@@ -95,5 +97,17 @@ public class LoginHandler  extends BaseHandler{
 		writeSystemLog("退出系统",getActionType());
 		this.clearSession();
 		return new RedirectRenderer(getHandlerURL(FrameHandlers.LoginHandlerId));
-	}	
+	}
+	
+	@PageAction
+	public ViewRenderer ensureLogin(DataParam param){
+		String  responseText = FAIL; 
+		User user =  (User) this.getUser();
+		if(user != null){
+			responseText = SUCCESS;
+		}else{
+			responseText = FAIL;
+		}
+		return new AjaxRenderer(responseText);
+	}
 }
