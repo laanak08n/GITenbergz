@@ -98,7 +98,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			DataRow leaveDaysRow = totalLeaveTimeMap.get(userCode);
 			dataParam = calculateTotalSalary(workDaysMap,leaveDaysMap,overTimeDaysMap,userCode,dataParam,validDaysRow,year,month,row,date);
 			Date regularTime = (Date)row.get("EMP_REGULAR_TIME");
-			dataParam = calculateLeaveOfYear(totalLeaveOfYearMap,totalOverTimeOfYearMap,date,row,userCode,dataParam,regularTime,yearMonth);
+			dataParam = calculateOverRunDays(totalLeaveOfYearMap,totalOverTimeOfYearMap,date,row,userCode,dataParam,regularTime,yearMonth);
 			BigDecimal salTotal = (BigDecimal) dataParam.getObject("SAL_TOTAL");
 			BigDecimal salInsure = (BigDecimal) dataParam.getObject("SAL_INSURE");
 			BigDecimal salTax = (BigDecimal) dataParam.getObject("SAL_TAX");
@@ -117,8 +117,11 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			if(!rewardtRow.isEmpty()){
 				rewardMoneyDecimal = (BigDecimal) rewardtRow.get("MONEY");
 			}
+			BigDecimal salProbation = (BigDecimal)row.get("EMP_PROBATION");
 			BigDecimal salFulltimeAward = calculateFullTimeAward(leaveDaysRow,currentMonthAttendRow,userCode,regularTime,date,dataParam);
-			BigDecimal salDayMoneyTotal = calculateOverRunSalary(dataParam,validDaysRow,salTotal,userCode,date);
+			dataParam = calculateOverRunSalary(dataParam,validDaysRow,salTotal,salProbation,userCode,date,regularTime);
+			BigDecimal salDayMoneyTotal = (BigDecimal)dataParam.getObject("salDayMoneyTotal");
+			
 			BigDecimal salBonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal).add(salDayMoneyTotal).add(salFulltimeAward);
 			dataParam.put("SAL_BONUS", salBonus);
 			BigDecimal salActual  = salShould.add(salBonus);
@@ -243,7 +246,6 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			inAttend = currentMonthAttendRow.getInt("IN_NUM",0);
 			outAttend = currentMonthAttendRow.getInt("OUT_NUM",0);
 		}
-		
 		BigDecimal inAttendDecimal = new BigDecimal(inAttend).add(BigDecimal.valueOf(3.0));
 		BigDecimal outAttendDecimal = new BigDecimal(outAttend).add(BigDecimal.valueOf(3.0));
 		boolean isLeave = false;
@@ -293,13 +295,18 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		}
 		return salFullTimeAward;
 	}
-	private DataParam calculateLeaveOfYear(HashMap<String,DataRow> totalLeaveOfYearMap,HashMap<String,DataRow> totalOverTimeOfYearMap,
+	private DataParam calculateOverRunDays(HashMap<String,DataRow> totalLeaveOfYearMap,HashMap<String,DataRow> totalOverTimeOfYearMap,
 			Date date,DataRow row,String userCode,DataParam dataParam,Date regularTime,String yearMonth){
+		String january = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getBeginOfYear(date));
+		String march = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getBeginOfYear(date), DateUtil.MONTH, 2));
+		String beforeYearDec = DateUtil.format(DateUtil.YYMM_NONE, DateUtil.getDateAdd(DateUtil.getBeginOfYear(date), DateUtil.MONTH, -1));
+		String nowSalDate = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, date);
 		Date lastDate = DateUtil.getDateAdd(date, DateUtil.MONTH, -1);
-		String lastYearMonth = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, lastDate);
+		String lastYearMonth = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, lastDate);
 		String lastYear = lastYearMonth.substring(0,4);
 		String lastMonth = lastYearMonth.substring(5,7);
-		BigDecimal offsetVacation = new BigDecimal(row.getInt("EMP_ANNUAL_LEAVE_DAYS",0));
+		int empAnnualLeaveDay = row.getInt("EMP_ANNUAL_LEAVE_DAYS",0);
+		BigDecimal nowAnnualLeaveDecimal = new BigDecimal(empAnnualLeaveDay);
 		DataRow totalLeaveOfYearRow = totalLeaveOfYearMap.get(userCode);
 		BigDecimal totalLeaveDecimal = new BigDecimal("0.0");
 		if(totalLeaveOfYearRow != null){
@@ -314,31 +321,50 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		}
 		String statementId = sqlNameSpace + "." + "getLastOffsetVacationInfo";
 		DataRow lastOffsetVacationRow = this.daoHelper.getRecord(statementId, new DataParam("userCode",userCode,"lastYear",lastYear,"lastMonth",lastMonth));
+		DataRow beforeYearDecOffsetVacationRow = this.daoHelper.getRecord(statementId, new DataParam("userCode",userCode,"lastYear",lastYear,"lastMonth",beforeYearDec));
+		BigDecimal beforeYearDecVacationDecimal = new BigDecimal("0");
 		BigDecimal lastOffsetVacationDecimal = new BigDecimal("0");
+		if(!MapUtil.isNullOrEmpty(lastOffsetVacationRow)){
+			lastOffsetVacationDecimal = (BigDecimal) lastOffsetVacationRow.get("SAL_OFFSET_VACATION");
+		}
+		if(!MapUtil.isNullOrEmpty(beforeYearDecOffsetVacationRow)){
+			beforeYearDecVacationDecimal =(BigDecimal) beforeYearDecOffsetVacationRow.get("SAL_OFFSET_VACATION");
+		}
 		Number leaveDaysNum = (Number) dataParam.getObject("SAL_LEAVE");
 		BigDecimal leaveDaysDecimal = (BigDecimal)leaveDaysNum;
 		Number overTimeDaysNum = (Number) dataParam.getObject("SAL_OVERTIME");
 		BigDecimal overTimeDaysDecimal = (BigDecimal)overTimeDaysNum;
-		String regularTimeStr = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, regularTime);
-		if(lastOffsetVacationRow == null || lastOffsetVacationRow.size() == 0 || lastMonth.equals("12")){
-			dataParam.put("SAL_OFFSET_VACATION", offsetVacation.subtract(totalLeaveDecimal).add(totalOverTimeDecimal)); 
-		}else if(yearMonth.equals(regularTimeStr.substring(0, 7))){
-			dataParam.put("SAL_OFFSET_VACATION", offsetVacation.subtract(leaveDaysDecimal).add(overTimeDaysDecimal));
-		}else{
-			lastOffsetVacationDecimal = (BigDecimal) lastOffsetVacationRow.get("SAL_OFFSET_VACATION");
-			if(lastOffsetVacationDecimal.compareTo(new BigDecimal("0"))==1 || lastOffsetVacationDecimal.compareTo(new BigDecimal("0"))==0){
-				dataParam.put("SAL_OFFSET_VACATION", lastOffsetVacationDecimal.subtract(leaveDaysDecimal).add(overTimeDaysDecimal));
-			}else if(lastOffsetVacationDecimal.compareTo(new BigDecimal("0")) == -1){
-				dataParam.put("SAL_OFFSET_VACATION", overTimeDaysDecimal.subtract(leaveDaysDecimal));
+		if(january.equals(nowSalDate)){
+			dataParam.put("SAL_OFFSET_VACATION", lastOffsetVacationDecimal.add(nowAnnualLeaveDecimal).subtract(leaveDaysDecimal).add(overTimeDaysDecimal));
+		}else if(march.equals(nowSalDate)){
+			BigDecimal vacationRemainDecimal = beforeYearDecVacationDecimal.subtract(totalLeaveDecimal).add(leaveDaysDecimal);
+			if(vacationRemainDecimal.compareTo(BigDecimal.ZERO)>=0){
+				dataParam.put("SAL_OFFSET_VACATION",nowAnnualLeaveDecimal.add(totalOverTimeDecimal).subtract(totalLeaveDecimal));
+			}else{
+				dataParam.put("SAL_OFFSET_VACATION",beforeYearDecVacationDecimal.add(vacationRemainDecimal)
+						.add(totalOverTimeDecimal).subtract(leaveDaysDecimal));
 			}
+		}else{
+			if(lastOffsetVacationDecimal.compareTo(BigDecimal.ZERO)<0){
+				lastOffsetVacationDecimal = new BigDecimal("0.0");
+			}
+			dataParam.put("SAL_OFFSET_VACATION", lastOffsetVacationDecimal.subtract(leaveDaysDecimal).add(overTimeDaysDecimal));
 		}
+		dataParam.put("unregularOverRunDays");
 		return dataParam;
 	}
-	private BigDecimal calculateOverRunSalary(DataParam dataParam,DataRow validDaysRow,BigDecimal salTotal,String userCode,Date date){
-		BigDecimal salOffsetVacation =  (BigDecimal) dataParam.getObject("SAL_OFFSET_VACATION");
+	private DataParam calculateOverRunSalary(DataParam dataParam,DataRow validDaysRow,BigDecimal salTotal,BigDecimal salProbation,
+			String userCode,Date date,Date regularTime){
+		BigDecimal salOffsetVacation = (BigDecimal) dataParam.getObject("SAL_OFFSET_VACATION");
 		BigDecimal validDays = (BigDecimal) validDaysRow.get("VALID_DAYS");
 		BigDecimal salDayMoney = salTotal.divide(validDays,2, RoundingMode.HALF_UP);
+		BigDecimal unregularDayMoney = salProbation.divide(validDays,2, RoundingMode.HALF_UP);
+		BigDecimal unregularOverRunDays = (BigDecimal)dataParam.getObject("unregularOverRunDays");
 		BigDecimal salDayMoneyTotal = new BigDecimal("0.0");
+		BigDecimal unregularSalDayMoneyTotal = new BigDecimal("0.0");
+		if(regularTime.compareTo(date)==0){
+			unregularSalDayMoneyTotal = unregularOverRunDays.multiply(unregularDayMoney);
+		}
 		if(salOffsetVacation.compareTo(new BigDecimal("0")) == -1){
 			salDayMoneyTotal = salOffsetVacation.multiply(salDayMoney);
 			DataParam bonusPenaltyParam = new DataParam();
@@ -357,7 +383,9 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				this.daoHelper.insertRecord(statementId, bonusPenaltyParam);
 			}
 		}
-		return salDayMoneyTotal;
+		dataParam.put("salDayMoneyTotal",salDayMoneyTotal);
+		dataParam.put("unregularSalDayMoneyTotal",unregularSalDayMoneyTotal);
+		return dataParam;
 	}
 	@Override
 	public void computeTotalMoney(String masterRecordId) {
