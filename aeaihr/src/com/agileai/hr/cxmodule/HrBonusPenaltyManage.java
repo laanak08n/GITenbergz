@@ -1,4 +1,4 @@
-package com.agileai.hr.module.bonuspenalty.service;
+package com.agileai.hr.cxmodule;
 
 import com.agileai.hotweb.bizmoduler.core.StandardService;
 

@@ -8,7 +8,7 @@ import com.agileai.hotweb.controller.core.StandardEditHandler;
 import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.module.bonuspenalty.service.HrBonusPenaltyManage;
+import com.agileai.hr.cxmodule.HrBonusPenaltyManage;
 import com.agileai.util.DateUtil;
 
 public class HrBonusPenaltyManageEditHandler

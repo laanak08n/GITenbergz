@@ -9,5 +9,10 @@
 		<auth type="IpWhiteList">
 			<property name="IpAddress">localhost,127.0.0.1</property>
 		</auth>
-	</service>	
+	</service>
+	<service id="BonusPenalty" type="Rest" implClass="com.agileai.hr.service.bonuspenalty.BonusPenaltyImpl" address="/BonusPenalty">
+		<auth type="IpWhiteList">
+			<property name="IpAddress">localhost,127.0.0.1</property>
+		</auth>
+	</service>		
 </beans>

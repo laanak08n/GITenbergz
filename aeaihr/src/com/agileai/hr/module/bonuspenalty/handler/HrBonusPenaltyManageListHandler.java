@@ -11,7 +11,7 @@ import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.common.PrivilegeHelper;
-import com.agileai.hr.module.bonuspenalty.service.HrBonusPenaltyManage;
+import com.agileai.hr.cxmodule.HrBonusPenaltyManage;
 import com.agileai.util.DateUtil;
 
 public class HrBonusPenaltyManageListHandler
