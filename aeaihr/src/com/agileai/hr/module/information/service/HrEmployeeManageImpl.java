@@ -40,7 +40,7 @@ public class HrEmployeeManageImpl
    		this.daoHelper.insertRecord(statementId, userParam);
    		
    		statementId = sqlNameSpace+"."+"insertSecurityUserGroupRelRecord";
-   		userParam.put("GRP_ID", param.get("GRP_ID"));
+   		userParam.put("GRP_ID", param.get("EMP_NOW_DEPT"));
    		userParam.put("USER_ID",param.get("USER_ID"));
    		this.daoHelper.insertRecord(statementId, userParam);
 
