@@ -1,5 +1,6 @@
 package com.agileai.hr.module.attendance.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.agileai.common.KeyGenerator;
@@ -175,5 +176,15 @@ public class HrAttendanceManageImpl
 		String statementId = sqlNameSpace+"."+"getSigninState";
 		DataRow result = this.daoHelper.getRecord(statementId, param);
 		return result;
+	}
+	
+	@Override
+	public void addAttendance(String atdId, String userId, String atdDate, String atdPlace){
+		DataParam insertParam = new DataParam();
+		Date atdInTime = DateUtil.getDate(atdDate+" 08:30:00");
+		Date atdOutTime = DateUtil.getDate(atdDate+" 19:00:00");
+		insertParam.put("ATD_ID",atdId,"USER_ID",userId,"ATD_DATE",atdDate,"ATD_IN_TIME",atdInTime,"ATD_IN_PLACE",atdPlace,"ATD_OUT_TIME",atdOutTime,"ATD_OUT_PLACE",atdPlace);
+		String statementId = sqlNameSpace+"."+"addAtdRecord";
+		this.daoHelper.insertRecord(statementId, insertParam);
 	}
 }
