@@ -1,6 +1,5 @@
 package com.agileai.hr.module.attendance.service;
 
-import java.util.Date;
 import java.util.List;
 
 import com.agileai.common.KeyGenerator;
@@ -40,10 +39,18 @@ public class HrAttendanceManageImpl
 	}
 
 	@Override
-	public List<DataRow> getAttendanceStatInfo() {
+	public List<DataRow> getAttendanceStatInfo(String date) {
 		String statementId = sqlNameSpace+"."+"getAttendanceStatInfoRecords";
-		String startDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getBeginOfMonth(new Date()));
-		String endDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, new Date());
+		String startDate = null;
+		String endDate = null;
+		if(date.endsWith("12")){
+			startDate =date+"-01";
+			endDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(startDate),DateUtil.YEAR,1));
+			endDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(endDate),DateUtil.MONTH,-11));
+		}else{
+			startDate =date+"-01";
+			endDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(DateUtil.getDate(startDate),DateUtil.MONTH,1));	
+		}
 		DataParam param = new DataParam("startDate",startDate,"endDate",endDate);
 		List<DataRow> records = this.daoHelper.queryRecords(statementId, param);
 		return records;
