@@ -29,4 +29,9 @@ public interface Salary {
     @Path("/get-last-salay-record/")
     @Produces(MediaType.TEXT_PLAIN)
 	public String getLastSalayInfo();
+    
+    @GET  
+    @Path("/get-five-salay-record/")
+    @Produces(MediaType.TEXT_PLAIN)
+	public String getFiveMonthsSalayInfo();
 }

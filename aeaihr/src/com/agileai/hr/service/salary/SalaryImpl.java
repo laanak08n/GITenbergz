@@ -6,8 +6,6 @@ import java.util.List;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 
-import sun.org.mozilla.javascript.internal.regexp.SubString;
-
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.domain.core.User;
@@ -121,5 +119,34 @@ public class SalaryImpl extends BaseRestService implements Salary {
 		}
 		return responseText;
 	}
-
+	
+	@Override
+	public String getFiveMonthsSalayInfo() {
+		String responseText = "";
+		try {
+			User user = (User) getUser();
+			List<DataRow> rsList = getService().findFiveMonthsSalayInfos(new DataParam("userId", user.getUserId()));
+			JSONArray jsonArray = new JSONArray();
+			JSONArray yearMonthArray = new JSONArray();
+			JSONArray actualArray = new JSONArray();
+			JSONArray performanceArray = new JSONArray();
+			JSONObject jsonObject = new JSONObject();
+			
+			for(int i=0;i<rsList.size();i++){
+				DataRow dataRow = rsList.get(i);
+				yearMonthArray.put(i, dataRow.get("SAL_YEAR_MONTH"));
+				actualArray.put(i, dataRow.get("SAL_ACTUAL"));
+				performanceArray.put(i, dataRow.get("SAL_PERFORMANCE"));
+			}
+			
+			
+			jsonArray.put(actualArray).put(performanceArray);
+			jsonObject.put("datas", jsonArray);
+			jsonObject.put("yearMonth", yearMonthArray);
+			responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(),e);
+		}
+		return responseText;
+	}
 }

@@ -341,5 +341,15 @@ where USER_ID = #USER_ID# and BP_DATE = #BP_DATE# and BP_TYPE = #BP_TYPE#
 		select TYPE_NAME
 		from sys_codetype
 		where TYPE_ID='FULLTIME_AWARD'
-	</select>    					
+	</select>
+	<select id="findFiveMonthsSalayInfos" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select CONCAT(SAL_YEAR,'-',SAL_MONTH)  as SAL_YEAR_MONTH,
+		SAL_ACTUAL,SAL_PERFORMANCE
+		from hr_salary
+		where 1=1
+		and SAL_USER = #userId#
+		order by SAL_YEAR,SAL_MONTH
+		limit 5
+	</select>	   					
 </sqlMap>

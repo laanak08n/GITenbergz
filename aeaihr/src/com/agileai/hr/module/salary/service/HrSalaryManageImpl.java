@@ -417,4 +417,11 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			}
 		}
 	}
+
+	@Override
+	public List<DataRow> findFiveMonthsSalayInfos(DataParam param) {
+		String statementId = sqlNameSpace+"."+"findFiveMonthsSalayInfos";
+		List<DataRow> result = this.daoHelper.queryRecords(statementId, param);
+		return result;
+	}
 }
