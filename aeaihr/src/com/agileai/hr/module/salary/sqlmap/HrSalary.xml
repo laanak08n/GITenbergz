@@ -405,7 +405,7 @@ where USER_ID = #USER_ID# and BP_DATE = #BP_DATE# and BP_TYPE = #BP_TYPE#
 		select SUM(BP_MONEY) as MONEY,USER_ID
 		from hr_bonus_penalty
 		where 1=1
-		and BP_TYPE = 'REWARD'
+		and BP_TYPE = 'ADDITIONALVATION'
 		and date_format(BP_DATE,'%Y-%m') = #yearMonth#
 		and BP_DATE !=#date#
 	</select>	   					
