@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans> 
-  <bean id="HrWorkOvertimeManageList" class="com.agileai.hr.module.workovertime.handler.HrWorkOvertimeManageListHandler" page="workovertime/HrWorkOvertimeManageList.jsp"/>  
-  <bean id="HrWorkOvertimeManageEdit" class="com.agileai.hr.module.workovertime.handler.HrWorkOvertimeManageEditHandler" page="workovertime/HrWorkOvertimeManageEdit.jsp"/>
-  <bean id="UserListSelectList" class="com.agileai.hr.module.workovertime.handler.UserListSelectListHandler" page="workovertime/UserListSelectList.jsp"/>
+  <bean id="HrWorkOvertimeManageList" class="com.agileai.hr.module.workovertime.handler.HrWorkOvertimeManageListHandler" page="workovertime/HrWorkOvertimeManageList.jsp" authOpera="true"/>  
+  <bean id="HrWorkOvertimeManageEdit" class="com.agileai.hr.module.workovertime.handler.HrWorkOvertimeManageEditHandler" page="workovertime/HrWorkOvertimeManageEdit.jsp" authOpera="true"/>
+  <bean id="UserListSelectList" class="com.agileai.hr.module.workovertime.handler.UserListSelectListHandler" page="workovertime/UserListSelectList.jsp" authOpera="true"/>
   <bean id="MobileOvertime" class="com.agileai.hr.module.workovertime.handler.MobileOvertimeHandler" page=""/>
 </beans>
