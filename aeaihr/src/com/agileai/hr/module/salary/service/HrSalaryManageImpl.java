@@ -177,9 +177,9 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 	}
 	
 	@Override
-	public List<DataRow> findSalaryList(String userCode) {
-		String statementId = sqlNameSpace+"."+"findRecords";
-		List<DataRow> result = this.daoHelper.queryRecords(statementId, userCode);
+	public List<DataRow> findSalaryList(DataParam param) {
+		String statementId = sqlNameSpace+"."+"findSalaryList";
+		List<DataRow> result = this.daoHelper.queryRecords(statementId, param);
 		return result;
 	}
 

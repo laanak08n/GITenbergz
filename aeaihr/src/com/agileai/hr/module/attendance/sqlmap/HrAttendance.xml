@@ -53,5 +53,10 @@
         and ATD_DATE &gt;= #sdate#
 		and ATD_DATE &lt;= #edate#
 		group by a.USER_ID
-	</select>	
+	</select>
+	<insert id="createLocationRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into hr_location
+		(LOCAT_ID,USER_ID,LOCAT_TIME,LOCAT_PLACE) values
+		(#LOCAT_ID:CHAR#,#USER_ID:CHAR#,#LOCAT_TIME:DATETIME#,#LOCAT_PLACE:VARCHAR#)
+	</insert>	
 </sqlMap>

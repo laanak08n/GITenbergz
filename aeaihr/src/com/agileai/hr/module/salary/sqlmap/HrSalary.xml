@@ -207,11 +207,12 @@
 	</update>
 	<select id="findSalaryList" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		SELECT SAL_ID,SAL_YEAR,SAL_MONTH,SAL_BASIC,SAL_PERFORMANCE,SAL_SUBSIDY,SAL_BONUS,SAL_TOTAL
-		FROM hr_salary a left join security_user b on a.SAL_USER = b.USER_ID
+		select SAL_ID,SAL_YEAR,SAL_MONTH,SAL_BASIC,SAL_PERFORMANCE,SAL_SUBSIDY,SAL_BONUS,SAL_INSURE,SAL_REMARKS
+		from hr_salary a left join security_user b on a.SAL_USER = b.USER_ID
 		where 1=1
-		and b.USER_CODE = #userCode#
-		ORDER BY SAL_YEAR desc,SAL_MONTH desc
+		and a.SAL_USER = #userId#
+		order by SAL_YEAR desc,SAL_MONTH desc
+		limit 6
 	</select>
 	<select id="getLastSalayInfo" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">

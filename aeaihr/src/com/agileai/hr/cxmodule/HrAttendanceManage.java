@@ -11,4 +11,5 @@ public interface HrAttendanceManage
 	public DataRow retrieveUserInfo(DataParam param);
 	public void bindUserWxOpenId(String userCode,String wxOpenId);
 	public List<DataRow> attendanceStatisticsRecords (DataParam param);
+	public void createLocationRecord(DataParam param);
 }

@@ -3,4 +3,5 @@
 <beans> 
   <bean id="HrAttendanceManageList" class="com.agileai.hr.module.attendance.handler.HrAttendanceManageListHandler" page="attendance/HrAttendanceManageList.jsp"/>  
   <bean id="HrAttendanceManageEdit" class="com.agileai.hr.module.attendance.handler.HrAttendanceManageEditHandler" page="attendance/HrAttendanceManageEdit.jsp"/>
+  <bean id="MobileAttendance" class="com.agileai.hr.module.attendance.handler.MobileAttendanceHandler" page=""/>
 </beans>

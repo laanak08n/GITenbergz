@@ -23,9 +23,9 @@ public class MobileSalaryHandler extends BaseHandler {
 			JSONObject jsonObject = new JSONObject();
 			User user = (User) this.getUser();
 			String userId = user.getUserId();
-			param.put("currentUserCode", userId);
+			param.put("userId", userId);
 			
-			List<DataRow> reList = getService().findRecords(param);
+			List<DataRow> reList = getService().findSalaryList(param);
 			JSONArray jsonArray = new JSONArray();
 			for(int i=0;i<reList.size();i++){
 				DataRow dataRow = reList.get(i);
