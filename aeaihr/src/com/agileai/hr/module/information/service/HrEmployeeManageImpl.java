@@ -105,4 +105,17 @@ public class HrEmployeeManageImpl
 
         return temp.toArray(new String[] {  });
     }
+    
+	@Override
+	public DataRow getSalaryLimitRecord() {
+		String statementId = sqlNameSpace+"."+"getSalaryLimitRecord";
+		DataRow dataRow = this.daoHelper.getRecord(statementId, new DataParam());
+		return dataRow;
+	}
+
+	@Override
+	public void updateSalaryLimitRecord(DataParam param) {
+		String statementId = sqlNameSpace+"."+"updateSalaryLimitRecord";
+		this.daoHelper.updateRecord(statementId, param);
+	}
 }

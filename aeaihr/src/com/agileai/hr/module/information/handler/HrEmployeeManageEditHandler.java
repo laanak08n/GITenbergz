@@ -109,6 +109,10 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 				"EMP_PARTICIPATE_SALARY",
 				FormSelectFactory.create("BOOL_DEFINE").addSelectedValue(
 						getOperaAttributeValue("EMP_PARTICIPATE_SALARY", "Y")));
+		setAttribute(
+				"EMP_PAY_INSURE",
+				FormSelectFactory.create("BOOL_DEFINE").addSelectedValue(
+						getOperaAttributeValue("EMP_PAY_INSURE", "N")));		
 		BigDecimal empMoney = new BigDecimal("0.00");
 		if (this.getAttribute("EMP_BASIC") == null) {
 			this.setAttribute("EMP_BASIC", empMoney);
@@ -127,6 +131,9 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 		}
 		if (this.getAttribute("EMP_ALLOWANCE") == null) {
 			this.setAttribute("EMP_ALLOWANCE", empMoney);
+		}
+		if (this.getAttribute("EMP_HOUSING_FUND") == null) {
+			this.setAttribute("EMP_HOUSING_FUND", empMoney);
 		}
 		if (this.getAttribute("EMP_ANNUAL_LEAVE_DAYS") == null) {
 			this.setAttribute("EMP_ANNUAL_LEAVE_DAYS", 0);
