@@ -16,8 +16,8 @@ and WOT_OVERTIME_DATE &lt;= #edate#
 <isNotEmpty prepend=" " property="currentUserId">
 and b.USER_ID = #currentUserId#
 </isNotEmpty>
-<isNotEmpty prepend=" " property="user_Name">
-and b.USER_NAME like '%$user_Name$%' 
+<isNotEmpty prepend=" " property="user_Name_like">
+and b.USER_NAME like #user_Name_like# 
 </isNotEmpty>
 <isNotEmpty prepend=" " property="STATE">
 and STATE = #STATE#

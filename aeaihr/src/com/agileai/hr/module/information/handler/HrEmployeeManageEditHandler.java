@@ -229,6 +229,6 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 	public ViewRenderer revokeApproval(DataParam param) {
 		String empId = param.get("EMP_ID");
 		getService().revokeApprovalRecords(empId);
-		return new RedirectRenderer(getHandlerURL(listHandlerClass));
+		return prepareDisplay(param);
 	}
 }

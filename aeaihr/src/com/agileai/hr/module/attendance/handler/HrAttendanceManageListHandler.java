@@ -109,7 +109,7 @@ public class HrAttendanceManageListHandler extends StandardListHandler {
 			String content ="";
 			for(int i=0;i<records.size();i++){
 				DataRow dataRow = records.get(i);
-				content = content + (String) dataRow.get("USER_NAME")+":签到"+dataRow.get("IN_NUM").toString()+"次,签退"+dataRow.get("OUT_NUM").toString()+"次."+"<br/>";
+				content = content + "<tr><td>"+(String) dataRow.get("USER_NAME")+"</td><td style=\"text-align:right\">"+dataRow.get("IN_NUM").toString()+"</td><td style=\"text-align:right\">"+dataRow.get("OUT_NUM").toString()+"</td></tr>";
 			}
 			model.put("content",content);
 			

@@ -13,8 +13,8 @@
 		EMP_ANNUAL_LEAVE_DAYS,EMP_ALLOWANCE,EMP_PARTICIPATE_SALARY
 		from hr_employee emp left join security_group sg on emp.EMP_NOW_DEPT = sg.GRP_ID
 		where 1=1
-		<isNotEmpty prepend=" " property="empName">
-			and EMP_NAME like '%$empName$%'
+		<isNotEmpty prepend=" " property="empName_like">
+			and EMP_NAME like #empName_like# 
 		</isNotEmpty>
 		<isNotEmpty prepend=" " property="empSex">
 			and EMP_SEX = #empSex#

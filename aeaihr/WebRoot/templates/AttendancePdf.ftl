@@ -16,17 +16,14 @@ table{
 </style>
 </head>
 <body>
-<table width="100%" border="0" style="table-layout:fixed;word-break:break-strict;">
+<h1 style="text-align:center">${model.title1}</h1>
+<table width="100%" border="1" cellspacing="0px" style="table-layout:fixed;word-break:break-strict;">
   <tr>
-    <td>
-    ${model.title1}
-    </td>
+	<th>姓名</th>
+	<th>签到次数</th>
+	<th>签退次数</th>
   </tr>
-  <tr>
-    <td>
-	${model.content}
-    </td>
-  </tr>
+${model.content}
 </table>
 </body>
 </html>
