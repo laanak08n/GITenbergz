@@ -45,11 +45,10 @@ public class HrWorkOvertimeManageListHandler extends StandardListHandler {
 		} else {
 			param.put("currentUserId", user.getUserId());
 			setAttribute("hasRight", false);
+			setAttribute("userId", user.getUserId());
 		}
-
 		mergeParam(param);
 		initParameters(param);
-
 		setAttribute("canSignIn", true);
 		this.setAttributes(param);
 		List<DataRow> rsList = getService().findRecords(param);
