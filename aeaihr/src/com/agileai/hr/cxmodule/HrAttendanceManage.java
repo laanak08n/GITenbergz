@@ -21,4 +21,7 @@ public interface HrAttendanceManage
 	public List<DataRow> findSignLocationInfos(String userId);
 	public List<DataRow> findCurrentDaySignOutInfos(String expression,String adtDate);
 	DataRow findActiveUserId(String userCode);
+	public List<DataRow> findLocationInfos(DataParam param);
+	List<DataRow> findSigninInfos(DataParam param);
+	public DataRow getSigninState(DataParam param);
 }
