@@ -9,12 +9,11 @@ import com.agileai.hotweb.controller.core.SimpleHandler;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.common.EmpInfoHelper;
+import com.agileai.hr.common.DateHelper;
 import com.agileai.hr.cxmodule.HrAttendanceManage;
 import com.agileai.hr.cxmodule.HrSalaryManage;
 import com.agileai.util.DateUtil;
 import com.agileai.util.MapUtil;
-
 public class AddAttendanceHandler extends SimpleHandler{
 	public AddAttendanceHandler(){
 		super();
@@ -29,8 +28,8 @@ public class AddAttendanceHandler extends SimpleHandler{
 		Date createDate = (Date) row.get("EMP_CREATE_TIME");
 		long dateDiff = DateUtil.getDateDiff(inductionDate,createDate, 1);
 		String gatherDate = param.get("salYear")+"-"+param.get("salMonth")+"-01";		
-		EmpInfoHelper empInfoHelper = new EmpInfoHelper();
-		boolean isCalSalary = empInfoHelper.isInductionAboveMonth(inductionDate, gatherDate);
+		DateHelper dateHelper = new DateHelper();
+		boolean isCalSalary = dateHelper.dateDuringMonth(inductionDate, gatherDate);
 		if(isCalSalary){
 			setAttribute("EMP_INDUCTION_TIME", inductionDate);
 			setAttribute("dateDiff", dateDiff);
