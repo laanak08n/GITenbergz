@@ -205,11 +205,14 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			salProbation = new BigDecimal("0.0");
 		}
 		BigDecimal salBasic = (BigDecimal) row.get("EMP_BASIC");		
-		BigDecimal salTotal = new BigDecimal("0.0");
-		BigDecimal salProbationDayMoney = salProbation.divide((BigDecimal) validDaysRow.get("VALID_DAYS"),6, RoundingMode.HALF_UP);
-		BigDecimal salRegularDayMoney = salBasic.divide((BigDecimal) validDaysRow.get("VALID_DAYS"),6, RoundingMode.HALF_UP);		
+		BigDecimal salTotal = new BigDecimal("0.0");		
 		Date inductionDate = (Date)row.get("EMP_INDUCTION_TIME");
-		Date regularDate = (Date)row.get("EMP_REGULAR_TIME");
+		Date regularDate = (Date)row.get("EMP_REGULAR_TIME");	
+		BigDecimal validDays = (BigDecimal) validDaysRow.get("VALID_DAYS");
+		BigDecimal salProbationDayMoney = salProbation.divide(validDays,6, RoundingMode.HALF_UP);
+		BigDecimal salRegularDayMoney = salBasic.divide(validDays,6, RoundingMode.HALF_UP);
+		dataParam.put("salProbationDayMoney", salProbationDayMoney);
+		dataParam.put("salRegularDayMoney", salRegularDayMoney);
 		Date proCalEndDate = DateUtil.getDateAdd(regularDate, DateUtil.DAY, -1);
 		BigDecimal currentMonthAttendDays = new BigDecimal("0.0");
 		if(currentMonthAttendRow != null){
@@ -398,8 +401,8 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 	private DataParam calculateOverRunSalary(DataParam dataParam,DataRow validDaysRow,BigDecimal salTotal,BigDecimal salProbation,
 			String userCode,Date date,Date regularTime){
 		BigDecimal salOffsetVacation = (BigDecimal) dataParam.getObject("SAL_OFFSET_VACATION");
-		BigDecimal salRegularDayMoney = (BigDecimal) dataParam.getObject("salRegularDayMoney");
 		BigDecimal salProbationDayMoney = (BigDecimal) dataParam.getObject("salProbationDayMoney");
+		BigDecimal salRegularDayMoney = (BigDecimal) dataParam.getObject("salRegularDayMoney");
 		BigDecimal unregularOverRunDays = (BigDecimal)dataParam.getObject("unregularOverRunDays");
 		BigDecimal salDayMoneyTotal = new BigDecimal("0.0");
 		BigDecimal unregularSalDayMoneyTotal = new BigDecimal("0.0");
