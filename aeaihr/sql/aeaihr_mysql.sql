@@ -678,6 +678,7 @@ INSERT INTO `sys_codelist` VALUES ('BP_TYPE', 'FULLTIME', '满勤', '', '3', '1'
 INSERT INTO `sys_codelist` VALUES ('BP_TYPE', 'OVERRUN', '超限', '', '4', '1');
 INSERT INTO `sys_codelist` VALUES ('BP_TYPE', 'PUNISHMENT', '惩罚', '', '1', '1');
 INSERT INTO `sys_codelist` VALUES ('BP_TYPE', 'REWARD', '奖励', '', '2', '1');
+INSERT INTO `sys_codelist` VALUES ('BP_TYPE', 'ADDITIONALVATION', '补假', '', 5, '1');
 INSERT INTO `sys_codelist` VALUES ('CODE_TYPE_GROUP', 'app_code_define', '应用编码', 'null', '1', '1');
 INSERT INTO `sys_codelist` VALUES ('CODE_TYPE_GROUP', 'sys_code_define', '系统编码', '系统编码123a1', '3', '1');
 INSERT INTO `sys_codelist` VALUES ('EMP_EDUCATION', '0', '初中', '', '1', '1');
@@ -741,6 +742,7 @@ INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '2', '2', '', '3', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '3', '3', '', '4', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '4', '4', '', '5', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '5', '5', '', '6', '1');
+
 
 -- ----------------------------
 -- Table structure for sys_codetype
