@@ -1,5 +1,6 @@
 package com.agileai.hr.module.attendance.handler;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -487,7 +488,19 @@ public class MobileAttendanceHandler extends BaseHandler {
     public ViewRenderer findUserInfos(DataParam param){
     	String responseText = null;
     	try {
-    		List<DataRow> records = getService().findUserInfos();
+    		String curUserCodes = param.get("curUserCodes");
+    		String userCodes = "";
+    		List<String> userList = new ArrayList<String>();
+    		MobileAttendanceHandler.addArrayToList(userList, curUserCodes.split(","));
+    		for(int i=0;i<userList.size();i++){
+    			String userCode = userList.get(i);
+    			if(i == userList.size()-1){
+    				userCodes = userCodes +userCode;
+    			}else{
+    				userCodes = userCodes +userCode +",";
+    			}
+    		}
+    		List<DataRow> records = getService().findUserInfos(userCodes);
     		JSONObject jsonObject = new JSONObject();
     		JSONArray jsonArray = new JSONArray();
     		JSONArray jsonArray2 = new JSONArray();
@@ -530,6 +543,21 @@ public class MobileAttendanceHandler extends BaseHandler {
 		return new AjaxRenderer(responseText);
 	}
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public static List addArrayToList(List list,Object[] objects){
+		List temp = arrayToList(objects);
+		list.addAll(temp);
+		return list;
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static List arrayToList(Object[] objects){
+		List list = new ArrayList();
+		for (int i=0;i < objects.length;i++){
+			String object = (String)"'"+ objects[i]+"'";
+			list.add(object);
+		}
+		return list;
+	}
 	protected HrAttendanceManage getService() {
 		return (HrAttendanceManage) this.lookupService(HrAttendanceManage.class);
 	}
