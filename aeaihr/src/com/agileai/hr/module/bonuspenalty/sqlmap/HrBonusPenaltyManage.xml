@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="HrBonusPenaltyManage">  
+  <select id="findRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	select a.BP_ID,u.USER_NAME,a.USER_ID,a.BP_DATE,a.BP_TYPE,a.BP_MONEY,a.BP_DESC
+from hr_bonus_penalty a 
+left join security_user u on a.USER_ID = u.USER_ID
+where 1=1
+<isNotEmpty prepend=" " property="sdate">
+and BP_DATE &gt;= #sdate#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="edate">
+and BP_DATE &lt;= #edate#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="bpType">
+and BP_TYPE=#bpType#
+</isNotEmpty>
+<isNotEmpty prepend=" " property="userName_like">
+and u.USER_NAME like #userName_like#
+</isNotEmpty>
+  </select>
+  <select id="getRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+    select a.BP_ID,u.USER_NAME,a.USER_ID,a.BP_DATE,a.BP_TYPE,a.BP_MONEY,a.BP_DESC
+from hr_bonus_penalty a 
+left join security_user u on a.USER_ID = u.USER_ID
+where 1=1
+<isNotEmpty prepend="and " property="BP_ID">
+BP_ID=#BP_ID#
+</isNotEmpty>
+  </select>
+  <insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
+    insert into hr_bonus_penalty (BP_ID,USER_ID,BP_DATE,BP_TYPE,BP_MONEY,BP_DESC) values (#BP_ID:CHAR#,#USER_ID:CHAR#,#BP_DATE:DATE#,#BP_TYPE:VARCHAR#,#BP_MONEY:DECIMAL#,#BP_DESC:VARCHAR#)
+  </insert>
+  <update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
+    update hr_bonus_penalty
+set USER_ID=#USER_ID:CHAR#,BP_DATE=#BP_DATE:DATE#,BP_TYPE=#BP_TYPE:VARCHAR#,BP_MONEY=#BP_MONEY:DECIMAL#,BP_DESC=#BP_DESC:VARCHAR#
+where BP_ID=#BP_ID#
+  </update>
+  <delete id="deleteRecord" parameterClass="com.agileai.domain.DataParam">
+    delete from hr_bonus_penalty where BP_ID=#BP_ID#
+  </delete>
+</sqlMap>

@@ -109,7 +109,7 @@ function openUserIdBox(){
 	}
 	var url = 'index?'+handlerId+'&targetId=USER_CODE&targetName=userName';
 	userIdBox.sendRequest(url);
-} 
+}
 <%
 if(!pageBean.getBoolValue("canSignIn")){
 %>	

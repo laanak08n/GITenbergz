@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="HrBonusPenaltyManageList" class="com.agileai.hr.module.bonuspenalty.handler.HrBonusPenaltyManageListHandler" page="bonuspenalty/HrBonusPenaltyManageList.jsp"/>
+  <bean id="HrBonusPenaltyManageEdit" class="com.agileai.hr.module.bonuspenalty.handler.HrBonusPenaltyManageEditHandler" page="bonuspenalty/HrBonusPenaltyManageEdit.jsp"/>
+</beans>

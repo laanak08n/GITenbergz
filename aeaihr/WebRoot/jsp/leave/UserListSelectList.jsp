@@ -57,7 +57,7 @@ width="100%" rowsDisplayed="10"
 listWidth="100%" 
 height="auto" 
 >
-<ec:row styleClass="odd" ondblclick="clearSelection();selectRequest('${row.USER_CODE}','${row.USER_NAME}')" onclick="setSelectTempValue('${row.USER_CODE}','${row.USER_NAME}')">
+<ec:row styleClass="odd" ondblclick="clearSelection();selectRequest('${row.USER_ID}','${row.USER_NAME}')" onclick="setSelectTempValue('${row.USER_ID}','${row.USER_NAME}')">
 	<ec:column width="50" style="text-align:center" property="_0" title="序号" value="${GLOBALROWCOUNT}" />
 	<ec:column width="100" property="USER_NAME" title="姓名"   />
 </ec:row>
