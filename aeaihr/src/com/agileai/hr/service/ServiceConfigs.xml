@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<service id="HelloWorld" type="Soap" implClass="com.agileai.hr.service.demo.HelloWorldImpl" address="/HelloWorld">
+		<auth type="IpWhiteList">
+			<property name="IpAddress">localhost,127.0.0.1</property>
+		</auth>
+	</service>
+	<service id="RestWorld" type="Rest" implClass="com.agileai.hr.service.demo.RestWorldImpl" address="/RestWorld">
+		<auth type="IpWhiteList">
+			<property name="IpAddress">localhost,127.0.0.1</property>
+		</auth>
+	</service>	
+</beans>

@@ -4,7 +4,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-@WebService
+@WebService(serviceName="HelloWorld",portName="HelloWorldPort")
 public interface HelloWorld {
 	@WebMethod
 	public String sayHi(@WebParam(name="theGirlName") String theGirlName);
