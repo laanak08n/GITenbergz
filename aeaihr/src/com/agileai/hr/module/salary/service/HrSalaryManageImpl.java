@@ -172,7 +172,8 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			BigDecimal salBasic = new BigDecimal("0.00");
 			String userId = row.getString("USER_ID");
 			String salId = KeyGenerator.instance().genKey();
-			Date regularTime = (Date) row.get("EMP_REGULAR_TIME");
+			java.sql.Date regularTimeSqlDate = (java.sql.Date) row.get("EMP_REGULAR_TIME");
+			java.util.Date regularTime = new java.util.Date(regularTimeSqlDate.getTime());
 			BigDecimal empBasic = (BigDecimal) row.get("EMP_BASIC");
 			BigDecimal empProbation = (BigDecimal) row.get("EMP_PROBATION");
 			BigDecimal salPerformance = (BigDecimal) row.get("EMP_PERFORMANCE");
@@ -575,7 +576,6 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		Double validDay = (Double) dataParam.getObject("validDay");
 		BigDecimal beforeYearDecemberOffsetVationDay = (BigDecimal) dataParam.getObject("beforeYearDecemberOffsetVationDay");
 		BigDecimal validDecimal = BigDecimal.valueOf(validDay);
-
 		BigDecimal salAuthal = new BigDecimal("0.0");
 		BigDecimal beforeYearDecemberRewordSalary = new BigDecimal("0.000");
 		Double probationOffsetVacationDay = (Double) dataParam.getObject("probationOffsetVacationDay");
@@ -584,7 +584,6 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		double probationLeaveDay = (double) dataParam.getObject("probationLeaveDay");
 		DataParam insertAdditionalVationParam = new DataParam();
 		DataParam overRunParam = new DataParam();
-
 		BigDecimal probationSalary = new BigDecimal("0.00");
 		BigDecimal regulartionSalary = new BigDecimal("0.00");
 		Double probationDays = 0.0;
@@ -777,7 +776,7 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 				overRunParam.put("BP_MONEY",(probationOverRunSalary.add(regulartionOverRunSalary)).abs());
 				salBonus = salBonus.add(probationOverRunSalary.add(regulartionOverRunSalary));
 				salAuthal = salAuthal.add(regulartionOverRunSalary).add(probationOverRunSalary);
-			}else if(isProbationOverRun&&!isCanOverRun){
+			}else if(isProbationOverRun&&isCanOverRun){
 				overRunParam.put("BP_MONEY",probationOverRunSalary.abs());
 				salAuthal = salAuthal.add(probationOverRunSalary);
 				salBonus = salBonus.add(probationOverRunSalary);
@@ -785,6 +784,10 @@ isRegularOverRun,updateFullTimeParamList,fullTimeRecordMap,fulltimeAwardMoney,to
 				overRunParam.put("BP_MONEY",regulartionOverRunSalary.abs());
 				salBonus = salBonus.add(regulartionOverRunSalary);
 				salAuthal = salAuthal.add(regulartionOverRunSalary);
+			}else if(isProbationOverRun&&!isCanOverRun){
+				overRunParam.put("BP_MONEY",probationOverRunSalary.abs());
+				salAuthal = salAuthal.add(probationOverRunSalary);
+				salBonus = salBonus.add(probationOverRunSalary);
 			}
 		}
 		if(!MapUtil.isNullOrEmpty(overRunDayRecordMap)&&overRunDayRecordMap.containsKey(userId)){
