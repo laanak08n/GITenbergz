@@ -4,7 +4,7 @@ angular.module('${menuCode}')
 	    return $sce.trustAsHtml(text);
 	};
 }])
-.controller("${widgetCode}Ctrl",function($scope,AppKit,$filter){
+.controller("${widgetCode}Ctrl",function($scope,AppKit,$filter,$state){
 	$scope.currentDay=new Date();
 	$scope.currentMonth=new Date();
 	$scope.lastDay =true;
