@@ -20,12 +20,16 @@
 			and EMP_SEX = #empSex#
 		</isNotEmpty>
 		<isNotEmpty prepend=" " property="currentUserCode">
-			and EMP_CODE =
-			#currentUserCode#
+			and EMP_CODE = #currentUserCode#
 		</isNotEmpty>
 		<isNotEmpty prepend=" " property="EMP_STATE">
-			and EMP_STATE =
-			#EMP_STATE#
+			and EMP_STATE = #EMP_STATE#
+		</isNotEmpty>
+		<isNotEmpty  prepend=" " property="undimission">
+			and EMP_WORK_STATE !='2'
+		</isNotEmpty>
+		<isNotEmpty  prepend=" " property="dimission">
+			and EMP_WORK_STATE ='2'
 		</isNotEmpty>
 		order by EMP_CODE
 	</select>

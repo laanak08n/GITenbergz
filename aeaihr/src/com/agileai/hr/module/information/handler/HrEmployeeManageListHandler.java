@@ -6,6 +6,7 @@ import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.controller.core.MasterSubListHandler;
+import com.agileai.hotweb.domain.FormSelect;
 import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.renders.DispatchRenderer;
@@ -32,6 +33,12 @@ public class HrEmployeeManageListHandler
 		mergeParam(param);
 		initParameters(param);
 		this.setAttributes(param);
+		String empWorkState = param.get("empWorkState");
+		if("01".equals(empWorkState)){
+			param.put("dimission","Y");
+		}else{
+			param.put("undimission","Y");
+		}
 		List<DataRow> rsList = getService().findMasterRecords(param);
 		this.setRsList(rsList);
 		processPageAttributes(param);
@@ -48,8 +55,12 @@ public class HrEmployeeManageListHandler
                         FormSelectFactory.create("EMP_EDUCATION").getContent());
         initMappingItem("EMP_STATE",
                 FormSelectFactory.create("EMP_STATE").getContent());
+        initMappingItem("EMP_WORK_STATE",
+        		FormSelectFactory.create("EMP_WORK_STATE").getContent());
 		setAttribute("EMP_STATE", FormSelectFactory.create("EMP_STATE")
 				.addSelectedValue(param.get("EMP_STATE")));
+		setAttribute("empWorkState", buildEmpWorkStateSelect().addSelectedValue(param.get("empWorkState","00")));
+		
     }
     
 	
@@ -73,4 +84,11 @@ public class HrEmployeeManageListHandler
 		getService().revokeApprovalRecords(empId);
 		return prepareDisplay(param);
 	}
+    private FormSelect buildEmpWorkStateSelect(){
+    	FormSelect formSelect = new FormSelect();
+    	formSelect.addValue("00", "在职");
+    	formSelect.addValue("01", "离职");
+    	formSelect.addHasBlankValue(false);
+    	return formSelect;
+    }
 }

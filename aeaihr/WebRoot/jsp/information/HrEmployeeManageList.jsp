@@ -61,7 +61,7 @@ function revokeApproval(){
 &nbsp;性别<select id="empSex" label="性别" name="empSex" class="select" onchange="doQuery()"><%=pageBean.selectValue("empSex")%></select>
 
 &nbsp;姓名<input id="empName" label="姓名" name="empName" type="text" value="<%=pageBean.inputValue("empName")%>" size="24" class="text" ondblclick="emptyText('empName')" /><img id="userIdSelectImage" src="images/sta.gif" width="16" height="16" onclick="openUserIdBox()" />
-
+&nbsp;入职状态<select id="empWorkState" label="状态" name="empWorkState" class="select" onchange="doQuery()"><%=pageBean.selectValue("empWorkState")%></select>
 &nbsp;<input type="button" name="button" id="button" value="查询" class="formbutton" onclick="doQuery()" />
 </td></tr></table>
 </div>
@@ -88,6 +88,7 @@ height="390px"
 	<ec:column width="100" property="EMP_NOW_JOB" title="岗位"   />
 	<ec:column width="100" property="EMP_EDUCATION" title="学历"   mappingItem="EMP_EDUCATION"/>
 	<ec:column width="100" property="EMP_STATE" title="状态" mappingItem="EMP_STATE"/>
+	<ec:column width="100" property="EMP_WORK_STATE" title="入职状态" mappingItem="EMP_WORK_STATE"/>
 </ec:row>
 </ec:table>
 <input type="hidden" name="EMP_ID" id="EMP_ID" value="" />
