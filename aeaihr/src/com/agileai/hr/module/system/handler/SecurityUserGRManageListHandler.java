@@ -60,30 +60,43 @@ public class SecurityUserGRManageListHandler
 	public ViewRenderer tableJson(DataParam param) {
     	String responseText = "";
     	try {
-			String columnId = param.get("columnId", this.rootColumnId);
+    		String columnId = param.get("columnId", this.rootColumnId);
 			param.put("columnId",columnId);
-			JSONObject jsonObject = new JSONObject();
-			List<DataRow> arrayList = new ArrayList<DataRow>();
 			DataMap userSex = FormSelectFactory.create("USER_SEX").getContent();
 			DataMap sysValidType = FormSelectFactory.create("SYS_VALID_TYPE").getContent();
 			SecurityUserGRManage service = this.getService();
 			List<DataRow> rsList=service.doQueryEmpAction(param);
-			for (int i = 0; i < rsList.size(); i++) {
-				DataRow rowNew = new DataRow();
-				DataRow row = rsList.get(i);
-				rowNew.put("ID", i+1);
-				rowNew.put("USER_ID", row.get("USER_ID"));
-				rowNew.put("USER_CODE", row.get("USER_CODE"));
-				rowNew.put("USER_NAME", row.get("USER_NAME"));
-				rowNew.put("USER_SEX", userSex.get(row.get("USER_SEX")));
-				rowNew.put("USER_STATE", sysValidType.get(row.get("USER_STATE")));
-				rowNew.put("GRP_ID", row.get("GRP_ID"));
-				rowNew.put("USER_PHONE", row.get("USER_PHONE"));
-				arrayList.add(rowNew);
-			}
-			jsonObject.put("arrayList", arrayList);
-			JSONArray jsonArray = (JSONArray) jsonObject.get("arrayList");
-			responseText = jsonArray.toString();
+			int page = param.getInt("page");
+    		int rows = param.getInt("rows");
+    		int index = page*rows-rows;
+    		int records = rsList.size();
+    		int total = (int)Math.ceil((double)records/rows);
+    		int indexRecords = page*rows;
+    		if(page == total){
+    			indexRecords = records;
+    		}
+    		JSONObject jsonObject = new JSONObject();
+    		JSONArray jsonArray = new JSONArray();
+    		if(records > 0){
+    			for (int i = index; i < indexRecords; i++) {
+    				JSONObject jsonObj = new JSONObject();
+    				DataRow row = rsList.get(i);
+    				jsonObj.put("ID", i+1);
+    				jsonObj.put("USER_ID", row.get("USER_ID"));
+    				jsonObj.put("USER_CODE", row.get("USER_CODE"));
+    				jsonObj.put("USER_NAME", row.get("USER_NAME"));
+    				jsonObj.put("USER_SEX", userSex.get(row.get("USER_SEX")));
+    				jsonObj.put("USER_STATE", sysValidType.get(row.get("USER_STATE")));
+    				jsonObj.put("GRP_ID", row.get("GRP_ID"));
+    				jsonObj.put("GRP_NAME", row.get("GRP_NAME"));
+    				jsonArray.put(jsonObj);
+    			}
+    		}
+    		jsonObject.put("rows", jsonArray);
+        	jsonObject.put("records", records);
+        	jsonObject.put("page", page);
+        	jsonObject.put("total", total);
+        	responseText = jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
