@@ -211,7 +211,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 				}
 			}else{
 				JSONObject jsonObject11 = new JSONObject();
-				jsonObject11.put("name", "无");
+				jsonObject11.put("name", "无记录");
 				jsonArray.put(jsonObject11);
 			}
     		
@@ -248,7 +248,9 @@ public class MobileAttendanceHandler extends BaseHandler {
 					jsonObject11.put("name", row.stringValue("USER_ID_NAME"));
 					String inTime = row.stringValue("ATD_IN_TIME");
 					if(!inTime.isEmpty()){
-						jsonObject11.put("inTime", inTime.substring(11, 16));
+						inTime = DateUtil.getDateByType(DateUtil.YYMMDDHHMISS_HORIZONTAL, row.getTimestamp("ATD_IN_TIME"));
+						inTime = inTime.substring(11, 16).replaceAll("/", "-");
+						jsonObject11.put("inTime", inTime);
 					}else{
 						jsonObject11.put("inTime", inTime);
 					}
@@ -257,7 +259,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 				}
 			}else{
 				JSONObject jsonObject11 = new JSONObject();
-				jsonObject11.put("name", "无");
+				jsonObject11.put("name", "无记录");
 				jsonArray.put(jsonObject11);
 			}
     		
@@ -294,7 +296,9 @@ public class MobileAttendanceHandler extends BaseHandler {
 					jsonObject11.put("name", row.stringValue("USER_ID_NAME"));
 					String inTime = row.stringValue("ATD_IN_TIME");
 					if(!inTime.isEmpty()){
-						jsonObject11.put("inTime", inTime.substring(11, 16));
+						inTime = DateUtil.getDateByType(DateUtil.YYMMDDHHMISS_HORIZONTAL, row.getTimestamp("ATD_IN_TIME"));
+						inTime = inTime.substring(11, 16).replaceAll("/", "-");
+						jsonObject11.put("inTime", inTime);
 					}else{
 						jsonObject11.put("inTime", inTime);
 					}
@@ -303,7 +307,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 				}
 			}else{
 				JSONObject jsonObject11 = new JSONObject();
-				jsonObject11.put("name", "无");
+				jsonObject11.put("name", "无记录");
 				jsonArray.put(jsonObject11);
 			}
     		
@@ -342,7 +346,9 @@ public class MobileAttendanceHandler extends BaseHandler {
 					jsonObject11.put("name", row.stringValue("USER_ID_NAME"));
 					String outTime = row.stringValue("ATD_OUT_TIME");
 					if(!outTime.isEmpty()){
-						jsonObject11.put("outTime", outTime.substring(11, 16));
+						outTime = DateUtil.getDateByType(DateUtil.YYMMDDHHMISS_HORIZONTAL, row.getTimestamp("ATD_OUT_TIME"));
+						outTime = outTime.substring(11, 16).replaceAll("/", "-");
+						jsonObject11.put("outTime", outTime);
 					}else{
 						jsonObject11.put("outTime", outTime);
 					}
@@ -351,7 +357,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 				}
 			}else{
 				JSONObject jsonObject11 = new JSONObject();
-				jsonObject11.put("name", "无");
+				jsonObject11.put("name", "无记录");
 				jsonArray.put(jsonObject11);
 			}
     		
@@ -393,7 +399,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 				}
 			}else{
 				JSONObject jsonObject11 = new JSONObject();
-				jsonObject11.put("name", "无");
+				jsonObject11.put("name", "无记录");
 				jsonArray.put(jsonObject11);
 			}
     		
@@ -430,7 +436,9 @@ public class MobileAttendanceHandler extends BaseHandler {
 					jsonObject11.put("name", row.stringValue("USER_ID_NAME"));
 					String outTime = row.stringValue("ATD_OUT_TIME");
 					if(!outTime.isEmpty()){
-						jsonObject11.put("outTime", outTime.substring(11, 16));
+						outTime = DateUtil.getDateByType(DateUtil.YYMMDDHHMISS_HORIZONTAL, row.getTimestamp("ATD_OUT_TIME"));
+						outTime = outTime.substring(11, 16).replaceAll("/", "-");
+						jsonObject11.put("outTime", outTime);
 					}else{
 						jsonObject11.put("outTime", outTime);
 					}
@@ -439,7 +447,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 				}
 			}else{
 				JSONObject jsonObject11 = new JSONObject();
-				jsonObject11.put("name", "无");
+				jsonObject11.put("name", "无记录");
 				jsonArray.put(jsonObject11);
 			}
     		
@@ -484,7 +492,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 				}
 			}else{
 				JSONObject jsonObject11 = new JSONObject();
-				jsonObject11.put("time", "无");
+				jsonObject11.put("time", "无记录");
 				jsonArray.put(jsonObject11);
 			}
     		
@@ -528,7 +536,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 				}
 			}else{
 				JSONObject jsonObject11 = new JSONObject();
-				jsonObject11.put("userName", "无");
+				jsonObject11.put("userName", "无记录");
 				jsonArray.put(jsonObject11);
 			}
     		jsonObject.put("userInfos", jsonArray);
