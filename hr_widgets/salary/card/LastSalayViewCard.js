@@ -3,7 +3,7 @@ angular.module('${menuCode}')
 	AppKit.isLogin().success(function(data, status, headers, config){
 		if (data.result=='true'){
 			$scope.userLogin = "isLogin";
-			AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/hr/index.cv#/tab/home",
+			AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/m1/index.cv#/tab/home",
 				"success":function(){
 					var url = '/aeaihr/services/Salary/rest/get-last-salay-record/';
 					var promise = AppKit.getJsonApi(url);

@@ -14,7 +14,7 @@ angular.module('${menuCode}')
 		AppKit.isLogin().success(function(data, status, headers, config){
 			if (data.result=='true'){
 				$scope.userLogin = "isLogin";
-				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/hr/index.cv#/tab/home",
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/m1/index.cv#/tab/home",
 					"success":function(){
 						if($scope.atdInTime&&$scope.titleName){
 							var parameterJson={"lng":$scope.lng,"lat":$scope.lat,"name":$scope.titleName,"address":$scope.titleAddress};

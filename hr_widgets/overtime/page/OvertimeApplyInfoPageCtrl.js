@@ -19,7 +19,7 @@ angular.module('${menuCode}')
 		AppKit.isLogin().success(function(data, status, headers, config){
 			if (data.result=='true'){
 				$scope.userLogin = "isLogin";
-				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/hr/index.cv#/tab/home",
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/m1/index.cv#/tab/home",
 					"success":function(){
 						var url = "/aeaihr/services/Overtime/rest/update-overtime-info";
 						AppKit.postJsonApi(url,JSON.stringify($scope.info)).then(function(response){
@@ -39,7 +39,7 @@ angular.module('${menuCode}')
 		AppKit.isLogin().success(function(data, status, headers, config){
 			if (data.result=='true'){
 				$scope.userLogin = "isLogin";
-				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/hr/index.cv#/tab/home",
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/m1/index.cv#/tab/home",
 					"success":function(){
 						AppKit.confirm({operaType:'delete',action:function(){
 							var url = "/aeaihr/services/Overtime/rest/delete-overtime-info/"+$scope.info.wotId;
