@@ -84,7 +84,7 @@ public class BonusPenaltyImpl extends BaseRestService implements BonusPenalty {
 		try {
 			JSONObject jsonObject = new JSONObject(info);
 			DataParam param = new DataParam();
-			param.put("BP_ID", KeyGenerator.instance().genKey());
+			param.put("BP_ID", jsonObject.getString("bpId"));
 			param.put("USER_ID", jsonObject.getString("userId"));
 			param.put("BP_DATE", jsonObject.getString("bpDate").substring(0, 10));
 			param.put("BP_TYPE", jsonObject.getString("bpType"));
