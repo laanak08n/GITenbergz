@@ -1,12 +1,10 @@
 <div class="content">
   <div class="list">
   	<label class="item item-input item-select">
-  		姓名
-<!--       <input class="input-size" type="text" ng-model="info.userName"> -->
+  		<div class="input-label">姓名</div>
   		<select class="select-full-item" ng-model="info.userName">
-	        <option value="selected">请选择</option>
-	        <option value="E011D0E7-C777-4CC8-BEBD-EBC8E63E797D">赵小二</option>
-	        <option value="REWARD">奖励</option>
+	        <option value="">请选择</option>
+	        <option ng-repeat="x in userList" value="{{x.value}}">{{x.key}}</option>
 		</select>
     </label>
   	<label class="item item-input info-nosideline">
@@ -17,7 +15,7 @@
   	<label class="item item-input item-select">
   		<div class="input-label">类型</div>
   		<select class="select-full-item" ng-model="info.bpType">
-	        <option value="selected">请选择</option>
+	        <option value="">请选择</option>
 	        <option value="PUNISHMENT">惩罚</option>
 	        <option value="REWARD">奖励</option>
 		</select>

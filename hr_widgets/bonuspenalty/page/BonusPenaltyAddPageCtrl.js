@@ -6,7 +6,7 @@ angular.module('${menuCode}')
 }])
 .controller("${widgetCode}Ctrl",function($scope,AppKit){
 	
-	$scope.info = {"userName":"","bpType":"selected","bpDate": "","bpMonry":"","bpDesc":""};
+	$scope.info = {"userName":"","bpType":"","bpDate": "","bpMonry":"","bpDesc":""};
 	
 	$scope.saveInfo = function(){
 		var url = "/aeaihr/services/BonusPenalty/rest/add-pun-info";
