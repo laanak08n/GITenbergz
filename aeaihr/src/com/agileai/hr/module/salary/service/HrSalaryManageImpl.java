@@ -266,7 +266,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			}
 
 			BigDecimal sal_fulltime_award = new BigDecimal("0.0");
-			if(leaveDaysRow == null && regularTime.compareTo(date) == -1){
+			if(leaveDaysRow == null && regularTime.compareTo(DateUtil.getDateAdd(date, DateUtil.DAY, -1)) <= 0){
 				statementId = sqlNameSpace + "." + "getFulltimeAwardRecord";
 				DataRow dataRow = this.daoHelper.getRecord(statementId, new DataParam());
 				sal_fulltime_award = new BigDecimal(dataRow.getString("TYPE_NAME"));

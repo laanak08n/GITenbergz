@@ -137,14 +137,20 @@ function openTargetTreeBox(curAction){
 		writeErrorMsg('请先选中一个树节点!');
 		return;
 	}
-	if (curAction == 'copyContent' || curAction == 'moveContent'){
+	if (curAction == 'copyContent'){
 		if (!isSelectedRow()){
 			jAlert('请先选中一条记录!');
 			return;
 		}
-		columnIdValue = $("#curColumnId").val()
+		columnIdValue = $("#curColumnId").val();
+		targetTreeBox.sendRequest(url);
+		$("#actionType").val(curAction);
 	}
 	if(curAction == 'moveContent'){
+		if (!isSelectedRow()){
+			jAlert('请先选中一条记录!');
+			return;
+		}
 		postRequest('form1',{actionType:'moveValidation',onComplete:function(responseText){
 			if(responseText == 'success'){
 				writeErrorMsg('该职员在原部门有角色关联，请先删除关联！');

@@ -323,7 +323,7 @@ public class SecurityUserListHandler
     
     public ViewRenderer doMoveValidationAction(DataParam param){
     	String responseText = "fail";
-    	String grpId = param.get("GRP_ID");
+    	String grpId = param.get("curColumnId");
     	String userId = param.get("USER_ID");
     	List<DataRow> records = this.getService().findUserRoleGroupRecords(grpId, userId, null);
     	if(records.size()>0){
