@@ -116,6 +116,9 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 				FormSelectFactory.create("BOOL_DEFINE").addSelectedValue(
 						getOperaAttributeValue("EMP_PAY_INSURE", "N")));		
 		BigDecimal empMoney = new BigDecimal("0.00");
+		if (this.getAttribute("EMP_PROBATION") == null) {
+			this.setAttribute("EMP_PROBATION", empMoney);
+		}
 		if (this.getAttribute("EMP_BASIC") == null) {
 			this.setAttribute("EMP_BASIC", empMoney);
 		}
