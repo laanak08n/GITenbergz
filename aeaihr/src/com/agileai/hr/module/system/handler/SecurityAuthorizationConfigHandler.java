@@ -8,15 +8,16 @@ import com.agileai.domain.DataRow;
 import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.bizmoduler.frame.SecurityAuthorizationConfig;
 import com.agileai.hotweb.controller.core.BaseHandler;
-import com.agileai.hr.cxmodule.FunctionTreeManage;
 import com.agileai.hotweb.domain.FormSelect;
 import com.agileai.hotweb.domain.core.Resource;
 import com.agileai.hotweb.domain.system.FuncHandler;
 import com.agileai.hotweb.domain.system.FuncMenu;
 import com.agileai.hotweb.domain.system.Operation;
+import com.agileai.hotweb.filter.HotwebUserCacher;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
+import com.agileai.hr.cxmodule.FunctionTreeManage;
 import com.agileai.util.ListUtil;
 import com.agileai.util.StringUtil;
 
@@ -114,6 +115,9 @@ public class SecurityAuthorizationConfigHandler extends BaseHandler{
 			resourceIds.add(resourceId);
 			getService().addUserAuthRelation(resourceTypes, resourceIds, userIdList);
 		}
+		
+		getHotwebUserCacher().truncateUsers();
+		
 		FormSelect userSelect = getUserSelect(resourceType, resourceId);
 		responseText = userSelect.getScriptSyntax("userList");
 		return new AjaxRenderer(responseText);
@@ -206,6 +210,8 @@ public class SecurityAuthorizationConfigHandler extends BaseHandler{
 			getService().addRoleAuthRelation(resourceTypes, resourceIds, roleIdList);
 		}
 		
+		getHotwebUserCacher().truncateUsers();
+		
 		FormSelect roleSelect = getRoleSelect(resourceType, resourceId);
 		responseText = roleSelect.getScriptSyntax("roleList");
 		return new AjaxRenderer(responseText);
@@ -249,6 +255,8 @@ public class SecurityAuthorizationConfigHandler extends BaseHandler{
 			getService().addGroupAuthRelation(resourceTypes, resourceIds, groupIdList);
 		}
 		
+		getHotwebUserCacher().truncateUsers();
+		
 		FormSelect groupSelect = getGroupSelect(resourceType, resourceId);
 		responseText = groupSelect.getScriptSyntax("groupList");
 		return new AjaxRenderer(responseText);
@@ -281,6 +289,9 @@ public class SecurityAuthorizationConfigHandler extends BaseHandler{
 		}else{
 			getService().delUserAuthRelation(resourceType, resourceId, userId);
 		}
+		
+		getHotwebUserCacher().truncateUsers();
+		
 		return this.prepareDisplay(param);
 	}
 	
@@ -364,6 +375,9 @@ public class SecurityAuthorizationConfigHandler extends BaseHandler{
 		}else{
 			getService().delRoleAuthRelation(resourceType, resourceId, roleId);
 		}
+		
+		getHotwebUserCacher().truncateUsers();
+		
 		return this.prepareDisplay(param);
 	}
 	
@@ -392,6 +406,9 @@ public class SecurityAuthorizationConfigHandler extends BaseHandler{
 		}else{
 			getService().delGroupAuthRelation(resourceType, resourceId, groupId);
 		}
+		
+		getHotwebUserCacher().truncateUsers();
+		
 		return this.prepareDisplay(param);
 	}	
 	
@@ -420,6 +437,9 @@ public class SecurityAuthorizationConfigHandler extends BaseHandler{
 		}else{
 			getService().delUserAuthRelations(resourceType, resourceId);
 		}
+		
+		getHotwebUserCacher().truncateUsers();
+		
 		return this.prepareDisplay(param);
 	}
 	
@@ -448,6 +468,9 @@ public class SecurityAuthorizationConfigHandler extends BaseHandler{
 		}else{
 			getService().delRoleAuthRelations(resourceType, resourceId);
 		}
+		
+		getHotwebUserCacher().truncateUsers();
+		
 		return this.prepareDisplay(param);
 	}
 	
@@ -476,10 +499,18 @@ public class SecurityAuthorizationConfigHandler extends BaseHandler{
 		}else{
 			getService().delGroupAuthRelations(resourceType, resourceId);
 		}
+		
+		getHotwebUserCacher().truncateUsers();
+		
 		return this.prepareDisplay(param);
 	}	
 	
     protected SecurityAuthorizationConfig getService() {
         return (SecurityAuthorizationConfig) this.lookupService(SecurityAuthorizationConfig.class);
+    }
+    
+    private HotwebUserCacher getHotwebUserCacher(){
+    	String appName = request.getContextPath().substring(1);
+    	return HotwebUserCacher.getInstance(appName);
     }
 }

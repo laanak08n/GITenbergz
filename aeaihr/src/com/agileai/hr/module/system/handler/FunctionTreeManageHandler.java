@@ -7,13 +7,13 @@ import com.agileai.domain.DataRow;
 import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.bizmoduler.frame.SecurityAuthorizationConfig;
 import com.agileai.hotweb.controller.core.TreeManageHandler;
-import com.agileai.hr.cxmodule.FunctionTreeManage;
 import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.domain.TreeBuilder;
 import com.agileai.hotweb.domain.TreeModel;
 import com.agileai.hotweb.domain.core.Resource;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
+import com.agileai.hr.cxmodule.FunctionTreeManage;
 import com.agileai.util.StringUtil;
 
 public class FunctionTreeManageHandler
@@ -164,6 +164,9 @@ public class FunctionTreeManageHandler
     	return super.doDeleteAction(param);
     }
     protected FunctionTreeManage getService() {
-        return (FunctionTreeManage) this.lookupService(this.getServiceId());
+    	FunctionTreeManage functionTreeManage = (FunctionTreeManage) this.lookupService(this.getServiceId());
+    	String appName = request.getContextPath().substring(1);
+    	functionTreeManage.setAppName(appName);
+    	return functionTreeManage;
     }
 }

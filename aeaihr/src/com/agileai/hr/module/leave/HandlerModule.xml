@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans> 
-  <bean id="HrLeaveManageList" class="com.agileai.hr.module.leave.handler.HrLeaveManageListHandler" page="leave/HrLeaveManageList.jsp"/>  
-  <bean id="HrLeaveManageEdit" class="com.agileai.hr.module.leave.handler.HrLeaveManageEditHandler" page="leave/HrLeaveManageEdit.jsp"/>
-  <bean id="UserListSelectList" class="com.agileai.hr.module.leave.handler.UserListSelectListHandler" page="leave/UserListSelectList.jsp"/>
+  <bean id="HrLeaveManageList" class="com.agileai.hr.module.leave.handler.HrLeaveManageListHandler" page="leave/HrLeaveManageList.jsp" authOpera="true"/>  
+  <bean id="HrLeaveManageEdit" class="com.agileai.hr.module.leave.handler.HrLeaveManageEditHandler" page="leave/HrLeaveManageEdit.jsp" authOpera="true"/>
+  <bean id="UserListSelectList" class="com.agileai.hr.module.leave.handler.UserListSelectListHandler" page="leave/UserListSelectList.jsp" authOpera="true"/>
   <bean id="MobileLeave" class="com.agileai.hr.module.leave.handler.MobileLeaveHandler" page=""/>
 </beans>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans> 
-  <bean id="DeptTreeSelect" class="com.agileai.hr.module.information.handler.DeptTreeSelectHandler" page="information/DeptTreeSelect.jsp"/>
-  <bean id="HrEducationEditBox" class="com.agileai.hr.module.information.handler.HrEducationEditBoxHandler" page="information/HrEducationEditBox.jsp"/>
-  <bean id="HrEmployeeManageList" class="com.agileai.hr.module.information.handler.HrEmployeeManageListHandler" page="information/HrEmployeeManageList.jsp"/>  
-  <bean id="HrEmployeeManageEdit" class="com.agileai.hr.module.information.handler.HrEmployeeManageEditHandler" page="information/HrEmployeeManageEdit.jsp"/>   
-  <bean id="HrExperienceEditBox" class="com.agileai.hr.module.information.handler.HrExperienceEditBoxHandler" page="information/HrExperienceEditBox.jsp"/>  
-  <bean id="HrWorkPerformanceEditBox" class="com.agileai.hr.module.information.handler.HrWorkPerformanceEditBoxHandler" page="information/HrWorkPerformanceEditBox.jsp"/>
+  <bean id="DeptTreeSelect" class="com.agileai.hr.module.information.handler.DeptTreeSelectHandler" page="information/DeptTreeSelect.jsp" authOpera="true"/>
+  <bean id="HrEducationEditBox" class="com.agileai.hr.module.information.handler.HrEducationEditBoxHandler" page="information/HrEducationEditBox.jsp" authOpera="true"/>
+  <bean id="HrEmployeeManageList" class="com.agileai.hr.module.information.handler.HrEmployeeManageListHandler" page="information/HrEmployeeManageList.jsp" authOpera="true"/>  
+  <bean id="HrEmployeeManageEdit" class="com.agileai.hr.module.information.handler.HrEmployeeManageEditHandler" page="information/HrEmployeeManageEdit.jsp" authOpera="true"/>   
+  <bean id="HrExperienceEditBox" class="com.agileai.hr.module.information.handler.HrExperienceEditBoxHandler" page="information/HrExperienceEditBox.jsp" authOpera="true"/>  
+  <bean id="HrWorkPerformanceEditBox" class="com.agileai.hr.module.information.handler.HrWorkPerformanceEditBoxHandler" page="information/HrWorkPerformanceEditBox.jsp" authOpera="true"/>
 </beans>

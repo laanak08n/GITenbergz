@@ -5,11 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.agileai.domain.DataParam;
-import com.agileai.domain.DataRow;
-import com.agileai.hotweb.bizmoduler.core.MasterSubService;
 import com.agileai.hotweb.controller.core.MasterSubEditMainHandler;
 import com.agileai.hotweb.domain.FormSelectFactory;
-import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.cxmodule.FunctionTreeManage;
 import com.agileai.hr.module.system.service.HandlerManage;
@@ -23,29 +20,6 @@ public class HandlerManageEditHandler
         this.baseTablePK = "HANLER_ID";
         this.defaultTabId = "SysOperation";
     }
-    
-	public ViewRenderer prepareDisplay(DataParam param) {
-		String operaType = param.get(OperaType.KEY);
-		if (isReqRecordOperaType(operaType)){
-			DataRow record = getService().getMasterRecord(param);
-			this.setAttributes(record);			
-		}
-		String currentSubTableId = param.get("currentSubTableId",defaultTabId);
-		if (!currentSubTableId.equals(MasterSubService.BASE_TABLE_ID)){
-			String subRecordsKey = currentSubTableId + "Records";
-			if (!this.getAttributesContainer().containsKey(subRecordsKey)){
-				List<DataRow> subRecords = getService().findSubRecords(currentSubTableId, param);
-				this.setAttribute(currentSubTableId+"Records", subRecords);
-			}
-		}
-		this.setAttribute("FUNC_ID", param.get("funcId"));
-		this.setAttribute("currentSubTableId", currentSubTableId);
-		this.setAttribute("currentSubTableIndex", getTabIndex(currentSubTableId));
-		String operateType = param.get(OperaType.KEY);
-		this.setOperaType(operateType);
-		processPageAttributes(param);
-		return new LocalRenderer(getPage());
-	}
 
     protected void processPageAttributes(DataParam param) {
         setAttribute("HANLER_TYPE",
@@ -54,23 +28,23 @@ public class HandlerManageEditHandler
                                                                                "MAIN")));
     }
     public ViewRenderer doSaveMasterRecordAction(DataParam param){
-    	this.lookupService(FunctionTreeManage.class).clearFuncTreeCache();
+    	getFunctionTreeManage().clearFuncTreeCache();
     	return super.doSaveMasterRecordAction(param);
     }
     public ViewRenderer doMoveUpAction(DataParam param){
-    	this.lookupService(FunctionTreeManage.class).clearFuncTreeCache();
+    	getFunctionTreeManage().clearFuncTreeCache();
     	return super.doMoveUpAction(param);
     }
     public ViewRenderer doMoveDownAction(DataParam param){
-    	this.lookupService(FunctionTreeManage.class).clearFuncTreeCache();
+    	getFunctionTreeManage().clearFuncTreeCache();
     	return super.doMoveDownAction(param);
     }
     public ViewRenderer doSaveEntryRecordsAction(DataParam param){
-    	this.lookupService(FunctionTreeManage.class).clearFuncTreeCache();
+    	getFunctionTreeManage().clearFuncTreeCache();
     	return super.doSaveEntryRecordsAction(param);
     }
     public ViewRenderer doDeleteEntryRecordAction(DataParam param){
-    	this.lookupService(FunctionTreeManage.class).clearFuncTreeCache();
+    	getFunctionTreeManage().clearFuncTreeCache();
     	return super.doDeleteEntryRecordAction(param);
     }
     protected String[] getEntryEditFields(String currentSubTableId) {
@@ -102,6 +76,13 @@ public class HandlerManageEditHandler
         return foreignKeys.get(currentSubTableId);
     }
 
+    protected FunctionTreeManage getFunctionTreeManage(){
+    	FunctionTreeManage functionTreeManage = this.lookupService(FunctionTreeManage.class);
+    	String appName = request.getContextPath().substring(1);
+    	functionTreeManage.setAppName(appName);
+    	return functionTreeManage;
+    }
+    
     protected HandlerManage getService() {
         return (HandlerManage) this.lookupService(this.getServiceId());
     }
