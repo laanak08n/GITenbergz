@@ -6,6 +6,8 @@ import java.util.List;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 
+import sun.org.mozilla.javascript.internal.regexp.SubString;
+
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.domain.core.User;
@@ -35,7 +37,7 @@ public class SalaryImpl extends BaseRestService implements Salary {
 				jsonObject.put("salSubsidy", dataRow.get("SAL_SUBSIDY"));
 				jsonObject.put("salBonus", dataRow.get("SAL_BONUS"));
 				jsonObject.put("salInsure", dataRow.get("SAL_INSURE"));
-				jsonObject.put("salRemarks", dataRow.get("SAL_REMARKS"));
+				jsonObject.put("salRemarks",dataRow.get("SAL_REMARKS"));
 				jsonArray.put(jsonObject);
 			}
 			responseText = jsonArray.toString();
@@ -60,7 +62,7 @@ public class SalaryImpl extends BaseRestService implements Salary {
 			jsonObject.put("salTotal", dataRow.get("SAL_TOTAL"));
 			jsonObject.put("salHousingFund", dataRow.get("SAL_HOUSING_FUND"));
 			jsonObject.put("salShould", dataRow.get("SAL_SHOULD"));
-			jsonObject.put("salRemarks ", dataRow.get("SAL_REMARKS"));
+			jsonObject.put("salRemarks", dataRow.get("SAL_REMARKS"));
 			responseText = jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(),e);
@@ -105,8 +107,8 @@ public class SalaryImpl extends BaseRestService implements Salary {
 			jsonArray.put(1, dataRow.get("SAL_PERFORMANCE"));
 			jsonArray.put(2, dataRow.get("SAL_SUBSIDY"));
 			jsonArray.put(3, dataRow.get("SAL_BONUS"));
-			jsonArray.put(4, dataRow.get("SAL_INSURE"));
-			jsonArray.put(5, dataRow.get("SAL_TOTAL"));
+			jsonArray.put(4, dataRow.get("SAL_TOTAL"));
+			jsonArray.put(5, dataRow.get("SAL_INSURE"));
 			jsonArray.put(6, dataRow.get("SAL_TAX"));
 			JSONArray jsonArray1 = new JSONArray();
 			jsonArray1.put(jsonArray);
