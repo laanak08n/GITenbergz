@@ -1,5 +1,6 @@
 package com.agileai.hr.module.salary.handler;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.codehaus.jettison.json.JSONArray;
@@ -79,7 +80,11 @@ public class MobileSalaryHandler extends BaseHandler {
 			jsonArray.put(0, dataRow.get("SAL_BASIC"));
 			jsonArray.put(1, dataRow.get("SAL_PERFORMANCE"));
 			jsonArray.put(2, dataRow.get("SAL_SUBSIDY"));
-			jsonArray.put(3, dataRow.get("SAL_BONUS"));
+			int salBonus = ((BigDecimal) dataRow.get("SAL_BONUS")).intValue();
+			if(salBonus < 0){
+				salBonus = 0;
+			}
+			jsonArray.put(3, salBonus);
 			responseText = jsonArray.toString();
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(),e);
