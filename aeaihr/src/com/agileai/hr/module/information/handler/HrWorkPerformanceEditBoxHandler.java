@@ -17,7 +17,7 @@ public class HrWorkPerformanceEditBoxHandler
     }
     public ViewRenderer prepareDisplay(DataParam param) {
 		String operaType = param.get(OperaType.KEY);
-		if ("update".equals(operaType)){
+		if ("update".equals(operaType)||"copy".equals(operaType)){
 			DataRow record = getService().getSubRecord(subTableId, param); 
 			this.setAttributes(record);	
 			DataParam empParam = new DataParam("EMP_ID", record.get("EMP_ID"));

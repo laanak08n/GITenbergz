@@ -34,11 +34,19 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 			setAttribute("onlyRead", "");
 		}
 		if ("update".equals(operaType)) {
-			setAttribute("doDetail", true);
-			setAttribute("onlyRead", "readonly");
-			setAttribute("doApprove", true);
 			if (isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getMasterRecord(param);
+				if (record.get("EMP_STATE").equals("drafe")) {
+					setAttribute("doDetail", true);
+					setAttribute("doApprove", true);
+					setAttribute("onlyRead", "readonly");
+				}
+				if(record.get("EMP_STATE").equals("approved")){
+					setAttribute("doDetail", false);
+					setAttribute("doApprove", false);
+					setAttribute("doRevokeApprove", true);
+					setAttribute("onlyRead", "");
+				} 
 				this.setAttributes(record);
 			}
 		}
@@ -57,10 +65,6 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 				if (record.get("EMP_STATE").equals("drafe")) {
 					setAttribute("doDetail", true);
 					setAttribute("doApprove", true);
-				}
-				if(record.get("EMP_STATE").equals("drafe")){
-				setAttribute("doDetail", true);
-				setAttribute("doApprove", true);
 				}
 				if(record.get("EMP_STATE").equals("approved")){
 					setAttribute("doDetail", false);
