@@ -129,8 +129,6 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 		}		
 		setAttribute("WOT_TIME", FormSelectFactory.create("WOT_TIME")
 				.addSelectedValue(getOperaAttributeValue("WOT_TIME", "")));
-		setAttribute("WOT_TIME_COMPANY", FormSelectFactory.create("WOT_TIME_COMPANY")
-				.addSelectedValue(getOperaAttributeValue("WOT_TIME_COMPANY", "DAY")));
 		setAttribute("APP_RESULT",FormSelectFactory.create("APP_RESULT").addSelectedValue(
 				getAttributeValue("APP_RESULT", "YES")));
 		setAttribute("STATE",FormSelectFactory.create("STATE") .addSelectedValue(

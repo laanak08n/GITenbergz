@@ -36,7 +36,6 @@ public class MobileOvertimeHandler extends BaseHandler {
 				jsonObject1.put("id", dataRow.get("WOT_ID"));
 				jsonObject1.put("place", dataRow.get("WOT_PLACE"));
 				jsonObject1.put("time", dataRow.get("WOT_TIME"));
-				jsonObject1.put("timeCompany", dataRow.get("WOT_TIME_COMPANY"));
 				Date overtimeDate = (Date) dataRow.get("WOT_OVERTIME_DATE");
 				String date = DateUtil.getDateByType(DateUtil.YYMMDD_SLANTING, overtimeDate);
 				jsonObject1.put("overtimeDate", date);
@@ -70,11 +69,10 @@ public class MobileOvertimeHandler extends BaseHandler {
         	String overtimeDate = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, otd);
         	
         	String time = jsonObject.get("time").toString();
-        	String timeCompany = jsonObject.get("timeCompany").toString();
         	String participant = jsonObject.get("participant").toString();
         	String desc = jsonObject.get("desc").toString();
         	
-        	DataParam createParam = new DataParam("USER_ID",userId,"WOT_DATE",wotDate,"WOT_PLACE",place,"WOT_OVERTIME_DATE",overtimeDate,"WOT_TIME",time,"WOT_TIME_COMPANY",timeCompany,"WOT_PARTICIPANT",participant,"WOT_DESC",desc);
+        	DataParam createParam = new DataParam("USER_ID",userId,"WOT_DATE",wotDate,"WOT_PLACE",place,"WOT_OVERTIME_DATE",overtimeDate,"WOT_TIME",time,"WOT_PARTICIPANT",participant,"WOT_DESC",desc);
         	getService().createRecord(createParam);
         	responseText = SUCCESS;
 		} catch (Exception e) {
@@ -106,7 +104,6 @@ public class MobileOvertimeHandler extends BaseHandler {
     		jsonObject.put("place", dataRow.get("WOT_PLACE"));
     		jsonObject.put("overtimeDate", dataRow.get("WOT_OVERTIME_DATE"));
     		jsonObject.put("time", dataRow.get("WOT_TIME"));
-    		jsonObject.put("timeCompany", dataRow.get("WOT_TIME_COMPANY"));
     		jsonObject.put("participant", dataRow.get("WOT_PARTICIPANT"));
     		jsonObject.put("desc", dataRow.get("WOT_DESC"));
     		
@@ -137,11 +134,10 @@ public class MobileOvertimeHandler extends BaseHandler {
         	String overtimeDate = DateUtil.format(DateUtil.YYMMDD_HORIZONTAL, otd);
         	
         	String time = jsonObject.get("time").toString();
-        	String timeCompany = jsonObject.get("timeCompany").toString();
         	String participant = jsonObject.get("participant").toString();
         	String desc = jsonObject.get("desc").toString();
         	
-        	DataParam createParam = new DataParam("WOT_ID",id,"USER_ID",userId,"WOT_DATE",wotDate,"WOT_PLACE",place,"WOT_OVERTIME_DATE",overtimeDate,"WOT_TIME",time,"WOT_TIME_COMPANY",timeCompany,"WOT_PARTICIPANT",participant,"WOT_DESC",desc,"STATE","drafe");
+        	DataParam createParam = new DataParam("WOT_ID",id,"USER_ID",userId,"WOT_DATE",wotDate,"WOT_PLACE",place,"WOT_OVERTIME_DATE",overtimeDate,"WOT_TIME",time,"WOT_PARTICIPANT",participant,"WOT_DESC",desc,"STATE","drafe");
         	getService().updateRecord(createParam);
         	responseText = SUCCESS;
 		} catch (Exception e) {

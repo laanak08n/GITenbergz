@@ -178,8 +178,7 @@ public class MobileAttendanceStatHandler extends SimpleHandler{
 				jsonObject.put("date", dataRow.get("WOT_OVERTIME_DATE"));
 				jsonObject.put("participant", dataRow.get("WOT_PARTICIPANT"));
 				jsonObject.put("place", dataRow.get("WOT_PLACE"));
-				jsonObject.put("num", dataRow.get("WOT_TIME_TEXT"));
-				jsonObject.put("unit", dataRow.get("WOT_TIME_COMPANY_TEXT"));
+				jsonObject.put("num", dataRow.get("WOT_TIME"));
 				jsonObject.put("cause", dataRow.get("WOT_DESC"));
 				jsonObject.put("appName", dataRow.get("WOT_APPROVER_NAME"));
 				jsonObject.put("appTime", dataRow.get("WOT_APP_TIME"));

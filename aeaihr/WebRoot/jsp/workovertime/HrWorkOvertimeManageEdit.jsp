@@ -96,7 +96,6 @@ function saveMasterRecord(){
 <tr>
 	<th width="100" nowrap>加班时长</th>
 	<td><select id="WOT_TIME" label="加班时长" name="WOT_TIME" class="select"><%=pageBean.selectValue("WOT_TIME")%></select>
-    <select id="WOT_TIME_COMPANY" label="加班时长" name="WOT_TIME_COMPANY" class="select"><%=pageBean.selectValue("WOT_TIME_COMPANY")%></select>
 </td>
 </tr>
 <tr>
@@ -162,7 +161,6 @@ requiredValidator.add("WOT_PLACE");
 requiredValidator.add("WOT_OVERTIME_DATE");
 requiredValidator.add("WOT_DESC");
 requiredValidator.add("WOT_TIME");
-requiredValidator.add("WOT_TIME_COMPANY");
 requiredValidator.add("APP_RESULT");
 initCalendar('WOT_OVERTIME_DATE','%Y-%m-%d','WOT_OVERTIME_DATEPicker');
 datetimeValidators[0].set("yyyy-MM-dd").add("WOT_OVERTIME_DATE");

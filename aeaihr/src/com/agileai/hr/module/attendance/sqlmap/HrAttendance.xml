@@ -131,19 +131,12 @@
 	</select>
 	<select id="getOverworkContentDataRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
-		select a.WOT_ID,a.USER_ID,b.USER_NAME as USER_ID_NAME,a.WOT_DATE,a.WOT_PARTICIPANT,a.WOT_PLACE,a.WOT_DESC,a.WOT_TIME,d.CODE_NAME as WOT_TIME_TEXT,WOT_TIME_COMPANY,e.CODE_NAME as WOT_TIME_COMPANY_TEXT,a.WOT_APPROVER,c.USER_NAME as WOT_APPROVER_NAME,a.WOT_APP_TIME,a.APP_RESULT,a.WOT_APP_OPINION,a.WOT_OVERTIME_DATE,a.STATE
+		select a.WOT_ID,a.USER_ID,b.USER_NAME as USER_ID_NAME,a.WOT_DATE,a.WOT_PARTICIPANT,a.WOT_PLACE,a.WOT_DESC,a.WOT_TIME,a.WOT_APPROVER,c.USER_NAME as WOT_APPROVER_NAME,a.WOT_APP_TIME,a.APP_RESULT,a.WOT_APP_OPINION,a.WOT_OVERTIME_DATE,a.STATE
 		from hr_work_overtime a left join security_user b on a.USER_ID = b.USER_ID left join security_user c on a.WOT_APPROVER=c.USER_ID 
-		left join sys_codelist d on a.WOT_TIME = d.CODE_ID
-		left join sys_codelist e on a.WOT_TIME_COMPANY = e.CODE_ID
 		where 1=1 
-		and d.TYPE_ID='WOT_TIME'
-		and e.TYPE_ID = 'WOT_TIME_COMPANY'
-		and b.USER_CODE=#code#
-		and a.WOT_OVERTIME_DATE &gt;= #startDate# and a.WOT_OVERTIME_DATE &lt;= #endDate#
 		and a.STATE = 'approved'
 		order by a.WOT_DATE
 	</select>
-	
 	<select id="findActiveUserId" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	 SELECT USER_ID,USER_NAME,USER_CODE
 	from security_user 
