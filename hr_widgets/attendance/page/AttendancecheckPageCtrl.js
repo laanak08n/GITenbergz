@@ -38,16 +38,19 @@ angular.module('${menuCode}')
 		$scope.LoadSigninInfos();
 		$scope.lastDay = false;
 		$scope.currentDayShow = false;
+		$scope.nextDay = true;
 	}    
 	$scope.findCurrentDaySigninInfos=function(){
 		$scope.currentDay=new Date();
 		$scope.LoadSigninInfos();
 		$scope.lastDay = true;
 		$scope.currentDayShow = true;
+		$scope.nextDay = true;
 	}
 	$scope.findFollowDaySigninInfos=function(){
 		$scope.currentDay=(new Date(($scope.currentDay/1000+86400)*1000))
 		$scope.LoadSigninInfos();
+		$scope.lastDay = true;
 		$scope.currentDayShow = false;
 		$scope.nextDay = false;
 	}
@@ -57,6 +60,7 @@ angular.module('${menuCode}')
 		$scope.LoadLocationInfos();
 		$scope.lastMonth = false;
 		$scope.currentMonthShow = false;
+		$scope.nextMonth = true;
 	}
 	$scope.findThisMonthLocations=function(){
 		$scope.currentMonth=new Date();
@@ -68,6 +72,7 @@ angular.module('${menuCode}')
 	$scope.findNextMonthLocations=function(){
 		$scope.currentMonth=(new Date(($scope.currentMonth/1000+(86400*30))*1000))
 		$scope.LoadLocationInfos();
+		$scope.lastMonth = true;
 		$scope.currentMonthShow = false;
 		$scope.nextMonth = false;
 	}

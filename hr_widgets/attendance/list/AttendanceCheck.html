@@ -36,17 +36,17 @@
 	<span class="right-link-item">
 		<a ng-click="findLastDaySigninInfos();" class="" style="">
 			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastday.png" ng-show="lastDay" >
-			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastday.png" ng-hide="lastDay" >
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastdaydis.png" ng-hide="lastDay" >
 		</a>
 		
 		<a ng-click="findCurrentDaySigninInfos();" style="margin-left: 10px;" >
-			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curday.png" ng-show="currentDay"  >
-			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curday.png" ng-hide="currentDay" >
+			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curday.png" ng-show="currentDayShow"  >
+			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curdaydis.png" ng-hide="currentDayShow" >
 		</a>
 		
 		<a ng-click="findFollowDaySigninInfos();" style="margin-left: 10px;" class="">
 			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextday.png" ng-show="nextDay"  >
-			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextday.png" ng-hide="nextDay" >
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextdaydis.png" ng-hide="nextDay" >
 		</a>
 	</span>
 </p>
@@ -54,17 +54,17 @@
 	<span class="right-link-item">
 		<a ng-click="findLastMonthLocations();" class="" style="">
 			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastMonth.png" ng-show='lastMonth' />
-			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastMonth.png" ng-hide='lastMonth' />
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/lastMonthdis.png" ng-hide='lastMonth' />
 		</a>
 		
 		<a ng-click="findThisMonthLocations();" style="margin-left: 10px;" >
-			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curMonth.png" ng-show='currentMonth' >
-			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curMonth.png" ng-hide='currentMonth' >
+			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curMonth.png" ng-show='currentMonthShow' >
+			<img class="curweek-img" ng-src="/map/repository/widgets/hr_widgets/attendance/image/curMonthdis.png" ng-hide='currentMonthShow' >
 		</a>
 		
 		<a ng-click="findNextMonthLocations();" style="margin-left: 10px;" class="">
 			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextMonth.png" ng-show='nextMonth'>
-			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextMonth.png" ng-hide='nextMonth'>
+			<img class="week-imgs" ng-src="/map/repository/widgets/hr_widgets/attendance/image/nextMonthdis.png" ng-hide='nextMonth'>
 		</a>
 	</span>
 </p>
@@ -96,7 +96,7 @@
 			        <div class="col-demo">签到时间：</div>
 			      </div>
 			      <div class="col col-75">
-			        <div class="col-demo">{{x.atdInTime|truncate}}</div>
+			        <div class="col-demo">{{x.atdInTime|date:'yyyy-MM-dd HH:mm:ss' }}</div>
 			      </div>
 			</div>
 			
@@ -114,7 +114,7 @@
 			        <div class="col-demo">签退时间：</div>
 			      </div>
 			      <div class="col col-75">
-			        <div class="col-demo" >{{x.atdOutTime|truncate}}</div>
+			        <div class="col-demo" >{{x.atdOutTime|date:'yyyy-MM-dd HH:mm:ss' }}</div>
 			      </div>
 			</div>
 			
@@ -155,7 +155,7 @@
 			        <div class="col-demo">定位时间：</div>
 			      </div>
 			      <div class="col col-75">
-			        <div class="col-demo">{{c.locatTime|truncate}}</div>
+			        <div class="col-demo">{{c.locatTime|date:'yyyy-MM-dd HH:mm:ss' }}</div>
 			      </div>
 			</div>
 			
