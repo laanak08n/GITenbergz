@@ -86,11 +86,10 @@ public class MobileAttendanceHandler extends BaseHandler {
     			jsonObject.put("isSignIn", "Y");
     			Date atdInTime = (Date) dataRow.get("ATD_IN_TIME");
     			jsonObject.put("atdInTime", DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, atdInTime));
+    			jsonObject.put("name", dataRow.get("ATD_IN_HOUSE"));
     			jsonObject.put("address", dataRow.get("ATD_IN_PLACE"));
-    			if (StringUtil.isNotNullNotEmpty(dataRow.getString("ATD_IN_COORDINATE"))){
-    				JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_IN_COORDINATE"));
-        			jsonObject.put("placeInfo", jsonObject1);    				
-    			}
+    			JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_IN_COORDINATE"));
+    			jsonObject.put("placeInfo", jsonObject1);
     		}
     		
         	responseText = jsonObject.toString();
@@ -155,6 +154,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     			Date atdOutTime = (Date) dataRow.get("ATD_OUT_TIME");
     			jsonObject.put("atdOutTime", DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, atdOutTime));
     			jsonObject.put("address", dataRow.get("ATD_OUT_PLACE"));
+    			jsonObject.put("name", dataRow.get("ATD_OUT_HOUSE"));
     			if (StringUtil.isNotNullNotEmpty(dataRow.getString("ATD_OUT_COORDINATE"))){
     				JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_OUT_COORDINATE"));
         			jsonObject.put("placeInfo", jsonObject1);    				
@@ -187,8 +187,9 @@ public class MobileAttendanceHandler extends BaseHandler {
     		String userId = user.getUserId();
     		String locatTime = DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, new Date());
     		String locatPlace = jsonObject.getString("address");
+    		String locatHouse = jsonObject.getString("name");
     		
-    		DataParam createparam = new DataParam("USER_ID",userId,"LOCAT_TIME",locatTime,"LOCAT_PLACE",locatPlace);
+    		DataParam createparam = new DataParam("USER_ID",userId,"LOCAT_TIME",locatTime,"LOCAT_PLACE",locatPlace,"LOCAT_HOUSE",locatHouse);
     		
     		getService().createLocationRecord(createparam);
         	responseText = SUCCESS;
