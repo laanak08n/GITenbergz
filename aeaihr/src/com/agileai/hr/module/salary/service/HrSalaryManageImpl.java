@@ -156,7 +156,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			BigDecimal leaveDaysDecimal = (BigDecimal)leaveDaysNum;
 			Number overTimeDaysNum = (Number) dataParam.getObject("SAL_OVERTIME");
 			BigDecimal overTimeDaysDecimal = (BigDecimal)overTimeDaysNum;
-			if(lastOffsetVacationRow == null){
+			if(lastOffsetVacationRow.size() == 0){
 				dataParam.put("SAL_OFFSET_VACATION", offsetVacation.subtract(totalLeaveDecimal).add(totalOverTimeDecimal)); 
 			}else{
 				BigDecimal lastOffsetVacationDecimal = (BigDecimal) lastOffsetVacationRow.get("SAL_OFFSET_VACATION");
