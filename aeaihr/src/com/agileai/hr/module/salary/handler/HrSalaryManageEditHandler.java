@@ -1,5 +1,7 @@
 package com.agileai.hr.module.salary.handler;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 import com.agileai.domain.DataParam;
@@ -14,6 +16,7 @@ import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.common.DateHelper;
 import com.agileai.hr.common.PrivilegeHelper;
 import com.agileai.hr.cxmodule.HrSalaryManage;
+import com.agileai.util.DateUtil;
 import com.agileai.util.StringUtil;
 
 public class HrSalaryManageEditHandler extends StandardEditHandler {
@@ -45,16 +48,29 @@ public class HrSalaryManageEditHandler extends StandardEditHandler {
 			}
 			setAttribute("hasRight", true);
 		}
-		
-		DataRow salRow = getService().getRecord(param);
-		String empId = salRow.getString("SAL_USER");
-		DataRow empRow = getService().getInductionAndCreateTime(empId);
-		Date inductionDate = (Date) empRow.get("EMP_INDUCTION_TIME");
-		String currentDate = param.get("salDate");
+		Date salDate = DateUtil.getDate(param.get("salDate")+"-01");
+		Date inductionDate = (Date)record.get("EMP_INDUCTION_TIME");
+		Date regularDate = (Date)record.get("EMP_REGULAR_TIME");
+		BigDecimal salProbation = (BigDecimal) record.get("SAL_PROBATION");
+		BigDecimal salRegular = (BigDecimal) record.get("SAL_BASIC");
+		BigDecimal salTotal = (BigDecimal) record.get("SAL_TOTAL");
+		BigDecimal validDays = (BigDecimal) record.get("SAL_VALID_DAYS");
+		BigDecimal salProbationDayMoney = new BigDecimal("0.0");
+		BigDecimal salRegularDayMoney = new BigDecimal("0.0");
+		if(DateUtil.getDateDiff(regularDate, salDate, DateUtil.DAY) >= 0){
+			salRegularDayMoney = salTotal.divide(validDays,2,RoundingMode.HALF_UP);
+		}else if(DateUtil.getDateDiff(regularDate, salDate, DateUtil.MONTH) == 0){
+			salProbationDayMoney = salProbation.divide(validDays, 2, RoundingMode.HALF_UP);
+			salRegularDayMoney = salRegular.divide(validDays, 2, RoundingMode.HALF_UP);
+		}else{
+			salProbationDayMoney = salProbation.divide(validDays, 2, RoundingMode.HALF_UP);
+		}		
+		this.setAttribute("salProbationDayMoney", salProbationDayMoney);
+		this.setAttribute("salRegularDayMoney", salRegularDayMoney);
 		DateHelper dateHelper = new DateHelper();
 		boolean isAddAttendance = false;
-		if(!StringUtil.isNullOrEmpty(currentDate)){
-			isAddAttendance = dateHelper.dateDuringMonth(inductionDate, currentDate);
+		if(!StringUtil.isNullOrEmpty(param.get("salDate"))){
+			isAddAttendance = dateHelper.dateDuringMonth(inductionDate, param.get("salDate"));
 		}
 		setAttribute("isAddAttendance", isAddAttendance);
 		this.setAttributes(record);

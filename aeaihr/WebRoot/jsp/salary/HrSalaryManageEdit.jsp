@@ -141,8 +141,11 @@ function addAttendance(){
 </td>
 </tr>
 <tr>
-	<th width="100" nowrap>人天费用</th>
-	<td><input id="SAL_DAY_MONEY" label="人天费用" name="SAL_DAY_MONEY" type="text" value="<%=pageBean.inputValue("SAL_DAY_MONEY")%>" size="24" class="text" readonly="readonly"/>	
+	<th width="100" nowrap>试用人天费用</th>
+	<td><input id=salProbationDayMoney label="试用人天费用" name="salProbationDayMoney" type="text" value="<%=pageBean.inputValue("salProbationDayMoney")%>" size="24" class="text" readonly="readonly"/>	
+</td>
+	<th width="100" nowrap>转正人天费用</th>
+	<td><input id="salRegularDayMoney" label="转正人天费用" name="salRegularDayMoney" type="text" value="<%=pageBean.inputValue("salRegularDayMoney")%>" size="24" class="text" readonly="readonly"/>	
 </td>
 </tr>
 <tr>
