@@ -17,6 +17,7 @@ import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.cxmodule.HrAttendanceManage;
 import com.agileai.util.DateUtil;
+import com.agileai.util.StringUtil;
 
 public class MobileAttendanceHandler extends BaseHandler {
 	
@@ -86,8 +87,10 @@ public class MobileAttendanceHandler extends BaseHandler {
     			Date atdInTime = (Date) dataRow.get("ATD_IN_TIME");
     			jsonObject.put("atdInTime", DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, atdInTime));
     			jsonObject.put("address", dataRow.get("ATD_IN_PLACE"));
-    			JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_IN_COORDINATE"));
-    			jsonObject.put("placeInfo", jsonObject1);
+    			if (StringUtil.isNotNullNotEmpty(dataRow.getString("ATD_IN_COORDINATE"))){
+    				JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_IN_COORDINATE"));
+        			jsonObject.put("placeInfo", jsonObject1);    				
+    			}
     		}
     		
         	responseText = jsonObject.toString();
@@ -152,14 +155,18 @@ public class MobileAttendanceHandler extends BaseHandler {
     			Date atdOutTime = (Date) dataRow.get("ATD_OUT_TIME");
     			jsonObject.put("atdOutTime", DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, atdOutTime));
     			jsonObject.put("address", dataRow.get("ATD_OUT_PLACE"));
-    			JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_OUT_COORDINATE"));
-    			jsonObject.put("placeInfo", jsonObject1);
+    			if (StringUtil.isNotNullNotEmpty(dataRow.getString("ATD_OUT_COORDINATE"))){
+    				JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_OUT_COORDINATE"));
+        			jsonObject.put("placeInfo", jsonObject1);    				
+    			}
     		}else{
     			jsonObject.put("isSignInOpera", "Y");
     			jsonObject.put("isSignOut", "N");
     			jsonObject.put("atdOutTime",DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, new Date()));
-    			JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_OUT_COORDINATE"));
-    			jsonObject.put("placeInfo", jsonObject1);
+    			if (StringUtil.isNotNullNotEmpty(dataRow.getString("ATD_OUT_COORDINATE"))){
+    				JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_OUT_COORDINATE"));
+        			jsonObject.put("placeInfo", jsonObject1);    				
+    			}
     		}
     		
         	responseText = jsonObject.toString();
