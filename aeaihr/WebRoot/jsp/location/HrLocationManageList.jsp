@@ -26,11 +26,11 @@ items="pageBean.rsList" csvFileName="定位查看.csv"
 retrieveRowsCallback="process" xlsFileName="定位查看.xls"
 useAjax="true" sortable="true"
 doPreload="false" toolbarContent="navigation|pagejump |pagesize |export|extend|status"
-width="100%" rowsDisplayed="${ec_rd == null ?20:ec_rd}"
+width="100%" rowsDisplayed="${ec_rd == null ?30:ec_rd}"
 listWidth="100%" 
 height="510px"
 >
-<ec:row styleClass="odd" ondblclick="clearSelection();doRequest('viewDetail')" oncontextmenu="selectRow(this,{LOCAT_ID:'${row.LOCAT_ID}'});refreshConextmenu()" onclick="selectRow(this,{LOCAT_ID:'${row.LOCAT_ID}'})">
+<ec:row styleClass="odd" oncontextmenu="selectRow(this,{LOCAT_ID:'${row.LOCAT_ID}'});refreshConextmenu()" onclick="selectRow(this,{LOCAT_ID:'${row.LOCAT_ID}'})">
 	<ec:column width="50" style="text-align:center" property="_0" title="序号" value="${GLOBALROWCOUNT}" />
 	<ec:column width="50" property="USER_NAME" title="姓名"   />
 	<ec:column width="50" property="LOCAT_TIME" title="时间" cell="date" format="yyyy-MM-dd HH:mm" />
