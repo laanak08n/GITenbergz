@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SecurityFactTreeSelect"> 
+<select id="queryPickTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	 SELECT a.ROLE_ID,a.ROLE_NAME,a.ROLE_SORT,b.GRP_ID,b.RG_ID FROM security_role_group_rel b 
+left Join security_role a ON a.ROLE_ID = b.ROLE_ID 
+where 1 = 1 
+<isNotEmpty prepend=" AND " property="orgId">
+b.GRP_ID = #orgId# 
+</isNotEmpty>
+order by a.ROLE_SORT,a.ROLE_CODE
+</select>
+<select id="findChildGroupRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	SELECT a.GRP_ID,a.GRP_NAME 
+FROM security_group a 
+where 1=1
+<isNotEmpty prepend=" AND " property="parentId">
+a.GRP_PID = #parentId#
+</isNotEmpty>
+order by a.GRP_SORT
+</select>
+  <select id="retrieveFactList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+SELECT  CONCAT(a.ROLE_NAME,"(",d.GRP_NAME,")") AS ROLE_NAME,a.ROLE_CODE,a.ROLE_ID,c.RG_ID
+FROM security_role a
+INNER JOIN security_role_group_rel b ON a.ROLE_ID = b.ROLE_ID
+INNER JOIN security_rg_auth c ON b.RG_ID = c.RG_ID
+INNER JOIN security_group d ON b.GRP_ID = d.GRP_ID 
+where 1=1
+    <isNotEmpty prepend=" AND " property="resourceType">RES_TYPE = #resourceType#</isNotEmpty>
+    <isNotEmpty prepend=" AND " property="resourceId">RES_ID = #resourceId#</isNotEmpty>
+GROUP BY ROLE_CODE
+  </select>
+<insert id="addFactAuthRelation" parameterClass="com.agileai.domain.DataParam" >
+    insert into security_rg_auth (RG_AUTH_ID,RG_ID,RES_TYPE,RES_ID)
+    select '$RG_AUTH_ID$','$RG_ID$','$RES_TYPE$','$RES_ID$' from dual 
+    where NOT EXISTS (select * from security_rg_auth where RG_ID = '$RG_ID$' and RES_TYPE='$RES_TYPE$' and RES_ID='$RES_ID$')
+</insert>
+
+<delete id="delFactAuthRelation" parameterClass="com.agileai.domain.DataParam">
+    delete from security_rg_auth where 1=1
+    <isNotEmpty prepend=" AND " property="RES_TYPE">RES_TYPE = #RES_TYPE#</isNotEmpty>
+    <isNotEmpty prepend=" AND " property="RES_ID">RES_ID = #RES_ID#</isNotEmpty>
+    <isNotEmpty prepend=" AND " property="RG_ID">RG_ID = #RG_ID#</isNotEmpty>
+  </delete>   
+  
+  <select id="findRootGroupRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	SELECT a.GRP_ID,a.GRP_NAME 
+FROM security_group a 
+where 1=1
+<isNotEmpty prepend=" AND " property="parentId">
+a.GRP_ID = #parentId#
+</isNotEmpty>
+order by a.GRP_SORT
+</select>   
+</sqlMap>

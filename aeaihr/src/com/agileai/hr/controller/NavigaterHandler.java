@@ -5,6 +5,8 @@ import com.agileai.hotweb.bizmoduler.frame.OnlineCounterService;
 import com.agileai.hotweb.common.BeanFactory;
 import com.agileai.hotweb.common.Constants;
 import com.agileai.hotweb.common.Constants.FrameHandlers;
+import com.agileai.hotweb.config.SharedConfig;
+import com.agileai.hotweb.config.SharedConfig.Keys;
 import com.agileai.hotweb.controller.core.BaseHandler;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
@@ -31,9 +33,16 @@ public class NavigaterHandler extends BaseHandler{
 	
 	public ViewRenderer doLogoutAction(DataParam param){
 		String casServerLogoutUrl = this.dispatchServlet.getServletContext().getInitParameter("casServerLogoutUrl");
+		String serverName = this.dispatchServlet.getServletContext().getInitParameter("serverName");
+		
+		SharedConfig sharedConfig = BeanFactory.instance().getSharedConfig();
+		if (sharedConfig.isEnable()){
+			casServerLogoutUrl = sharedConfig.getConfig(Keys.casServerLogoutUrl);
+			serverName = sharedConfig.getConfig(Keys.serverName);
+		}
+		
 		if (!StringUtil.isNullOrEmpty(casServerLogoutUrl)){
 			this.clearSession();
-			String serverName = this.dispatchServlet.getServletContext().getInitParameter("serverName");
 			String redirectUrl = casServerLogoutUrl + "?service="+ serverName+this.dispatchServlet.getServletContext().getContextPath();
 			return new RedirectRenderer(redirectUrl);
 		}else{

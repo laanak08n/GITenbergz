@@ -38,12 +38,6 @@
   <bean id="securityRoleTreeManageService" parent="transactionBase"> 
     <property name="target" ref="securityRoleTreeManageTarget"/> 
   </bean>  
-  <bean id="securityUserQueryTarget" class="com.agileai.hr.module.system.service.SecurityUserQueryImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="SecurityUserQuery"/> 
-  </bean>  
-  <bean id="securityUserQueryService" parent="transactionBase"> 
-    <property name="target" ref="securityUserQueryTarget"/> 
-  </bean>  
   <bean id="securityGroupTreeSelectTarget" class="com.agileai.hr.module.system.service.SecurityGroupTreeSelectImpl" parent="baseService"> 
     <property name="sqlNameSpace" value="SecurityGroupTreeSelect"/> 
   </bean>  
@@ -56,6 +50,67 @@
   <bean id="securityGroupQueryService" parent="transactionBase"> 
     <property name="target" ref="securityGroupQueryTarget"/> 
   </bean>  
+    <bean id="securityFactTreeSelectTarget" class="com.agileai.hr.module.system.service.SecurityFactTreeSelectImpl" parent="baseService">
+    <property name="sqlNameSpace" value="SecurityFactTreeSelect"/>
+  </bean>
+  <bean id="securityFactTreeSelectService" parent="transactionBase">
+    <property name="target" ref="securityFactTreeSelectTarget"/>
+  </bean>
+   <bean id="securityUserManageTarget" class="com.agileai.hr.module.system.service.SecurityUserManageImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SecurityUserManage"/> 
+    <property name="tabIdAndTableNameMapping"> 
+      <map> 
+        <entry key="SecurityUser"> 
+          <value>security_user</value> 
+        </entry> 
+      </map> 
+    </property> 
+     <property name="tabIdAndColFieldMapping"> 
+      <map> 
+        <entry key="SecurityUser"> 
+          <value>GRP_ID</value> 
+        </entry> 
+      </map> 
+    </property>
+     <property name="tabIdAndTableModeMapping"> 
+      <map> 
+        <entry key="SecurityUser"> 
+          <value>Many2ManyAndRel</value> 
+        </entry> 
+      </map> 
+    </property> 
+  </bean>
+  <bean id="securityUserManageService" parent="transactionBase"> 
+    <property name="target" ref="securityUserManageTarget"/> 
+  </bean> 
+  <bean id="securityUserGRManageTarget" class="com.agileai.hr.module.system.service.SecurityUserGRManageImpl" parent="baseService">
+    <property name="sqlNameSpace" value="SecurityUserGRManage"/>
+    <property name="tableName" value="security_group"/>
+    <property name="tabIdAndTableNameMapping">
+      <map>
+        <entry key="Position">
+          <value>position</value>
+        </entry>
+      </map>
+    </property>
+    <property name="tabIdAndColFieldMapping">
+      <map>
+        <entry key="Position">
+          <value>ORG_ID</value>
+        </entry>
+      </map>
+    </property>
+    <property name="tabIdAndTableModeMapping">
+      <map>
+        <entry key="Position">
+          <value>Many2ManyAndRel</value>
+        </entry>
+      </map>
+    </property>
+  </bean>
+  <bean id="securityUserGRManageService" parent="transactionBase">
+    <property name="target" ref="securityUserGRManageTarget"/>
+  </bean> 
   <bean id="securityUserTreeSelectTarget" class="com.agileai.hr.module.system.service.SecurityUserTreeSelectImpl" parent="baseService"> 
     <property name="sqlNameSpace" value="SecurityUserTreeSelect"/> 
   </bean>  

@@ -22,7 +22,7 @@ img {
 	padding:0px;
 	margin:0px;
 	text-align:left;
-font-family: "ï¿½ï¿½ï¿½ï¿½","Verdana","Arial","Helvetica","sans-serif";
+font-family: "ËÎÌå","Verdana","Arial","Helvetica","sans-serif";
 
 
 }
@@ -302,7 +302,9 @@ scrollbar-track-color:#EEEEEE;
   border :1px solid #aac0dd;
   overflow:visible;
   background-image:url(../images/gird/footerBg.gif); 
+  /*
   width:100%;
+  */
 }
 .ecSide .toolbarTable {
 width:100%;

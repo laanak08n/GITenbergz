@@ -9,4 +9,7 @@
   <sqlMap resource="sqlmap/SecurityUserTreeSelect.xml"/>  
   <sqlMap resource="sqlmap/SecurityRoleTreeSelect.xml"/>  
   <sqlMap resource="sqlmap/WcmGeneralGroup8Associates.xml"/>  
+  <sqlMap resource="sqlmap/SecurityUserManage.xml"/>  
+  <sqlMap resource="sqlmap/SecurityUserGRManage.xml"/>     
+  <sqlMap resource="sqlmap/SecurityFactTreeSelect.xml"/>
 </sqlMapConfig>

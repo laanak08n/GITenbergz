@@ -5,4 +5,5 @@ import com.agileai.hotweb.bizmoduler.frame.FunctionManage;
 
 public interface FunctionTreeManage
         extends TreeManage,FunctionManage {
+	
 }

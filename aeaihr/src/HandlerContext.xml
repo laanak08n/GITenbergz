@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<beans> 
-  <bean id="Homepage" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Homepage.jsp"/>  
-  <bean id="MenuTree" class="com.agileai.hr.controller.MenuTreeHandler" page="frame/MenuTree.jsp"/>  
-  <bean id="Navigater" class="com.agileai.hr.controller.NavigaterHandler" page="frame/Navigater.jsp"/>  
-  <bean id="Login" class="com.agileai.hr.controller.LoginHandler" page="frame/Login.jsp"/>  
-  <bean id="MainWin" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/MainWin.jsp"/>  
-  <bean id="Bottom" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Bottom.jsp"/>  
-  <bean id="Logo" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Logo.jsp"/>  
-  <bean id="Building" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Building.jsp"/>  
-  <bean id="CodeTypeManageList" class="com.agileai.hotweb.controller.frame.CodeTypeManageListHandler" page="frame/CodeTypeManageList.jsp"/>  
-  <bean id="CodeTypeManageEdit" class="com.agileai.hotweb.controller.frame.CodeTypeManageEditHandler" page="frame/CodeTypeManageEdit.jsp"/>  
-  <bean id="CodeListManageList" class="com.agileai.hotweb.controller.frame.CodeListManageListHandler" page="frame/CodeListManageList.jsp"/>  
-  <bean id="CodeListManageEdit" class="com.agileai.hotweb.controller.frame.CodeListManageEditHandler" page="frame/CodeListManageEdit.jsp"/>  
-  <bean id="MenuDataProvider" class="com.agileai.hr.controller.MenuDataProviderHandler" page=""/>
-  <bean id="ModuleCycle" class="com.agileai.hotweb.controller.core.ModuleCycleHandler" page=""/>
-  <bean id="WxSignIn" class="com.agileai.hr.controller.WxSignInHandler" page="weixin/WxSignIn.jsp"/>  
-  <bean id="WxSignOut" class="com.agileai.hr.controller.WxSignOutHandler" page="weixin/WxSignOut.jsp"/>  
-  <bean id="WxBind" class="com.agileai.hr.controller.WxBindHandler" page="weixin/WxBind.jsp"/>
+<beans>
+	<bean id="Homepage" class="com.agileai.hotweb.controller.HomepageHandler" page="frame/Homepage.jsp"/>
+	<bean id="MenuTree" class="com.agileai.hr.controller.MenuTreeHandler" page="frame/MenuTree.jsp"/>
+	<bean id="Navigater" class="com.agileai.hr.controller.NavigaterHandler" page="frame/Navigater.jsp"/>
+	<bean id="Login" class="com.agileai.hr.controller.LoginHandler" page="frame/Login.jsp"/>
+	<bean id="MainWin" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/MainWin.jsp"/>
+	<bean id="Bottom" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Bottom.jsp"/>  
+	<bean id="Logo" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Logo.jsp"/>
+	<bean id="Building" class="com.agileai.hotweb.controller.core.SimpleHandler" page="frame/Building.jsp"/>
+	<bean id="CodeTypeManageList" class="com.agileai.hotweb.controller.frame.CodeTypeManageListHandler" page="frame/CodeTypeManageList.jsp"/>
+	<bean id="CodeTypeManageEdit" class="com.agileai.hotweb.controller.frame.CodeTypeManageEditHandler" page="frame/CodeTypeManageEdit.jsp"/>
+	<bean id="CodeListManageList" class="com.agileai.hotweb.controller.frame.CodeListManageListHandler" page="frame/CodeListManageList.jsp"/>
+	<bean id="CodeListManageEdit" class="com.agileai.hotweb.controller.frame.CodeListManageEditHandler" page="frame/CodeListManageEdit.jsp"/>
+    <bean id="MenuDataProvider" class="com.agileai.hr.controller.MenuDataProviderHandler" page=""/>
+    <bean id="ModuleCycle" class="com.agileai.hotweb.controller.core.ModuleCycleHandler" page=""/>
+    <bean id="WxSignIn" class="com.agileai.hr.controller.WxSignInHandler" page="weixin/WxSignIn.jsp"/>  
+  	<bean id="WxSignOut" class="com.agileai.hr.controller.WxSignOutHandler" page="weixin/WxSignOut.jsp"/>  
+  	<bean id="WxBind" class="com.agileai.hr.controller.WxBindHandler" page="weixin/WxBind.jsp"/>	
 </beans>

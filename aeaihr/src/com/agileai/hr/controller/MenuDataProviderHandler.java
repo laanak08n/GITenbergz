@@ -28,7 +28,6 @@ public class MenuDataProviderHandler extends BaseHandler{
 	
 	public ViewRenderer prepareDisplay(DataParam param){
 		String userId = param.get("userId");
-		String folderId = param.get("folderId");
 		SecurityAuthorizationConfig authorizationConfig = 
 				(SecurityAuthorizationConfig)this.lookupService("securityAuthorizationConfigService");
 		DataRow userRow = authorizationConfig.retrieveUserRecord(userId);
@@ -39,7 +38,6 @@ public class MenuDataProviderHandler extends BaseHandler{
 		TreeBuilder treeBuilder = new TreeBuilder(funcRecords,"funcId","funcName","funcPid");
 		treeBuilder.setTypeKey("funcType");
 		treeBuilder.setPojoList(true);
-		treeBuilder.setRootId(folderId);
 		TreeModel treeModel = treeBuilder.buildTreeModel();
 		List<TreeModel> treeModels = treeModel.getChildren();
 		JSONObject jsonObject = new JSONObject();
@@ -69,11 +67,7 @@ public class MenuDataProviderHandler extends BaseHandler{
 			JSONObject jsonObject, String menuURLPrefix)throws JSONException {
 		jsonObject.put("id",treeModel.getId());
 		jsonObject.put("text", treeModel.getName());
-		String funcURL = (String)treeModel.getProperty().get("funcUrl");
-		if (funcURL.startsWith("index")){
-    		funcURL = menuURLPrefix + funcURL + "&__function_id__="+treeModel.getId();
-    	}
-		jsonObject.put("url", funcURL);
+		jsonObject.put("url",menuURLPrefix + treeModel.getProperty().get("funcUrl"));
 		jsonObject.put("height", "");
 		
 		List<TreeModel> children = treeModel.getChildren();

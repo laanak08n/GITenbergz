@@ -4,7 +4,7 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="util">
   <select id="getCodeList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
-	select code_id as "id",code_name as "value"
+	select code_id as "id",code_name as "value",code_desc as "descr" 
 	from sys_codelist
 	where type_id = '$TYPE_ID$'
 	order by code_sort

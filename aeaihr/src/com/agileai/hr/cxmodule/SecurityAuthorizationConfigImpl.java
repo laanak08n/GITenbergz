@@ -181,6 +181,13 @@ public class SecurityAuthorizationConfigImpl extends BaseService implements
 		DataParam param = new DataParam("userId",userId);
 		return this.daoHelper.queryRecords(statementId, param);
 	}
+	
+	@Override
+	public List<DataRow> retrieveGroupRoleRecords(String userId) {
+		String statementId = this.sqlNameSpace + ".retrieveGroupRoleRecords";
+		DataParam param = new DataParam("userId",userId);
+		return this.daoHelper.queryRecords(statementId, param);
+	}	
 
 	@Override
 	public List<String> retrieveMenuIdList(String userId) {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<service id="Salary" type="Rest" implClass="com.agileai.hr.module.salary.exteral.SalaryImpl" address="/Salary">
+		<auth type="IpWhiteList">
+			<property name="IpAddress">localhost,127.0.0.1,192.168.1.118</property>
+		</auth>
+	</service>
+</beans>

@@ -4,15 +4,15 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="SecurityGroup8Associates">  
   <select id="queryTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
-	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT
+	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK
 from security_group order by GRP_PID,GRP_SORT
   </select>
   <select id="queryPickTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
-	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT
+	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK
 from security_group order by GRP_PID,GRP_SORT
   </select>
   <select id="queryTreeRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
-	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT
+	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK
 from security_group
 where 1=1 
 <isNotEmpty prepend="and " property="GRP_ID">
@@ -22,8 +22,28 @@ GRP_ID=#GRP_ID#
 GRP_CODE=#GRP_CODE#
 </isNotEmpty>
   </select> 
+  <select id="queryTreeorgNameRecords"  parameterClass="String" resultClass="com.agileai.domain.DataRow">
+	select GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK
+from security_group
+where 1=1 
+where  GRP_ID=#value#
+  </select>
+   <select id="queryTreeTypeRecords"  parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">	
+	SELECT GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK
+FROM security_group
+  </select>
+  <select id="findPositionRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	SELECT b.ROLE_ID,b.ROLE_CODE,b.ROLE_NAME,b.ROLE_PID,b.ROLE_DESC,b.ROLE_STATE,b.ROLE_SORT,c.GRP_ID,c.GRP_CODE,a.RG_ID
+FROM
+security_role_group_rel AS a
+INNER JOIN security_role AS b ON b.ROLE_ID = a.ROLE_ID
+INNER JOIN security_group AS c ON a.GRP_ID = c.GRP_ID
+<isNotEmpty prepend=" " property="columnId">
+and a.GRP_ID=#columnId#
+</isNotEmpty>
+  </select>
   <insert id="insertTreeRecord" parameterClass="com.agileai.domain.DataParam">
-    insert into security_group (GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT) values (#GRP_ID#,#GRP_CODE#,#GRP_NAME#,#GRP_PID#,#GRP_DESC#,#GRP_STATE#,#GRP_SORT#)
+    insert into security_group (GRP_ID,GRP_CODE,GRP_NAME,GRP_PID,GRP_DESC,GRP_STATE,GRP_SORT,GRP_TYPE,GRP_RANK) values (#GRP_ID#,#GRP_CODE#,#GRP_NAME#,#GRP_PID#,#GRP_DESC#,#GRP_STATE#,#GRP_SORT#,#GRP_TYPE#,#GRP_RANK#)
   </insert>  
   <update id="updateTreeRecord" parameterClass="com.agileai.domain.DataParam">
 	update security_group
@@ -47,23 +67,9 @@ on a.GRP_PID=b.GRP_PID
 where a.GRP_ID=#value#
 order by b.GRP_SORT
   </select>  
-  <select id="findSecurityUserRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
-	select a.USER_ID,a.USER_CODE,a.USER_NAME,a.USER_PWD,a.USER_SEX,a.USER_DESC,a.USER_STATE,a.USER_SORT,a.USER_MAIL,a.USER_PHONE
-	,b.GRP_ID,b.GRP_NAME
-from security_user a ,security_group b,security_user_group_rel c 
-where a.USER_ID = c.USER_ID
-and b.GRP_ID = c.GRP_ID
-<isNotEmpty prepend=" " property="columnId">
-and b.GRP_ID=#columnId#
-</isNotEmpty>
-<isNotEmpty prepend=" " property="userCode">
-and a.USER_CODE like '%$userCode$%'
-</isNotEmpty>
-<isNotEmpty prepend=" " property="userName">
-and a.USER_NAME like '%$userName$%'
-</isNotEmpty>
-order by a.USER_SORT
-  </select>
+ <delete id="delGroupTreeRelation" parameterClass="com.agileai.domain.DataParam">
+    delete from security_role_group_rel where ROLE_ID = #ROLE_ID# and GRP_ID = #groupId#
+  </delete> 
   <select id="getSecurityUserRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	select USER_ID,USER_CODE,USER_NAME,USER_PWD,USER_SEX,USER_DESC,USER_STATE,USER_SORT,USER_MAIL,USER_PHONE
 from security_user
@@ -93,12 +99,9 @@ where USER_ID=#USER_ID#
   </delete>
   <select id="querySecurityUserRelation" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	select GRP_ID,USER_ID
-	from security_user_group_rel
-	where 1=1
-	<isNotEmpty prepend=" and " property="GRP_ID">
-	GRP_ID=#GRP_ID#
-	</isNotEmpty>
-	and USER_ID=#USER_ID#
+from security_user_group_rel
+where GRP_ID=#GRP_ID#
+and USER_ID=#USER_ID#
   </select>
   <insert id="insertSecurityUserRelation" parameterClass="com.agileai.domain.DataParam">
 	insert into security_user_group_rel (GRP_ID,USER_ID) values (#GRP_ID#,#USER_ID#)
@@ -111,4 +114,9 @@ where USER_ID=#USER_ID#
 where GRP_ID=#GRP_ID#
 and USER_ID=#USER_ID#
   </delete>
+   <select id="queryRelationRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
+	select RG_ID,GRP_ID,ROLE_ID
+from security_role_group_rel
+where GRP_ID=#value#
+  </select> 
 </sqlMap>

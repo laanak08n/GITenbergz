@@ -77,12 +77,22 @@
 	</isNotEmpty>
   </select> 
   <select id="retrieveRoleRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
-	SELECT a.ROLE_ID, a.ROLE_CODE,a.ROLE_NAME,b.USER_ID
-	FROM security_role a
-	Inner Join security_user_role_rel b 
-	ON a.ROLE_ID = b.ROLE_ID
-	where b.USER_ID = #userId#
-	and a.ROLE_STATE = 1
+	SELECT distinct r.ROLE_ID,r.ROLE_CODE,r.ROLE_NAME,rg_rel.USER_ID
+	FROM security_role r
+	INNER JOIN security_role_group_rel rg ON r.ROLE_ID = rg.ROLE_ID
+	INNER JOIN security_group g ON rg.GRP_ID = g.GRP_ID
+	INNER JOIN security_user_rg_rel rg_rel ON rg.RG_ID = rg_rel.RG_ID 
+	where r.ROLE_STATE = 1 and g.GRP_STATE = 1
+	and rg_rel.USER_ID =  #userId#
+  </select>
+  <select id="retrieveGroupRoleRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	SELECT r.ROLE_ID,r.ROLE_CODE,r.ROLE_NAME,rg.RG_ID,g.GRP_ID,g.GRP_CODE,g.GRP_NAME,rg_rel.USER_ID
+	FROM security_role r
+	INNER JOIN security_role_group_rel rg ON r.ROLE_ID = rg.ROLE_ID
+	INNER JOIN security_group g ON rg.GRP_ID = g.GRP_ID
+	INNER JOIN security_user_rg_rel rg_rel ON rg.RG_ID = rg_rel.RG_ID 
+	where r.ROLE_STATE = 1 and g.GRP_STATE = 1
+	and rg_rel.USER_ID =  #userId#
   </select> 
   <select id="retrieveGroupRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	SELECT a.GRP_ID,a.GRP_CODE,a.GRP_NAME,b.USER_ID
@@ -108,17 +118,23 @@
 	SELECT nav.FUNC_ID,nav.FUNC_NAME
 	FROM sys_function nav Inner Join security_role_auth rauth 
 	ON nav.FUNC_ID = rauth.RES_ID
-	inner join security_role r
-	on rauth.ROLE_ID = r.ROLE_ID
-	inner join security_user_role_rel ur
-	on r.ROLE_ID = ur.ROLE_ID
-	inner join security_user u
-	on ur.USER_ID = u.USER_ID
-	where 1=1
+	inner join security_role r on rauth.ROLE_ID = r.ROLE_ID
+	INNER JOIN security_role_group_rel rg ON r.ROLE_ID = rg.ROLE_ID
+	INNER JOIN security_group g ON rg.GRP_ID = g.GRP_ID
+	INNER JOIN security_user_rg_rel rg_rel ON rg.RG_ID = rg_rel.RG_ID 
+	where r.ROLE_STATE = 1 and g.GRP_STATE = 1
+	and rg_rel.USER_ID =  #userId#
 	and rauth.RES_TYPE = 'Menu'
-	and ur.USER_ID = #userId#
-	and u.USER_STATE = 1
-	and r.ROLE_STATE = 1
+	UNION
+	SELECT nav.FUNC_ID,nav.FUNC_NAME
+	FROM sys_function nav Inner Join security_rg_auth rgauth 
+	ON nav.FUNC_ID = rgauth.RES_ID
+	INNER JOIN security_role_group_rel rg ON rgauth.RG_ID = rg.RG_ID
+	INNER JOIN security_group g ON rg.GRP_ID = g.GRP_ID
+	INNER JOIN security_user_rg_rel rg_rel ON rg.RG_ID = rg_rel.RG_ID 
+	where g.GRP_STATE = 1
+	and rg_rel.USER_ID =  #userId#
+	and rgauth.RES_TYPE = 'Menu'
 	UNION
 	SELECT nav.FUNC_ID,	nav.FUNC_NAME
 	FROM sys_function nav Inner Join security_group_auth rauth 
@@ -154,17 +170,23 @@
 	SELECT nav.HANLER_ID,nav.HANLER_CODE
 	FROM sys_handler nav Inner Join security_role_auth rauth 
 	ON nav.HANLER_ID = rauth.RES_ID
-	inner join security_role r
-	on rauth.ROLE_ID = r.ROLE_ID
-	inner join security_user_role_rel ur
-	on r.ROLE_ID = ur.ROLE_ID
-	inner join security_user u
-	on ur.USER_ID = u.USER_ID
-	where 1=1
+	inner join security_role r on rauth.ROLE_ID = r.ROLE_ID
+	INNER JOIN security_role_group_rel rg ON r.ROLE_ID = rg.ROLE_ID
+	INNER JOIN security_group g ON rg.GRP_ID = g.GRP_ID
+	INNER JOIN security_user_rg_rel rg_rel ON rg.RG_ID = rg_rel.RG_ID 
+	where r.ROLE_STATE = 1 and g.GRP_STATE = 1
+	and rg_rel.USER_ID = #userId#
 	and rauth.RES_TYPE = 'Handler'
-	and ur.USER_ID = #userId#
-	and u.USER_STATE = 1
-	and r.ROLE_STATE = 1
+	UNION
+	SELECT nav.HANLER_ID,nav.HANLER_CODE
+	FROM sys_handler nav Inner Join security_rg_auth rgauth 
+	ON nav.HANLER_ID = rgauth.RES_ID
+	INNER JOIN security_role_group_rel rg ON rgauth.RG_ID = rg.RG_ID
+	INNER JOIN security_group g ON rg.GRP_ID = g.GRP_ID
+	INNER JOIN security_user_rg_rel rg_rel ON rg.RG_ID = rg_rel.RG_ID 
+	where g.GRP_STATE = 1
+	and rg_rel.USER_ID = #userId#
+	and rgauth.RES_TYPE = 'Handler'	
 	UNION
 	SELECT nav.HANLER_ID,	nav.HANLER_CODE
 	FROM sys_handler nav Inner Join security_group_auth rauth 
@@ -182,9 +204,7 @@
 	and g.GRP_STATE = 1
 	) aa
   </select>
-  
-  
-    <select id="retrieveOperationIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  <select id="retrieveOperationIdList" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	select DISTINCT aa.OPER_ID,aa.OPER_NAME
 	from 
 	(
@@ -201,17 +221,23 @@
 	SELECT nav.OPER_ID,nav.OPER_NAME
 	FROM sys_operation nav Inner Join security_role_auth rauth 
 	ON nav.OPER_ID = rauth.RES_ID
-	inner join security_role r
-	on rauth.ROLE_ID = r.ROLE_ID
-	inner join security_user_role_rel ur
-	on r.ROLE_ID = ur.ROLE_ID
-	inner join security_user u
-	on ur.USER_ID = u.USER_ID
-	where 1=1
+	inner join security_role r on rauth.ROLE_ID = r.ROLE_ID
+	INNER JOIN security_role_group_rel rg ON r.ROLE_ID = rg.ROLE_ID
+	INNER JOIN security_group g ON rg.GRP_ID = g.GRP_ID
+	INNER JOIN security_user_rg_rel rg_rel ON rg.RG_ID = rg_rel.RG_ID 
+	where r.ROLE_STATE = 1 and g.GRP_STATE = 1
+	and rg_rel.USER_ID =  #userId#
 	and rauth.RES_TYPE = 'Operation'
-	and ur.USER_ID = #userId#
-	and u.USER_STATE = 1
-	and r.ROLE_STATE = 1
+	UNION
+	SELECT nav.OPER_ID,nav.OPER_NAME
+	FROM sys_operation nav Inner Join security_rg_auth rgauth 
+	ON nav.OPER_ID = rgauth.RES_ID
+	INNER JOIN security_role_group_rel rg ON rgauth.RG_ID = rg.RG_ID
+	INNER JOIN security_group g ON rg.GRP_ID = g.GRP_ID
+	INNER JOIN security_user_rg_rel rg_rel ON rg.RG_ID = rg_rel.RG_ID 
+	where g.GRP_STATE = 1
+	and rg_rel.USER_ID = #userId#
+	and rgauth.RES_TYPE = 'Operation'	
 	UNION
 	SELECT nav.OPER_ID,	nav.OPER_NAME
 	FROM sys_operation nav Inner Join security_group_auth rauth 

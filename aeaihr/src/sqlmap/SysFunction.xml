@@ -4,24 +4,24 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="SysFunction">  
   <select id="queryTreeRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
-	select a.FUNC_ID,a.FUNC_NAME,a.FUNC_TYPE,a.MAIN_HANDLER,b.HANLER_CODE,b.HANLER_URL,a.FUNC_PID,a.FUNC_STATE,a.FUNC_SORT,a.FUNC_DESC
+	select a.FUNC_ID,a.FUNC_NAME,a.FUNC_TYPE,a.MAIN_HANDLER,b.HANLER_CODE,b.HANLER_URL,a.FUNC_PID,a.FUNC_STATE,a.FUNC_SORT,a.FUNC_DESC,a.FUNC_ICON
 	from sys_function a left join sys_handler b
 	on a.MAIN_HANDLER = b.HANLER_ID
 	order by FUNC_PID,FUNC_SORT
   </select>
   <select id="queryCurLevelRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
-    select b.FUNC_ID,b.FUNC_NAME,b.FUNC_TYPE,b.MAIN_HANDLER,b.FUNC_PID,b.FUNC_STATE,b.FUNC_SORT,b.FUNC_DESC
+    select b.FUNC_ID,b.FUNC_NAME,b.FUNC_TYPE,b.MAIN_HANDLER,b.FUNC_PID,b.FUNC_STATE,b.FUNC_SORT,b.FUNC_DESC,b.FUNC_ICON
 	from sys_function a left join sys_function b 
 	on a.FUNC_PID=b.FUNC_PID
 	where a.FUNC_ID=#value#
 	order by b.FUNC_SORT
   </select>
   <select id="queryChildRecords" parameterClass="String" resultClass="com.agileai.domain.DataRow">
-    select FUNC_ID,FUNC_NAME,FUNC_TYPE,MAIN_HANDLER,FUNC_PID,FUNC_STATE,FUNC_SORT,FUNC_DESC
+    select FUNC_ID,FUNC_NAME,FUNC_TYPE,MAIN_HANDLER,FUNC_PID,FUNC_STATE,FUNC_SORT,FUNC_DESC,FUNC_ICON
 	from sys_function where FUNC_PID = #value# order by FUNC_SORT
   </select>  
   <select id="queryTreeRecord" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
-    select a.FUNC_ID,a.FUNC_NAME,a.FUNC_TYPE,b.HANLER_CODE as MAIN_HANDLER,a.FUNC_PID,a.FUNC_STATE,a.FUNC_SORT,a.FUNC_DESC
+    select a.FUNC_ID,a.FUNC_NAME,a.FUNC_TYPE,b.HANLER_CODE as MAIN_HANDLER,a.FUNC_PID,a.FUNC_STATE,a.FUNC_SORT,a.FUNC_DESC,a.FUNC_ICON
 	from sys_function a
 	left join sys_handler b
 	on a.MAIN_HANDLER = b.HANLER_ID
@@ -38,7 +38,7 @@
   </insert>
   <update id="updateTreeRecord" parameterClass="com.agileai.domain.DataParam">
     update sys_function
-	set FUNC_NAME=#FUNC_NAME#,FUNC_PID=#FUNC_PID#,FUNC_STATE=#FUNC_STATE#,FUNC_SORT=#FUNC_SORT#,FUNC_DESC=#FUNC_DESC#
+	set FUNC_NAME=#FUNC_NAME#,FUNC_PID=#FUNC_PID#,FUNC_STATE=#FUNC_STATE#,FUNC_SORT=#FUNC_SORT#,FUNC_DESC=#FUNC_DESC#,FUNC_ICON=#FUNC_ICON#
 	where FUNC_ID=#FUNC_ID#
   </update>
   <delete id="deleteTreeRecord" parameterClass="String">
