@@ -25,7 +25,7 @@ public class AttendanceImpl extends BaseRestService implements Attendance {
 	public String findAroundBuilding(String location) {
 		String responseText = null;
 		try {
-			String url = "https://restapi.amap.com/v3/place/around?location="+location+"&types=%E5%95%86%E5%8A%A1%E4%BD%8F%E5%AE%85&offset=10&page=1&radius=1000&output=json&key=c65021cd6043c78e7dd473ac1f9233a1";
+			String url = "https://restapi.amap.com/v3/place/around?location="+location+"&types=%E5%95%86%E5%8A%A1%E4%BD%8F%E5%AE%85%7C%E5%85%AC%E5%8F%B8%E4%BC%81%E4%B8%9A&offset=10&page=1&radius=1000&output=json&key=c65021cd6043c78e7dd473ac1f9233a1";
 			HttpClientHelper httpClientHelper = new HttpClientHelper();
 			String jsonStr = httpClientHelper.retrieveGetReponseText(url);
 	        JSONObject jsonObject = new JSONObject(jsonStr);
