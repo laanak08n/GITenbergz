@@ -22,7 +22,7 @@ var addAttendanceBox;
 function addAttendance(){
 	var title = '添加考勤';
 	if(!addAttendanceBox){
-		addAttendanceBox = new PopupBox('addAttendanceBox',title,{size:'normal',height:'300px',top:'10px',scroll:'yes'});
+		addAttendanceBox = new PopupBox('addAttendanceBox',title,{size:'normal',width:'400px',height:'300px',top:'10px',scroll:'yes'});
 	}
 	var salUser = $("#SAL_USER").val();
 	var year = $("#SAL_YEAR").val();

@@ -15,7 +15,8 @@ function addDateRow(days,nextDate){
 	$("#atdDay tr:last").append('<th width="100" nowrap="nowrap">第'+(days+1)+'天</th>');
 	$("#atdDay tr:last").append('<td width="10" nowrap="nowrap"><input name="EMP_INDUCTION_TIME'+days+'" type="text" class="text" id="EMP_INDUCTION_TIME'+days+'" value="'+nextDate+'" size="16" readonly="readonly" label="日期" /></td>');
 	$("#atdDay tr:last").append('<td>&nbsp;&nbsp;<img id="EMP_INDUCTION_TIMEPicker'+days+'" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" /></td>');	
-	$("#atdDay tr:last").append('<td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="deleteDate('+days+')"><input id="deleteImgBtn" value="&nbsp;" title="删除"  type="button"  class="delImgBtn" />删除</td>');
+	$("#atdDay tr:last").append('<td>&nbsp;<img id="delImgBtn" style="display: inline;" src="images/delete.gif" width="16" height="16" onclick="deleteDate('+days+')"></td>')
+	
 	$("#atdDay").append('<input type="hidden" name="attendanceDate'+days+'" id="attendanceDate'+days+'" value="'+nextDate+'" />');
 	
 	initCalendar('EMP_INDUCTION_TIME'+days,'%Y-%m-%d','EMP_INDUCTION_TIMEPicker'+days);
@@ -24,7 +25,11 @@ function addDateRow(days,nextDate){
 
 function addAttendance(){
 	var days = $("#atdDay tr").length;
-	var lastDate = $("#EMP_INDUCTION_TIME"+(days-1)).val();
+	if(days > 0){
+		var lastDate = $("#EMP_INDUCTION_TIME"+(days-1)).val();
+	}else{
+		
+	}
 	var nextDate = addDay(lastDate);
 	addDateRow(days,nextDate);
 }
@@ -52,9 +57,18 @@ function saveAttendance(){
 	}});
 }
 
-function addDay(date){
-	var nextDate = ""+date.slice(0,8)+("0"+(parseInt(date.slice(-2))+1)).slice(-2);
-	return nextDate;
+function addDay(dateStr){
+	var date = new Date(dateStr);
+	date.setDate(date.getDate()+1);
+	var dateVal = date.getDate();
+	if(dateVal < 10){
+		dateVal = '0'+dateVal;
+	}
+	var month = date.getMonth()+1;
+	if(month < 10){
+		month = '0'+month;
+	}
+	return date.getFullYear()+'-'+month+'-'+dateVal;
 }
 
 function deleteDate(n){
@@ -102,14 +116,13 @@ function deleteDate(n){
   	Date inductionDate = (Date)pageBean.getAttribute("EMP_INDUCTION_TIME");
   	for(int i = 0; i<addDate; i++){
   		Date nextDate = DateUtil.getDateAdd(inductionDate, 1, i);
-  		String nextDay = DateUtil.getDateByType(9, nextDate);
+  		String nextDay = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, nextDate);
   	%>
   	  <tr id="day<%=i%>">
 	    <th width="100" nowrap="nowrap">第<%=i+1%>天</th>
 	    <td width="10" nowrap="nowrap"><input name="EMP_INDUCTION_TIME<%=i%>" type="text" class="text" id="EMP_INDUCTION_TIME<%=i%>" value="<%=nextDay%>" size="16" readonly="readonly" label="日期" /></td>
 	    <td>&nbsp;&nbsp;<img id="EMP_INDUCTION_TIMEPicker<%=i%>" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" /></td>
-	    <aeai:previlege code="delete"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="deleteDate(<%=i%>)">
-	    <input id="deleteImgBtn" value="&nbsp;" title="删除"  type="button"  class="delImgBtn" />删除</td></aeai:previlege>
+	    <td>&nbsp;<img id="delImgBtn" style="display: inline;" src="images/delete.gif" width="16" height="16" onclick="deleteDate(<%=i%>)"></td>
 	  </tr>
 	  <input type="hidden" name="attendanceDate<%=i%>" id="attendanceDate<%=i%>" value="<%=nextDay%>" />
 	  <script>

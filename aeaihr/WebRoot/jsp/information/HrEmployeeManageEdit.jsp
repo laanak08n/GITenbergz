@@ -331,11 +331,11 @@ function revokeApproval(){
 	<td>
 	<input id="EMP_CREATE_TIME" label="创建时间" name="EMP_CREATE_TIME" type="text" value="<%=pageBean.inputValue("EMP_CREATE_TIME")%>" size="24" class="text" readonly="readonly" />
 	</td>
-</tr>
-<tr>
 	<th width="100" nowrap>是否缴纳社会保险</th>
 	<td>&nbsp;<%=pageBean.selectRadio("EMP_PAY_INSURE")%>
 	</td>
+</tr>
+<tr>
 	<th width="100" nowrap>是否参与薪资汇总</th>
 	<td>&nbsp;<%=pageBean.selectRadio("EMP_PARTICIPATE_SALARY")%>
 	</td>
