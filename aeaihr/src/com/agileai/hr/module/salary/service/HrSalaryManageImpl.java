@@ -468,7 +468,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				this.daoHelper.insertRecord(statementId, bonusPenaltyParam);
 			}
 		}
-		if(regularAnnualLaveAward.compareTo(new BigDecimal("0.00"))>0){
+		if(regularAnnualLaveAward.compareTo(new BigDecimal("0.00"))>0&&DateUtil.getDateDiff(date, regularTime, DateUtil.MONTH)>0){
 			DataParam param = new DataParam();
 			param.put("BP_ID", KeyGenerator.instance().genKey());
 			param.put("USER_ID", userCode);
