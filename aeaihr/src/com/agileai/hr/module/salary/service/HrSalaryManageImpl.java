@@ -236,10 +236,16 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		KeyGenerator keyGenerator = KeyGenerator.instance();
 		String statementId = "";
 		BigDecimal salFullTimeAward = new BigDecimal("0.0");
-		String validDayStr = param.get("SAL_VALID_DAYS");
-		int inAttend = currentMonthAttendRow.getInt("IN_NUM",0);
-		int outAttend = currentMonthAttendRow.getInt("OUT_NUM",0);
-		Double validDay = Double.valueOf(validDayStr);
+		BigDecimal validDay = (BigDecimal) param.getObject("SAL_VALID_DAYS");
+		int inAttend = 0 ;
+		int outAttend = 0;
+		if(!MapUtil.isNullOrEmpty(currentMonthAttendRow)){
+			inAttend = currentMonthAttendRow.getInt("IN_NUM",0);
+			outAttend = currentMonthAttendRow.getInt("OUT_NUM",0);
+		}
+		
+		BigDecimal inAttendDecimal = new BigDecimal(inAttend).add(BigDecimal.valueOf(3.0));
+		BigDecimal outAttendDecimal = new BigDecimal(outAttend).add(BigDecimal.valueOf(3.0));
 		boolean isLeave = false;
 		boolean isFullAttend = true;
 		if(!MapUtil.isNullOrEmpty(leaveDaysRow)){
@@ -250,7 +256,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 				isLeave = true;
 			}
 		}
-		if(inAttend+3<validDay||outAttend+3<validDay){
+		if(inAttendDecimal.compareTo(validDay)==-1||outAttendDecimal.compareTo(validDay)==-1){
 			isFullAttend = false;
 		}
 		if(!isLeave&&isFullAttend&&regularTime.compareTo(DateUtil.getDateAdd(date, DateUtil.DAY, -1)) <= 0){
