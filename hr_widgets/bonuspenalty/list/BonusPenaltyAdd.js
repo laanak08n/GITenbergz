@@ -5,8 +5,8 @@ angular.module('${menuCode}')
 		$scope.userList = rspJson;
 	});
 	
-	var url = '/aeaihr/services/FormSelectUtil/rest/codeList/BP_TYPE';
-	AppKit.getJsonApi(url).success(function(rspJson){
-		$scope.bpTypeSelect = rspJson;
-	});
+//	var url = '/aeaihr/services/FormSelectUtil/rest/codeList/BP_TYPE';
+//	AppKit.getJsonApi(url).success(function(rspJson){
+//		$scope.bpTypeSelect = rspJson;
+//	});
 });
