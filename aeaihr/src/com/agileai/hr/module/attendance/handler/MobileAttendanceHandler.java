@@ -49,8 +49,15 @@ public class MobileAttendanceHandler extends BaseHandler {
     		String atdDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, new Date());
     		String atdInTime = DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, new Date());
     		String atdInPlace = jsonObject.getString("address");
-    		
-    		DataParam createparam = new DataParam("USER_ID", userId,"ATD_DATE",atdDate,"ATD_IN_TIME",atdInTime,"ATD_IN_PLACE",atdInPlace);
+    		String house = jsonObject.getString("name");
+    		String lng = jsonObject.getString("lng");
+    		String lat = jsonObject.getString("lat");
+    		JSONObject jsonObject1 = new JSONObject();
+    		jsonObject1.put("lng",lng);
+    		jsonObject1.put("lat",lat);
+    		String coordinate = jsonObject1.toString();
+    		DataParam createparam = new DataParam("USER_ID", userId,"ATD_DATE",atdDate,"ATD_IN_TIME",atdInTime,
+    				"ATD_IN_COORDINATE",coordinate,"ATD_IN_PLACE",atdInPlace,"ATD_IN_HOUSE",house);
     		
     		getService().createRecord(createparam);
         	responseText = SUCCESS;
@@ -79,6 +86,8 @@ public class MobileAttendanceHandler extends BaseHandler {
     			Date atdInTime = (Date) dataRow.get("ATD_IN_TIME");
     			jsonObject.put("atdInTime", DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, atdInTime));
     			jsonObject.put("address", dataRow.get("ATD_IN_PLACE"));
+    			JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_IN_COORDINATE"));
+    			jsonObject.put("placeInfo", jsonObject1);
     		}
     		
         	responseText = jsonObject.toString();
@@ -105,8 +114,16 @@ public class MobileAttendanceHandler extends BaseHandler {
     				
     		String atdOutTime = DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, new Date());
     		String atdOutPlace = jsonObject.getString("address");
+    		String house = jsonObject.getString("name");
+    		String lng = jsonObject.getString("lng");
+    		String lat = jsonObject.getString("lat");
+    		JSONObject jsonObject1 = new JSONObject();
+    		jsonObject1.put("lng",lng);
+    		jsonObject1.put("lat",lat);
+    		String coordinate = jsonObject1.toString();
     		
-    		DataParam updateparam = new DataParam("ATD_ID", atdId,"ATD_OUT_TIME",atdOutTime,"ATD_OUT_PLACE",atdOutPlace);
+    		DataParam updateparam = new DataParam("ATD_ID", atdId,"ATD_OUT_TIME",atdOutTime,"ATD_OUT_PLACE",atdOutPlace,
+    				"ATD_OUT_COORDINATE",coordinate,"ATD_OUT_HOUSE",house);
     		
     		getService().updateRecord(updateparam);
         	responseText = SUCCESS;
@@ -135,10 +152,14 @@ public class MobileAttendanceHandler extends BaseHandler {
     			Date atdOutTime = (Date) dataRow.get("ATD_OUT_TIME");
     			jsonObject.put("atdOutTime", DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, atdOutTime));
     			jsonObject.put("address", dataRow.get("ATD_OUT_PLACE"));
+    			JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_OUT_COORDINATE"));
+    			jsonObject.put("placeInfo", jsonObject1);
     		}else{
     			jsonObject.put("isSignInOpera", "Y");
     			jsonObject.put("isSignOut", "N");
     			jsonObject.put("atdOutTime",DateUtil.getDateByType(DateUtil.YYMMDDHHMI_HORIZONTAL, new Date()));
+    			JSONObject jsonObject1 = new JSONObject(dataRow.getString("ATD_OUT_COORDINATE"));
+    			jsonObject.put("placeInfo", jsonObject1);
     		}
     		
         	responseText = jsonObject.toString();

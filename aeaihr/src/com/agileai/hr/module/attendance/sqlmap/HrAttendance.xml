@@ -6,7 +6,8 @@
 	<select id="findRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
 		select a.ATD_ID,a.ATD_DATE,a.USER_ID,b.USER_NAME as
-		USER_ID_NAME,a.ATD_IN_TIME,a.ATD_OUT_TIME,a.ATD_IN_PLACE,a.ATD_OUT_PLACE
+		USER_ID_NAME,a.ATD_IN_TIME,a.ATD_OUT_TIME,a.ATD_IN_PLACE,a.ATD_OUT_PLACE,
+		a.ATD_IN_COORDINATE,a.ATD_IN_HOUSE,a.ATD_OUT_COORDINATE,a.ATD_OUT_HOUSE
 		from hr_attendance a left join security_user b on a.USER_ID =
 		b.USER_ID
 		where 1=1
@@ -23,7 +24,8 @@
 	<select id="getRecord" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
 		select a.ATD_ID,a.ATD_DATE,a.USER_ID,b.USER_NAME as
-		USER_ID_NAME,a.ATD_IN_TIME,a.ATD_OUT_TIME,a.ATD_IN_PLACE,a.ATD_OUT_PLACE
+		USER_ID_NAME,a.ATD_IN_TIME,a.ATD_OUT_TIME,a.ATD_IN_PLACE,a.ATD_OUT_PLACE,
+		a.ATD_IN_COORDINATE,a.ATD_IN_HOUSE,a.ATD_OUT_COORDINATE,a.ATD_OUT_HOUSE
 		from hr_attendance a left join security_user b on a.USER_ID =
 		b.USER_ID
 		where 1=1
@@ -36,13 +38,13 @@
 	</select>
 	<insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
 		insert into hr_attendance
-		(ATD_ID,ATD_DATE,USER_ID,ATD_IN_TIME,ATD_IN_PLACE)values
-		(#ATD_ID:CHAR#,#ATD_DATE:DATETIME#,#USER_ID:CHAR#,#ATD_IN_TIME:DATETIME#,#ATD_IN_PLACE:VARCHAR#)
+		(ATD_ID,ATD_DATE,USER_ID,ATD_IN_TIME,ATD_IN_PLACE,ATD_IN_HOUSE,ATD_IN_COORDINATE)values
+		(#ATD_ID:CHAR#,#ATD_DATE:DATETIME#,#USER_ID:CHAR#,#ATD_IN_TIME:DATETIME#,#ATD_IN_PLACE:VARCHAR#,#ATD_IN_HOUSE:VARCHAR#,#ATD_IN_COORDINATE:VARCHAR#)
 	</insert>
 	<update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
 		update hr_attendance
 		set
-		ATD_OUT_TIME=#ATD_OUT_TIME:DATETIME#,ATD_OUT_PLACE=#ATD_OUT_PLACE:VARCHAR#
+		ATD_OUT_TIME=#ATD_OUT_TIME:DATETIME#,ATD_OUT_PLACE=#ATD_OUT_PLACE:VARCHAR#,ATD_OUT_COORDINATE=#ATD_OUT_COORDINATE:VARCHAR#,ATD_OUT_HOUSE=#ATD_OUT_HOUSE:VARCHAR#
 		where ATD_ID=#ATD_ID#
 	</update>
 	<select id="attendanceStatisticsRecords" parameterClass="com.agileai.domain.DataParam"
