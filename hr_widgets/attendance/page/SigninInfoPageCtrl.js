@@ -1,6 +1,26 @@
 angular.module('${menuCode}')
-.controller("${widgetCode}Ctrl",function($scope,$state,AppKit,$rootScope,$filter){
-	
+.controller("${widgetCode}Ctrl",function($scope,$state,AppKit,$rootScope,$filter,$http){
+	$scope.initSignInInfo=function(){
+		
+		var location = "123.432588,41.795673";
+		if($scope.options&&$scope.options.lng&&$scope.options.lat){
+			location = $scope.options.lng+","+$scope.options.lat;
+		}
+		var url = '/aeaihr/services/Attendance/rest/find-around-building/'+location;
+		var promise = AppKit.getJsonApi(url);
+		promise.success(function(rspJson){
+			$scope.positioninfos= rspJson;
+			$scope.atdInTime=new Date();
+			$scope.results=rspJson.pois;
+			if($scope.positioninfos.pois[0]){
+				$scope.titleName=$scope.positioninfos.pois[0].name;
+				$scope.titleAddress=$scope.positioninfos.pois[0].address;
+				var locationArr = $scope.positioninfos.pois[0].location.split(",");
+				$scope.mapOptions={"lng":locationArr[0],"lat":locationArr[1]};
+			} 
+		});
+	}
+	$scope.initSignInInfo();
 	
 	$scope.getSignState=function(){
 		AppKit.isLogin().success(function(data, status, headers, config){
@@ -23,12 +43,14 @@ angular.module('${menuCode}')
 	$scope.getSignState();
 	
 	$scope.setPosition=function(obj){
-		$scope.mapOptions={"lng":obj.location.lng,"lat":obj.location.lat};
-		$scope.lng=obj.location.lng;
-		$scope.lat=obj.location.lat;
+		var locationArr = obj.location.split(",");
+		$scope.mapOptions={"lng":locationArr[0],"lat":locationArr[1]};
+		$scope.lng=locationArr[0];
+		$scope.lat=locationArr[1];
 		$scope.atdInTime=new Date();
 		$scope.titleName=obj.name;
 		$scope.titleAddress=obj.address;
+		//$scope.mapOptions={"lng":locationArr[0],"lat":locationArr[1]};
 	}
 	
 	$scope.doConfirm=function(){
