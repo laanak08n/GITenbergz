@@ -380,8 +380,8 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		DataRow regularOverTimeRow = this.daoHelper.getRecord(statementId, new DataParam("userCode",userCode,"beginYear",regularTime,"currentDate",DateUtil.getEndOfMonth(date)));
 		BigDecimal beforeYearDecVacationDecimal = new BigDecimal("0");
 		BigDecimal lastOffsetVacationDecimal = new BigDecimal("0");
-		BigDecimal probationOverTimeDecimal = null;
-		BigDecimal regularOverTimeDecimal = null;
+		BigDecimal probationOverTimeDecimal =  new BigDecimal("0.0");
+		BigDecimal regularOverTimeDecimal = new BigDecimal("0.0");
 		if(!MapUtil.isNullOrEmpty(lastOffsetVacationRow)){
 			lastOffsetVacationDecimal = (BigDecimal) lastOffsetVacationRow.get("SAL_OFFSET_VACATION");
 		}
@@ -441,28 +441,25 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			if(DateUtil.getDateDiff(regularTime,date , DateUtil.MONTH)<0){
 				salProbationDayMoneyTotal = salOffsetVacation.multiply(salProbationDayMoney);
 				bonusPenaltyParam.put("BP_MONEY", salProbationDayMoneyTotal.abs());
-				bonusPenaltyParam.put("BP_DESC","未转正人员超限扣除"+salProbationDayMoney+"元");
 			}else if(DateUtil.getDateDiff(regularTime,date, DateUtil.MONTH)==0){
 				BigDecimal probationOverRunDays = (BigDecimal) dataParam.getObject("probationOverRunDays");
 				BigDecimal regularOverRunDays = (BigDecimal) dataParam.getObject("regularOverRunDays");
 				salProbationDayMoneyTotal = probationOverRunDays.multiply(salProbationDayMoney);
 				salDayMoneyTotal = regularOverRunDays.multiply(salRegularDayMoney);
 				bonusPenaltyParam.put("BP_MONEY", salProbationDayMoneyTotal.abs().add(salDayMoneyTotal.abs()));
-				bonusPenaltyParam.put("BP_DESC","本月转正人员转正前扣除"+salDayMoneyTotal.abs()+"元</br>"+"转正后扣除"+salProbationDayMoneyTotal.abs()+"元");
 			}else{
 				salDayMoneyTotal = salOffsetVacation.multiply(salRegularDayMoney);
 				bonusPenaltyParam.put("BP_MONEY", salDayMoneyTotal.abs());
-				bonusPenaltyParam.put("BP_DESC","转正人员超限扣除"+salProbationDayMoney+"元");
-			}	
-		}
-		String statementId = sqlNameSpace + "." + "getBonusPenaltyRecord";
-		DataRow bonusPenaltyRow = this.daoHelper.getRecord(statementId, bonusPenaltyParam);
-		if(!MapUtil.isNullOrEmpty(bonusPenaltyRow)){
-			statementId = sqlNameSpace + "." + "updateBonusPenaltyRecord";
-			this.daoHelper.updateRecord(statementId, bonusPenaltyParam);
-		}else{
-			statementId = sqlNameSpace + "." + "insertBonusPenaltyRecord";
-			this.daoHelper.insertRecord(statementId, bonusPenaltyParam);
+			}
+			String statementId = sqlNameSpace + "." + "getBonusPenaltyRecord";
+			DataRow bonusPenaltyRow = this.daoHelper.getRecord(statementId, bonusPenaltyParam);
+			if(!MapUtil.isNullOrEmpty(bonusPenaltyRow)){
+				statementId = sqlNameSpace + "." + "updateBonusPenaltyRecord";
+				this.daoHelper.updateRecord(statementId, bonusPenaltyParam);
+			}else{
+				statementId = sqlNameSpace + "." + "insertBonusPenaltyRecord";
+				this.daoHelper.insertRecord(statementId, bonusPenaltyParam);
+			}
 		}
 		dataParam.put("salDayMoneyTotal",salDayMoneyTotal);
 		return dataParam;
