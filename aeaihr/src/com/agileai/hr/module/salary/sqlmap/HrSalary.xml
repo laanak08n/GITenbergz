@@ -145,20 +145,18 @@
 	<select id="existsDataRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
 		select
-		a.SAL_ID,a.SAL_USER,c.EMP_NAME as
-		SAL_NAME,a.SAL_YEAR,a.SAL_MONTH,a.SAL_VALID_DAYS,a.SAL_WORK_DAYS,a.SAL_OVERTIME,a.SAL_LEAVE,a.SAL_PROBATION,a.SAL_BASIC,
-		a.SAL_PERFORMANCE,a.SAL_SUBSIDY,a.SAL_BONUS,a.SAL_TOTAL,a.SAL_STATE,a.SAL_INSURE,a.SAL_TAX,c.EMP_PARTICIPATE_SALARY
+		a.SAL_ID,c.EMP_PARTICIPATE_SALARY,c.EMP_INDUCTION_TIME,a.SAL_USER
 		from hr_salary a LEFT JOIN security_user b ON a.SAL_USER=b.USER_ID
 		LEFT
 		JOIN hr_employee c ON b.USER_CODE = c.EMP_CODE
 		where 1=1
 		<isNotEmpty prepend=" " property="year">
-			and SAL_YEAR = #year#
+			and a.SAL_YEAR = #year#
 		</isNotEmpty>
 		<isNotEmpty prepend=" " property="month">
-			and SAL_MONTH = #month#
+			and a.SAL_MONTH = #month#
 		</isNotEmpty>
-		order by SAL_YEAR,SAL_MONTH,SAL_USER
+		order by a.SAL_YEAR,a.SAL_MONTH,a.SAL_USER
 	</select>
 	<select id="workDayRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
@@ -316,12 +314,11 @@
 		and BP_TYPE = 'REWARD'
 		and date_format(BP_DATE,'%Y-%m') = #yearMonth#
 	</select>
-	<select id="getBonusPenaltyRecord" parameterClass="com.agileai.domain.DataParam"
+	<select id="findBonusPenaltyRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
 		SELECT BP_ID,USER_ID,BP_DATE,BP_TYPE,BP_MONEY
 		FROM hr_bonus_penalty
 		where 1=1
-		and USER_ID = #USER_ID#
 		and BP_DATE = #BP_DATE#
 		and BP_TYPE = #BP_TYPE#
 	</select>	
