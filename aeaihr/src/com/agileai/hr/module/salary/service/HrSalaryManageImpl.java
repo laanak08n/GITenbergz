@@ -104,7 +104,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			BigDecimal salTax = (BigDecimal) dataParam.getObject("SAL_TAX");
 			BigDecimal salHousingFund =(BigDecimal) dataParam.getObject("SAL_HOUSING_FUND");
 			BigDecimal salShould = salTotal.subtract(salInsure).subtract(salTax).subtract(salHousingFund);
-			if(regularTime.compareTo(DateUtil.getDateAdd(date, DateUtil.MONTH, 1))>=0){
+			if(DateUtil.getDateDiff(regularTime, date, DateUtil.MONTH) > 0){
 				salShould = salTotal;
 			}			
 			dataParam.put("SAL_SHOULD", salShould);
@@ -122,9 +122,8 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			}
 			BigDecimal salFulltimeAward = calculateFullTimeAward(leaveDaysRow,currentMonthAttendRow,userCode,regularTime,date,dataParam);
 			dataParam = calculateOverRunSalary(dataParam,validDaysRow,userCode,date,regularTime);
-			BigDecimal salDayMoneyTotal = (BigDecimal)dataParam.getObject("salDayMoneyTotal");
-			
-			BigDecimal salBonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal).add(salDayMoneyTotal).add(salFulltimeAward);
+			BigDecimal salOverRunMoneyTotal = (BigDecimal)dataParam.getObject("salOverRunMoneyTotal");
+			BigDecimal salBonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal).subtract(salOverRunMoneyTotal).add(salFulltimeAward);
 			dataParam.put("SAL_BONUS", salBonus);
 			BigDecimal salActual  = salShould.add(salBonus);
 			dataParam.put("SAL_ACTUAL", salActual);
