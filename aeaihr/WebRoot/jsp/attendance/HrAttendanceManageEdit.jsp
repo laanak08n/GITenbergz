@@ -23,7 +23,7 @@
 					<aeai:previlege code="confirm"><td onmouseover="onMover(this);" onmouseout="onMout(this);"
 						class="bartdx" align="center"
 						onclick="doSubmit({actionType:'save',target:'_parent'})"><input value="&nbsp;"
-						type="button" class="saveImgBtn" id="saveImgBtn" title="确认" />确认</td></aeai:previlege>
+						type="button" class="approveImgBtn" id="saveImgBtn" title="确认" />确认</td></aeai:previlege>
 					<aeai:previlege code="close"><td onmouseover="onMover(this);" onmouseout="onMout(this);"
 						class="bartdx" align="center" onclick="parent.PopupBox.closeCurrent()">
 						<input value="&nbsp;" type="button" class="closeImgBtn" title="关闭" />关闭</td></aeai:previlege>

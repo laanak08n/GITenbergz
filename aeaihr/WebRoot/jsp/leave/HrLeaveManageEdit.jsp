@@ -7,13 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>请假申请</title>
 <%@include file="/jsp/inc/resource.inc.jsp"%>
-<style type="text/css">
-.reSubmittedImgBtn{
-	background: url(./images/submitted.gif) no-repeat center center; width: 16px; height: 16px; border: none;
-	margin:0px 0px 0px 1px;
-	cursor:pointer;
-}
-</style>
 <script language="javascript">
 function stateSubmit(){
 	doSubmit({actionType:'submit'});
