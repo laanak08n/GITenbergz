@@ -22,6 +22,9 @@
 	<isNotEmpty prepend="AND" property="ACTION_TYPE">
 	ACTION_TYPE = #ACTION_TYPE#
 	</isNotEmpty>
+	<isNotEmpty prepend="AND" property="userId">
+	USER_ID = #userId#
+	</isNotEmpty>	
 	) aa limit $_startNum_$,$_stepRange_$
   </select>
   <select id="queryRecordsCount" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
