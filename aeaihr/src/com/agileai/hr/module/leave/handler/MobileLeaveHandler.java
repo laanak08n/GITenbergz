@@ -166,4 +166,19 @@ public class MobileLeaveHandler extends BaseHandler {
     protected HrLeaveManage getService() {
         return (HrLeaveManage) this.lookupService(HrLeaveManage.class);
     }
+    
+    @PageAction
+    public ViewRenderer initLeaveInInfo(DataParam param){
+    	String responseText = null;
+    	try {
+    		JSONObject jsonObject = new JSONObject();
+    		jsonObject.put("sdate", DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, new Date()));
+    		jsonObject.put("edate", DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, DateUtil.getDateAdd(new Date(), DateUtil.DAY, 1)));
+    		
+    		responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return new AjaxRenderer(responseText);
+    }
 }

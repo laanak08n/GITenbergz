@@ -160,6 +160,20 @@ public class MobileOvertimeHandler extends BaseHandler {
     	return new AjaxRenderer(responseText);
     }
     
+    @PageAction
+    public ViewRenderer initOvertimeInInfo(DataParam param){
+    	String responseText = null;
+    	try {
+    		JSONObject jsonObject = new JSONObject();
+    		jsonObject.put("overtimeDate", DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, new Date()));
+    		
+    		responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+    	return new AjaxRenderer(responseText);
+    }
+    
 	protected HrWorkOvertimeManage getService() {
 		return (HrWorkOvertimeManage) this.lookupService(HrWorkOvertimeManage.class);
 	}
