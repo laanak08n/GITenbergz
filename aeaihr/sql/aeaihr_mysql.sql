@@ -273,7 +273,6 @@ CREATE TABLE `hr_work_overtime` (
   `APP_RESULT` varchar(32) DEFAULT NULL,
   `WOT_APP_OPINION` varchar(256) DEFAULT NULL,
   `STATE` varchar(32) DEFAULT NULL,
-  `WOT_TIME_COMPANY` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`WOT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -727,8 +726,6 @@ INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '2', '2', '', '3', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '3', '3', '', '4', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '4', '4', '', '5', '1');
 INSERT INTO `sys_codelist` VALUES ('WOT_TIME', '5', '5', '', '6', '1');
-INSERT INTO `sys_codelist` VALUES ('WOT_TIME_COMPANY', 'day', '天', '', '2', '1');
-INSERT INTO `sys_codelist` VALUES ('WOT_TIME_COMPANY', 'hour', '小时', '', '1', '1');
 
 -- ----------------------------
 -- Table structure for sys_codetype
@@ -775,7 +772,6 @@ INSERT INTO `sys_codetype` VALUES ('SYS_VALID_TYPE', '有效标识符', 'app_cod
 INSERT INTO `sys_codetype` VALUES ('UNIT_TYPE', '单位类型', 'app_code_define', null, null, null, null, null, null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('USER_SEX', '性别类型', 'sys_code_define', '', 'N', 'Y', 'Y', '16', 'C', null, null, null);
 INSERT INTO `sys_codetype` VALUES ('WOT_TIME', '加班时间', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
-INSERT INTO `sys_codetype` VALUES ('WOT_TIME_COMPANY', '加班时长单位', 'sys_code_define', '', 'Y', 'Y', 'Y', '20', '', 'N', '', '');
 
 -- ----------------------------
 -- Table structure for sys_function
