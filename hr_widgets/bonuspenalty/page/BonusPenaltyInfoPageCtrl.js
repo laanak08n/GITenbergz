@@ -4,7 +4,7 @@ angular.module('${menuCode}')
 	    return $sce.trustAsHtml(text);
 	};
 }])
-.controller("${widgetCode}Ctrl",function($scope,AppKit,$stateParams){
+.controller("${widgetCode}Ctrl",function($scope,AppKit,$state,$stateParams){
 	var url = '/aeaihr/services/BonusPenalty/rest/find-all-record';
 	AppKit.getJsonApi(url).success(function(rspJson){
 		$scope.listInfo = rspJson;
@@ -21,7 +21,6 @@ angular.module('${menuCode}')
 	var promise = AppKit.getJsonApi(url);
 	promise.success(function(rspJson){
 		$scope.info = rspJson;
-		alert($scope.info.userId)
 		$scope.info.bpDate = new Date($scope.info.bpDate);
 	});
 	
@@ -34,5 +33,15 @@ angular.module('${menuCode}')
 				AppKit.errorPopup();
 			}
 		});
+	}
+	
+	$scope.deleteInfo = function (){
+		AppKit.confirm({operaType:'delete',action:function(){
+			var url = "/aeaihr/services/BonusPenalty/rest/delete-pun-info/"+$scope.info.bpId;
+			AppKit.getJsonApi(url).success(function(rspJson){
+				AppKit.successPopup();
+				$state.go("tab.rawards-punishment-infos");
+			});
+		}});
 	}
 });
