@@ -45,7 +45,7 @@ DROP TABLE IF EXISTS `hr_bonus_penalty`;
 CREATE TABLE `hr_bonus_penalty` (
   `BP_ID` char(36) NOT NULL,
   `USER_ID` char(36) DEFAULT NULL,
-  `BP_DATE` varchar(32) DEFAULT NULL,
+  `BP_DATE` date DEFAULT NULL,
   `BP_TYPE` varchar(32) DEFAULT NULL,
   `BP_MONEY` decimal(8,2) DEFAULT NULL,
   `BP_DESC` varchar(1024) DEFAULT NULL,
