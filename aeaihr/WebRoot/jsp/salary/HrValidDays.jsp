@@ -12,15 +12,28 @@ $(function(){
     numValidator.add("VALID_DAYS");
 	requiredValidator.add("VALID_DAYS");
 });
-
 function saveValidDays(){
-	postRequest('form1',{actionType:'save',onComplete:function(responseText){
-		if (responseText == 'success'){
-			window.parent.location.reload();
-		}else{
-			showMessage('保存出错啦！');
-		}
-	}});
+	var validDays = $('#VALID_DAYS').val();
+	if (validate(validDays)){
+		postRequest('form1',{actionType:'save',onComplete:function(responseText){
+			if (responseText == 'success'){
+				window.parent.location.reload();
+			}else{
+				showMessage('保存出错啦！');
+			}
+		}});
+	} else {
+		showMessage('有效工作天数必须大于0！');
+	}
+}
+function validate(num){
+	var regInt = /(^\d*[1-9]\d*$)/;
+	var regFloat = /^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$/;
+	if(regInt.test(num) || regFloat.test(num)) {
+		return true;
+	} else {
+		return false ;  
+	}
 }
 </script>
 </head>
@@ -55,6 +68,9 @@ function saveValidDays(){
 <input type="hidden" name="year" id="year" value="<%=pageBean.inputValue("year")%>"/>
 <input type="hidden" name="month" id="month" value="<%=pageBean.inputValue("month")%>"/>
 </form>
+<script language="javascript">
+numValidator.add("VALID_DAYS");
+</script>
 </body>
 </html>
 <%@include file="/jsp/inc/scripts.inc.jsp"%>
