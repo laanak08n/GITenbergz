@@ -77,4 +77,67 @@
 		and USER_ID = #userId#
 		ORDER BY LOCAT_TIME Desc 
 	</select>
+	<select id="getAttendanceStatInfoRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select DISTINCT USER_NAME,USER_CODE,ifnull(c.nums, 0) as lastNums,ifnull(e.nums, 0) as leaveNums,ifnull(g.nums, 0) as overWorkNums from security_user a 
+		left JOIN 
+		(select USER_ID,SUM(b.ATD_ID) as nums from hr_attendance b
+		where 1=1
+		and b.ATD_DATE &gt;= #startDate# and b.ATD_DATE &lt;= #endDate#
+		and date_format(b.ATD_IN_TIME , '%H:%i') > date_format(now(),'09:00')
+		group by USER_ID
+		)c on a.USER_ID = c.USER_ID
+		LEFT JOIN
+		(select USER_ID,SUM(d.LEA_DAYS) as nums from hr_leave d
+		where 1=1
+		and d.LEA_DATE &gt;= #startDate# and d.LEA_DATE &lt;= #endDate#
+		and d.STATE = 'approved'
+		group by USER_ID
+		)e on a.USER_ID = e.USER_ID
+		LEFT JOIN
+		(select USER_ID,SUM(f.WOT_TIME) as nums from hr_work_overtime f
+		where 1=1
+		and f.WOT_DATE &gt;= #startDate# and f.WOT_DATE &lt;= #endDate#
+		and f.STATE = 'approved'
+		group by USER_ID
+		)g on a.USER_ID = g.USER_ID
+	</select>		
+	
+	<select id="getAttendContentDataRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select a.ATD_ID,a.ATD_DATE,a.USER_ID,b.USER_NAME as
+		USER_ID_NAME,a.ATD_IN_TIME,a.ATD_OUT_TIME,a.ATD_IN_PLACE,a.ATD_OUT_PLACE
+		from hr_attendance a left join security_user b on a.USER_ID = b.USER_ID
+		where 1=1
+		and b.USER_CODE=#code#
+		and a.ATD_DATE &gt;= #startDate# and a.ATD_DATE &lt;= #endDate#
+		and date_format(a.ATD_IN_TIME , '%H:%i') > date_format(now(),'09:00')
+		order by a.ATD_DATE
+	</select>
+	<select id="getLeaveContentDataRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select a.LEA_ID,a.USER_ID,b.USER_NAME as USER_ID_NAME,a.LEA_DATE,a.LEA_TYPE,d.CODE_NAME as LEA_TYPE_TEXT,a.LEA_CAUSE,a.LEA_APPOVER,c.USER_NAME as LEA_APPOVER_NAME,a.LEA_APP_TIME,a.LEA_APP_OPINION,a.APP_RESULT,a.LEA_SDATE,a.LEA_EDATE,a.LEA_DAYS,STATE
+		from hr_leave a left join security_user b on a.USER_ID = b.USER_ID left join security_user c on a.LEA_APPOVER = c.USER_ID
+		left join sys_codelist d on a.LEA_TYPE = d.CODE_ID 
+		where 1=1 
+		and d.TYPE_ID = 'LEA_TYPE'
+		and b.USER_CODE=#code#
+		and a.LEA_DATE &gt;= #startDate# and a.LEA_DATE &lt;= #endDate#
+		and a.STATE = 'approved'
+		order by a.LEA_DATE
+	</select>
+	<select id="getOverworkContentDataRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select a.WOT_ID,a.USER_ID,b.USER_NAME as USER_ID_NAME,a.WOT_DATE,a.WOT_PARTICIPANT,a.WOT_PLACE,a.WOT_DESC,a.WOT_TIME,d.CODE_NAME as WOT_TIME_TEXT,WOT_TIME_COMPANY,e.CODE_NAME as WOT_TIME_COMPANY_TEXT,a.WOT_APPROVER,c.USER_NAME as WOT_APPROVER_NAME,a.WOT_APP_TIME,a.APP_RESULT,a.WOT_APP_OPINION,a.WOT_OVERTIME_DATE,a.STATE
+		from hr_work_overtime a left join security_user b on a.USER_ID = b.USER_ID left join security_user c on a.WOT_APPROVER=c.USER_ID 
+		left join sys_codelist d on a.WOT_TIME = d.CODE_ID
+		left join sys_codelist e on a.WOT_TIME_COMPANY = e.CODE_ID
+		where 1=1 
+		and d.TYPE_ID='WOT_TIME'
+		and e.TYPE_ID = 'WOT_TIME_COMPANY'
+		and b.USER_CODE=#code#
+		and a.WOT_OVERTIME_DATE &gt;= #startDate# and a.WOT_OVERTIME_DATE &lt;= #endDate#
+		and a.STATE = 'approved'
+		order by a.WOT_DATE
+	</select>
 </sqlMap>

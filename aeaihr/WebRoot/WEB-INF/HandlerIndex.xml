@@ -47,7 +47,7 @@
 
 	<bean id="HrAttendanceManageList" module="attendance" ></bean>
 	<bean id="HrAttendanceManageEdit" module="attendance" ></bean>
-	<bean id="MobileAttendance" module="attendance" ></bean>
+	<bean id="MobileAttendance" module="attendance" ></bean>	
 	<bean id="DeptTreeSelect" module="information" ></bean>
 	<bean id="HrEducationEditBox" module="information" ></bean>
 	<bean id="HrEmployeeManageList" module="information" ></bean>
@@ -65,4 +65,5 @@
 	<bean id="HrWorkOvertimeManageEdit" module="workovertime" ></bean>
 	<bean id="UserListSelectList" module="workovertime" ></bean>
 	<bean id="MobileOvertime" module="workovertime" ></bean>
+	<bean id="MobileAttendanceStat" module="attendance" ></bean>
 </Handlers>
