@@ -19,8 +19,8 @@ public interface SecurityUserManage extends
 	public String updateEmpPassWordRecord(String empCode, String newpassword);
 	public void updateEmpModifierRecord(DataParam param);
 	public DataRow getSysuserRecord(DataParam param);
-	public List<DataRow> findUserRoleGroupRecords (DataParam param);
-	public List<DataRow> queryUserRelationRecords(DataParam param);
-	public List<DataRow> queryUserGroupRelationRecords(DataParam param);	
-	public List<DataRow> findUserAuthRecords (DataParam param);
+	
+	public List<DataRow> findUserRoleGroupRecords (String grpId, String userId, String roleId);
+	public List<DataRow> queryUserRelationRecords(String userId);
+	public List<DataRow> findUserAuthRecords (String grpId, String userId);
 }

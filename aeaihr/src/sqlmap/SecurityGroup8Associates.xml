@@ -126,14 +126,14 @@
 	from security_role_group_rel a
 	inner join security_user_rg_rel b on a.RG_ID = b.RG_ID
 	where 1=1
-	<isNotEmpty prepend="and " property="ROLE_ID">
+	<isNotEmpty prepend="and " property="roleId">
 		a.ROLE_ID=#roleId#
 	</isNotEmpty>
 	<isNotEmpty prepend="and " property="grpId">
 		a.GRP_ID=#grpId#
 	</isNotEmpty>
-	<isNotEmpty prepend="and " property="USER_ID">
-		b.USER_ID=#USER_ID#
+	<isNotEmpty prepend="and " property="userId">
+		b.USER_ID=#userId#
 	</isNotEmpty>
   </select>
   

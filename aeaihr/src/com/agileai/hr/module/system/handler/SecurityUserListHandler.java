@@ -200,11 +200,11 @@ public class SecurityUserListHandler
 		Map<String,String> tabIdAndColFieldMapping = service.getTabIdAndColFieldMapping();
 		String colField = tabIdAndColFieldMapping.get(tabId);
 		param.put(colField,columnId);
-		
-		param.put("GRP_ID", columnId);
-		param.put("ROOTCOLUMNID", this.rootColumnId);
-		List<DataRow> userAuth = service.findUserAuthRecords(param);
-		List<DataRow> userRole = service.findUserRoleGroupRecords(param);
+				
+		String userId = param.get("USER_ID");
+		String roleId = param.get("ROLE_ID");		
+		List<DataRow> userAuth = service.findUserAuthRecords(this.rootColumnId, userId);
+		List<DataRow> userRole = service.findUserRoleGroupRecords(null, userId, roleId);
 		if(userAuth.size()>0) {
 			responseText.append(",auth");
 		}
@@ -218,9 +218,10 @@ public class SecurityUserListHandler
 		return new AjaxRenderer(responseText.toString());
 	}
     
-	public String uniqueRelation(DataParam param, String responseText){
+	public String uniqueUserGroupRelation(DataParam param, String responseText){
 		SecurityUserManage service = this.getService();
-		List<DataRow> userGroupRecords = service.queryUserRelationRecords(param);
+		String userId = param.get("USER_ID");
+		List<DataRow> userGroupRecords = service.queryUserRelationRecords(userId);
 		if(userGroupRecords.size() == 1){
 			responseText = "unique";
 		}
@@ -232,13 +233,13 @@ public class SecurityUserListHandler
 		String responseText = "false";
 		SecurityUserManage service = this.getService();
 		String columnId = param.get("curColumnId");
-		param.put("grpId",columnId);
-		
-		List<DataRow> userRecords = service.queryUserGroupRelationRecords(param);
+		param.put("grpId", columnId);
+		String userId = param.get("USER_ID");
+		List<DataRow> userRecords = service.findUserRoleGroupRecords(columnId, userId, null);
 		if(userRecords.size() > 0){
 			responseText = "true";
 		}else{
-			responseText = this.uniqueRelation(param, responseText);
+			responseText = this.uniqueUserGroupRelation(param, responseText);
 			if("false".equals(responseText)){
 				service.deleteSecurityUserRelation(param);
 			}	

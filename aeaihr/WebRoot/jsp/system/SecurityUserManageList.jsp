@@ -222,9 +222,10 @@ function selectButton(){
 	}
 }
 function doDelete(){
-	if (currentParamItemIndex == -1){
-		jAlert('请先选中一条记录!');
-		return;		
+	var userId = $('#'+rsIdTagId).val()
+	if (!isValid(userId)){
+		writeErrorMsg('请先选中一条记录!');
+		return;
 	}
 	jConfirm("您确认要删除这条信息吗？",function(changeRelease){
 		if(changeRelease){

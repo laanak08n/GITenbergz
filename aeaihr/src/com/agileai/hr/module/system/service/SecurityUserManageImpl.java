@@ -166,22 +166,26 @@ public class SecurityUserManageImpl
 	}
 	
 	@Override
-	public List<DataRow> queryUserRelationRecords(DataParam param) {
+	public List<DataRow> queryUserRelationRecords(String userId) {
+		DataParam param = new DataParam();
+		param.put("userId", userId);
 		String statementId = this.sqlNameSpace + "." + "querySecurityUserRelation";
 		return this.daoHelper.queryRecords(statementId, param);
 	}
 	@Override
-	public List<DataRow> queryUserGroupRelationRecords(DataParam param) {
-		String statementId = "SecurityGroup8Associates.findUserRoleRelationRecords";
-		return this.daoHelper.queryRecords(statementId, param);
-	}
-	@Override
-	public List<DataRow> findUserAuthRecords(DataParam param) {
+	public List<DataRow> findUserAuthRecords(String grpId, String userId) {
+		DataParam param = new DataParam();
+		param.put("rootColumnId", grpId);
+		param.put("userId", userId);
 		String statementId = this.sqlNameSpace + "." + "findUserAuthRecords";
 		return this.daoHelper.queryRecords(statementId, param);
 	}
 	@Override
-	public List<DataRow> findUserRoleGroupRecords(DataParam param) {
+	public List<DataRow> findUserRoleGroupRecords(String grpId, String userId, String roleId) {
+		DataParam param = new DataParam();
+		param.put("grpId", grpId);
+		param.put("userId", userId);
+		param.put("roleId", roleId);
 		String statementId = "SecurityGroup8Associates.findUserRoleRelationRecords";
 		return this.daoHelper.queryRecords(statementId, param);
 	}
