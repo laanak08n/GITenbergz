@@ -38,7 +38,9 @@ function showDetailBox(){
 <tr><td>
 <input name="OPER_STIME" type="text" id="OPER_STIME" value="<%=pageBean.inputValue("OPER_STIME")%>" size="10" maxlength="10" /><img id="OPER_STIMEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框"> 至 <input name="OPER_ETIME" type="text" id="OPER_ETIME" value="<%=pageBean.inputValue("OPER_ETIME")%>" size="10" maxlength="10" /><img id="OPER_ETIMEPicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框">
 IP地址<input name="IP_ADDTRESS" type="text" id="IP_ADDTRESS" value="<%=pageBean.inputValue("IP_ADDTRESS")%>" size="10" />
+<%if(pageBean.getAttribute("userId") == null){ %>
 用户ID<input name="USER_ID" type="text" id="USER_ID" value="<%=pageBean.inputValue("USER_ID")%>" size="6" />
+<%} %>
 功能名称<input name="FUNC_NAME" type="text" id="FUNC_NAME" value="<%=pageBean.inputValue("FUNC_NAME")%>" size="8" />
 操作<input name="ACTION_TYPE" type="text" id="ACTION_TYPE" value="<%=pageBean.inputValue("ACTION_TYPE")%>" size="6" />
 &nbsp;<input type="button" name="button" id="button" value="查询" class="formbutton" onClick="doQuery()"></td>
