@@ -24,6 +24,15 @@ function stateApprove(){
 function stateDrafe(){
 	doSubmit({actionType:'drafe'});
 }
+function save(){
+	postRequest('form1',{actionType:'save',onComplete:function(responseText){
+		if ("fail" != responseText){
+			$('#operaType').val('update');
+			$('#LEA_ID').val(responseText);
+			doSubmit({actionType:'prepareDisplay'});
+		}
+	}});
+}
 </script>
 </head>
 <body>
@@ -34,7 +43,7 @@ function stateDrafe(){
 <table border="0" cellpadding="0" cellspacing="1">
 <tr>
  <%if(pageBean.getBoolValue("doInsertEdit")){%>
-  <aeai:previlege code="save"><td  align="center"class="bartdx"onclick="doSubmit({actionType:'save'})" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="saveImgBtn" id="savedrafeImgBtn" title="保存" />保存</td></aeai:previlege>
+  <aeai:previlege code="save"><td  align="center"class="bartdx" onclick="save()" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="saveImgBtn" id="savedrafeImgBtn" title="保存" />保存</td></aeai:previlege>
   <%}%>
  <%if(pageBean.getBoolValue("doSubmit")){%> 
   <aeai:previlege code="submit"><td  align="center"class="bartdx"onclick="stateSubmit();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="submitImgBtn" id="submittedImgBtn" title="提交" />提交</td></aeai:previlege>

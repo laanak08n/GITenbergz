@@ -8,6 +8,7 @@ import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.controller.core.StandardEditHandler;
 import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.domain.core.User;
+import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
@@ -143,16 +144,20 @@ public class HrLeaveManageEditHandler
                                                                           "drafe")));
     }
     public ViewRenderer doSaveAction(DataParam param){
-		String operateType = param.get(OperaType.KEY);
+		String responseText = FAIL;
+    	String operateType = param.get(OperaType.KEY);
 		if (OperaType.CREATE.equals(operateType)){
-			getService().createRecord(param);	
+			getService().createRecord(param);
+			responseText = param.get("LEA_ID");
 		}
 		else if (OperaType.UPDATE.equals(operateType)){
-			getService().updateRecord(param);	
+			getService().updateRecord(param);
+			responseText = param.get("LEA_ID");
 		}else if (OperaType.DETAIL.equals(operateType)){
-			getService().updateRecord(param);	
+			getService().updateRecord(param);
+			responseText = param.get("LEA_ID");
 		}
-		return new RedirectRenderer(getHandlerURL(listHandlerClass));
+		return new AjaxRenderer(responseText);
 	}
     public ViewRenderer detail(DataParam param) {
 		getService().getNowRecord(param);
