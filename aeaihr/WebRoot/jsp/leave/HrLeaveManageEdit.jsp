@@ -20,14 +20,17 @@ function stateDrafe(){
 function save(){
 	var startLeaDate = new Date(Date.parse($("#LEA_SDATE").val()));
 	var endLeaDate = new Date(Date.parse($("#LEA_EDATE").val()));
+	var leaDays = $("#LEA_DAYS").val();
 	if(startLeaDate.getFullYear() == endLeaDate.getFullYear() && startLeaDate.getMonth() != endLeaDate.getMonth()){
 		showMessage("日期错误，不能进行跨月请假");
 	}else{
 		postRequest('form1',{actionType:'save',onComplete:function(responseText){
-			if ("fail" != responseText){
+			if ("success" == responseText){
 				$('#operaType').val('update');
 				$('#LEA_ID').val(responseText);
 				doSubmit({actionType:'prepareDisplay'});
+			}else if("leaveDayTooLong"== responseText){
+				showMessage("请假时长过长，请确认！");
 			}
 		}});
 	}

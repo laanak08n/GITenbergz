@@ -107,14 +107,9 @@ public class HrLeaveManageEditHandler
 						setAttribute("doSignIn", true);
 					}
 				}
-				
-				
-				
 				this.setAttributes(record);
-				
 			}
 		}
-		
 		this.setOperaType(operaType);
 		processPageAttributes(param);
 		return new LocalRenderer(getPage());
@@ -123,7 +118,6 @@ public class HrLeaveManageEditHandler
     
     
     protected void processPageAttributes(DataParam param) {
-    	
     	User user = (User) this.getUser();
 		this.setAttribute("USER_ID_NAME",
 				this.getAttribute("USER_ID_NAME", user.getUserName()));
@@ -134,7 +128,6 @@ public class HrLeaveManageEditHandler
 		if (this.getAttribute("LEA_DATE") == null) {
 			this.setAttribute("LEA_DATE", date);
 		}		
-
         setAttribute("LEA_TYPE",
                      FormSelectFactory.create("LEA_TYPE")
                                       .addSelectedValue(getOperaAttributeValue("LEA_TYPE",
@@ -151,6 +144,14 @@ public class HrLeaveManageEditHandler
     public ViewRenderer doSaveAction(DataParam param){
 		String responseText = FAIL;
     	String operateType = param.get(OperaType.KEY);
+    	String leaSdate = param.get("LEA_SDATE");
+    	String leaEdate = param.get("LEA_EDATE");
+    	String leaDays = param.get("LEA_DAYS");
+    	Double leaDay = Double.parseDouble(leaDays);
+    	Long dateDiff = DateUtil.getDateDiff(DateUtil.getDate(leaSdate), DateUtil.getDate(leaEdate), DateUtil.DAY);
+    	if(dateDiff.intValue()<leaDay.intValue()){
+    		return new AjaxRenderer("leaveDayTooLong");
+    	}
 		if (OperaType.CREATE.equals(operateType)){
 			getService().createRecord(param);
 			responseText = param.get("LEA_ID");
