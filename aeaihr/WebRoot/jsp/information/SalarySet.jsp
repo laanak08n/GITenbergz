@@ -6,6 +6,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>工资额度设定</title>
 <%@include file="/jsp/inc/resource.inc.jsp"%>
+<script  language="javascript">
+function saveRecord(){
+	if (!validate()){
+		return;
+	}
+	showSplash();
+	postRequest('form1',{actionType:'save',onComplete:function(responseText){
+		if (responseText == 'success'){
+			hideSplash();
+			parent.PopupBox.closeCurrent();
+		}
+	}});
+}
+</script>
 </head>
 <body>
 <form action="<%=pageBean.getHandlerURL()%>" name="form1" id="form1" method="post">
@@ -14,7 +28,7 @@
 <div id="__ToolBar__">
 <table border="0" cellpadding="0" cellspacing="1">
 <tr>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="doSubmit({actionType:'save'});"><input value="&nbsp;" type="button" class="saveImgBtn" id="saveImgBtn" title="确定"/>确定</td>
+   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="saveRecord()"><input value="&nbsp;" type="button" class="saveImgBtn" id="saveImgBtn" title="确定"/>确定</td>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="javascript:parent.PopupBox.closeCurrent();"><input value="&nbsp;" type="button" class="closeImgBtn" title="关闭" />关闭</td>   
 </tr>
 </table>

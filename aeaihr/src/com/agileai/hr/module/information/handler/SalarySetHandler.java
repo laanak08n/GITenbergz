@@ -3,6 +3,7 @@ package com.agileai.hr.module.information.handler;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.controller.core.SimpleHandler;
+import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.module.information.service.HrEmployeeManage;
@@ -26,9 +27,15 @@ public class SalarySetHandler extends SimpleHandler{
 	}
 	
 	public ViewRenderer doSaveAction(DataParam param){
-		getService().updateSalaryLimitRecord(param);
-		getService().updateFulltimeAwardRecord(param);
-		return prepareDisplay(param);
+		String responseText = SUCCESS;
+		try {
+			getService().updateSalaryLimitRecord(param);
+			getService().updateFulltimeAwardRecord(param);
+		} catch (Exception e) {
+			responseText = FAIL;
+			log.error(e.getLocalizedMessage(), e);
+		}
+		return new AjaxRenderer(responseText);
 	}
 	
 	protected void processPageAttributes(DataParam param){
