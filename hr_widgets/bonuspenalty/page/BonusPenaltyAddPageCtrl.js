@@ -5,17 +5,20 @@ angular.module('${menuCode}')
 	};
 }])
 .controller("${widgetCode}Ctrl",function($scope,AppKit){
+	
 	$scope.info = {"userName":"","bpType":"selected","bpDate": "","bpMonry":"","bpDesc":""};
+	
 	$scope.saveInfo = function(){
-		alert($scope.info);
-//		var url = "/aeaihr/index?MobileLeave&actionType=createLeaveInfo";
-//		AppKit.postJsonApi(url,$scope.info).then(function(response){
+		alert(JSON.stringify($scope.info));
+		var url = "/aeaihr/services/BonusPenalty/rest/add-pun-info";
+		AppKit.postJsonApi(url,JSON.stringify($scope.info)).then(function(response){
+			AppKit.successPopup();
 //			if ("success" == response.data){
 //				$scope.loadData();
 //				AppKit.successPopup();				
 //			}else{
 //				AppKit.errorPopup();
 //			}
-//		});
+		});
 	}
 });
