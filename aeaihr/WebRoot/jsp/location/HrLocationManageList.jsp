@@ -11,6 +11,12 @@
 <body>
 <form action="<%=pageBean.getHandlerURL()%>" name="form1" id="form1" method="post">
 <%@include file="/jsp/inc/message.inc.jsp"%>
+<div id="__ToolBar__">
+<table class="" border="0" cellpadding="0" cellspacing="1">
+<tr>
+</tr>
+</table>
+</div>
 <div id="__ParamBar__">
 <table class="queryTable"><tr><td>
 &nbsp;起止日期<input id="sdate" label="开始时间" name="sdate" type="text" value="<%=pageBean.inputDate("sdate")%>" size="10" class="text" readonly="readonly"/><img id="sdatePicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
