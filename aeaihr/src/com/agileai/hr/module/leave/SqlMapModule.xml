@@ -3,5 +3,5 @@
 
 <sqlMapConfig> 
   <settings cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="true" errorTracingEnabled="true" maxRequests="32" maxSessions="10" maxTransactions="5" useStatementNamespaces="true"/>  
-  <sqlMap resource="sqlmap/HrLeave.xml"/>
+
 </sqlMapConfig>
