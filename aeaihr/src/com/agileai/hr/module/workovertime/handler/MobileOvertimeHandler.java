@@ -14,7 +14,7 @@ import com.agileai.hotweb.controller.core.BaseHandler;
 import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.module.workovertime.service.HrWorkOvertimeManage;
+import com.agileai.hr.cxmodule.HrWorkOvertimeManage;
 import com.agileai.util.DateUtil;
 
 public class MobileOvertimeHandler extends BaseHandler {

@@ -13,7 +13,7 @@ import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.common.PrivilegeHelper;
-import com.agileai.hr.module.workovertime.service.HrWorkOvertimeManage;
+import com.agileai.hr.cxmodule.HrWorkOvertimeManage;
 import com.agileai.util.DateUtil;
 
 public class HrWorkOvertimeManageListHandler extends StandardListHandler {
