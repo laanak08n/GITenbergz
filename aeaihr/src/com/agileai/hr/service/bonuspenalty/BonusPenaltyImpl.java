@@ -60,13 +60,13 @@ public class BonusPenaltyImpl extends BaseRestService implements BonusPenalty {
 	}
 	
 	@Override
-	public String findAllPunRecord(String id) {
+	public String getPunRecord(String id) {
 		String responseText = "fail";
 		try {
 			DataRow dataRow = getService().getRecord(new DataParam("BP_ID",id));
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("bpId", dataRow.get("BP_ID"));
-			jsonObject.put("userName", dataRow.get("USER_ID"));
+			jsonObject.put("userId", dataRow.get("USER_ID"));
 			jsonObject.put("bpDate", dataRow.get("BP_DATE"));
 			jsonObject.put("bpType", dataRow.get("BP_TYPE"));
 			jsonObject.put("bpMonry", dataRow.get("BP_MONEY"));
@@ -78,7 +78,29 @@ public class BonusPenaltyImpl extends BaseRestService implements BonusPenalty {
 		return responseText;
 	}
 	
+	@Override
+	public String updatePunInfo(String info) {
+		String responseText = "fail";
+		try {
+			JSONObject jsonObject = new JSONObject(info);
+			DataParam param = new DataParam();
+			param.put("BP_ID", KeyGenerator.instance().genKey());
+			param.put("USER_ID", jsonObject.getString("userId"));
+			param.put("BP_DATE", jsonObject.getString("bpDate").substring(0, 10));
+			param.put("BP_TYPE", jsonObject.getString("bpType"));
+			param.put("BP_MONEY", jsonObject.getString("bpMonry"));
+			param.put("BP_DESC", jsonObject.getString("bpDesc"));
+			getService().updateRecord(param);
+			responseText = "success";
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+		return responseText;
+	}
+	
     protected HrBonusPenaltyManage getService() {
         return (HrBonusPenaltyManage) this.lookupService(HrBonusPenaltyManage.class);
     }
+
+
 }

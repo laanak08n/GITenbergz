@@ -26,5 +26,11 @@ public interface BonusPenalty {
     @GET  
     @Path("/get-record/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-	public String findAllPunRecord(@PathParam("id") String id);
+	public String getPunRecord(@PathParam("id") String id);
+    
+    @POST
+    @Path("/update-pun-info")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+	public String updatePunInfo(String info);
 }
