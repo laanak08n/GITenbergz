@@ -272,8 +272,16 @@ function revokeApproval(){
 	<th width="100" nowrap>民族</th>
 	<td><input id="EMP_NATIONAL" label="民族" name="EMP_NATIONAL" type="text" value="<%=pageBean.inputValue("EMP_NATIONAL")%>" size="24" class="text" />
 	</td>
-	<th width="100" nowrap>基本工资</th>
-	<td><input name="EMP_BASIC" type="text" class="text markable0" id="EMP_BASIC" value="<%=pageBean.inputValue("EMP_BASIC")%>" size="24"  label="基本工资" />
+	<th width="100" nowrap>试用工资</th>
+	<td><input name="EMP_PROBATION" type="text" class="text markable0" id="EMP_PROBATION" value="<%=pageBean.inputValue("EMP_PROBATION")%>" size="24"  label="试用工资" />
+</td>
+</tr>
+<tr>
+	<th width="100" nowrap>创建时间</th>
+	<td><input id="EMP_CREATE_TIME" label="创建时间" name="EMP_CREATE_TIME" type="text" value="<%=pageBean.inputValue("EMP_CREATE_TIME")%>" size="24" class="text" readonly="readonly" />
+	</td>
+	<th width="100" nowrap>转正工资</th>
+	<td><input name="EMP_BASIC" type="text" class="text markable0" id="EMP_BASIC" value="<%=pageBean.inputValue("EMP_BASIC")%>" size="24"  label="转正工资" />
 </td>
 </tr>
 <tr>
@@ -283,7 +291,6 @@ function revokeApproval(){
 <th width="100" nowrap>绩效工资</th>
 	<td><input name="EMP_PERFORMANCE" type="text" class="text markable0" id="EMP_PERFORMANCE" value="<%=pageBean.inputValue("EMP_PERFORMANCE")%>" size="24"  label="绩效工资" />
 </td>
-	
 </tr>
 <tr>
 	<th width="100" nowrap>上岗时间</th>
@@ -326,16 +333,10 @@ function revokeApproval(){
 	<th width="100" nowrap>公积金</th>
 	<td><input name="EMP_HOUSING_FUND" type="text" class="text markable0" id="EMP_HOUSING_FUND" value="<%=pageBean.inputValue("EMP_HOUSING_FUND")%>" size="24"  label="公积金" />
 </tr>
-<tr>
-	<th width="100" nowrap>创建时间</th>
-	<td>
-	<input id="EMP_CREATE_TIME" label="创建时间" name="EMP_CREATE_TIME" type="text" value="<%=pageBean.inputValue("EMP_CREATE_TIME")%>" size="24" class="text" readonly="readonly" />
-	</td>
+<tr>	
 	<th width="100" nowrap>是否缴纳社会保险</th>
 	<td>&nbsp;<%=pageBean.selectRadio("EMP_PAY_INSURE")%>
 	</td>
-</tr>
-<tr>
 	<th width="100" nowrap>是否参与薪资汇总</th>
 	<td>&nbsp;<%=pageBean.selectRadio("EMP_PARTICIPATE_SALARY")%>
 	</td>
