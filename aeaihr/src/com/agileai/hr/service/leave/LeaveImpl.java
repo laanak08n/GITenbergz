@@ -84,7 +84,7 @@ public class LeaveImpl extends BaseRestService implements Leave {
     		DataRow dataRow = getService().getRecord(new DataParam("LEA_ID",id));
     		JSONObject jsonObject = new JSONObject();
     		jsonObject.put("leaId", dataRow.get("LEA_ID"));
-    		jsonObject.put("leatype", dataRow.get("LEA_TYPE"));
+    		jsonObject.put("leaType", dataRow.get("LEA_TYPE"));
     		jsonObject.put("leaSdate", dataRow.get("LEA_SDATE"));
     		jsonObject.put("leaEdate", dataRow.get("LEA_EDATE"));
     		jsonObject.put("leaDays", dataRow.get("LEA_DAYS"));
