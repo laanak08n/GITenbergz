@@ -191,25 +191,59 @@ public class SecurityUserListHandler
     	return new AjaxRenderer(responseText);
     }
 
-	@PageAction
+    @PageAction
     public ViewRenderer doDeleteAction(DataParam param){
+		StringBuilder responseText = new StringBuilder("fail");
 		SecurityUserManage service = this.getService();
 		String tabId = param.get(TreeAndContentManage.TAB_ID);
 		String columnId = param.get("curColumnId");
 		Map<String,String> tabIdAndColFieldMapping = service.getTabIdAndColFieldMapping();
 		String colField = tabIdAndColFieldMapping.get(tabId);
 		param.put(colField,columnId);
-		service.deleteSecurityUserRecord(param);
-		return prepareDisplay(param);
+		
+		param.put("GRP_ID", columnId);
+		param.put("ROOTCOLUMNID", this.rootColumnId);
+		List<DataRow> userAuth = service.findUserAuthRecords(param);
+		List<DataRow> userRole = service.findUserRoleGroupRecords(param);
+		if(userAuth.size()>0) {
+			responseText.append(",auth");
+		}
+		if(userRole.size()>0){
+			responseText.append(",role");
+		}
+		if("fail".equals(responseText.toString())){
+			service.deleteSecurityUserRelation(param);
+			service.deleteSecurityUserRecord(param);
+		}
+		return new AjaxRenderer(responseText.toString());
+	}
+    
+	public String uniqueRelation(DataParam param, String responseText){
+		SecurityUserManage service = this.getService();
+		List<DataRow> userGroupRecords = service.queryUserRelationRecords(param);
+		if(userGroupRecords.size() == 1){
+			responseText = "unique";
+		}
+		return responseText;
 	}
 	
 	@Override
 	public ViewRenderer doRemoveContentAction(DataParam param){
+		String responseText = "false";
 		SecurityUserManage service = this.getService();
 		String columnId = param.get("curColumnId");
-		param.put("GRP_ID",columnId);
-		service.deleteSecurityUserRelation(param);
-		return prepareDisplay(param);
+		param.put("grpId",columnId);
+		
+		List<DataRow> userRecords = service.queryUserGroupRelationRecords(param);
+		if(userRecords.size() > 0){
+			responseText = "true";
+		}else{
+			responseText = this.uniqueRelation(param, responseText);
+			if("false".equals(responseText)){
+				service.deleteSecurityUserRelation(param);
+			}	
+		}
+		return new AjaxRenderer(responseText);
 	}
 	
 	protected TreeBuilder provideTreeBuilder(DataParam param) {

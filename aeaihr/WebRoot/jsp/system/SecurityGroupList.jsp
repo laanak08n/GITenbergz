@@ -413,6 +413,7 @@ disableButton('upImgBtn');
 setImgDisabled('downImgBtn',true); 
 disableButton('downImgBtn');
 <%}%>
+
 </script>
 </form>
 </body>

@@ -164,5 +164,25 @@ public class SecurityUserManageImpl
 		SendPW=CryptionUtil.encryption(password, SendSK);
 		return SendPW;
 	}
-
+	
+	@Override
+	public List<DataRow> queryUserRelationRecords(DataParam param) {
+		String statementId = this.sqlNameSpace + "." + "querySecurityUserRelation";
+		return this.daoHelper.queryRecords(statementId, param);
+	}
+	@Override
+	public List<DataRow> queryUserGroupRelationRecords(DataParam param) {
+		String statementId = "SecurityGroup8Associates.findUserRoleRelationRecords";
+		return this.daoHelper.queryRecords(statementId, param);
+	}
+	@Override
+	public List<DataRow> findUserAuthRecords(DataParam param) {
+		String statementId = this.sqlNameSpace + "." + "findUserAuthRecords";
+		return this.daoHelper.queryRecords(statementId, param);
+	}
+	@Override
+	public List<DataRow> findUserRoleGroupRecords(DataParam param) {
+		String statementId = "SecurityGroup8Associates.findUserRoleRelationRecords";
+		return this.daoHelper.queryRecords(statementId, param);
+	}
 }

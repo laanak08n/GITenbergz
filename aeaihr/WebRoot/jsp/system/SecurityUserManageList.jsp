@@ -24,6 +24,9 @@
 	width: calc(100% - 230px);
 	float: left;
 }
+#errorMsg{
+	height: 20px !important;
+}
 </style>
 <script src="js/jquery.easyui.min.js" language="javascript"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -80,26 +83,41 @@ function doRemoveContent(){
 	}
 	jConfirm('确认要移除该条记录吗？',function(r){
 		if(r){
-			postRequest('form1',{actionType:'isLastRelation',onComplete:function(responseText){
+			postRequest('form1',{actionType:'removeContent',onComplete:function(responseText){
 				if (responseText == 'true'){
-					jConfirm('该信息只有一条关联记录，确认要删除吗？',function(rr){
+					writeErrorMsg("该信息有角色关联，请先删除关联！");
+				}else if(responseText == 'unique'){
+					jConfirm('该信息只关联当前组织，删除会将该用户彻底删除，确认要删除吗？',function(rr){
 						if (rr){
-							$("#queryTable").jqGrid("delRowData", currentParamItemIndex); 
-							postRequest("form1",{actionType:"doDeleteAction",onComplete:function(responseText){							
-								$('#queryTable').trigger('reloadGrid');				
-							}});
+							isDelete();
 						}
-					});
+					})
 				}else{
-					$("#queryTable").jqGrid("delRowData", currentParamItemIndex); 
-					postRequest("form1",{actionType:"removeContent",onComplete:function(responseText){
-						$('#queryTable').trigger('reloadGrid');				
-					}});
+					$('#queryTable').trigger('reloadGrid');
 				}
 			}});
 		}
 	});
 }
+function isDelete(){
+	postRequest("form1",{actionType:"doDeleteAction",onComplete:function(responseText){
+		if(responseText.indexOf("role")>=0){
+			if(responseText.indexOf("auth")>=0){
+				writeErrorMsg("该用户有角色关联和权限关联，请先删除关联！");
+			}else{
+				writeErrorMsg("该用户有角色关联，请先删除关联！");
+			}
+		}else{
+			if(responseText.indexOf("auth")>=0){
+				writeErrorMsg("该用户有权限关联，请先删除关联！");
+			}else{
+				$("#queryTable").jqGrid("delRowData", currentParamItemIndex); 
+				$('#queryTable').trigger('reloadGrid');
+			}
+		}
+	}});
+}
+
 function isSelectedTree(){
 	if (isValid($('#columnId').val())){
 		return true;
@@ -210,13 +228,11 @@ function doDelete(){
 	}
 	jConfirm("您确认要删除这条信息吗？",function(changeRelease){
 		if(changeRelease){
-			postRequest("form1",{actionType:"doDeleteAction",onComplete:function(responseText){
-				$("#queryTable").jqGrid("delRowData", currentParamItemIndex); 
-				$('#queryTable').trigger('reloadGrid');				
-			}});
+			isDelete();
 		}
 	})
 }
+
 var resetPasswordBox;
 function openResetPasswordBox(){
 	if (!isSelectedRow()){

@@ -51,6 +51,7 @@ public class SecurityUserTreePickHandler
     	String result = null;
     	try {
     		treeSyntax.append("d = new dTree('d');");
+    		treeSyntax.append("d.config.useCookies = false;");
 			@SuppressWarnings("unchecked")
 			List<DataRow> menuRecords = (List<DataRow>) this.getAttribute("menuRecords");
     		for(DataRow row :menuRecords){

@@ -32,8 +32,9 @@ function refreshContent(curNodeId){
 function clearFilter(){
 	$("#filterBox input[type!='button'],select").val('');
 }
-function doDeletePosemp(){
-	if (!isSelectedRow()){
+function doDeletePosemp(){	
+	var userId = $('#'+rsIdTagId).val()
+	if (!isValid(userId)){
 		jAlert('请先选中一条记录!');
 		return;
 	}
@@ -41,11 +42,13 @@ function doDeletePosemp(){
 		if (r){
 			$("#queryTable").jqGrid("delRowData", currentParamItemIndex); 
 			postRequest("form1",{actionType:"deletePosemp",onComplete:function(responseText){
-				$('#queryTable').trigger('reloadGrid');				
+				$("#USER_ID").val("");
+				$('#queryTable').trigger('reloadGrid');
 			}});
 		}
 	});
 }
+
 </script>
 </head>
 <body>

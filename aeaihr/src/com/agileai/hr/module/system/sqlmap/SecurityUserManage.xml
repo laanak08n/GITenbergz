@@ -97,9 +97,9 @@ where USER_ID=#USER_ID#
   </delete>
   <select id="querySecurityUserRelation" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	select GRP_ID,USER_ID
-from security_user_group_rel
-where GRP_ID=#GRP_ID#
-and USER_ID=#USER_ID#
+	from security_user_group_rel
+	where 1=1
+	and USER_ID=#USER_ID#
   </select>
   <insert id="insertSecurityUserRelation" parameterClass="com.agileai.domain.DataParam">
 	insert into security_user_group_rel (GU_ID,GRP_ID,USER_ID) values (#GU_ID#,#GRP_ID#,#USER_ID#)
@@ -109,8 +109,11 @@ and USER_ID=#USER_ID#
   </update>
   <delete id="deleteSecurityUserRelation" parameterClass="com.agileai.domain.DataParam">
 	delete from security_user_group_rel
-where GRP_ID=#GRP_ID#
-and USER_ID=#USER_ID#
+	where 1=1
+	<isNotEmpty prepend="and " property="grpId">
+	GRP_ID=#grpId#
+	</isNotEmpty>
+	and USER_ID=#USER_ID#
   </delete>
   <select id="queryCopyTreeContentRelation" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
 	select GRP_ID,USER_ID,GU_ID
@@ -126,4 +129,17 @@ where 1=1
 and USER_ID=#USER_ID#
 and GRP_ID=#GRP_ID#
   </select>
+  <select id="findUserRoleGroupRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	select URG_ID,USER_ID,RG_ID
+from security_user_rg_rel
+where 1=1
+and USER_ID=#USER_ID#
+  </select>
+  <select id="findUserAuthRecords" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	select USER_AUTH_ID,USER_ID,RES_TYPE,RES_ID
+  	from security_user_auth
+  	where 1=1
+  	and RES_ID=#ROOTCOLUMNID#
+  	and USER_ID=#USER_ID#
+  </select> 
 </sqlMap>
