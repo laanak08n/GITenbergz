@@ -23,13 +23,13 @@ public class DaoExtendsHelper{
 			Iterator<String> it = recordMap.keySet().iterator();
 			while (it.hasNext()) {
 				String indexField = it.next();
-				List<DataRow> rows = new ArrayList<DataRow>();
+				List<DataRow> list = new ArrayList<DataRow>();
 				for (int i = 0; i < count; i++) {
 					if (indexField.equals(String.valueOf(recordList.get(i).get(indexFieldName)))) {
-						rows.add(recordList.get(i));
+						list.add(recordList.get(i));
 					}
 				}
-				result.put(indexField, rows);
+				result.put(indexField, list);
 			}
 		}
 		return result;
