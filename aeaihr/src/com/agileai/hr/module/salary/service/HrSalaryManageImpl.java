@@ -115,18 +115,50 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 			dataParam.put("SAL_BASIC", row.get("EMP_BASIC"));
 			dataParam.put("SAL_PERFORMANCE", row.get("EMP_PERFORMANCE"));
 			dataParam.put("SAL_SUBSIDY", row.get("EMP_SUBSIDY"));
-			dataParam.put("SAL_INSURE", row.get("EMP_INSURE"));
-			dataParam.put("SAL_TAX", row.get("EMP_TAX"));
+			BigDecimal sal_insure = (BigDecimal) row
+					.get("EMP_INSURE");
+			dataParam.put("SAL_INSURE", sal_insure);
+			dataParam.put("EMP_HOUSING_FUND", row.get("EMP_HOUSING_FUND"));
+			BigDecimal sal_tax = (BigDecimal) row
+					.get("EMP_TAX");
+			dataParam.put("SAL_TAX", sal_tax);
+			
+			BigDecimal sal_housing_fund = (BigDecimal) row
+					.get("EMP_HOUSING_FUND");
+			dataParam.put("SAL_HOUSING_FUND", sal_housing_fund);
+			
 			dataParam.put("SAL_STATE", "0");
 			BigDecimal sal_basic = (BigDecimal) row.get("EMP_BASIC");
 			BigDecimal sal_performance = (BigDecimal) row
 					.get("EMP_PERFORMANCE");
 			BigDecimal sal_subsidy = (BigDecimal) row.get("EMP_SUBSIDY");
-			dataParam.put("SAL_BONUS", "0.00");
 			
 			BigDecimal sal_total = sal_basic.add(sal_performance).add(
 					sal_subsidy);
 			dataParam.put("SAL_TOTAL", sal_total);
+			
+			statementId = sqlNameSpace + "." + "getPunishmentRecord";
+			DataRow punishmentRow = this.daoHelper.getRecord(statementId, new DataParam("USER_ID",userCode,"yearMonth",yearMonth));
+			BigDecimal punishmentMoneyDecimal = new BigDecimal("0.0");
+			if(!punishmentRow.isEmpty()){
+				punishmentMoneyDecimal = (BigDecimal) punishmentRow.get("MONEY");
+			}
+			
+			statementId = sqlNameSpace + "." + "getRewardtRecord";
+			DataRow rewardtRow = this.daoHelper.getRecord(statementId, new DataParam("USER_ID",userCode,"yearMonth",yearMonth));
+			BigDecimal rewardMoneyDecimal = new BigDecimal("0.0");
+			if(!rewardtRow.isEmpty()){
+				rewardMoneyDecimal = (BigDecimal) rewardtRow.get("MONEY");
+			}
+			
+			BigDecimal sal_bonus = rewardMoneyDecimal.subtract(punishmentMoneyDecimal);
+			dataParam.put("SAL_BONUS", sal_bonus);
+			
+			BigDecimal sal_actual = sal_total.subtract(sal_insure).subtract(sal_tax).subtract(sal_housing_fund);
+			dataParam.put("SAL_ACTUAL", sal_actual);
+			
+			BigDecimal sal_should = sal_actual.add(sal_bonus);
+			dataParam.put("SAL_SHOULD", sal_should);
 			
 			Date lastDate = DateUtil.getDateAdd(date, DateUtil.MONTH, -1);
 			String lastYearMonth = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL, lastDate);

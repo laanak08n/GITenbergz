@@ -73,49 +73,62 @@
 	<th width="100" nowrap>有效工作天数</th>
 	<td><input name="SAL_VALID_DAYS" type="text" class="text" id="SAL_VALID_DAYS" value="<%=pageBean.inputValue("SAL_VALID_DAYS")%>" size="24" readonly="readonly" label="有效工作天数" />
 </td>
-	<th width="100" nowrap>奖金</th>
-	<td colspan="3"><input id="SAL_BONUS" label="奖金" name="SAL_BONUS" type="text" class="text markable0" value="<%=pageBean.inputValue("SAL_BONUS")%>" size="24" maxlength="6" <%if(!pageBean.getBoolValue("hasRight")&& pageBean.getBoolValue("isComeFromDetail")){ %> readonly="readonly" <%}%>  />
+	<th width="100" nowrap>保险</th>
+	<td colspan="3"><input name="SAL_INSURE" type="text" class="text" id="SAL_INSURE" value="<%=pageBean.inputValue("SAL_INSURE")%>" size="24" readonly="readonly" label="绩效工资" />
 </td>
 </tr>
 <tr>
 	<th width="100" nowrap>出勤天数</th>
 	<td><input name="SAL_WORK_DAYS" type="text" class="text" id="SAL_WORK_DAYS" value="<%=pageBean.inputValue("SAL_WORK_DAYS")%>" size="24" readonly="readonly" label="出勤天数" />
 </td>
-	<th width="100" nowrap>保险</th>
-	<td colspan="3"><input name="SAL_INSURE" type="text" class="text" id="SAL_INSURE" value="<%=pageBean.inputValue("SAL_INSURE")%>" size="24" readonly="readonly" label="绩效工资" />
+	<th width="100" nowrap>个人所得税</th>
+	<td colspan="3"><input name="SAL_TAX" type="text" class="text" id="SAL_TAX" value="<%=pageBean.inputValue("SAL_TAX")%>" size="24" readonly="readonly" label="绩效工资" />
 </td>
 </tr>
 <tr>
 	<th width="100" nowrap>加班天数</th>
 	<td><input name="SAL_OVERTIME" type="text" class="text" id="SAL_OVERTIME" value="<%=pageBean.inputValue("SAL_OVERTIME")%>" size="24" readonly="readonly" label="加班天数" />
 </td>
-	<th width="100" nowrap>实发工资</th>
-	<td colspan="3"><input name="SAL_ACTUAL" type="text" class="text markable" id="SAL_ACTUAL" value="<%=pageBean.inputValue("SAL_ACTUAL")%>" size="24" readonly="readonly" label="补贴" />
+	<th width="100" height="19" nowrap>公积金</th>
+    <td colspan="3"><input name="SAL_HOUSING_FUND" type="text" class="text" id="SAL_HOUSING_FUND" value="<%=pageBean.inputValue("SAL_HOUSING_FUND")%>" size="24" readonly="readonly" label="公积金" />
 </td>
 </tr>
 <tr>
 	<th width="100" nowrap>请假天数</th>
 	<td><input name="SAL_LEAVE" type="text" class="text" id="SAL_LEAVE" value="<%=pageBean.inputValue("SAL_LEAVE")%>" size="24" readonly="readonly" label="请假天数" />
 </td>
-	<th width="100" nowrap>总工资</th>
-	<td colspan="3"><input name="SAL_TOTAL" type="text" class="text markable" id="SAL_TOTAL" value="<%=pageBean.inputValue("SAL_TOTAL")%>" size="24"  readonly="readonly" label="总工资" />
+	<th width="100" nowrap>奖金</th>
+	<td colspan="3"><input id="SAL_BONUS" label="奖金" name="SAL_BONUS" type="text" class="text markable0" value="<%=pageBean.inputValue("SAL_BONUS")%>" size="24" maxlength="6" <%if(!pageBean.getBoolValue("hasRight")&& pageBean.getBoolValue("isComeFromDetail")){ %> readonly="readonly" <%}%>  />
 </td>
 </tr>
 <tr>
 	<th width="100" height="19" nowrap>年请假数</th>
     <td><input name="SAL_YEAR_LEAVE" type="text" class="text" id="SAL_YEAR_LEAVE" value="<%=pageBean.inputValue("SAL_YEAR_LEAVE")%>" size="24" readonly="readonly" label="年请假数" />
 </td>
-	<th width="100" nowrap>个人所得税</th>
-	<td colspan="3"><input name="SAL_TAX" type="text" class="text" id="SAL_TAX" value="<%=pageBean.inputValue("SAL_TAX")%>" size="24" readonly="readonly" label="绩效工资" />
+	<th width="100" nowrap>总工资</th>
+	<td colspan="3"><input name="SAL_TOTAL" type="text" class="text markable" id="SAL_TOTAL" value="<%=pageBean.inputValue("SAL_TOTAL")%>" size="24"  readonly="readonly" label="总工资" />
 </td>
 </tr>
 <tr>
 	<th width="100" nowrap>抵扣假期</th>
 	<td><input name="SAL_OFFSET_VACATION" type="text" class="text" id="SAL_OFFSET_VACATION" value="<%=pageBean.inputValue("SAL_OFFSET_VACATION")%>" size="24" readonly="readonly" label="抵扣假期" />
 </td>
-	<th width="100" height="19" nowrap>状态</th>
-    <td colspan="3"><input id="SAL_STATE_NAME" label="状态" name="SAL_STATE_NAME" type="text" value="<%=pageBean.selectedText("SAL_STATE")%>" size="24" class="text" readonly="readonly"/>
+	<th width="100" nowrap>实发工资</th>
+	<td colspan="3"><input name="SAL_ACTUAL" type="text" class="text markable" id="SAL_ACTUAL" value="<%=pageBean.inputValue("SAL_ACTUAL")%>" size="24" readonly="readonly" label="补贴" />
+</td>
+</tr>
+<tr>
+	<th width="100" nowrap>状态</th>
+	<td><input id="SAL_STATE_NAME" label="状态" name="SAL_STATE_NAME" type="text" value="<%=pageBean.selectedText("SAL_STATE")%>" size="24" class="text" readonly="readonly"/>
 	<input id="SAL_STATE" label="状态" name="SAL_STATE" type="hidden" value="<%=pageBean.selectedValue("SAL_STATE")%>" />
+</td>
+	<th width="100" height="19" nowrap>应发工资</th>
+    <td colspan="3"><input name="SAL_SHOULD" type="text" class="text markable" id="SAL_SHOULD" value="<%=pageBean.inputValue("SAL_SHOULD")%>" size="24" readonly="readonly" label="应发工资" />
+</td>
+</tr>
+<tr>
+	<th width="100" nowrap>人天费用</th>
+	<td><input id="SAL_DAY_MONEY" label="人天费用" name="SAL_DAY_MONEY" type="text" value="<%=pageBean.inputValue("SAL_DAY_MONEY")%>" size="24" class="text" readonly="readonly"/>	
 </td>
 </tr>
 <tr>
@@ -150,6 +163,8 @@ numValidator.add("SAL_PERFORMANCE");
 numValidator.add("SAL_SUBSIDY");
 numValidator.add("SAL_BONUS");
 numValidator.add("SAL_TOTAL");
+numValidator.add("SAL_SHOULD");
+numValidator.add("SAL_HOUSING_FUND");
 requiredValidator.add("SAL_BONUS");
 initDetailOpertionImage();
 </script>

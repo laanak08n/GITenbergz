@@ -56,10 +56,11 @@ function revokeApproval(){
 </div>
 <div id="__ParamBar__">
 <table class="queryTable"><tr><td>
-&nbsp;年月<input id="salDate" label="时间" name="salDate" type="text" value="<%=pageBean.inputValue("salDate")%>"  size="10" class="text" />
+&nbsp;年月<input id="salDate" label="时间" name="salDate" type="text" value="<%=pageBean.inputValue("salDate")%>"  size="5" class="text" readonly="readonly"/>
 &nbsp;<input type="submit" name="button" id="button" value="上一月" class="formbutton" onclick="doSubmit({actionType:'beforeMonth'})" />
 &nbsp;<input type="submit" name="button" id="button" value="本月" class="formbutton" onclick="doSubmit({actionType:'currentMonth'})" />
 &nbsp;<input type="submit" name="button" id="button" value="下一月" class="formbutton" onclick="doSubmit({actionType:'nextMonth'})" />
+&nbsp;有效天数:<%=pageBean.inputValue("validDaysNum")%>天
 &nbsp;&nbsp;
 &nbsp;状态<select id="salState" label="状态" name="salState" class="select" onchange="doQuery()"><%=pageBean.selectValue("salState")%></select>
 &nbsp;<input type="button" name="button" id="button" value="查询" class="formbutton" onclick="doQuery()" />
@@ -79,8 +80,6 @@ height="390px"
 <ec:row styleClass="odd" ondblclick="clearSelection();doRequest('viewDetail')" oncontextmenu="selectRow(this,{SAL_ID:'${row.SAL_ID}'});controlApproveBtn('${row.SAL_STATE}');refreshConextmenu()" onclick="selectRow(this,{SAL_ID:'${row.SAL_ID}'});controlApproveBtn('${row.SAL_STATE}');">
 	<ec:column width="50" style="text-align:center" property="_0" title="序号" value="${GLOBALROWCOUNT}" />
 	<ec:column width="100" property="SAL_NAME"  title="人员姓名"   />
-	<ec:column width="100" property="SAL_YEAR_MONTH" title="年月"   />
-	<ec:column width="100" property="SAL_VALID_DAYS" style="text-align:right;" title="有效天数"   />
 	<ec:column width="100" property="SAL_WORK_DAYS" style="text-align:right;" title="出勤天数"   />
 	<ec:column width="100" property="SAL_OVERTIME" style="text-align:right;" title="加班天数"   />
 	<ec:column width="100" property="SAL_LEAVE" style="text-align:right;" title="请假天数"   />
@@ -88,11 +87,13 @@ height="390px"
 	<ec:column width="100" property="SAL_BASIC" style="text-align:right;" title="基本工资"   />
 	<ec:column width="100" property="SAL_PERFORMANCE" style="text-align:right;" title="绩效工资"   />
 	<ec:column width="100" property="SAL_SUBSIDY" style="text-align:right;" title="补贴"   />
-	<ec:column width="100" property="SAL_BONUS" style="text-align:right;" title="奖金"   />
     <ec:column width="100" property="SAL_INSURE" style="text-align:right;" title="保险"   />
     <ec:column width="100" property="SAL_TAX" style="text-align:right;" title="个人所得税"   />
-	<ec:column width="100" property="SAL_TOTAL" style="text-align:right;background-color:yellow;" title="总工资"   />
-     <ec:column width="100" property="SAL_ACTUAL" style="text-align:right;background-color:yellow;" title="实发工资"   />
+    <ec:column width="100" property="SAL_HOUSING_FUND" style="text-align:right;" title="公积金"   />
+    <ec:column width="100" property="SAL_BONUS" style="text-align:right;" title="奖金"   />
+	<ec:column width="100" property="SAL_TOTAL" style="text-align:right;background-color:yellow;" title="总工资"/>
+    <ec:column width="100" property="SAL_ACTUAL" style="text-align:right;background-color:yellow;" title="实发工资"/>
+    <ec:column width="100" property="SAL_SHOULD" style="text-align:right;background-color:yellow;" title="应发工资"/>
 	<ec:column width="100" property="SAL_STATE" title="状态"   mappingItem="SAL_STATE"/>
 </ec:row>
 </ec:table>

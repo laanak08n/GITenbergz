@@ -1,5 +1,6 @@
 package com.agileai.hr.module.salary.handler;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -59,6 +60,13 @@ public class HrSalaryManageListHandler extends StandardListHandler {
 		}
 		param.put("salYear", year, "salMonth", month);
 		
+		DataRow validDaysRow = getService().retrieveValidDays(year, month);
+		BigDecimal validDaysNum = new BigDecimal("0.0");
+		if(!(validDaysRow == null)){
+			validDaysNum = (BigDecimal) validDaysRow.get("VALID_DAYS");
+		}
+		
+		this.setAttribute("validDaysNum", validDaysNum);
 		this.setAttributes(param);
 		List<DataRow> rsList = getService().findRecords(param);
 		this.setRsList(rsList);

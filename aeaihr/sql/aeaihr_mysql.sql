@@ -39,6 +39,24 @@ CREATE TABLE `hr_attendance` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for hr_bonus_penalty
+-- ----------------------------
+DROP TABLE IF EXISTS `hr_bonus_penalty`;
+CREATE TABLE `hr_bonus_penalty` (
+  `BP_ID` char(36) NOT NULL,
+  `USER_ID` char(36) DEFAULT NULL,
+  `BP_DATE` varchar(32) DEFAULT NULL,
+  `BP_TYPE` varchar(32) DEFAULT NULL,
+  `BP_MONEY` decimal(8,2) DEFAULT NULL,
+  `BP_DESC` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`BP_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hr_bonus_penalty
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for hr_education
 -- ----------------------------
 DROP TABLE IF EXISTS `hr_education`;
@@ -86,19 +104,17 @@ CREATE TABLE `hr_employee` (
   `EMP_DIMISSION_TIME` date DEFAULT NULL,
   `EMP_TAX` decimal(8,0) DEFAULT NULL,
   `EMP_INSURE` decimal(8,0) DEFAULT NULL,
+  `EMP_HOUSING_FUND` decimal(8,2) DEFAULT NULL,
   `EMP_ANNUAL_LEAVE_DAYS` varchar(5) DEFAULT NULL,
   `EMP_ALLOWANCE` decimal(8,0) DEFAULT NULL,
   `EMP_PARTICIPATE_SALARY` varchar(32) DEFAULT NULL,
+  `EMP_PAY_INSURE` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`EMP_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hr_employee
 -- ----------------------------
-INSERT INTO `hr_employee` VALUES ('434964EB-04E5-4BE6-822C-2FBB5A6BF50D', 'CS02', '赵小二', 'M', null, '', '', '', '', '', '', null, 'FDB148EF-9146-4675-AB8E-0CE85164B67A', '行政总监', null, '', null, '', 'drafe', '0.00', '0.00', '0.00', '', null, '0', '0', null, null, null);
-INSERT INTO `hr_employee` VALUES ('5F12ED6E-372E-4DC5-AADA-9B3A5EFB53C6', 'CS01', '张老大', 'M', null, '', '', '', '', '', '', null, '3435DD86-53B8-41DC-BE10-0463428D18D6', '技术总监', null, '', null, '', 'drafe', '3500.00', '500.00', '100.00', '', null, '200', '200', null, null, null);
-INSERT INTO `hr_employee` VALUES ('D49E1F66-68AD-4BEA-B7ED-698264D16989', 'CS03', '孙小三', 'M', null, '', '', '', '', '', '', null, '72A9E7B1-5B47-4822-ACA0-A8CB1EE78506', '技术顾问', null, '', null, '', 'drafe', '0.00', '0.00', '0.00', '', null, '0', '0', null, null, null);
-INSERT INTO `hr_employee` VALUES ('D773AB95-FAEF-4748-909A-1351FAD635F4', 'CS04', '赵小四', 'M', null, '', '', '', '', '', '', null, '72A9E7B1-5B47-4822-ACA0-A8CB1EE78506', '技术顾问', null, '', null, '', 'drafe', '0.00', '0.00', '0.00', '', null, '0', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for hr_evection
@@ -233,14 +249,15 @@ CREATE TABLE `hr_salary` (
   `SAL_TAX` decimal(8,2) DEFAULT NULL,
   `SAL_REMARKS` varchar(512) DEFAULT NULL,
   `SAL_OFFSET_VACATION` decimal(8,2) DEFAULT NULL,
-  `SAL_YEAR_LEAVE` decimal(8,2) DEFAULT NULL
+  `SAL_YEAR_LEAVE` decimal(8,2) DEFAULT NULL,
+  `SAL_HOUSING_FUND` decimal(8,2) DEFAULT NULL,
+  `SAL_SHOULD` decimal(8,2) DEFAULT NULL,
   PRIMARY KEY (`SAL_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hr_salary
 -- ----------------------------
-
 -- ----------------------------
 -- Table structure for hr_valid
 -- ----------------------------
@@ -671,6 +688,8 @@ INSERT INTO `sys_codelist` VALUES ('APP_RESULT', 'NO', '不同意', '', '2', '1'
 INSERT INTO `sys_codelist` VALUES ('APP_RESULT', 'YES', '同意', '', '1', '1');
 INSERT INTO `sys_codelist` VALUES ('BOOL_DEFINE', 'N', '否', '', '2', '1');
 INSERT INTO `sys_codelist` VALUES ('BOOL_DEFINE', 'Y', '是', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('BP_TYPE', 'PUNISHMENT', '惩罚', '', '1', '1');
+INSERT INTO `sys_codelist` VALUES ('BP_TYPE', 'REWARD', '奖励', '', '2', '1');
 INSERT INTO `sys_codelist` VALUES ('CODE_TYPE_GROUP', 'app_code_define', '应用编码', 'null', '1', '1');
 INSERT INTO `sys_codelist` VALUES ('CODE_TYPE_GROUP', 'sys_code_define', '系统编码', '系统编码123a1', '3', '1');
 INSERT INTO `sys_codelist` VALUES ('EMP_EDUCATION', '0', '初中', '', '1', '1');
@@ -754,6 +773,7 @@ CREATE TABLE `sys_codetype` (
 INSERT INTO `sys_codetype` VALUES ('AuthedHandlerId', '认证Handler定义', 'sys_code_define', '', 'Y', 'Y', 'Y', '', 'B', 'N', '', '');
 INSERT INTO `sys_codetype` VALUES ('APP_RESULT', '核准結果', 'sys_code_define', '', 'Y', 'Y', 'Y', '10', '', null, null, null);
 INSERT INTO `sys_codetype` VALUES ('BOOL_DEFINE', '布尔定义', 'sys_code_define', '', 'Y', 'Y', 'Y', '1', 'C', '', '', '');
+INSERT INTO `sys_codetype` VALUES ('BP_TYPE', '奖惩类型', 'app_code_define', '', 'Y', 'Y', 'Y', '20', '', 'N', '', '');
 INSERT INTO `sys_codetype` VALUES ('CODE_TYPE_GROUP', '编码类型分组', 'app_code_define', '编码类型分组', null, null, null, null, null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('EMP_EDUCATION', '学历', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('EMP_MARITAL_STATUS', '婚姻状况', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
@@ -767,6 +787,7 @@ INSERT INTO `sys_codetype` VALUES ('MENUTREE_CASCADE', '是否展开', 'sys_code
 INSERT INTO `sys_codetype` VALUES ('OPER_CTR_TYPE', '操作控制类型', 'sys_code_define', null, null, null, null, null, null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('POSITION_TYPE', '岗位类型', 'app_code_define', null, null, null, null, null, null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('RES_TYPE', '资源类型', 'sys_code_define', '', 'N', 'Y', 'Y', '16', 'C', null, null, null);
+INSERT INTO `sys_codetype` VALUES ('SALARY_LIMIT', '2000', 'app_code_define', '', 'Y', 'Y', 'Y', '', '', 'N', '', '');
 INSERT INTO `sys_codetype` VALUES ('SAL_STATE', '薪资状态', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('STATE', '状态', 'sys_code_define', null, 'Y', 'Y', 'Y', '', null, null, null, null);
 INSERT INTO `sys_codetype` VALUES ('SYS_VALID_TYPE', '有效标识符', 'app_code_define', null, null, null, null, null, null, null, null, null);
@@ -796,6 +817,7 @@ CREATE TABLE `sys_function` (
 INSERT INTO `sys_function` VALUES ('00000000-0000-0000-00000000000000000', '人力资源系统', 'funcmenu', null, null, '1', null, null);
 INSERT INTO `sys_function` VALUES ('00000000-0000-0000-00000000000000001', '系统管理', 'funcmenu', '', '00000000-0000-0000-00000000000000000', '1', '100', '');
 INSERT INTO `sys_function` VALUES ('49F49293-5270-4C72-B7EE-02562627BF03', '基本信息', 'funcnode', '4F7D78BE-CEF2-4B71-9F43-EEF3ABADC5A1', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '1', '');
+INSERT INTO `sys_function` VALUES ('58266DF2-BCF6-4176-A5E5-800E993DD3F7', '奖惩管理', 'funcnode', '2F9E86A7-983F-4889-8705-37268F2DACD1', 'AD7CE5A0-39C4-4B43-B243-D056BBDF9332', '1', '8', '');
 INSERT INTO `sys_function` VALUES ('5FDEE3AB-6D32-4C5F-AD65-EF1EE5FFBAE6', '附件管理', 'funcnode', '1F617665-FC8B-4E8C-ABE4-540C363A17A8', '00000000-0000-0000-00000000000000001', '1', '7', '');
 INSERT INTO `sys_function` VALUES ('67BA273A-DD31-48D0-B78C-1D60D5316074', '系统日志', 'funcnode', '494DF09B-7573-4CCA-85C1-97F4DC58C86B', '00000000-0000-0000-00000000000000001', '1', '6', null);
 INSERT INTO `sys_function` VALUES ('692B0D37-2E66-4E82-92B4-E59BCF76EE76', '编码管理', 'funcnode', 'B4FE5722-9EA6-47D8-8770-D999A3F6A354', '00000000-0000-0000-00000000000000001', '1', '5', null);
@@ -833,6 +855,8 @@ INSERT INTO `sys_handler` VALUES ('0CE03AD4-FF29-4FDB-8FEE-DA8AA38B649F', 'Secur
 INSERT INTO `sys_handler` VALUES ('145920A1-3843-419E-A633-5C3AC2AFC454', 'HrSalaryManageEdit', 'OTHER', '', '697BF588-ED62-43BB-B30E-3A7E40E7F1F1');
 INSERT INTO `sys_handler` VALUES ('1F617665-FC8B-4E8C-ABE4-540C363A17A8', 'WcmGeneralGroup8ContentList', 'MAIN', null, '5FDEE3AB-6D32-4C5F-AD65-EF1EE5FFBAE6');
 INSERT INTO `sys_handler` VALUES ('27BCFFDE-DD30-4659-8EAB-D0D848A39DB8', 'DeptTreeSelect', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
+INSERT INTO `sys_handler` VALUES ('2F9E86A7-983F-4889-8705-37268F2DACD1', 'HrBonusPenaltyManageList', 'MAIN', null, '58266DF2-BCF6-4176-A5E5-800E993DD3F7');
+INSERT INTO `sys_handler` VALUES ('32F1ED17-41D0-4195-A756-4B88EBB691E8', 'SalarySet', 'OTHER', '', '49F49293-5270-4C72-B7EE-02562627BF03');
 INSERT INTO `sys_handler` VALUES ('34BD49C5-0BA6-4DAC-A96C-B2B426127C28', 'HrLocationManageList', 'MAIN', null, '6FDE7748-A30D-4386-999E-600B79D472D5');
 INSERT INTO `sys_handler` VALUES ('3844F972-311A-459A-8B9A-B39DFA526B6C', 'HrValidDays', 'OTHER', '', '697BF588-ED62-43BB-B30E-3A7E40E7F1F1');
 INSERT INTO `sys_handler` VALUES ('439949F0-C6B7-49FF-8ED1-2A1B5062E7B9', 'SecurityGroupList', 'MAIN', '', '8C84B439-2788-4608-89C4-8F5AA076D124');
@@ -854,6 +878,7 @@ INSERT INTO `sys_handler` VALUES ('9A16D554-F989-438A-B92D-C8C8AC6BF9B8', 'CodeT
 INSERT INTO `sys_handler` VALUES ('A2E1E8E7-EAC9-45F7-AAEE-D08C89BDEE0A', 'UserListSelectList', 'OTHER', '', 'F8C4DC47-8F58-4420-8FC4-4DB1CE35C0F6');
 INSERT INTO `sys_handler` VALUES ('A9846F89-E5FA-4820-9913-0CF1BB71F4D1', 'HrAttendanceManageEdit', 'OTHER', '', '99EAA89A-59E6-4866-9980-21164DA571F2');
 INSERT INTO `sys_handler` VALUES ('B4FE5722-9EA6-47D8-8770-D999A3F6A354', 'CodeListManageList', 'MAIN', null, '692B0D37-2E66-4E82-92B4-E59BCF76EE76');
+INSERT INTO `sys_handler` VALUES ('C8DAE35A-B1DB-47A3-822F-97659C56334B', 'HrBonusPenaltyManageEdit', 'OTHER', '', '58266DF2-BCF6-4176-A5E5-800E993DD3F7');
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -972,8 +997,6 @@ INSERT INTO `sys_operation` VALUES ('FB7B15C0-9D21-4AFA-8918-28DFDAC25FA1', '7D0
 INSERT INTO `sys_operation` VALUES ('FC086415-FACB-4530-B38A-F993ABE59337', '27BCFFDE-DD30-4659-8EAB-D0D848A39DB8', 'close', '关闭', 'close', '2');
 INSERT INTO `sys_operation` VALUES ('FE224D4E-381B-4DC6-82EA-B7F2C70F4012', '642BCD38-28C1-4FF1-A194-535BFAB10679', 'apply', '申请', 'apply', '1');
 INSERT INTO `sys_operation` VALUES ('FFA6D0CD-ED98-4C51-BBDC-A3367BE0B594', '4F7D78BE-CEF2-4B71-9F43-EEF3ABADC5A1', 'approve', '核准', 'approve', '3');
-INSERT INTO `sys_operation` VALUES ('BF63FE41-2A03-4D38-B2B0-39EE5E5DEB59', '145920A1-3843-419E-A633-5C3AC2AFC454', 'reset', '年假重新计算', 'reset', '3');
-
 
 -- ----------------------------
 -- Table structure for wcm_general_group
