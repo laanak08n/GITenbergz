@@ -192,6 +192,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		String currentDate = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,new Date());
     		String weekText = DateUtil.getWeekText(new Date());
     		List<DataRow> records = getService().findCurrentDaySigninInfos(currentDate);
+    		String signInDateShow = currentDate.substring(5, 10);
     		JSONObject jsonObject = new JSONObject();
     		JSONArray jsonArray = new JSONArray();
     		if(records.size() != 0){
@@ -216,6 +217,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		
     		jsonObject.put("signInfos", jsonArray);
     		jsonObject.put("signInDate", currentDate);
+    		jsonObject.put("signInDateShow", signInDateShow);
     		jsonObject.put("weekText", weekText);
         	responseText = jsonObject.toString();
 		} catch (Exception e) {
@@ -236,6 +238,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		}
     		String weekText = DateUtil.getWeekText(DateUtil.getDateTime(date));
     		List<DataRow> records = getService().findCurrentDaySigninInfos(date);
+    		String signInDateShow = date.substring(5, 10);
     		JSONObject jsonObject = new JSONObject();
     		JSONArray jsonArray = new JSONArray();
     		if(records.size() != 0){
@@ -260,6 +263,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		
     		jsonObject.put("signInfos", jsonArray);
     		jsonObject.put("signInDate", date);
+    		jsonObject.put("signInDateShow", signInDateShow);
     		jsonObject.put("weekText", weekText);
         	responseText = jsonObject.toString();
 		} catch (Exception e) {
@@ -280,6 +284,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		}
     		String weekText = DateUtil.getWeekText(DateUtil.getDateTime(date));
     		List<DataRow> records = getService().findCurrentDaySigninInfos(date);
+    		String signInDateShow = date.substring(5, 10);
     		JSONObject jsonObject = new JSONObject();
     		JSONArray jsonArray = new JSONArray();
     		if(records.size() != 0){
@@ -304,6 +309,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		
     		jsonObject.put("signInfos", jsonArray);
     		jsonObject.put("signInDate", date);
+    		jsonObject.put("signInDateShow", signInDateShow);
     		jsonObject.put("weekText", weekText);
         	responseText = jsonObject.toString();
 		} catch (Exception e) {
@@ -323,6 +329,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		}else{
     			date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,DateUtil.getDateAdd(DateUtil.getDateTime(date), DateUtil.DAY, -1));
     		}
+    		String signOutDateShow = date.substring(5, 10);
     		String weekText = DateUtil.getWeekText(DateUtil.getDateTime(date));
     		String expression = "and ATD_OUT_TIME is not null";
     		List<DataRow> records = getService().findCurrentDaySignOutInfos(expression,date);
@@ -350,6 +357,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		
     		jsonObject.put("signOutInfos", jsonArray);
     		jsonObject.put("signOutDate", date);
+    		jsonObject.put("signOutDateShow", signOutDateShow);
     		jsonObject.put("outWeekText", weekText);
         	responseText = jsonObject.toString();
 		} catch (Exception e) {
@@ -366,6 +374,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		String weekText = DateUtil.getWeekText(new Date());
     		String expression = "and ATD_OUT_TIME is not null";
     		List<DataRow> records = getService().findCurrentDaySignOutInfos(expression,currentDate);
+    		String signOutDateShow = currentDate.substring(5, 10);
     		JSONObject jsonObject = new JSONObject();
     		JSONArray jsonArray = new JSONArray();
     		if(records.size() != 0){
@@ -390,6 +399,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		
     		jsonObject.put("signOutInfos", jsonArray);
     		jsonObject.put("signOutDate", currentDate);
+    		jsonObject.put("signOutDateShow", signOutDateShow);
     		jsonObject.put("outWeekText", weekText);
         	responseText = jsonObject.toString();
 		} catch (Exception e) {
@@ -410,6 +420,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		}
     		String weekText = DateUtil.getWeekText(DateUtil.getDateTime(date));
     		List<DataRow> records = getService().findCurrentDaySigninInfos(date);
+    		String signOutDateShow = date.substring(5, 10);
     		JSONObject jsonObject = new JSONObject();
     		JSONArray jsonArray = new JSONArray();
     		if(records.size() != 0){
@@ -434,6 +445,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		
     		jsonObject.put("signOutInfos", jsonArray);
     		jsonObject.put("signOutDate", date);
+    		jsonObject.put("signOutDateShow", signOutDateShow);
     		jsonObject.put("outWeekText", weekText);
         	responseText = jsonObject.toString();
 		} catch (Exception e) {
