@@ -74,7 +74,7 @@
 		FROM hr_location
 		where 1 = 1
 		and USER_ID = #userId#
-		ORDER BY LOCAT_TIME Desc 
+		ORDER BY LOCAT_TIME Desc limit 20
 	</select>
 	<select id="getAttendanceStatInfoRecords" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">
@@ -138,5 +138,12 @@
 		and a.WOT_OVERTIME_DATE &gt;= #startDate# and a.WOT_OVERTIME_DATE &lt;= #endDate#
 		and a.STATE = 'approved'
 		order by a.WOT_DATE
+	</select>
+	
+	<select id="findActiveUserId" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+	 SELECT USER_ID,USER_NAME,USER_CODE
+	from security_user 
+	where 1 = 1
+	 and USER_CODE = #userCode#
 	</select>
 </sqlMap>

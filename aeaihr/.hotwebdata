@@ -7,11 +7,11 @@
     <DriverUrl>jdbc:mysql://localhost:3306/aeaihr</DriverUrl>  
     <DriverClass>com.mysql.jdbc.Driver</DriverClass>  
     <UserId>root</UserId>  
-    <UserPwd>pM2i4+HjFrl5VvGQvelc4g==</UserPwd> 
+    <UserPwd>HUX+7VtHgb0=</UserPwd> 
   </DBConfig>  
   <ServerConfig> 
     <ServerAddress>localhost</ServerAddress>  
-    <ServerPort>6060</ServerPort>  
+    <ServerPort>8080</ServerPort>  
     <ServerUserId>admin</ServerUserId>  
     <ServerUserPwd>K6CG7IXQGv4=</ServerUserPwd> 
   </ServerConfig>  

@@ -1,5 +1,6 @@
 package com.agileai.hr.module.attendance.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.agileai.common.KeyGenerator;
@@ -147,5 +148,11 @@ public class HrAttendanceManageImpl
 		String statementId = sqlNameSpace+"."+"findRecords";
 		List<DataRow> records = this.daoHelper.queryRecords(statementId, param);
 		return records;
+	}
+	@Override
+	public DataRow findActiveUserId(String userCode) {
+		DataParam param = new DataParam("userCode",userCode);
+		String statementId = sqlNameSpace+"."+"findActiveUserId";
+		return this.daoHelper.getRecord(statementId, param);
 	}
 }

@@ -490,6 +490,7 @@ public class MobileAttendanceHandler extends BaseHandler {
     		List<DataRow> records = getService().findUserInfos();
     		JSONObject jsonObject = new JSONObject();
     		JSONArray jsonArray = new JSONArray();
+    		JSONArray jsonArray2 = new JSONArray();
     		if(records.size() != 0){
 				for(int i=0;i<records.size();i++){
 					DataRow row = records.get(i);
@@ -498,6 +499,7 @@ public class MobileAttendanceHandler extends BaseHandler {
 					jsonObject11.put("userName", row.stringValue("USER_NAME"));
 					jsonObject11.put("userCode", row.stringValue("USER_CODE"));
 					jsonArray.put(jsonObject11);
+					jsonArray2.put(row.stringValue("USER_CODE"));
 				}
 			}else{
 				JSONObject jsonObject11 = new JSONObject();
@@ -505,12 +507,28 @@ public class MobileAttendanceHandler extends BaseHandler {
 				jsonArray.put(jsonObject11);
 			}
     		jsonObject.put("userInfos", jsonArray);
+    		jsonObject.put("userCodes", jsonArray2);
         	responseText = jsonObject.toString();
 		} catch (Exception e) {
 			log.error(e.getLocalizedMessage(), e);
 		}
     	return new AjaxRenderer(responseText);
     }
+    
+    @PageAction
+	public ViewRenderer findActiveUserId(DataParam param){
+		String responseText = FAIL;
+		try {
+			String userCode = param.get("userCode");
+			DataRow userInfo = getService().findActiveUserId(userCode);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("userId", userInfo.stringValue("USER_ID"));
+			responseText = jsonObject.toString();
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(),e);
+		}
+		return new AjaxRenderer(responseText);
+	}
     
 	protected HrAttendanceManage getService() {
 		return (HrAttendanceManage) this.lookupService(HrAttendanceManage.class);
