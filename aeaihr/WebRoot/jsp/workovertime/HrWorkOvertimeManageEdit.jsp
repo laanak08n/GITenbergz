@@ -51,7 +51,8 @@ function saveMasterRecord(){
 <table border="0" cellpadding="0" cellspacing="1">
 <tr>
 <%if(pageBean.getBoolValue("doEdit")){%>
-  <aeai:previlege code="save"><td  align="center"class="bartdx"onclick="saveMasterRecord()" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;" type="button" class="saveImgBtn" id="savedrafeImgBtn" title="保存" />保存</td></aeai:previlege>
+  <aeai:previlege code="edit"><td  align="center"class="bartdx"onclick="enableSave()" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;" type="button" class="editImgBtn" id="modifyImgBtn" title="编辑" />编辑</td></aeai:previlege>
+  <aeai:previlege code="save"><td  align="center"class="bartdx"onclick="saveMasterRecord()" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;" type="button" class="saveImgBtn" id="saveImgBtn" title="保存" />保存</td></aeai:previlege>
 <%}%>
 <%if(pageBean.getBoolValue("doSubmit")){%>
   <aeai:previlege code="submit"><td  align="center"class="bartdx"onclick="stateSubmit();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="submitImgBtn" id="submitImgBtn" title="提交" />提交</td></aeai:previlege>
