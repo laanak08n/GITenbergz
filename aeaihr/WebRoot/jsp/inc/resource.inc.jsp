@@ -31,6 +31,7 @@ String themeVersion = "20170522";
 <script src="js/validate/filter.js?<%=themeVersion%>" language="javascript"></script>
 <script src="js/validate/validator.config.js?<%=themeVersion%>" language="javascript"></script>
 <script src="js/ecside.js?<%=themeVersion%>" language="javascript"></script>
+<script src="js/jquery.inputlimiter.1.3.1.min.js?<%=themeVersion%>" language="javascript"></script>
 <script type="text/javascript">
 validateIsDisplayAllError = false;
 </script>

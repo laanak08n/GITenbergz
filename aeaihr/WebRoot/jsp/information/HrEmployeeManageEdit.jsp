@@ -72,10 +72,12 @@ function deleteEntryRecord(subTableId){
 		writeErrorMsg('请先选中一条记录!');
 		return;
 	}
-	if (confirm('确认要删除该条记录吗？')){
-		$('#currentSubTableId').val(subTableId);
-		doSubmit({actionType:'deleteEntryRecord'});	
-	}
+	jConfirm('确认要删除该条记录吗？',function(r){
+		if (r){
+			$('#currentSubTableId').val(subTableId);
+			doSubmit({actionType:'deleteEntryRecord'});	
+		}
+	});
 }
 function checkEntryRecords(subTableId){
 	var result = true;
@@ -121,9 +123,11 @@ function deleteSubRecord(){
 		writeErrorMsg('请先选中一条记录!');
 		return;
 	}
-	if (confirm('确认要删除该条记录吗？')){
-		doSubmit({actionType:'deleteSubRecord'});	
-	}
+	jConfirm('确认要删除该条记录吗？',function(r){
+		if (r){
+			doSubmit({actionType:'deleteSubRecord'});
+		}
+	});
 }
 function doMoveUp(){
 	if (!isSelectedRow()){
@@ -142,9 +146,10 @@ function doMoveDown(){
 }
 function stateApprove(){
 	postRequest('form1',{actionType:'approve',onComplete:function(responseText){
-		jAlert(responseText);
-		$('#operaType').val('detail');
-		doSubmit({actionType:'prepareDisplay'});
+		jAlert(responseText,null,function(){
+			$('#operaType').val('detail');
+			doSubmit({actionType:'prepareDisplay'});
+		});
 	}});
 }
 function saveRecord(){

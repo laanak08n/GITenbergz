@@ -209,9 +209,9 @@
 		where PER_ID=#PER_ID#
 	</update>
 	<insert id="insertSecurityUserGroupRelRecord" parameterClass="com.agileai.domain.DataParam">
-		insert into security_user_group_rel (GRP_ID,USER_ID)
+		insert into security_user_group_rel (GRP_ID,USER_ID,GU_ID)
 		values
-		(#GRP_ID#,#USER_ID#)
+		(#GRP_ID#,#USER_ID#,#GU_ID#)
 	</insert>
 	<select id="getSecurityUserCode" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">

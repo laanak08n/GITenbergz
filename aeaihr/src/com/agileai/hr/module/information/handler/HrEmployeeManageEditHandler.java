@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.agileai.common.KeyGenerator;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.annotation.PageAction;
@@ -144,6 +145,8 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 	@PageAction
 	public ViewRenderer approve(DataParam param) {
 		param.put("EMP_STATE", "approved");
+		String guId = KeyGenerator.instance().genKey();
+		param.put("GU_ID",guId);
 		String responseText = getService().approveRecord(param);
 		return new AjaxRenderer(responseText);
 	}
