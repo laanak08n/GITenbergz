@@ -3,7 +3,9 @@
 AEAI HR人力资源管理系统是数通畅联软件基于AEAI DP开发的开源Java Web系统，用来协助管理公司人力、薪酬等事务， AEAI HR人力资源系统包括一些核心的人力资源管理业务功能，如：薪酬管理、考勤管理、绩效管理等模块，同时支持移动签到、签退（移动支持是V1.5版本新特性），能够满足企业人力资源信息化的基本要求。 AEAI HR人力资源系统内部已预置演示账户，用于快速了解、掌握该系统。
 
 AEAIHR系统功能架构图如下所示，包括基本信息模块，考勤模块，加班申请，请假申请，薪资管理和微信签到签退。
+
 ![enter image description here](http://www.agileai.com/HotServer/reponsitory/images/oschina/hr.jpg)
+
 **AEAI HR人力资源系统各模块的主要功能说明如下：**
 
 1.基本信息：主要是指新员工入职时，人力负责人在该模块开通账户并记录新员工的具体信息， 包括联系方式及日后工作调动情况等。
@@ -21,11 +23,17 @@ AEAIHR系统功能架构图如下所示，包括基本信息模块，考勤模�
 7.微信签退：主要用于对下班签退的管理，员工每天下班时可以利用手机移动端进行签退，签退后即可显示员工的所在位置及签退时间，签退后不可撤销，注：没有签到是不能签退的。
 
 **AEAI HR系统登录页面，如下图所示：**
+
 ![enter image description here](http://www.agileai.com/HotServer/reponsitory/images/oschina/login.png)
+
 **预置角色列表：**
+
 ![enter image description here](http://www.agileai.com/HotServer/reponsitory/images/oschina/actor%20.png)
+
 **预置用户列表：**
+
 ![enter image description here](http://www.agileai.com/HotServer/reponsitory/images/oschina/actors.png)
+
 **AEAI HR人力资源管理系统特性：**
 -------------
 1.实用性：够用就行，简单明了。
