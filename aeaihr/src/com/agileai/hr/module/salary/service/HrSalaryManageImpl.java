@@ -348,7 +348,7 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 	}
 	private int getWeekendDays(Date beginDate, Date endDate){
 		int result = 0;
-		
+		//#######################################
 		return result;
 	}
 	private BigDecimal calculateFullTimeAward(DataRow leaveDaysRow,DataRow currentMonthAttendRow,String userCode,Date regularTime,Date date,DataParam param){
