@@ -30,7 +30,7 @@ public class LeaveImpl extends BaseRestService implements Leave {
 				DataRow dataRow = reList.get(i);
 				JSONObject jsonObject1 = new JSONObject();
 				jsonObject1.put("leaId", dataRow.get("LEA_ID"));
-				jsonObject1.put("leatype", dataRow.get("LEA_TYPE"));
+				jsonObject1.put("leaType", dataRow.get("LEA_TYPE"));
 				jsonObject1.put("leaDays", dataRow.get("LEA_DAYS"));
 				Date leaDate = (Date) dataRow.get("LEA_DATE");
 				String date = DateUtil.getDateByType(DateUtil.YYMMDDHHMI_SLANTING, leaDate);
