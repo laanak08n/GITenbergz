@@ -211,7 +211,7 @@ function revokeApproval(){
 </tr>
 <tr>
 <th width="100" nowrap>姓名</th>
-	<td><input id="EMP_NAME" label="姓名" name="EMP_NAME" type="text" value="<%=pageBean.inputValue("EMP_NAME")%>"  <%if("readonly".equals(pageBean.getAttribute("onlyRead"))){ %>readonly="readonly"<%} %> size="24" class="text" />
+	<td><input id="EMP_NAME" label="姓名" name="EMP_NAME" type="text" value="<%=pageBean.inputValue("EMP_NAME")%>" size="24" class="text" />
 </td>
 <th width="100" nowrap>邮箱</th>
 	<td><input id="EMP_EMAIL" label="邮箱" name="EMP_EMAIL" type="text" value="<%=pageBean.inputValue("EMP_EMAIL")%>" size="24" class="text" />
@@ -237,7 +237,7 @@ function revokeApproval(){
 </tr>
 <tr>
 	<th width="100" nowrap>岗位</th>
-	<td><input id="EMP_NOW_JOB" label="岗位" name="EMP_NOW_JOB" type="text" value="<%=pageBean.inputValue("EMP_NOW_JOB")%>" <%if("readonly".equals(pageBean.getAttribute("onlyRead"))){ %>readonly="readonly"<%} %> size="24" class="text" />
+	<td><input id="EMP_NOW_JOB" label="岗位" name="EMP_NOW_JOB" type="text" value="<%=pageBean.inputValue("EMP_NOW_JOB")%>" size="24" class="text" />
 </td>
 <th width="100" nowrap>政治面貌</th>
 	<td><select id="EMP_PARTY" label="政治面貌" name="EMP_PARTY" class="select"><%=pageBean.selectValue("EMP_PARTY")%></select>
