@@ -12,6 +12,7 @@ import com.agileai.common.KeyGenerator;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.bizmoduler.core.StandardServiceImpl;
+import com.agileai.hr.cxmodule.HrSalaryManage;
 import com.agileai.util.DateUtil;
 
 public class HrSalaryManageImpl extends StandardServiceImpl implements

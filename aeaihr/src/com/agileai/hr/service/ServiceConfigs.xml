@@ -24,7 +24,12 @@
 		<auth type="IpWhiteList">
 			<property name="IpAddress">localhost,127.0.0.1</property>
 		</auth>
-	</service>		
+	</service>
+	<service id="Salary" type="Rest" implClass="com.agileai.hr.service.salary.SalaryImpl" address="/Salary">
+		<auth type="IpWhiteList">
+			<property name="IpAddress">localhost,127.0.0.1</property>
+		</auth>
+	</service>				
 	<service id="FormSelectUtil" type="Rest" implClass="com.agileai.hr.service.common.FormSelectUtilImpl" address="/FormSelectUtil">
 		<auth type="IpWhiteList">
 			<property name="IpAddress">localhost,127.0.0.1</property>

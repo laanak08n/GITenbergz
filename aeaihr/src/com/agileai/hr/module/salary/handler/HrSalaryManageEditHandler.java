@@ -10,7 +10,7 @@ import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.common.PrivilegeHelper;
-import com.agileai.hr.module.salary.service.HrSalaryManage;
+import com.agileai.hr.cxmodule.HrSalaryManage;
 
 public class HrSalaryManageEditHandler extends StandardEditHandler {
 	public ViewRenderer prepareDisplay(DataParam param) {

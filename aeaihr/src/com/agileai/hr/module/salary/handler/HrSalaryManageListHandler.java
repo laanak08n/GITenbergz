@@ -14,7 +14,7 @@ import com.agileai.hotweb.renders.DispatchRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.common.PrivilegeHelper;
-import com.agileai.hr.module.salary.service.HrSalaryManage;
+import com.agileai.hr.cxmodule.HrSalaryManage;
 import com.agileai.util.DateUtil;
 
 public class HrSalaryManageListHandler extends StandardListHandler {

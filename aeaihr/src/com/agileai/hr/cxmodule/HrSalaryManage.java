@@ -1,4 +1,4 @@
-package com.agileai.hr.module.salary.service;
+package com.agileai.hr.cxmodule;
 
 import java.util.List;
 

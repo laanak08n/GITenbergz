@@ -13,7 +13,7 @@ import com.agileai.hotweb.controller.core.BaseHandler;
 import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.module.salary.service.HrSalaryManage;
+import com.agileai.hr.cxmodule.HrSalaryManage;
 
 public class MobileSalaryHandler extends BaseHandler {
 	
