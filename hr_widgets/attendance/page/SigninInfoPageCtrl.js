@@ -27,7 +27,6 @@ angular.module('${menuCode}')
 			var parameterJson={"lng":$scope.lng,"lat":$scope.lat,"name":$scope.titleName,"address":$scope.titleAddress};
 			var parameter=JSON.stringify(parameterJson); 
 			var url ='/aeaihr/services/Attendance/rest/signIn';
-			console.log(url+"<=>"+parameter)
 			AppKit.postJsonApi(url,parameter).then(function(rspJson){
 				if("success"==rspJson.data){
 					AppKit.successPopup({"title":"签到成功!"});

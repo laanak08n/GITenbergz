@@ -26,15 +26,25 @@ angular.module('${menuCode}')
 	});
 	
 	$scope.updateInfo = function (){
-		var url = "/aeaihr/services/Leave/rest/update-leave-info";
-		AppKit.postJsonApi(url,JSON.stringify($scope.info)).then(function(response){
-			if ("success" == response.data){
-				AppKit.successPopup();
-				$state.go("tab.leave-infos");
-			}else{
-				AppKit.errorPopup();
+		AppKit.isLogin().success(function(data, status, headers, config){
+			if (data.result=='true'){
+				$scope.userLogin = "isLogin";
+				AppKit.secuityOperation("aeaihr",{"backURL":"/map/repository/genassets/hr/index.cv#/tab/home",
+					"success":function(){
+						var url = "/aeaihr/services/Leave/rest/update-leave-info";
+						AppKit.postJsonApi(url,JSON.stringify($scope.info)).then(function(response){
+							if ("success" == response.data){
+								AppKit.successPopup();
+								$state.go("tab.leave-infos");
+							}else{
+								AppKit.errorPopup();
+							}
+						});
+					}
+				})
 			}
-		});
+		})
+
 	}
 	$scope.deleteInfo = function (){
 		AppKit.confirm({operaType:'delete',action:function(){
