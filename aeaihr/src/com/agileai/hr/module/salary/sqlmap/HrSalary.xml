@@ -214,6 +214,12 @@
 			and LEFT(WOT_OVERTIME_DATE,7) =
 			#yearMonth#
 		</isNotEmpty>
+		<isNotEmpty prepend=" " property="sdate">
+			and WOT_OVERTIME_DATE &gt;= #sdate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="edate">
+			and WOT_OVERTIME_DATE &lt;= #edate#
+		</isNotEmpty>
 		GROUP BY USER_ID
 	</select>
 	<select id="currentMonthLeaveDayRecords" parameterClass="com.agileai.domain.DataParam"
@@ -228,6 +234,9 @@
 		<isNotEmpty prepend=" " property="year">
 			and LEFT(LEA_SDATE,4) =
 			#year#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="userId">
+			USER_ID = #userId#
 		</isNotEmpty>
 		AND STATE = 'approved'
 		ORDER BY LEA_SDATE
