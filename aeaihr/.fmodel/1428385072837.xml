@@ -1,0 +1,1 @@
+<sim:SimplestFuncModel xmlns:sim="http://www.hotweb.agileai.com/model/simplest"><sim:BaseInfo defaultJspName="salary/HrValid.jsp" defaultJspTitle="有效天数" template="Custom"><sim:Handler handlerId="HrValid" handlerClass="com.agileai.hr.controller.salary.HrValidHandler"/></sim:BaseInfo></sim:SimplestFuncModel>

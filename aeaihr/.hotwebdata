@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<HotwebModule> 
+  <ProjectType>JavaWebProject</ProjectType>  
+  <MainPkg>com.agileai.hr</MainPkg>  
+  <DBConfig> 
+    <DriverUrl>jdbc:mysql://localhost:3306/aeaihr</DriverUrl>  
+    <DriverClass>com.mysql.jdbc.Driver</DriverClass>  
+    <UserId>root</UserId>  
+    <UserPwd>npOw+NbljG+eAr7WiSAHRQ==</UserPwd> 
+  </DBConfig>  
+  <ServerConfig> 
+    <ServerAddress>localhost</ServerAddress>  
+    <ServerPort>6060</ServerPort> 
+  </ServerConfig>  
+  <FuncTree>
+    <FuncList id="1427165423457" name="业务管理">
+      <FuncNode id="1427165444236" name="基本信息" subPkg="information" type="mastersubmodel" typeName="主从表操作功能模型"/>
+      <FuncNode id="1427245348163" name="部门选择" subPkg="information" type="treefillmodel" typeName="树形选择功能模型"/>
+      <FuncNode id="1427347928220" name="考勤系统" subPkg="attendance" type="standard" typeName="单表操作功能模型"/>
+      <FuncNode id="1427856370027" name="加班申请" subPkg="workovertime" type="standard" typeName="单表操作功能模型"/>
+      <FuncNode id="1427859854345" name="加班人员查询选择" subPkg="workovertime" type="pickfillmodel" typeName="列表选择功能模型"/>
+      <FuncNode id="1428045206670" name="请假申请" subPkg="leave" type="standard" typeName="单表操作功能模型"/>
+      <FuncNode id="1428048635892" name="请假人员查询选择" subPkg="leave" type="pickfillmodel" typeName="列表选择功能模型"/>
+   	  <FuncNode id="1427419026005" name="出差信息" subPkg="evection" type="mastersubmodel" typeName="主从表操作功能模型"/>
+      <FuncNode id="1429175423593" name="出差人员查询选择" subPkg="evection" type="pickfillmodel" typeName="列表选择功能模型"/>   	  
+    </FuncList>
+  </FuncTree>
+</HotwebModule>
