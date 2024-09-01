@@ -56,5 +56,8 @@
   <bean id="HrSalaryManageList" class="com.agileai.hr.controller.salary.HrSalaryManageListHandler" page="salary/HrSalaryManageList.jsp"/>  
   <bean id="HrSalaryManageEdit" class="com.agileai.hr.controller.salary.HrSalaryManageEditHandler" page="salary/HrSalaryManageEdit.jsp"/>  
   <bean id="HrValidDays" class="com.agileai.hr.controller.salary.HrValidDaysHandler" page="salary/HrValidDays.jsp"/>  
-  <bean id="UserListSelectList" class="com.agileai.hr.controller.evection.UserListSelectListHandler" page="evection/UserListSelectList.jsp"/>
+  <bean id="UserListSelectList" class="com.agileai.hr.controller.evection.UserListSelectListHandler" page="evection/UserListSelectList.jsp"/>  
+  <bean id="WxSignIn" class="com.agileai.hr.controller.weixin.WxSignInHandler" page="weixin/WxSignIn.jsp"/>  
+  <bean id="WxSignOut" class="com.agileai.hr.controller.weixin.WxSignOutHandler" page="weixin/WxSignOut.jsp"/>  
+  <bean id="WxBind" class="com.agileai.hr.controller.weixin.WxBindHandler" page="weixin/WxBind.jsp"/>
 </beans>

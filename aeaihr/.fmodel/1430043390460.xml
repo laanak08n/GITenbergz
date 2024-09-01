@@ -1,0 +1,1 @@
+<sim:SimplestFuncModel xmlns:sim="http://www.hotweb.agileai.com/model/simplest"><sim:BaseInfo defaultJspName="weixin/WxSignOut.jsp" defaultJspTitle="微信签退" template="Default"><sim:Handler handlerId="WxSignOut" handlerClass="com.agileai.hr.controller.weixin.WxSignOutHandler"/></sim:BaseInfo></sim:SimplestFuncModel>

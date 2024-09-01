@@ -69,12 +69,10 @@
 			<param-name>servletURL</param-name>
 			<param-value>index</param-value>
 		</init-param>
-		<!-- 
 		<init-param>
 			<param-name>publicHandlerIds</param-name>
-			<param-value>XXXX</param-value>
+			<param-value>WxSignIn,WxSignOut,WxBind</param-value>
 		</init-param>
-		 -->
 		<!-- -->
 		<init-param>
 			<param-name>operationAuthInterceptor</param-name>
@@ -93,8 +91,7 @@
 	<servlet>  
 	    <servlet-name>safecode</servlet-name>  
 	    <servlet-class>com.agileai.hr.servlet.SafeCodeServlet</servlet-class>  
-	</servlet> 
-		
+	</servlet> 	
 	<servlet-mapping>
 		<servlet-name>DispatchServlet</servlet-name>
 		<url-pattern>/index</url-pattern>
@@ -110,7 +107,7 @@
 	<servlet-mapping>  
 	    <servlet-name>safecode</servlet-name>  
 	    <url-pattern>/safecode</url-pattern>  
-	</servlet-mapping>		
+	</servlet-mapping>
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>

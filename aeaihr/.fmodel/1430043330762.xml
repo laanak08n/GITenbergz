@@ -1,0 +1,1 @@
+<sim:SimplestFuncModel xmlns:sim="http://www.hotweb.agileai.com/model/simplest"><sim:BaseInfo defaultJspName="weixin/WxSignIn.jsp" defaultJspTitle="WxSignIn" template="Default"><sim:Handler handlerId="WxSignIn" handlerClass="com.agileai.hr.controller.weixin.WxSignInHandler"/></sim:BaseInfo></sim:SimplestFuncModel>

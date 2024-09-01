@@ -211,6 +211,9 @@ function doSubmit(reqOptions)
 {
 	var breakTag = false;
 	var processValidate = true;	
+	if ($.mobile){
+		processValidate = false;
+	}
 	var showMessage = true;
 	if (reqOptions && reqOptions.doValidate  && (reqOptions.doValidate== 'false'
 		|| reqOptions.doValidate.toLowerCase() == 'no' || reqOptions.doValidate.toLowerCase() == 'n')){
@@ -255,7 +258,7 @@ function doSubmit(reqOptions)
 	}
 	if (!breakTag){
 		showSplash(waitMsg,showMessage);
-		$("#"+formTagId).submit();	
+		ele(formTagId).submit();	
 	}
 }
 function setRsIdTag(rsIdTag)

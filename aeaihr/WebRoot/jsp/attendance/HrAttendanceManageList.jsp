@@ -57,12 +57,12 @@ listWidth="100%"
 height="390px"
 >
 <ec:row styleClass="odd" onclick="selectRow(this,{ATD_ID:'${row.ATD_ID}'})">
-	<ec:column width="50" style="text-align:center" property="_0" title="序号" value="${GLOBALROWCOUNT}" />
-	<ec:column width="100" property="USER_ID_NAME" title="姓名"   />
-	<ec:column width="100" property="ATD_IN_TIME" title="签到时间" cell="date" format="yyyy-MM-dd HH:mm" />
-	<ec:column width="100" property="ATD_IN_PLACE" title="签到地点"   />
-	<ec:column width="100" property="ATD_OUT_TIME" title="签退时间" cell="date" format="yyyy-MM-dd HH:mm" />
-	<ec:column width="100" property="ATD_OUT_PLACE" title="签退地点"   />
+	<ec:column width="30" style="text-align:center" property="_0" title="序号" value="${GLOBALROWCOUNT}" />
+	<ec:column width="50" property="USER_ID_NAME" title="姓名"   />
+	<ec:column width="50" property="ATD_IN_TIME" title="签到时间" cell="date" format="HH:mm" />
+	<ec:column width="200" property="ATD_IN_PLACE" title="签到地点"   />
+	<ec:column width="50" property="ATD_OUT_TIME" title="签退时间" cell="date" format="HH:mm" />
+	<ec:column width="200" property="ATD_OUT_PLACE" title="签退地点"   />
 </ec:row>
 </ec:table>
 <input type="hidden" name="ATD_ID" id="ATD_ID" value="" />

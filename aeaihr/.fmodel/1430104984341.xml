@@ -1,0 +1,1 @@
+<sim:SimplestFuncModel xmlns:sim="http://www.hotweb.agileai.com/model/simplest"><sim:BaseInfo defaultJspName="weixin /WxBind.jsp" defaultJspTitle="绑定微信" template="Default"><sim:Handler handlerId="WxBind" handlerClass="com.agileai.hr.controller.weixin .WxBindHandler"/></sim:BaseInfo></sim:SimplestFuncModel>
