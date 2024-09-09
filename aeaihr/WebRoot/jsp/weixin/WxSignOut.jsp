@@ -69,9 +69,9 @@ if (statusMsg == null){
 	<div class="ui-block-b" style="text-align: center;"><%=pageBean.inputValue("week")%></div>
 </div>
 <div class="ui-grid-b" style="margin:10px 0px 5px 0px;">
-	<div class="ui-block-a" style="text-align: center;"><a href="javascript:showBeforeDay()" data-ajax="false">上一天</a></div>
-	<div class="ui-block-b" style="text-align: center;"><a href="javascript:showToday()" data-ajax="false">今天</a></div>
-	<div class="ui-block-c" style="text-align: center;"><a href="javascript:showNextDay()" data-ajax="false">下一天</a></div>
+	<div class="ui-block-a" style="text-align: center;"><a href="javascript:showBeforeDay()" rel="external" data-ajax="false">上一天</a></div>
+	<div class="ui-block-b" style="text-align: center;"><a href="javascript:showToday()" rel="external" data-ajax="false">今  天</a></div>
+	<div class="ui-block-c" style="text-align: center;"><a href="javascript:showNextDay()" rel="external" data-ajax="false">下一天</a></div>
 </div>
 <%}%>
 <% if (pageBean.isValid(pageBean.inputTime("date"))){%>

@@ -1,6 +1,7 @@
 package com.agileai.hr.controller.weixin;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.agileai.common.KeyGenerator;
@@ -46,7 +47,7 @@ public class WxSignInHandler extends SimpleHandler{
 	        	queryParam.put("currentUser", userId);
 	        	DataRow attendanceRow = attendanceManage.getRecord(queryParam);
 	        	if (MapUtil.isNullOrEmpty(attendanceRow)){
-	        		DataRow locaionRow = MessageEventHandler.getLocation(openId);
+	        		HashMap<String,Object> locaionRow = MessageEventHandler.getLocation(openId);
 	        		if (MapUtil.isNullOrEmpty(locaionRow)){
 	        			this.setErrorMsg("获取不到地理位置信息，请确认允许本公众号获取您的位置信息！");		
 	        		}else{

@@ -1,6 +1,7 @@
 package com.agileai.hr.controller.weixin;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.agileai.domain.DataParam;
@@ -46,7 +47,7 @@ public class WxSignOutHandler extends SimpleHandler{
 	        	if (MapUtil.isNullOrEmpty(attendanceRow)){
 	        		this.setErrorMsg("没有签到，不能签退！");
 	        	}else{
-	        		DataRow locaionRow = MessageEventHandler.getLocation(openId);
+	        		HashMap<String,Object> locaionRow = MessageEventHandler.getLocation(openId);
 	        		if (MapUtil.isNullOrEmpty(locaionRow)){
 	        			this.setErrorMsg("获取不到地理位置信息，请确认允许本公众号获取您的位置信息！");		
 	        		}else{
