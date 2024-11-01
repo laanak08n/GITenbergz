@@ -39,12 +39,14 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 			setAttribute("doInsertEdit", true);
 			setAttribute("doApprove", false);
 			setAttribute("doSignIn", false);
+			setAttribute("doSubmit", false);
 		}
 		if ("update".equals(operaType)) {
 			setAttribute("doInsertEdit", true);
 			setAttribute("doApprove", false);
 			setAttribute("isComeFromDetail", true);
 			setAttribute("doSignIn", false);
+			setAttribute("doSubmit", true);
 			if (isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getMasterRecord(param);
 				this.setAttributes(record);
@@ -98,6 +100,7 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 						setAttribute("isComeFromDetail", true);
 						setAttribute("doApprove", false);
 						setAttribute("doSignIn", false);
+						setAttribute("doSubmit", true);
 						if (user.getUserId().equals(
 								record.get("EVE_APPLY_USER"))) {
 							setAttribute("doInsertEdit", true);
@@ -225,6 +228,12 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 
 	@PageAction
 	public ViewRenderer submit(DataParam param) {
+		DataParam dataParam = new DataParam("EVE_ID",param.get("EVE_ID"));
+		List<DataRow> expenses = getService().findExpensesRecords(dataParam);
+		if(expenses.size()==0){
+			this.setErrorMsg("请填写费用清单!");
+			return prepareDisplay(param);
+		}
 		param.put("STATE", "submitted");
 		getService().updateMasterRecord(param);
 		return new RedirectRenderer(getHandlerURL(listHandlerClass));

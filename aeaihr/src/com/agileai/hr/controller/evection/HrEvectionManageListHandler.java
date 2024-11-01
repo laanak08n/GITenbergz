@@ -71,7 +71,7 @@ public class HrEvectionManageListHandler extends MasterSubListHandler {
 				param,
 				"sdate",
 				DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,
-						DateUtil.getBeginOfMonth(new Date())));
+						DateUtil.getDateAdd(DateUtil.getBeginOfMonth(new Date()),DateUtil.MONTH,-1)));
 		initParamItem(
 				param,
 				"edate",

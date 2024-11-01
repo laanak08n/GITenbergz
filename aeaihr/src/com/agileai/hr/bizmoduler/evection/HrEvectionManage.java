@@ -1,6 +1,8 @@
 package com.agileai.hr.bizmoduler.evection;
 
+import java.util.List;
 import com.agileai.domain.DataParam;
+import com.agileai.domain.DataRow;
 import com.agileai.hotweb.bizmoduler.core.MasterSubService;
 
 public interface HrEvectionManage
@@ -8,4 +10,5 @@ public interface HrEvectionManage
 	
 	public void computeTotalMoney(String masterRecordId);
 	public void approveMasterRecord(DataParam param);
+	public List<DataRow> findExpensesRecords(DataParam param);
 }

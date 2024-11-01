@@ -83,27 +83,21 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 						setAttribute("onlyRead", "readonly");
 						if (record.get("EMP_STATE").equals("drafe")) {
 							setAttribute("doDetail", true);
-							setAttribute("doApprove", false);
-							setAttribute("doReApprove",false);
+							setAttribute("doApprove", true);
 						}
-					} else if (privilegeHelper.isHRMASTER()
-							&& record.get("EMP_STATE").equals("drafe")) {
+					} else if (privilegeHelper.isHRMASTER()) {
 						setAttribute("onlyRead", "");
 						setAttribute("codeReadonly", "codereadonly");
 						setAttribute("isappover","apporver");
+						if(record.get("EMP_STATE").equals("drafe")){
 						setAttribute("doDetail", true);
 						setAttribute("doApprove", true);
-						setAttribute("doReApprove",false);
-					} else if (privilegeHelper.isHRMASTER()
-							&& record.get("EMP_STATE").equals("approved")) {
-						setAttribute("doDetail", true);
-						setAttribute("doApprove", false);
-						setAttribute("doReApprove",true);
-					} else {
-						setAttribute("doDetail", false);
-						setAttribute("doApprove", false);
-					}
-
+						}else if(record.get("EMP_STATE").equals("approved")){
+							setAttribute("doDetail", false);
+							setAttribute("doApprove", false);
+							setAttribute("doRevokeApprove", true);
+						} 
+					} 
 				}
 				this.setAttributes(record);
 			}
