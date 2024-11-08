@@ -188,7 +188,7 @@ function revokeApproval(){
 	<td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="enableSave()" ><input value="&nbsp;" type="button" class="editImgBtn" id="modifyImgBtn" title="编辑" />编辑</td>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="saveMasterRecord()"><input value="&nbsp;" type="button" class="saveImgBtn" id="saveImgBtn" title="保存" />保存</td>
    <%} %>
-    <%if(pageBean.getBoolValue("doReApprove")){ %>
+    <%if(pageBean.getBoolValue("doRevokeApprove")){ %>
     <td  onmouseover="onMover(this);" onmouseout="onMout(this);"   align="center" class="bartdx" onclick="revokeApproval()" ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>
      <%} %>
    <%if(pageBean.getBoolValue("doApprove")){ %>

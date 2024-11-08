@@ -145,7 +145,9 @@ function saveMasterRecord(){
 <%if(pageBean.getBoolValue("doInsertEdit")){%>
     <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="enableSave()" ><input value="&nbsp;" type="button" class="editImgBtn" id="modifyImgBtn" title="编辑" />编辑</td>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="saveMasterRecord()"><input value="&nbsp;" type="button" class="saveImgBtn" id="saveImgBtn" title="保存" />保存</td>
+ <%if(pageBean.getBoolValue("doSubmit")){ %>
    <td  align="center"class="bartdx"onclick="stateSubmit();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="submitImgBtn" id="submitImgBtn" title="提交" />提交</td>
+    <%}%>
     <%}%>
 <%if(pageBean.getBoolValue("doApprove")){ %>
    <td  align="center"class="bartdx"onclick="stateDrafe();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="reSubmittedImgBtn" id="drafeImgBtn" title="反提交" />反提交</td>
