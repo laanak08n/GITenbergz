@@ -60,4 +60,5 @@
   <bean id="WxSignIn" class="com.agileai.hr.controller.weixin.WxSignInHandler" page="weixin/WxSignIn.jsp"/>  
   <bean id="WxSignOut" class="com.agileai.hr.controller.weixin.WxSignOutHandler" page="weixin/WxSignOut.jsp"/>  
   <bean id="WxBind" class="com.agileai.hr.controller.weixin.WxBindHandler" page="weixin/WxBind.jsp"/>
+  <bean id="MenuDataProvider" class="com.agileai.hr.controller.MenuDataProviderHandler" page=""/>
 </beans>
