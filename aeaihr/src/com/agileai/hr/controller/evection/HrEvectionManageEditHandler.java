@@ -56,6 +56,7 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 			setAttribute("doInsertEdit", false);
 			setAttribute("doApprove", true);
 			setAttribute("doSignIn", true);
+			setAttribute("doRevokeApprove", false);
 			if (!isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getMasterRecord(param);
 				this.setAttributes(record);
@@ -72,6 +73,14 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 				}
 			}
 		}
+		if("revokeApproval".equals(operaType)){
+			DataRow record = getService().getMasterRecord(param);
+			this.setAttributes(record);
+			setAttribute("doInsertEdit", false);
+			setAttribute("doApprove", false);
+			setAttribute("doSignIn", false);
+			setAttribute("doRevokeApprove", true);
+		}
 		if (operaType.equals("detail")) {
 			if (isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getMasterRecord(param);
@@ -82,7 +91,6 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 						setAttribute("isComeFromDetail", true);
 						setAttribute("doApprove", false);
 						setAttribute("doSignIn", false);
-
 					} else if (!privilegeHelper.isApprove()
 							&& record.get("STATE").equals("submitted")) {
 						setAttribute("doInsertEdit", false);
@@ -137,6 +145,7 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 						setAttribute("isComeFromDetail", false);
 						setAttribute("doApprove", false);
 						setAttribute("doSignIn", true);
+						setAttribute("doRevokeApprove", true);
 					}
 				}
 				this.setAttributes(record);
@@ -245,7 +254,18 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 		getService().approveMasterRecord(param);
 		return new RedirectRenderer(getHandlerURL(listHandlerClass));
 	}
-
+	
+	
+	@PageAction
+	public ViewRenderer revokeApproval(DataParam param) {
+		param.put("STATE", "drafe");
+		param.put("EVE_APPROVE_USER_NAME","");
+		param.put("EVE_APPROVE_USER","");
+		param.put("EVE_APPROVE_TIME","");
+		getService().approveMasterRecord(param);
+		return new RedirectRenderer(getHandlerURL(listHandlerClass));
+	}
+	
 	@PageAction
 	public ViewRenderer drafe(DataParam param) {
 		param.put("STATE", "drafe");

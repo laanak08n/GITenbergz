@@ -124,6 +124,9 @@ function saveMasterRecord(){
 		}});
 	}
 }
+function revokeApproval(){
+	doSubmit({actionType:'revokeApproval'});
+}
 </script>
 </head>
 <body>
@@ -150,9 +153,12 @@ function saveMasterRecord(){
     <%}%>
     <%}%>
 <%if(pageBean.getBoolValue("doApprove")){ %>
-   <td  align="center"class="bartdx"onclick="stateDrafe();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="reSubmittedImgBtn" id="drafeImgBtn" title="反提交" />反提交</td>
+   <td  align="center"class="bartdx"onclick="stateDrafe();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="reSubmittedImgBtn" id="drafeImgBtn" title="反提交" />反提交</td>  
    <td  align="center"class="bartdx"onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="approveImgBtn" id="approveImgBtn" title="核准" />核准</td>
-  <%} %>
+   <%}%>
+   <%if(pageBean.getBoolValue("doRevokeApprove")){ %>
+      <td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>
+ <%}%>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="goToBack();"><input value="&nbsp;" type="button" class="backImgBtn" title="返回" />返回</td>
 </tr>
 </table>

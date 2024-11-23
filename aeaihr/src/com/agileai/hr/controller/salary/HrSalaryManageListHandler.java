@@ -124,6 +124,7 @@ public class HrSalaryManageListHandler extends StandardListHandler {
 		return new DispatchRenderer(getHandlerURL(this.editHandlerClazz) + "&"
 				+ OperaType.KEY + "=approve&comeFrome=approve");
 	}
+	
 	@PageAction
 	public ViewRenderer revokeApproval(DataParam param) {
 		String salId = param.get("SAL_ID");

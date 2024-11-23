@@ -11,6 +11,7 @@
 function controlUpdateBtn(stateResult){
 	if(stateResult =='drafe'){
 		enableButton("editImgBtn");
+		disableButton("revokeApproval")
 		  <%
 		  if(pageBean.getBoolValue("isApprove")){
 		  %>
@@ -22,17 +23,19 @@ function controlUpdateBtn(stateResult){
 	}else
 	if(stateResult =='submitted'){
 		disableButton("editImgBtn");
+		disableButton("revokeApproval")
 		  <%
 		  if(pageBean.getBoolValue("isApprove")){
 		  %>
 		enableButton("approve");
 		<%}
-			%>
+			%>	
 		enableButton("detailImgBtn");
 		disableButton("deleteImgBtn");
 	}else
 	if(stateResult =='approved'){
 		disableButton("editImgBtn");
+		enableButton("revokeApproval");
 		  <%
 		  if(pageBean.getBoolValue("isApprove")){
 		  %>
@@ -62,6 +65,7 @@ function controlCanEdit(userId,state){
 if(pageBean.getBoolValue("isApprove")){
 %>
     <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="R" align="center" onclick="doRequest('approveRequest')"><input id="approve" value="&nbsp;" title="核准" type="button" class="approveImgBtn"   />核准</td>
+      <td  align="center"class="bartdx" onclick="doRequest('revokeApproveRequest')" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>
      <%} %>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input id="detailImgBtn" value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td>   
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input id="deleteImgBtn" value="&nbsp;" title="删除"  type="button"  class="delImgBtn" />删除</td>

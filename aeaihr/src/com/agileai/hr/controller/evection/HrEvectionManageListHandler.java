@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
+import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.controller.core.MasterSubListHandler;
 import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.domain.core.User;
@@ -58,6 +59,12 @@ public class HrEvectionManageListHandler extends MasterSubListHandler {
 		storeParam(param);
 		return new DispatchRenderer(getHandlerURL(this.editHandlerClazz) + "&"
 				+ OperaType.KEY + "=approve&comeFrome=approve");
+	}
+	
+	public ViewRenderer doRevokeApproveRequestAction(DataParam param) {
+		storeParam(param);
+		return new DispatchRenderer(getHandlerURL(this.editHandlerClazz) + "&"
+				+ OperaType.KEY + "=revokeApproval&comeFrome=revokeApproval");
 	}
 	
 	public ViewRenderer doViewDetailAction(DataParam param){
