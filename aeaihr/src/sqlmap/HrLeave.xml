@@ -20,7 +20,7 @@ and b.USER_ID = #currentUserId#
 and STATE = #STATE#
 </isNotEmpty>
 <isNotEmpty prepend=" " property="user_Name">
-and b.USER_NAME = #user_Name#
+and b.USER_NAME like '%$user_Name$%'
 </isNotEmpty>
 order by LEA_SDATE,b.USER_CODE
   </select>

@@ -115,6 +115,7 @@
 		EXPE_ID,EVE_ID,EXPE_DEPART,EXPE_DESTINATION,EXPE_DEPART_TIME,EXPE_COMEBACK_TIME,EXPE_TRANSPORTATION_WAY,EXPE_TRANSPORTATION_FEE,EXPE_HOTEL,EXPE_OTHER,EXPE_REMARKS
 		from hr_expenses
 		where EVE_ID=#EVE_ID#
+		order by EXPE_DEPART_TIME
 	</select>
 	<select id="getHrExpensesRecord" parameterClass="com.agileai.domain.DataParam"
 		resultClass="com.agileai.domain.DataRow">

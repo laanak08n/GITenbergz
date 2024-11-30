@@ -13,8 +13,7 @@
 		EMP_ANNUAL_LEAVE_DAYS,EMP_ALLOWANCE
 		from hr_employee where 1=1
 		<isNotEmpty prepend=" " property="empName">
-			and EMP_NAME like
-			'%$empName$%'
+			and EMP_NAME like '%$empName$%'
 		</isNotEmpty>
 		<isNotEmpty prepend=" " property="empSex">
 			and EMP_SEX = #empSex#
