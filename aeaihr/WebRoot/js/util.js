@@ -1414,3 +1414,7 @@ function refreshDTreeConextmenu(){
 	dtreeContextMenu.reset();
 	dtreeContextMenu.build();
 }
+
+function emptyText(inputId){
+	ele(inputId).value = '';
+}
