@@ -40,7 +40,7 @@ function doSelectRequest(){
 <div>
 <table class="queryTable">
 <tr><td>
-&nbsp;姓名<input id="userName" label="姓名" name="userName" type="text" value="<%=pageBean.inputValue("userName")%>" size="24" class="text" />
+&nbsp;姓名<input id="userName" label="姓名" name="userName" type="text" value="<%=pageBean.inputValue("userName")%>" size="24" class="text" ondblclick="emptyText('userName')" />
 
 &nbsp;<input type="button" name="button" id="button" value="查询" class="formbutton" onclick="doQuery()" />
 </td></tr>
