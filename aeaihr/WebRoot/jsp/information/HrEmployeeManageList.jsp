@@ -64,7 +64,7 @@ function revokeApproval(){
 &nbsp;状态<select id="EMP_STATE" label="状态" name="EMP_STATE" class="select" onchange="doQuery()"><%=pageBean.selectValue("EMP_STATE")%></select>
 &nbsp;性别<select id="empSex" label="性别" name="empSex" class="select" onchange="doQuery()"><%=pageBean.selectValue("empSex")%></select>
 
-&nbsp;姓名<input id="empName" label="姓名" name="empName" type="text" value="<%=pageBean.inputValue("empName")%>" size="24" class="text" />
+&nbsp;姓名<input id="empName" label="姓名" name="empName" type="text" value="<%=pageBean.inputValue("empName")%>" size="24" class="text" ondblclick="emptyText('empName')" /><img id="userIdSelectImage" src="images/sta.gif" width="16" height="16" onclick="openUserIdBox()" />
 
 &nbsp;<input type="button" name="button" id="button" value="查询" class="formbutton" onclick="doQuery()" />
 </td></tr></table>
@@ -99,6 +99,16 @@ height="390px"
 <script language="JavaScript">
 setRsIdTag('EMP_ID');
 var ectableMenu = new EctableMenu('contextMenu','ec_table');
+var userIdBox;
+function openUserIdBox(){
+	var handlerId = "UserListSelectList"; 
+	if (!userIdBox){
+		userIdBox = new PopupBox('userIdBox','请选择人员      ',{size:'normal',width:'300',top:'2px'});
+	}
+	var url = 'index?'+handlerId+'&targetId=empName&targetName=empName';
+	userIdBox.sendRequest(url);
+} 
+
 </script>
 </form>
 </body>
