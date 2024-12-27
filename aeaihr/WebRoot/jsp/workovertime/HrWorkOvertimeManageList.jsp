@@ -62,7 +62,7 @@ function controlCanEdit(userId,state){
 &nbsp;状态<select id="STATE" label="状态" name="STATE" class="select" onchange="doQuery()"><%=pageBean.selectValue("STATE")%></select>
 &nbsp;起止日期<input id="sdate" label="开始时间" name="sdate" type="text" value="<%=pageBean.inputDate("sdate")%>" size="10" class="text" readonly="readonly"/><img id="sdatePicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
 -<input id="edate" label="截止时间" name="edate" type="text" value="<%=pageBean.inputDate("edate")%>" size="10" class="text"  readonly="readonly"/><img id="edatePicker" src="images/calendar.gif" width="16" height="16" alt="日期/时间选择框" />
-&nbsp;姓名 <input id="user_Name" label="姓名 " name="user_Name" type="text" value="<%=pageBean.inputDate("user_Name")%>" size="24" class="text"  /><input type="hidden" label="人员选择" id="USER_CODE" name="USER_CODE" value="<%=pageBean.inputValue("USER_CODE")%>" /><img id="userIdSelectImage" src="images/sta.gif" width="16" height="16" onclick="openUserIdBox()" />
+&nbsp;姓名 <input id="user_Name" label="姓名 " name="user_Name" type="text" value="<%=pageBean.inputDate("user_Name")%>" size="24" class="text" ondblclick="emptyText('user_Name')" /><input type="hidden" label="人员选择" id="USER_CODE" name="USER_CODE" value="<%=pageBean.inputValue("USER_CODE")%>" /><img id="userIdSelectImage" src="images/sta.gif" width="16" height="16" onclick="openUserIdBox()" />
 &nbsp;<input type="button" name="button" id="button" value="查询" class="formbutton" onclick="doQuery()" /></td></tr></table>
 </div>
 <ec:table 

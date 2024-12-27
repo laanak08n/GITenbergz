@@ -57,11 +57,12 @@ function revokeApproval(){
 <div id="__ParamBar__">
 <table class="queryTable"><tr><td>
 &nbsp;年月<input id="salDate" label="时间" name="salDate" type="text" value="<%=pageBean.inputValue("salDate")%>"  size="10" class="text" />
+&nbsp;<input type="submit" name="button" id="button" value="上一月" class="formbutton" onclick="doSubmit({actionType:'beforeMonth'})" />
+&nbsp;<input type="submit" name="button" id="button" value="下一月" class="formbutton" onclick="doSubmit({actionType:'nextMonth'})" />
 &nbsp;&nbsp;
 &nbsp;状态<select id="salState" label="状态" name="salState" class="select" onchange="doQuery()"><%=pageBean.selectValue("salState")%></select>
 &nbsp;<input type="button" name="button" id="button" value="查询" class="formbutton" onclick="doQuery()" />
-&nbsp;<input type="submit" name="button" id="button" value="上一月" class="formbutton" onclick="doSubmit({actionType:'beforeMonth'})" />
-&nbsp;<input type="submit" name="button" id="button" value="下一月" class="formbutton" onclick="doSubmit({actionType:'nextMonth'})" /></td></tr></table>
+</td></tr></table>
 </div>
 <ec:table 
 form="form1"
