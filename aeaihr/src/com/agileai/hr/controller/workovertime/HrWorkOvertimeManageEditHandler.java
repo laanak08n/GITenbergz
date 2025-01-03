@@ -32,11 +32,13 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 			setAttribute("doEdit", true);
 			setAttribute("doSignIn", false);
 			setAttribute("doApprove", false);
+			setAttribute("doSubmit", false);
 		}
 		if ("update".equals(operaType)) {
 			setAttribute("doEdit", true);
 			setAttribute("doSignIn", false);
 			setAttribute("doApprove",false);
+			setAttribute("doSubmit", true);
 			if (isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getNowRecord(param);
 				this.setAttributes(record);
@@ -76,6 +78,7 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 						setAttribute("doEdit", true);
 						setAttribute("doApprove",false);
 						setAttribute("doSignIn", false);
+						setAttribute("doSubmit", true);
 					}else if(!privilegeHelper.isApprove()&&record.get("STATE").equals("submitted")){
 						setAttribute("doEdit", false);
 						setAttribute("doApprove",false);
@@ -88,6 +91,7 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 						setAttribute("doEdit", false);
 						setAttribute("doApprove",false);
 						setAttribute("doSignIn", false);
+						setAttribute("doSubmit", true);
 						if(user.getUserId().equals(record.get("USER_ID"))){
 							setAttribute("doEdit", true);
 						}

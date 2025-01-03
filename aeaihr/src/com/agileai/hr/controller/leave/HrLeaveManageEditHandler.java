@@ -6,7 +6,6 @@ import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.controller.core.StandardEditHandler;
-import com.agileai.hotweb.controller.core.BaseHandler.OperaType;
 import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.renders.LocalRenderer;
@@ -34,11 +33,13 @@ public class HrLeaveManageEditHandler
 			setAttribute("doInsertEdit", true);
 			setAttribute("doSignIn", false);
 			setAttribute("doApprove", false);
+			setAttribute("doSubmit", false);
 		}
 		if ("update".equals(operaType)) {
 			setAttribute("doInsertEdit", true);
 			setAttribute("doSignIn", false);
 			setAttribute("doApprove",false);
+			setAttribute("doSubmit", true);
 			if (isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getNowRecord(param);
 				this.setAttributes(record);
@@ -78,6 +79,7 @@ public class HrLeaveManageEditHandler
 						setAttribute("doInsertEdit", true);
 						setAttribute("doApprove",false);
 						setAttribute("doSignIn", false);
+						setAttribute("doSubmit", true);
 					}else if(!privilegeHelper.isApprove()&&record.get("STATE").equals("submitted")){
 						setAttribute("doInsertEdit", false);
 						setAttribute("doApprove",false);
@@ -90,6 +92,7 @@ public class HrLeaveManageEditHandler
 						setAttribute("doInsertEdit", false);
 						setAttribute("doApprove",false);
 						setAttribute("doSignIn", false);
+						setAttribute("doSubmit", true);
 						if(user.getUserId().equals(record.get("USER_ID"))){
 							setAttribute("doInsertEdit", true);
 						}

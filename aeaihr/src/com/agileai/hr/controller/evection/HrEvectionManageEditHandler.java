@@ -91,6 +91,7 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 						setAttribute("isComeFromDetail", true);
 						setAttribute("doApprove", false);
 						setAttribute("doSignIn", false);
+						setAttribute("doSubmit", true);
 					} else if (!privilegeHelper.isApprove()
 							&& record.get("STATE").equals("submitted")) {
 						setAttribute("doInsertEdit", false);
