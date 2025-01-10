@@ -27,6 +27,8 @@ function stateDrafe(){
 <tr>
  <%if(pageBean.getBoolValue("doEdit")){%>
   <td  align="center"class="bartdx"onclick="doSubmit({actionType:'save'})" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;" type="button" class="saveImgBtn" id="savedrafeImgBtn" title="保存" />保存</td>
+  <%}%>
+ <%if(pageBean.getBoolValue("doSubmit")){%>
   <td  align="center"class="bartdx"onclick="stateSubmit();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="submitImgBtn" id="submitImgBtn" title="提交" />提交</td>
   <%} %>
   <%if(pageBean.getBoolValue("doApprove")){ %>
@@ -82,7 +84,7 @@ function stateDrafe(){
 </tr>
 <tr>
 	<th width="100" nowrap>加班原因</th>
-	<td><textarea id="WOT_DESC" label="加班原因" name="WOT_DESC" cols="40" rows="3" class="textarea"><%=pageBean.inputValue("WOT_DESC")%></textarea>
+	<td><textarea id="WOT_DESC" label="加班原因" name="WOT_DESC" cols="60" rows="5" class="textarea"><%=pageBean.inputValue("WOT_DESC")%></textarea>
 </td>
 </tr>
 <% if (pageBean.getBoolValue("doSignIn")) {

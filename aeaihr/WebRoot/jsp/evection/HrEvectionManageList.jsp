@@ -20,7 +20,7 @@ function controlUpdateBtn(stateResult){
 		%>
 		enableButton("detailImgBtn");
 		enableButton("deleteImgBtn");
-	}else
+	}
 	if(stateResult =='submitted'){
 		disableButton("editImgBtn");
 		disableButton("revokeApproval")
@@ -32,7 +32,7 @@ function controlUpdateBtn(stateResult){
 			%>	
 		enableButton("detailImgBtn");
 		disableButton("deleteImgBtn");
-	}else
+	}
 	if(stateResult =='approved'){
 		disableButton("editImgBtn");
 		enableButton("revokeApproval");

@@ -80,7 +80,7 @@ function saveRecord(){
 </tr>
 <tr>
 	<th width="100" nowrap>备注</th>
-	<td><textarea id="EXPE_REMARKS" label="备注" name="EXPE_REMARKS" cols="40" rows="3" class="textarea"><%=pageBean.inputValue("EXPE_REMARKS")%></textarea>
+	<td><textarea id="EXPE_REMARKS" label="备注" name="EXPE_REMARKS" cols="60" rows="5" class="textarea"><%=pageBean.inputValue("EXPE_REMARKS")%></textarea>
 </td>
 </tr>
 </table>

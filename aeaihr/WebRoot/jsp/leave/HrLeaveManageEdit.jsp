@@ -34,8 +34,10 @@ function stateDrafe(){
 <tr>
  <%if(pageBean.getBoolValue("doInsertEdit")){%>
   <td  align="center"class="bartdx"onclick="doSubmit({actionType:'save'})" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="saveImgBtn" id="savedrafeImgBtn" title="保存" />保存</td>
+  <%}%>
+ <%if(pageBean.getBoolValue("doSubmit")){%> 
   <td  align="center"class="bartdx"onclick="stateSubmit();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="submitImgBtn" id="submittedImgBtn" title="提交" />提交</td>
-  <%} %>
+  <%}%>
   <%if(pageBean.getBoolValue("doApprove")){ %>
   <td  align="center"class="bartdx"onclick="stateDrafe();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="reSubmittedImgBtn" id="drafeImgBtn" title="反提交" />反提交</td>
   <td  align="center"class="bartdx"onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="approveImgBtn" id="approveImgBtn" title="核准" />核准</td>
@@ -85,7 +87,7 @@ function stateDrafe(){
 </tr>
 <tr>
 	<th width="100" nowrap>请假原因</th>
-	<td><textarea id="LEA_CAUSE" label="请假原因" name="LEA_CAUSE" cols="40" rows="3" class="textarea"><%=pageBean.inputValue("LEA_CAUSE")%></textarea>
+	<td><textarea id="LEA_CAUSE" label="请假原因" name="LEA_CAUSE" cols="60" rows="5" class="textarea"><%=pageBean.inputValue("LEA_CAUSE")%></textarea>
 </td>
 </tr>
 <%if(pageBean.getBoolValue("doSignIn")){

@@ -214,7 +214,7 @@ function revokeApproval(){
 </tr>
 <tr>
 	<th width="100" nowrap>出差事由</th>
-	<td><textarea id="EVE_REASON" label="出差事由" name="EVE_REASON" cols="40" rows="3" <%if(pageBean.getBoolValue("isComeFromApprove")){ %> readonly="readonly"  <%}%> class="textarea"><%=pageBean.inputValue("EVE_REASON")%></textarea>
+	<td><textarea id="EVE_REASON" label="出差事由" name="EVE_REASON" cols="60" rows="5" <%if(pageBean.getBoolValue("isComeFromApprove")){ %> readonly="readonly"  <%}%> class="textarea"><%=pageBean.inputValue("EVE_REASON")%></textarea>
 </td>
 </tr>
 <%if(pageBean.getBoolValue("doSignIn")){ %>
