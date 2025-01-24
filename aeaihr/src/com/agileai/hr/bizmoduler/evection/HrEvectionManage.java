@@ -10,5 +10,6 @@ public interface HrEvectionManage
 	
 	public void computeTotalMoney(String masterRecordId);
 	public void approveMasterRecord(DataParam param);
+	public void updateStateRecord(DataParam param);
 	public List<DataRow> findExpensesRecords(DataParam param);
 }

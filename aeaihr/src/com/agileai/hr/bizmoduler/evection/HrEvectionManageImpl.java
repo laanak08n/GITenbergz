@@ -77,5 +77,11 @@ public class HrEvectionManageImpl extends MasterSubServiceImpl implements
 		List<DataRow> result = this.daoHelper.queryRecords(statementId, param);
 		return result;
 	}
+
+	@Override
+	public void updateStateRecord(DataParam param) {
+		String statementId = sqlNameSpace+"."+"updateStateRecord";
+		this.daoHelper.updateRecord(statementId, param);
+	}
 	
 }
