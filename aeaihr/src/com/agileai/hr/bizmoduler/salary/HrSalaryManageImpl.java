@@ -3,6 +3,7 @@ package com.agileai.hr.bizmoduler.salary;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import com.agileai.common.KeyGenerator;
@@ -125,6 +126,19 @@ public class HrSalaryManageImpl extends StandardServiceImpl implements
 		if (updateParamList.size() > 0){
 			statementId = this.sqlNameSpace + "."+"validupdateRecord";
 			this.daoHelper.batchUpdate(statementId, updateParamList);
+		}
+		
+		Iterator<String> iter = existsDataMap.keySet().iterator();
+		while (iter.hasNext()) {
+			String key = iter.next();
+			DataRow dataRow = existsDataMap.get(key);
+			String empParticipateSalary = (String) dataRow.get("EMP_PARTICIPATE_SALARY");
+			if("N".equals(empParticipateSalary)){
+				DataParam param = new DataParam();
+				param.put("SAL_ID", dataRow.get("SAL_ID"));
+				statementId = this.sqlNameSpace + "."+"deleteRecord";
+				this.daoHelper.deleteRecords(statementId, param);
+			}
 		}
 	}
 
