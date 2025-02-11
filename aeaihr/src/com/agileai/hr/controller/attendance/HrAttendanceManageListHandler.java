@@ -1,6 +1,8 @@
 package com.agileai.hr.controller.attendance;
 
+import java.io.ByteArrayInputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.agileai.domain.DataParam;
@@ -9,8 +11,10 @@ import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.controller.core.StandardListHandler;
 import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.renders.LocalRenderer;
+import com.agileai.hotweb.renders.NullRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.bizmoduler.attendance.HrAttendanceManage;
+import com.agileai.hr.common.ExportFileHelper;
 import com.agileai.util.DateUtil;
 
 public class HrAttendanceManageListHandler extends StandardListHandler {
@@ -85,6 +89,47 @@ public class HrAttendanceManageListHandler extends StandardListHandler {
 				beforeDate);
 		param.put("adtDate", targetDate);
 		return prepareDisplay(param);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public ViewRenderer doExportAction(DataParam param){
+		String fileType = param.get("fileType");
+		String exportFileName = "考勤表";
+		try {
+			Date adtDate = DateUtil.getDate(param.get("adtDate"));
+			param.put("sdate", DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,
+					DateUtil.getDateAdd(DateUtil.getBeginOfMonth(adtDate),DateUtil.MONTH,0)));
+			param.put("edate", DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,
+					DateUtil.getDateAdd(DateUtil.getBeginOfMonth(adtDate),DateUtil.MONTH,+1)));
+			List<DataRow> records = getService().attendanceStatisticsRecords(param);
+			HashMap model = new HashMap();
+			model.put("title",exportFileName);
+			String date = DateUtil.getDateByType(DateUtil.YYMMDD_HORIZONTAL,adtDate).substring(0, 7);
+			model.put("title1",date+"月考勤情况");
+			String content ="";
+			for(int i=0;i<records.size();i++){
+				DataRow dataRow = records.get(i);
+				content = content + (String) dataRow.get("USER_NAME")+":签到"+dataRow.get("IN_NUM").toString()+"次,签退"+dataRow.get("OUT_NUM").toString()+"次."+"<br/>";
+			}
+			model.put("content",content);
+			
+			ExportFileHelper exportFileHelper = new ExportFileHelper(request, response);
+			String templateDir = exportFileHelper.geTemplateDirPath();
+			if ("word".equals(fileType)){
+				String templateFile = "AttendanceDoc.ftl";
+				
+				ByteArrayInputStream bais = exportFileHelper.buildHtml4Doc(templateDir,templateFile, model);
+				exportFileHelper.exportWord(bais,exportFileName+".doc");				
+			}else{
+				String templateFile = "AttendancePdf.ftl";
+				
+				String inputFileContent = exportFileHelper.buildHtml4Pdf(templateDir,templateFile, model);
+				exportFileHelper.exportPdf(inputFileContent, exportFileName+".pdf");
+			}
+		} catch (Exception e) {
+			log.error(e.getLocalizedMessage(), e);
+		}
+		return new NullRenderer();
 	}
 
 	public ViewRenderer doQueryAction(DataParam param) {
