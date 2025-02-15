@@ -32,7 +32,6 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 	public ViewRenderer prepareDisplay(DataParam param) {
 		User user = (User) this.getUser();
 		PrivilegeHelper privilegeHelper = new PrivilegeHelper(user);
-		
 		String operaType = param.get(OperaType.KEY);
 		
 		if ("insert".equals(operaType)) {
@@ -80,6 +79,11 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 			setAttribute("doApprove", false);
 			setAttribute("doSignIn", false);
 			setAttribute("doRevokeApprove", true);
+		}
+		if("payment".equals(operaType)){
+			DataRow record = getService().getMasterRecord(param);
+			this.setAttributes(record);
+			setAttribute("doPayment", true);
 		}
 		if (operaType.equals("detail")) {
 			if (isReqRecordOperaType(operaType)) {
@@ -147,6 +151,7 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 						setAttribute("doApprove", false);
 						setAttribute("doSignIn", true);
 						setAttribute("doRevokeApprove", true);
+						setAttribute("doPayment", true);
 					}
 				}
 				this.setAttributes(record);
@@ -245,7 +250,7 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 			return prepareDisplay(param);
 		}
 		param.put("STATE", "submitted");
-		getService().updateMasterRecord(param);
+		getService().approveMasterRecord(param);
 		return new RedirectRenderer(getHandlerURL(listHandlerClass));
 	}
 
@@ -256,21 +261,32 @@ public class HrEvectionManageEditHandler extends MasterSubEditMainHandler {
 		return new RedirectRenderer(getHandlerURL(listHandlerClass));
 	}
 	
-	
 	@PageAction
 	public ViewRenderer revokeApproval(DataParam param) {
 		param.put("STATE", "drafe");
-		param.put("EVE_APPROVE_USER_NAME","");
 		param.put("EVE_APPROVE_USER","");
 		param.put("EVE_APPROVE_TIME","");
+		param.put("APP_RESULT", "");
+		param.put("EVE_APPROVE_OPINION", "");
 		getService().approveMasterRecord(param);
+		return new RedirectRenderer(getHandlerURL(listHandlerClass));
+	}
+	
+	@PageAction
+	public ViewRenderer payment(DataParam param) {
+		param.put("STATE", "PAID");
+		getService().updateStateRecord(param);
 		return new RedirectRenderer(getHandlerURL(listHandlerClass));
 	}
 	
 	@PageAction
 	public ViewRenderer drafe(DataParam param) {
 		param.put("STATE", "drafe");
-		getService().updateMasterRecord(param);
+		param.put("EVE_APPROVE_USER","");
+		param.put("EVE_APPROVE_TIME","");
+		param.put("APP_RESULT", "");
+		param.put("EVE_APPROVE_OPINION", "");
+		getService().approveMasterRecord(param);
 		return new RedirectRenderer(getHandlerURL(listHandlerClass));
 	}
 
