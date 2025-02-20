@@ -67,7 +67,7 @@ public class HrSalaryManageListHandler extends StandardListHandler {
 	}
 	protected void processPageAttributes(DataParam param) {
 		setAttribute("salState", FormSelectFactory.create("SAL_STATE")
-				.addSelectedValue(param.get("salStSAL_STATEate")));
+				.addSelectedValue(param.get("salState")));
 		initMappingItem("SAL_STATE", FormSelectFactory.create("SAL_STATE")
 				.getContent());
 	}
@@ -79,6 +79,7 @@ public class HrSalaryManageListHandler extends StandardListHandler {
 						DateUtil.getBeginOfMonth(beforeDate), DateUtil.DAY, 9));
 		String yearMonth = salDate.substring(0, 7);
 		initParamItem(param, "salDate", yearMonth);
+		initParamItem(param, "salState", "");
 	}
 
 	protected HrSalaryManage getService() {
