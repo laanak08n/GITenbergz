@@ -139,6 +139,10 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 				"EMP_WORK_STATE",
 				FormSelectFactory.create("EMP_WORK_STATE").addSelectedValue(
 						getOperaAttributeValue("EMP_WORK_STATE", "")));
+		setAttribute(
+				"EMP_PARTICIPATE_SALARY",
+				FormSelectFactory.create("BOOL_DEFINE").addSelectedValue(
+						getOperaAttributeValue("EMP_PARTICIPATE_SALARY", "Y")));
 		BigDecimal empMoney = new BigDecimal("0.00");
 		if (this.getAttribute("EMP_BASIC") == null) {
 			this.setAttribute("EMP_BASIC", empMoney);
