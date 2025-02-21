@@ -8,6 +8,7 @@ import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.controller.core.StandardEditHandler;
 import com.agileai.hotweb.domain.FormSelectFactory;
 import com.agileai.hotweb.domain.core.User;
+import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
@@ -67,6 +68,11 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 		} else {
 			setAttribute("isApprove", false);
 		}
+		if("revokeApproval".equals(operaType)){
+			DataRow record = getService().getNowRecord(param);
+			this.setAttributes(record);
+			setAttribute("doRevokeApprove", true);
+		}
 		if("detail".equals(operaType)){
 			PrivilegeHelper privilegeHelper = new PrivilegeHelper(user);
 			setAttribute("doEdit", true);
@@ -117,14 +123,9 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 						setAttribute("doEdit", false);
 						setAttribute("doApprove",false);
 						setAttribute("doSignIn", true);
+						setAttribute("doRevokeApprove", true);
 					}
 				}
-				
-				
-				
-				
-				
-				
 				this.setAttributes(record);
 			}
 		}
@@ -147,6 +148,8 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 		}		
 		setAttribute("WOT_TIME", FormSelectFactory.create("WOT_TIME")
 				.addSelectedValue(getOperaAttributeValue("WOT_TIME", "")));
+		setAttribute("WOT_TIME_COMPANY", FormSelectFactory.create("WOT_TIME_COMPANY")
+				.addSelectedValue(getOperaAttributeValue("WOT_TIME_COMPANY", "DAY")));
 		setAttribute("APP_RESULT",FormSelectFactory.create("APP_RESULT").addSelectedValue(
 				getAttributeValue("APP_RESULT", "YES")));
 		setAttribute("STATE",FormSelectFactory.create("STATE") .addSelectedValue(
@@ -154,17 +157,21 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 
 	}
 
-	public ViewRenderer doSaveAction(DataParam param) {
+	public ViewRenderer doSaveMasterRecordAction(DataParam param) {
 		String operateType = param.get(OperaType.KEY);
+		String responseText = "fail";
 		if (OperaType.CREATE.equals(operateType)) {
 			getService().createRecord(param);
+			responseText = param.get("WOT_ID");
 		} 
 		else if (OperaType.UPDATE.equals(operateType)) {
 			getService().updateRecord(param);
+			responseText = param.get("WOT_ID");
 		}else if(OperaType.DETAIL.equals(operateType)){
 			getService().updateRecord(param);
+			responseText = param.get("WOT_ID");
 		}
-		return new RedirectRenderer(getHandlerURL(listHandlerClass));
+		return new AjaxRenderer(responseText);
 	}
 	public ViewRenderer detail(DataParam param) {
 		getService().getNowRecord(param);
@@ -183,12 +190,25 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 		return new RedirectRenderer(getHandlerURL(listHandlerClass));
 	}
 	@PageAction
-	public ViewRenderer drafe(DataParam param) {
-		param.put("STATE","drafe");
-		getService().updateRecord(param);
+	public ViewRenderer revokeApproval(DataParam param) {
+		param.put("STATE", "drafe");
+		param.put("WOT_APPROVER","");
+		param.put("WOT_APP_TIME","");
+		param.put("APP_RESULT","");
+		param.put("WOT_APP_OPINION","");
+		getService().approveRecord(param);
 		return new RedirectRenderer(getHandlerURL(listHandlerClass));
 	}
-
+	@PageAction
+	public ViewRenderer drafe(DataParam param) {
+		param.put("STATE", "drafe");
+		param.put("WOT_APPROVER","");
+		param.put("WOT_APP_TIME","");
+		param.put("APP_RESULT","");
+		param.put("WOT_APP_OPINION","");
+		getService().approveRecord(param);
+		return new RedirectRenderer(getHandlerURL(listHandlerClass));
+	}
 	protected HrWorkOvertimeManage getService() {
 		return (HrWorkOvertimeManage) this.lookupService(this.getServiceId());
 	}

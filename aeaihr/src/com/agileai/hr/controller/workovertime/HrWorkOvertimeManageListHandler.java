@@ -24,8 +24,6 @@ public class HrWorkOvertimeManageListHandler extends StandardListHandler {
 	}
 
 	protected void processPageAttributes(DataParam param) {
-		initMappingItem("WOT_TIME", FormSelectFactory.create("WOT_TIME")
-				.getContent());
 		initMappingItem("APP_RESULT",
 				FormSelectFactory.create("APP_RESULT").getContent());
 		initMappingItem("STATE",
@@ -77,6 +75,11 @@ public class HrWorkOvertimeManageListHandler extends StandardListHandler {
 		storeParam(param);
 		return new DispatchRenderer(getHandlerURL(this.editHandlerClazz) + "&"
 				+ OperaType.KEY + "=approve&comeFrome=approve");
+	}
+	public ViewRenderer doRevokeApproveRequestAction(DataParam param) {
+		storeParam(param);
+		return new DispatchRenderer(getHandlerURL(this.editHandlerClazz) + "&"
+				+ OperaType.KEY + "=revokeApproval&comeFrome=revokeApproval");
 	}
 	public ViewRenderer doDeleteAction(DataParam param){
 		storeParam(param);
