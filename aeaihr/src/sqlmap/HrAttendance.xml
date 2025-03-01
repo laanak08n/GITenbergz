@@ -34,7 +34,6 @@
 			ATD_DATE=#currentDate#
 		</isNotEmpty>
 	</select>
-	
 	<insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
 		insert into hr_attendance
 		(ATD_ID,ATD_DATE,USER_ID,ATD_IN_TIME,ATD_IN_PLACE)values
@@ -46,4 +45,13 @@
 		ATD_OUT_TIME=#ATD_OUT_TIME:DATETIME#,ATD_OUT_PLACE=#ATD_OUT_PLACE:VARCHAR#
 		where ATD_ID=#ATD_ID#
 	</update>
+	<select id="attendanceStatisticsRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select USER_NAME,COUNT(ATD_IN_TIME) as IN_NUM,COUNT(ATD_OUT_TIME) as OUT_NUM 
+		from hr_attendance a left join security_user b on a.USER_ID = b.USER_ID
+		where 1=1
+        and ATD_DATE &gt;= #sdate#
+		and ATD_DATE &lt;= #edate#
+		group by a.USER_ID
+	</select>	
 </sqlMap>
