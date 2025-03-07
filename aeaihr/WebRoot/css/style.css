@@ -449,7 +449,31 @@ select{
 	margin:0px 0px 0px 1px;
 	cursor:pointer;
 }
-
+.excelImgBtn{
+	background: url(../images/excel.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.wordImgBtn{
+	background: url(../images/word.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.pdfImgBtn{
+	background: url(../images/pdf.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.paymentImgBtn{
+	background: url(../images/payment.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
+.paymentImgBtndisabled{
+	background: url(../images/payment0.png) no-repeat center center; width: 16px; height: 16px; border: none;
+	margin:0px 0px 0px 1px;
+	cursor:pointer;
+}
 /************************************************************
 Tab begin
 ***************************************************************/
