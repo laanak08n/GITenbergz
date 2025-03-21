@@ -18,8 +18,12 @@ function showEditBox(operType){
 	var url = "<%=pageBean.getHandlerURL()%>&actionType="+operType;
 	editBox.sendRequest(url);
 }
+function exportFile(fileType){
+	$("#fileType").val(fileType);
+	doSubmit({actionType:'export'});
+	hideSplash();
+}
 </script>
-
 </head>
 <body>
 <form action="<%=pageBean.getHandlerURL()%>" name="form1" id="form1" method="post">
@@ -29,6 +33,8 @@ function showEditBox(operType){
 <tr>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="A" align="center" onclick="showEditBox('insertRequest')"><input id="singInImgBtn" value="&nbsp;" title="新增" type="button" class="createImgBtn" />签到</td>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="E" align="center" onclick="showEditBox('updateRequest')"><input id="singOutImgBtn" value="&nbsp;" title="编辑" type="button" class="editImgBtn" />签退</td>
+   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="e" align="center" onclick="exportFile('word')"><input value="&nbsp;" title="导出WORD" type="button" class="wordImgBtn" style="margin-right:" />导出WORD</td>
+   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="p" align="center" onclick="exportFile('pdf')"><input value="&nbsp;" title="导出PDF" type="button" class="pdfImgBtn" style="margin-right:" />导出PDF</td>
 </tr>
 </table>
 </div>
@@ -65,8 +71,9 @@ height="390px"
 	<ec:column width="200" property="ATD_OUT_PLACE" title="签退地点"   />
 </ec:row>
 </ec:table>
-<input type="hidden" name="ATD_ID" id="ATD_ID" value="" />
-<input type="hidden" name="actionType" id="actionType" />
+<input type="hidden" name="ATD_ID" id="ATD_ID" value=""/>
+<input type="hidden" name="actionType" id="actionType"/>
+<input type="hidden" id="fileType" name="fileType" value=""/>
 <script language="JavaScript">
 setRsIdTag('ATD_ID');
 initCalendar('adtDate','%Y-%m-%d','adtDatePicker');
