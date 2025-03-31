@@ -11,15 +11,13 @@
 function controlUpdateBtn(stateResult){
 	if(stateResult =='drafe'){
 		enableButton("editImgBtn");
-		disableButton("revokeApproval")
-		  <%
-		  if(pageBean.getBoolValue("isApprove")){
-		  %>
+		disableButton("revokeApproval");
+		<%if(pageBean.getBoolValue("isApprove")){%>
 		disableButton("approve");
-		<%}
-		%>
+		<%}%>
 		enableButton("detailImgBtn");
 		enableButton("deleteImgBtn");
+		disableButton("payment");
 	}
 	if(stateResult =='submitted'){
 		disableButton("editImgBtn");
@@ -32,18 +30,27 @@ function controlUpdateBtn(stateResult){
 			%>	
 		enableButton("detailImgBtn");
 		disableButton("deleteImgBtn");
+		disableButton("payment");
 	}
 	if(stateResult =='approved'){
 		disableButton("editImgBtn");
 		enableButton("revokeApproval");
-		  <%
-		  if(pageBean.getBoolValue("isApprove")){
-		  %>
+		<%if(pageBean.getBoolValue("isApprove")){%>
 		disableButton("approve");
-		<%}
-			%>
+		<%}%>
 		enableButton("detailImgBtn");
 		disableButton("deleteImgBtn");
+		enableButton("payment");
+	}
+	if(stateResult =='PAID'){
+		disableButton("editImgBtn");
+		disableButton("revokeApproval");
+		<%if(pageBean.getBoolValue("isApprove")){%>
+		disableButton("approve");
+		<%}%>
+		disableButton("detailImgBtn");
+		disableButton("deleteImgBtn");
+		disableButton("payment");
 	}
 }
 function controlCanEdit(userId,state){
@@ -64,9 +71,10 @@ function controlCanEdit(userId,state){
    <%
 if(pageBean.getBoolValue("isApprove")){
 %>
-    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="R" align="center" onclick="doRequest('approveRequest')"><input id="approve" value="&nbsp;" title="核准" type="button" class="approveImgBtn"   />核准</td>
-      <td  align="center"class="bartdx" onclick="doRequest('revokeApproveRequest')" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>
-     <%} %>
+   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="R" align="center" onclick="doRequest('approveRequest')"><input id="approve" value="&nbsp;" title="核准" type="button" class="approveImgBtn"   />核准</td>
+   <td  align="center"class="bartdx" onclick="doRequest('revokeApproveRequest')" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>
+     <%}%>
+   <td  align="center"class="bartdx" onclick="doRequest('paymentRequest')" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="paymentImgBtn" id="payment" title="付款" />付款</td>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input id="detailImgBtn" value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td>   
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input id="deleteImgBtn" value="&nbsp;" title="删除"  type="button"  class="delImgBtn" />删除</td>
 </tr>
@@ -96,7 +104,6 @@ height="390px"
 <ec:row styleClass="odd" ondblclick="clearSelection();doRequest('viewDetail')" oncontextmenu="selectRow(this,{EVE_ID:'${row.EVE_ID}'});controlUpdateBtn('${row.STATE}');controlCanEdit('${row.EVE_APPLY_USER}','${row.STATE}');refreshConextmenu()" onclick="selectRow(this,{EVE_ID:'${row.EVE_ID}'});controlUpdateBtn('${row.STATE}');controlCanEdit('${row.EVE_APPLY_USER}','${row.STATE}');">
 	<ec:column width="50" style="text-align:center" property="_0" title="序号" value="${GLOBALROWCOUNT}" />
 	<ec:column width="100" property="EVE_CODE_NAME"  title="姓名"   />
-	
 	<ec:column width="100" property="EVE_START_TIME" title="出差日期" cell="date" format="yyyy-MM-dd" />
 	<ec:column width="100" property="EVE_DAYS" style="text-align:right;" title="出差天数"   />
     <ec:column width="100" property="EVE_TOGETHER" title="同行人"   />

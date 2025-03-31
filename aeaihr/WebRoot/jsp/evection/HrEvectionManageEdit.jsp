@@ -59,7 +59,7 @@ function checkEntryRecords(subTableId){
 var insertSubRecordBox;
 function insertSubRecordRequest(title,handlerId){
 	if (!insertSubRecordBox){
-		insertSubRecordBox = new PopupBox('insertSubRecordBox',title,{size:'normal',height:'370px',top:'10px'});
+		insertSubRecordBox = new PopupBox('insertSubRecordBox',title,{size:'normal',height:'400px',top:'10px'});
 	}
 	var url = 'index?'+handlerId+'&operaType=insert&EVE_ID='+$('#EVE_ID').val();
 	insertSubRecordBox.sendRequest(url);	
@@ -127,6 +127,9 @@ function saveMasterRecord(){
 function revokeApproval(){
 	doSubmit({actionType:'revokeApproval'});
 }
+function payment(){
+	doSubmit({actionType:'payment'});
+}
 </script>
 </head>
 <body>
@@ -148,17 +151,20 @@ function revokeApproval(){
 <%if(pageBean.getBoolValue("doInsertEdit")){%>
     <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="enableSave()" ><input value="&nbsp;" type="button" class="editImgBtn" id="modifyImgBtn" title="编辑" />编辑</td>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="saveMasterRecord()"><input value="&nbsp;" type="button" class="saveImgBtn" id="saveImgBtn" title="保存" />保存</td>
- <%if(pageBean.getBoolValue("doSubmit")){ %>
+<%if(pageBean.getBoolValue("doSubmit")){ %>
    <td  align="center"class="bartdx"onclick="stateSubmit();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="submitImgBtn" id="submitImgBtn" title="提交" />提交</td>
-    <%}%>
-    <%}%>
+<%}%>
+<%}%>
 <%if(pageBean.getBoolValue("doApprove")){ %>
    <td  align="center"class="bartdx"onclick="stateDrafe();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="reSubmittedImgBtn" id="drafeImgBtn" title="反提交" />反提交</td>  
    <td  align="center"class="bartdx"onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="approveImgBtn" id="approveImgBtn" title="核准" />核准</td>
-   <%}%>
-   <%if(pageBean.getBoolValue("doRevokeApprove")){ %>
-      <td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>
- <%}%>
+<%}%>
+<%if(pageBean.getBoolValue("doRevokeApprove")){ %>
+   <td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>
+<%}%>
+<%if(pageBean.getBoolValue("doPayment")){ %>
+   <td  align="center"class="bartdx" onclick="payment()" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="paymentImgBtn" id="payment" title="付款" />付款</td>
+ <%} %>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="goToBack();"><input value="&nbsp;" type="button" class="backImgBtn" title="返回" />返回</td>
 </tr>
 </table>
@@ -291,11 +297,8 @@ height="auto"
 setRsIdTag('EXPE_ID');
 numValidator.add("EVE_DAYS");
 numValidator.add("EVE_SUBSID");
-
 </script>
 <%}%>
-
-
 <input type="hidden" id="currentSubTableId" name="currentSubTableId" value="<%=pageBean.inputValue("currentSubTableId")%>" />
 <%if (!"_base".equals(pageBean.inputValue("currentSubTableId"))){%>
 <script language="javascript">
@@ -318,7 +321,6 @@ $("#Layer0").hide();
 <script language="javascript">
 initCalendar('EVE_START_TIME','%Y-%m-%d','EVE_START_TIMEPicker');
 initCalendar('EVE_OVER_TIME','%Y-%m-%d','EVE_OVER_TIMEPicker');
-
 requiredValidator.add("EVE_REIMBURSEMENT_TIME");
 datetimeValidators[0].set("yyyy-MM-dd HH:mm").add("EVE_REIMBURSEMENT_TIME");
 requiredValidator.add("EVE_START_TIME");
