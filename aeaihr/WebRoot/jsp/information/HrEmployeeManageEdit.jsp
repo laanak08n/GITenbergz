@@ -310,10 +310,13 @@ function revokeApproval(){
 </tr>
 <tr>
 	<th width="100" nowrap>信息状态</th>
-	<td colspan="3">
+	<td>
 	<input id="EMP_STATE_TEXT" label="信息状态" name="EMP_STATE_TEXT" type="text" value="<%=pageBean.selectedText("EMP_STATE")%>" size="24"  class="text" readonly="readonly"/>
 	<input id="EMP_STATE" label="信息状态" name="EMP_STATE" type="hidden" value="<%=pageBean.selectedValue("EMP_STATE")%>" />
    </td>
+<th width="100" nowrap>是否参与薪资汇总</th>
+	<td>&nbsp;<%=pageBean.selectRadio("EMP_PARTICIPATE_SALARY")%>
+	</td>
 </tr>
 </table>
 </div>
