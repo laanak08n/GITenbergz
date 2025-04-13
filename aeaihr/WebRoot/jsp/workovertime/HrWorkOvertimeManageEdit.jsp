@@ -16,6 +16,30 @@ function stateApprove(){
 function stateDrafe(){
 	doSubmit({actionType:'drafe'});
 }
+function revokeApproval(){
+	doSubmit({actionType:'revokeApproval'});
+}
+function saveMasterRecord(){
+	if (validate()){
+		if (ele("currentSubTableId")){
+			var subTableId = $("#currentSubTableId").val();
+			if (!checkEntryRecords(subTableId)){
+				return;
+			}
+		}
+		showSplash();
+		postRequest('form1',{actionType:'saveMasterRecord',onComplete:function(responseText){
+			if ("fail" != responseText){
+				$('#operaType').val('update');
+				$('#WOT_ID').val(responseText);
+				doSubmit({actionType:'prepareDisplay'});
+			}else{
+				hideSplash();
+				writeErrorMsg('保存操作出错啦！');
+			}
+		}});
+	}
+}
 </script>
 </head>
 <body >
@@ -25,17 +49,20 @@ function stateDrafe(){
 <div id="__ToolBar__">
 <table border="0" cellpadding="0" cellspacing="1">
 <tr>
- <%if(pageBean.getBoolValue("doEdit")){%>
-  <td  align="center"class="bartdx"onclick="doSubmit({actionType:'save'})" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;" type="button" class="saveImgBtn" id="savedrafeImgBtn" title="保存" />保存</td>
-  <%}%>
- <%if(pageBean.getBoolValue("doSubmit")){%>
+<%if(pageBean.getBoolValue("doEdit")){%>
+  <td  align="center"class="bartdx"onclick="saveMasterRecord()" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;" type="button" class="saveImgBtn" id="savedrafeImgBtn" title="保存" />保存</td>
+<%}%>
+<%if(pageBean.getBoolValue("doSubmit")){%>
   <td  align="center"class="bartdx"onclick="stateSubmit();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="submitImgBtn" id="submitImgBtn" title="提交" />提交</td>
-  <%} %>
-  <%if(pageBean.getBoolValue("doApprove")){ %>
+<%} %>
+<%if(pageBean.getBoolValue("doApprove")){ %>
   <td  align="center"class="bartdx"onclick="stateDrafe();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="reSubmittedImgBtn" id="drafeImgBtn" title="反提交" />反提交</td>
   <td  align="center"class="bartdx"onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="approveImgBtn" id="approveImgBtn" title="核准" />核准</td>
-  <%} %>
-  <td  align="center"class="bartdx"onclick="goToBack();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="backImgBtn"                 title="返回" />返回</td>
+<%} %>
+<%if(pageBean.getBoolValue("doRevokeApprove")){ %>
+   <td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>
+<%}%>
+  <td  align="center"class="bartdx"onclick="goToBack();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="backImgBtn" title="返回" />返回</td>
 </tr>
 </table>
 </div>
@@ -68,6 +95,7 @@ function stateDrafe(){
 <tr>
 	<th width="100" nowrap>加班时长</th>
 	<td><select id="WOT_TIME" label="加班时长" name="WOT_TIME" class="select"><%=pageBean.selectValue("WOT_TIME")%></select>
+    <select id="WOT_TIME_COMPANY" label="加班时长" name="WOT_TIME_COMPANY" class="select"><%=pageBean.selectValue("WOT_TIME_COMPANY")%></select>
 </td>
 </tr>
 <tr>
@@ -127,6 +155,7 @@ requiredValidator.add("WOT_PLACE");
 requiredValidator.add("WOT_OVERTIME_DATE");
 requiredValidator.add("WOT_DESC");
 requiredValidator.add("WOT_TIME");
+requiredValidator.add("WOT_TIME_COMPANY");
 requiredValidator.add("APP_RESULT");
 initCalendar('WOT_OVERTIME_DATE','%Y-%m-%d','WOT_OVERTIME_DATEPicker');
 datetimeValidators[0].set("yyyy-MM-dd").add("WOT_OVERTIME_DATE");

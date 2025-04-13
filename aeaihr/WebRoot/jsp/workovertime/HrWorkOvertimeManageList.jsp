@@ -11,6 +11,7 @@
 function controlUpdateBtn(stateResult){
 	if(stateResult =='drafe'){
 		enableButton("editImgBtn");
+		disableButton("revokeApproval");
 		<%if(pageBean.getBoolValue("hasRight")){ %>
 		disableButton("approveImgBtn");
 		<%}%>
@@ -19,6 +20,7 @@ function controlUpdateBtn(stateResult){
 	}else
 	if(stateResult =='submitted'){
 		disableButton("editImgBtn");
+		disableButton("revokeApproval");
 		<%if(pageBean.getBoolValue("hasRight")){ %>
 		enableButton("approveImgBtn");
 		<%}%>
@@ -27,6 +29,7 @@ function controlUpdateBtn(stateResult){
 	}else
 	if(stateResult =='approved'){
 		disableButton("editImgBtn");
+		enableButton("revokeApproval");
 		<%if(pageBean.getBoolValue("hasRight")){ %>
 		disableButton("approveImgBtn");
 		<%}%>
@@ -51,6 +54,7 @@ function controlCanEdit(userId,state){
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="E" align="center" onclick="doRequest('updateRequest')"><input id="editImgBtn" value="&nbsp;" title="编辑" type="button" class="editImgBtn" />编辑</td>
 <%if(pageBean.getBoolValue("hasRight")){ %>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="R" align="center" onclick="doRequest('approveRequest')"><input id="approveImgBtn" value="&nbsp;" title="核准" type="button" class="approveImgBtn" />核准</td>
+   <td  align="center"class="bartdx" onclick="doRequest('revokeApproveRequest')" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>
 <%}%>
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input id="detailImgBtn" value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td>   
    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input id="deleteImgBtn" value="&nbsp;" title="删除" type="button" class="delImgBtn" />删除</td>
@@ -81,7 +85,7 @@ height="390px"
 	<ec:column width="100" property="USER_ID_NAME" title="加班人"   />
 	<ec:column width="100" property="WOT_OVERTIME_DATE" title="加班日期"   />
 	<ec:column width="100" property="WOT_PLACE" title="加班地点"   />
-	<ec:column width="100" property="WOT_TIME" style="text-align:right;" title="加班时长"   mappingItem="WOT_TIME"/>
+	<ec:column width="100" property="WOT_TIME" title="加班时长"  />
 	<ec:column width="100" property="WOT_PARTICIPANT" title="参与人"   />
 	<ec:column width="100" property="STATE" title="状态" mappingItem="STATE"/>
 	<ec:column width="100" property="WOT_APPROVER_NAME" title="核准人"   />
