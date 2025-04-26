@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <HotwebModule> 
   <ProjectType>JavaWebProject</ProjectType>  
@@ -7,7 +7,7 @@
     <DriverUrl>jdbc:mysql://localhost:3306/aeaihr</DriverUrl>  
     <DriverClass>com.mysql.jdbc.Driver</DriverClass>  
     <UserId>root</UserId>  
-    <UserPwd>npOw+NbljG+eAr7WiSAHRQ==</UserPwd> 
+    <UserPwd>GvO3YVl24y8=</UserPwd> 
   </DBConfig>  
   <ServerConfig> 
     <ServerAddress>localhost</ServerAddress>  
