@@ -3,7 +3,7 @@ package com.agileai.hr.controller.system;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.annotation.PageAction;
-import com.agileai.hr.bizmoduler.system.SecurityAuthorizationConfig;
+import com.agileai.hotweb.bizmoduler.frame.SecurityAuthorizationConfig;
 import com.agileai.hotweb.controller.core.SimpleHandler;
 import com.agileai.hotweb.domain.core.Profile;
 import com.agileai.hotweb.domain.core.User;

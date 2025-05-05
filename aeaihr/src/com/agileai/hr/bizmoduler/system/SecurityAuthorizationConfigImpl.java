@@ -7,6 +7,7 @@ import com.agileai.common.KeyGenerator;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.bizmoduler.core.BaseService;
+import com.agileai.hotweb.bizmoduler.frame.SecurityAuthorizationConfig;
 import com.agileai.hotweb.domain.core.Resource;
 
 public class SecurityAuthorizationConfigImpl extends BaseService implements

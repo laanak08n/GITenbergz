@@ -9,14 +9,14 @@ import org.codehaus.jettison.json.JSONObject;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.annotation.PageAction;
-import com.agileai.hr.bizmoduler.system.SecurityAuthorizationConfig;
-import com.agileai.hr.bizmoduler.system.SecurityUserQuery;
-import com.agileai.hr.bizmoduler.system.SecurityUserTreeSelect;
+import com.agileai.hotweb.bizmoduler.frame.SecurityAuthorizationConfig;
 import com.agileai.hotweb.controller.core.TreeSelectHandler;
 import com.agileai.hotweb.domain.TreeBuilder;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
+import com.agileai.hr.bizmoduler.system.SecurityUserQuery;
+import com.agileai.hr.bizmoduler.system.SecurityUserTreeSelect;
 import com.agileai.util.StringUtil;
 
 public class SecurityUserTreeSelectHandler

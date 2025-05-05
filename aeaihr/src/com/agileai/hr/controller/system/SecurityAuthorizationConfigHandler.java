@@ -6,8 +6,7 @@ import java.util.List;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.annotation.PageAction;
-import com.agileai.hr.bizmoduler.system.FunctionTreeManage;
-import com.agileai.hr.bizmoduler.system.SecurityAuthorizationConfig;
+import com.agileai.hotweb.bizmoduler.frame.SecurityAuthorizationConfig;
 import com.agileai.hotweb.controller.core.BaseHandler;
 import com.agileai.hotweb.domain.FormSelect;
 import com.agileai.hotweb.domain.core.Resource;
@@ -17,6 +16,7 @@ import com.agileai.hotweb.domain.system.Operation;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
+import com.agileai.hr.bizmoduler.system.FunctionTreeManage;
 import com.agileai.util.ListUtil;
 import com.agileai.util.StringUtil;
 

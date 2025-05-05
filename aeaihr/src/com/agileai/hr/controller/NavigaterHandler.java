@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.agileai.domain.DataParam;
 import com.agileai.hotweb.bizmoduler.frame.OnlineCounterService;
-import com.agileai.hr.bizmoduler.system.HotwebAuthHelper;
 import com.agileai.hotweb.common.BeanFactory;
 import com.agileai.hotweb.common.Constants;
 import com.agileai.hotweb.common.Constants.FrameHandlers;
+import com.agileai.hotweb.common.HotwebAuthHelper;
 import com.agileai.hotweb.controller.core.BaseHandler;
 import com.agileai.hotweb.domain.core.Resource;
 import com.agileai.hotweb.domain.core.User;

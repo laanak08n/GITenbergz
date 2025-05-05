@@ -2,7 +2,7 @@ package com.agileai.hr.controller;
 
 import com.agileai.domain.DataParam;
 import com.agileai.hotweb.annotation.PageAction;
-import com.agileai.hr.bizmoduler.system.HotwebAuthHelper;
+import com.agileai.hotweb.common.HotwebAuthHelper;
 import com.agileai.hotweb.controller.core.BaseHandler;
 import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.domain.system.FuncMenu;

@@ -10,6 +10,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
+import com.agileai.hotweb.bizmoduler.frame.SecurityAuthorizationConfig;
 import com.agileai.hotweb.common.BeanFactory;
 import com.agileai.hotweb.controller.core.BaseHandler;
 import com.agileai.hotweb.domain.TreeBuilder;
@@ -20,7 +21,6 @@ import com.agileai.hotweb.domain.system.FuncMenu;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.bizmoduler.system.FunctionTreeManage;
-import com.agileai.hr.bizmoduler.system.SecurityAuthorizationConfig;
 
 public class MenuDataProviderHandler extends BaseHandler{
 	
