@@ -1418,3 +1418,55 @@ function refreshDTreeConextmenu(){
 function emptyText(inputId){
 	ele(inputId).value = '';
 }
+
+
+function banBackSpace(e){   
+	  var ev = e || window.event;   
+	  var obj = ev.target || ev.srcElement;   
+	  var t = obj.type || obj.getAttribute('type');  
+	  var vReadOnly = obj.getAttribute('readonly');
+	  vReadOnly = (vReadOnly == "") ? false : vReadOnly;
+	  var flag1=(ev.keyCode == 8 && (t=="password" || t=="text" || t=="textarea") 
+	              && vReadOnly=="readonly")?true:false;
+	  var flag2=(ev.keyCode == 8 && t != "password" && t != "text" && t != "textarea")
+	              ?true:false;        
+	  if(flag2){
+	      return false;
+	  }
+	  if(flag1){   
+	      return false;   
+	  }   
+}
+
+function __processForms__() {
+	if (ele('operaType')) {
+		  if (ele('operaType').value == 'detail'){
+			  $(":input").each(function(){
+				  if ($(this).attr('name') != undefined){
+					  if ($(this).attr('readonly') == undefined){
+						  $(this).attr('canEdit','true');
+						  $(this).attr('readonly','readonly');
+					  }
+				  }
+			  });
+		  }else{
+			  $(":input[canEdit='true']").removeAttr('readonly'); 
+		  }
+		  $(':input[readonly]').css("background-color","#efefef");
+		  $(":input").each(function(){
+			  if ($(this).attr('name') != undefined){
+				  if ($(this).attr('readonly') == undefined){
+					  if ($(this).attr('canEdit') =='true'){
+						  $(this).css("background-color","#fff");		
+					  }
+				  }
+			  }
+		  });		  
+	}
+}
+
+window.onload=function(){
+  document.onkeypress=banBackSpace;
+  document.onkeydown=banBackSpace;
+  __processForms__();
+}

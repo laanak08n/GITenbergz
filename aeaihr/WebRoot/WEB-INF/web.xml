@@ -90,7 +90,7 @@
 	</servlet>
 	<servlet>  
 	    <servlet-name>safecode</servlet-name>  
-	    <servlet-class>com.agileai.hr.servlet.SafeCodeServlet</servlet-class>  
+	    <servlet-class>com.agileai.hotweb.servlet.SafeCodeServlet</servlet-class>  
 	</servlet> 	
 	<servlet-mapping>
 		<servlet-name>DispatchServlet</servlet-name>
@@ -109,6 +109,10 @@
 	    <url-pattern>/safecode</url-pattern>  
 	</servlet-mapping>
 	<jsp-config>
+    	<taglib>
+        	<taglib-uri>http://www.agileai.com</taglib-uri>
+        	<taglib-location>/WEB-INF/taglibs.tld</taglib-location>
+      	</taglib>
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>
 			<trim-directive-whitespaces>true</trim-directive-whitespaces>

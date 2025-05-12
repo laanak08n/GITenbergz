@@ -785,14 +785,6 @@
 			</description>
 		</attribute>
 		<attribute>
-			<name>headerSpan</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<description>
-				<![CDATA[Custom header td span.]]>
-			</description>
-		</attribute>
-		<attribute>
 			<name>group</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1161,7 +1153,15 @@
 			<description>
 				<![CDATA[Specify the column text max length for substring(0,maxLength).]]>
 			</description>
-		</attribute>		
+		</attribute>
+		<attribute>
+			<name>wrapped</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>
+				<![CDATA[Specify the column text is wrapped for maxLength ,the value can be : yes ,true,y]]>
+			</description>
+		</attribute>				
 		<attribute>
 			<name>tagAttributes</name>
 			<required>false</required>
