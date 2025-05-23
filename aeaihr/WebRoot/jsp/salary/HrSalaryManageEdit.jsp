@@ -107,8 +107,8 @@
 </td>
 </tr>
 <tr>
-	<th width="100" nowrap>请假原因</th>
-	<td colspan="3"><textarea id="SAL_REMARKS" label="请假原因" name="SAL_REMARKS" cols="60" rows="5" class="textarea"><%=pageBean.inputValue("SAL_REMARKS")%></textarea>
+	<th width="100" nowrap>备注</th>
+	<td colspan="3"><textarea id="SAL_REMARKS" label="备注" name="SAL_REMARKS" cols="60" rows="5" class="textarea"><%=pageBean.inputValue("SAL_REMARKS")%></textarea>
 </td>
 </tr>
 </table>
@@ -117,6 +117,12 @@
 <input type="hidden" id="SAL_ID" name="SAL_ID" value="<%=pageBean.inputValue("SAL_ID")%>" />
 </form>
 <script language="javascript">
+$('#SAL_REMARKS').inputlimiter({
+	limit: 100,
+	remText: '还可以输入  %n 字 /',
+	limitText: '%n 字',
+	zeroPlural: false
+	});
 function stateApprove(){
 	doSubmit({actionType:'approve'});
 }

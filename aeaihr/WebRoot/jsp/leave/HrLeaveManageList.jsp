@@ -76,7 +76,7 @@ items="pageBean.rsList" csvFileName="请假申请.csv"
 retrieveRowsCallback="process" xlsFileName="请假申请.xls"
 useAjax="true" sortable="true"
 doPreload="false" toolbarContent="navigation|pagejump |pagesize |export|extend|status"
-width="100%" rowsDisplayed="15"
+width="100%" rowsDisplayed="${ec_rd == null ?15:ec_rd}"
 listWidth="100%" 
 height="390px"
 >

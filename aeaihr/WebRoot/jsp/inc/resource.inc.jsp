@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="css/calendar.css" />
 <link rel="stylesheet" type="text/css" href="css/contextmenu.css" />
 <link rel="stylesheet" type="text/css" href="css/decorator.css" />
+<link rel="stylesheet" type="text/css" href="css/jquery.inputlimiter.1.0.css" />
 <link href="css/dtree.css" rel="stylesheet" type="text/css"/>
 <link href="css/stree.css" rel="stylesheet" type="text/css"/>
 <script src="js/jquery-1.7.1.js" language="javascript"></script>
@@ -25,6 +26,8 @@
 <script src="js/validate/filter.js" language="javascript"></script>
 <script src="js/validate/validator.config.js" language="javascript"></script>
 <script src="js/ecside.js" language="javascript"></script>
+<script src="js/jquery.inputlimiter.1.3.1.min.js" language="javascript"></script>
 <script type="text/javascript">
+$.fn.inputlimiter.defaults.lineReturnCount = 2;
 validateIsDisplayAllError = false;
 </script>

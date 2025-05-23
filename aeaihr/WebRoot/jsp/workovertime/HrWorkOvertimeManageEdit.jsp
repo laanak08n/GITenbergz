@@ -149,6 +149,12 @@ function saveMasterRecord(){
 <input type="hidden" id="WOT_ID" name="WOT_ID" value="<%=pageBean.inputValue("WOT_ID")%>" />
 </form>
 <script language="javascript">
+$('#WOT_DESC').inputlimiter({
+limit: 100,
+remText: '还可以输入  %n 字 /',
+limitText: '%n 字',
+zeroPlural: false
+});
 requiredValidator.add("USER_ID");
 requiredValidator.add("WOT_DATE");
 requiredValidator.add("WOT_PLACE");

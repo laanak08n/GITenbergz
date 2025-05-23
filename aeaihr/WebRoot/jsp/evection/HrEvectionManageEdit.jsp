@@ -242,7 +242,7 @@ size="24" readonly="readonly"  label="核准人姓名" />
 </tr>
 <tr>
 	<th width="100" nowrap>核准意见</th>
-	<td><textarea name="EVE_APPROVE_OPINION" cols="40" rows="3" <%if(!pageBean.getBoolValue("isApprove")){ %> readonly="readonly" <%}%> class="textarea" id="EVE_APPROVE_OPINION" label="核准意见"><%=pageBean.inputValue("EVE_APPROVE_OPINION")%></textarea></td>
+	<td><textarea name="EVE_APPROVE_OPINION" cols="60" rows="5" <%if(!pageBean.getBoolValue("isApprove")){ %> readonly="readonly" <%}%> class="textarea" id="EVE_APPROVE_OPINION" label="核准意见"><%=pageBean.inputValue("EVE_APPROVE_OPINION")%></textarea></td>
 </tr>
 <%}%>
 </table>
@@ -319,6 +319,18 @@ $("#Layer0").hide();
 </div>
 </form>
 <script language="javascript">
+$('#EVE_REASON').inputlimiter({
+	limit: 100,
+	remText: '还可以输入  %n 字 /',
+	limitText: '%n 字',
+	zeroPlural: false
+	});
+$('#EVE_APPROVE_OPINION').inputlimiter({
+	limit: 100,
+	remText: '还可以输入  %n 字 /',
+	limitText: '%n 字',
+	zeroPlural: false
+	});
 initCalendar('EVE_START_TIME','%Y-%m-%d','EVE_START_TIMEPicker');
 initCalendar('EVE_OVER_TIME','%Y-%m-%d','EVE_OVER_TIMEPicker');
 requiredValidator.add("EVE_REIMBURSEMENT_TIME");

@@ -116,7 +116,7 @@ function stateDrafe(){
 </tr>
 <tr>
 	<th width="100" nowrap>核准意见</th>
-	<td><textarea id="LEA_APP_OPINION" label="核准意见" name="LEA_APP_OPINION" cols="40" rows="3" class="textarea"><%=pageBean.inputValue("LEA_APP_OPINION")%></textarea>
+	<td><textarea id="LEA_APP_OPINION" label="核准意见" name="LEA_APP_OPINION" cols="60" rows="5" class="textarea"><%=pageBean.inputValue("LEA_APP_OPINION")%></textarea>
 </td>
 </tr>
 <%
@@ -127,6 +127,18 @@ function stateDrafe(){
 <input type="hidden" id="LEA_ID" name="LEA_ID" value="<%=pageBean.inputValue("LEA_ID")%>" />
 </form>
 <script language="javascript">
+$('#LEA_CAUSE').inputlimiter({
+	limit: 100,
+	remText: '还可以输入  %n 字 /',
+	limitText: '%n 字',
+	zeroPlural: false
+	});
+$('#LEA_APP_OPINION').inputlimiter({
+	limit: 100,
+	remText: '还可以输入  %n 字 /',
+	limitText: '%n 字',
+	zeroPlural: false
+	});
 requiredValidator.add("USER_ID");
 requiredValidator.add("LEA_DATE");
 requiredValidator.add("LEA_TYPE");
