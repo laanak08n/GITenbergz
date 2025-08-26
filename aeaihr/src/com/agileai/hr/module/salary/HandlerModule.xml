@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="HrSalaryManageList" class="com.agileai.hr.module.salary.handler.HrSalaryManageListHandler" page="salary/HrSalaryManageList.jsp"/>  
+  <bean id="HrSalaryManageEdit" class="com.agileai.hr.module.salary.handler.HrSalaryManageEditHandler" page="salary/HrSalaryManageEdit.jsp"/>  
+  <bean id="HrValidDays" class="com.agileai.hr.module.salary.handler.HrValidDaysHandler" page="salary/HrValidDays.jsp"/>  
+</beans>
