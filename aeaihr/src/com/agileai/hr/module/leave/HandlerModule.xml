@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="HrLeaveManageList" class="com.agileai.hr.module.leave.handler.HrLeaveManageListHandler" page="leave/HrLeaveManageList.jsp"/>  
+  <bean id="HrLeaveManageEdit" class="com.agileai.hr.module.leave.handler.HrLeaveManageEditHandler" page="leave/HrLeaveManageEdit.jsp"/>
+</beans>
