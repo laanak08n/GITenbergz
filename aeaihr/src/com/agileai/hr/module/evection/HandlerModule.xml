@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans> 
+  <bean id="HrEvectionManageList" class="com.agileai.hr.module.evection.handler.HrEvectionManageListHandler" page="evection/HrEvectionManageList.jsp"/>  
+  <bean id="HrEvectionManageEdit" class="com.agileai.hr.module.evection.handler.HrEvectionManageEditHandler" page="evection/HrEvectionManageEdit.jsp"/>  
+  <bean id="HrExpensesEditBox" class="com.agileai.hr.module.evection.handler.HrExpensesEditBoxHandler" page="evection/HrExpensesEditBox.jsp"/>
+  <bean id="UserListSelectList" class="com.agileai.hr.module.evection.handler.UserListSelectListHandler" page="evection/UserListSelectList.jsp"/>
+</beans>
