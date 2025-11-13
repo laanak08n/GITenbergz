@@ -79,7 +79,6 @@ datetimeValidators[0].set("yyyy-MM-dd").add("OPER_STIME");
 datetimeValidators[0].set("yyyy-MM-dd").add("OPER_ETIME");
 initCalendar('OPER_STIME','%Y-%m-%d','OPER_STIMEPicker');
 initCalendar('OPER_ETIME','%Y-%m-%d','OPER_ETIMEPicker');
-pms.initPageActon({"handlerId":"<%=pageBean.getHandlerId()%>","buttonIds":"refreshImgBtn"});
 </script>
 </body>
 </html>
