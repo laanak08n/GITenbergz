@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Handlers>
+	<bean id="Homepage" module=""></bean>
+	<bean id="MenuTree" module=""></bean>
+	<bean id="Navigater" module=""></bean>
+	<bean id="Login" module=""></bean>
+	<bean id="MainWin" module=""></bean>
+	<bean id="Bottom" module=""></bean>
+	<bean id="Logo" module=""></bean>
+	<bean id="Building" module=""></bean>
+	<bean id="CodeTypeManageList" module=""></bean>
+	<bean id="CodeTypeManageEdit" module=""></bean>
+	<bean id="CodeListManageList" module=""></bean>
+	<bean id="CodeListManageEdit" module=""></bean>
+	<bean id="MenuDataProvider" module=""></bean>
+	<bean id="ModuleCycle" module=""></bean>
+	<bean id="WxSignIn" module="" ></bean>
+	<bean id="WxSignOut" module="" ></bean>
+	<bean id="WxBind" module="" ></bean>
+
+	<bean id="ModifyPassword" module="system"></bean>
+	<bean id="ResetPassword" module="system"></bean>
+	<bean id="SecurityGroupList" module="system"></bean>
+	<bean id="SecurityGroupPick" module="system"></bean>
+	<bean id="SecurityGroupEdit" module="system"></bean>
+	<bean id="SecurityUserEdit" module="system"></bean>
+	<bean id="SecurityRoleTreeManage" module="system"></bean>
+	<bean id="SecurityRoleParentSelect" module="system"></bean>
+	<bean id="SecurityUserQueryList" module="system"></bean>
+	<bean id="SecurityGroupTreeSelect" module="system"></bean>
+	<bean id="SecurityGroupQueryList" module="system"></bean>
+	<bean id="SecurityUserTreeSelect" module="system"></bean>
+	<bean id="SecurityAuthorizationConfig" module="system"></bean>
+	<bean id="SecurityRoleTreeSelect" module="system"></bean>
+	<bean id="SysLogQueryList" module="system"></bean>
+	<bean id="SysLogQueryDetail" module="system"></bean>
+	<bean id="FunctionTreeManage" module="system"></bean>
+	<bean id="FunctionParentSelect" module="system"></bean>
+	<bean id="HandlerManageList" module="system"></bean>
+	<bean id="HandlerManageEdit" module="system"></bean>
+	<bean id="WcmGeneralGroup8ContentList" module="system"></bean>
+	<bean id="WcmGeneralGroupPick" module="system"></bean>
+	<bean id="WcmGeneralGroupEdit" module="system"></bean>
+	<bean id="WcmGeneralResourceEdit" module="system"></bean>
+	<bean id="ResourseUploader" module="system"></bean>
+
+	<bean id="HrAttendanceManageList" module="attendance" ></bean>
+	<bean id="HrAttendanceManageEdit" module="attendance" ></bean>
+	<bean id="HrEvectionManageList" module="evection" ></bean>
+	<bean id="HrEvectionManageEdit" module="evection" ></bean>
+	<bean id="HrExpensesEditBox" module="evection" ></bean>
+	<bean id="UserListSelectList" module="evection" ></bean>
+	<bean id="DeptTreeSelect" module="information" ></bean>
+	<bean id="HrEducationEditBox" module="information" ></bean>
+	<bean id="HrEmployeeManageList" module="information" ></bean>
+	<bean id="HrEmployeeManageEdit" module="information" ></bean>
+	<bean id="HrExperienceEditBox" module="information" ></bean>
+	<bean id="HrWorkPerformanceEditBox" module="information" ></bean>
+	<bean id="HrLeaveManageList" module="leave" ></bean>
+	<bean id="HrLeaveManageEdit" module="leave" ></bean>
+	<bean id="HrSalaryManageList" module="salary" ></bean>
+	<bean id="HrSalaryManageEdit" module="salary" ></bean>
+	<bean id="HrValidDays" module="salary" ></bean>
+	<bean id="HrWorkOvertimeManageList" module="workovertime" ></bean>
+	<bean id="HrWorkOvertimeManageEdit" module="workovertime" ></bean>
+</Handlers>
