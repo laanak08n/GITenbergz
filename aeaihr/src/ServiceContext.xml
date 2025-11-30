@@ -38,9 +38,11 @@
       </map> 
     </property> 
   </bean>  
-  <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"> 
-    <property name="configLocation" value="classpath:SqlMapConfig.xml"/> 
-  </bean>  
+	<bean id="sqlMapClient"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocations"
+			value="classpath*:SqlMap*.xml" />
+	</bean>
   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
     <property name="dataSource" ref="dataSource"/> 
   </bean>  
@@ -97,233 +99,19 @@
   </bean>  
   <bean id="onlineCounterService" parent="transactionBase"> 
     <property name="target" ref="onlineCounterTarget"/> 
-  </bean>  
-  <bean id="systemLogQueryTarget" class="com.agileai.hr.bizmoduler.system.SystemLogQueryImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="syslog"/> 
-  </bean>  
-  <bean id="systemLogQuery" parent="transactionBase"> 
-    <property name="target" ref="systemLogQueryTarget"/> 
-  </bean>  
-  <bean id="securityGroupManageTarget" class="com.agileai.hr.bizmoduler.system.SecurityGroupManageImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="SecurityGroup8Associates"/>  
-    <property name="tableName" value="security_group"/>  
-    <property name="tabIdAndTableNameMapping"> 
-      <map> 
-        <entry key="SecurityUser"> 
-          <value>security_user</value> 
-        </entry> 
-      </map> 
-    </property>  
-    <property name="tabIdAndColFieldMapping"> 
-      <map> 
-        <entry key="SecurityUser"> 
-          <value>GRP_ID</value> 
-        </entry> 
-      </map> 
-    </property>  
-    <property name="tabIdAndTableModeMapping"> 
-      <map> 
-        <entry key="SecurityUser"> 
-          <value>Many2ManyAndRel</value> 
-        </entry> 
-      </map> 
-    </property> 
-  </bean>  
-  <bean id="securityGroupManageService" parent="transactionBase"> 
-    <property name="target" ref="securityGroupManageTarget"/> 
-  </bean>  
-  <bean id="securityRoleTreeManageTarget" class="com.agileai.hr.bizmoduler.system.SecurityRoleTreeManageImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="SecurityRole"/>  
-    <property name="tableName" value="security_role"/>  
-    <property name="uniqueField" value="ROLE_CODE"/> 
-  </bean>  
-  <bean id="securityRoleTreeManageService" parent="transactionBase"> 
-    <property name="target" ref="securityRoleTreeManageTarget"/> 
-  </bean>  
-  <bean id="securityUserQueryTarget" class="com.agileai.hr.bizmoduler.system.SecurityUserQueryImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="SecurityUserQuery"/> 
-  </bean>  
-  <bean id="securityUserQueryService" parent="transactionBase"> 
-    <property name="target" ref="securityUserQueryTarget"/> 
-  </bean>  
-  <bean id="securityGroupTreeSelectTarget" class="com.agileai.hr.bizmoduler.system.SecurityGroupTreeSelectImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="SecurityGroupTreeSelect"/> 
-  </bean>  
-  <bean id="securityGroupTreeSelectService" parent="transactionBase"> 
-    <property name="target" ref="securityGroupTreeSelectTarget"/> 
-  </bean>  
-  <bean id="securityGroupQueryTarget" class="com.agileai.hr.bizmoduler.system.SecurityGroupQueryImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="SecurityGroupQuery"/> 
-  </bean>  
-  <bean id="securityGroupQueryService" parent="transactionBase"> 
-    <property name="target" ref="securityGroupQueryTarget"/> 
-  </bean>  
-  <bean id="securityUserTreeSelectTarget" class="com.agileai.hr.bizmoduler.system.SecurityUserTreeSelectImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="SecurityUserTreeSelect"/> 
-  </bean>  
-  <bean id="securityUserTreeSelectService" parent="transactionBase"> 
-    <property name="target" ref="securityUserTreeSelectTarget"/> 
-  </bean>  
-  <bean id="securityAuthorizationConfigTarget" class="com.agileai.hr.bizmoduler.system.SecurityAuthorizationConfigImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="SecurityAuthorizationConfig"/> 
-  </bean>  
-  <bean id="securityAuthorizationConfigService" parent="transactionBase"> 
-    <property name="target" ref="securityAuthorizationConfigTarget"/> 
-  </bean>  
-  <bean id="securityRoleTreeSelectTarget" class="com.agileai.hr.bizmoduler.system.SecurityRoleTreeSelectImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="SecurityRoleTreeSelect"/> 
-  </bean>  
-  <bean id="securityRoleTreeSelectService" parent="transactionBase"> 
-    <property name="target" ref="securityRoleTreeSelectTarget"/> 
-  </bean>  
-  <bean id="functionTreeManageTarget" class="com.agileai.hr.bizmoduler.system.FunctionTreeManageImpl" parent="baseService"> 
+  </bean>
+  <bean id="functionTreeManageTarget" class="com.agileai.hr.cxmodule.FunctionTreeManageImpl" parent="baseService"> 
     <property name="sqlNameSpace" value="SysFunction"/>  
     <property name="tableName" value="sys_function"/> 
   </bean>  
   <bean id="functionTreeManageService" parent="transactionBase"> 
     <property name="target" ref="functionTreeManageTarget"/> 
-  </bean>  
-  <bean id="handlerManageTarget" class="com.agileai.hr.bizmoduler.system.HandlerManageImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="syshandler"/>  
-    <property name="tableName" value="sys_handler"/>  
-    <property name="subTableIdNameMapping"> 
-      <map> 
-        <entry key="SysOperation"> 
-          <value>sys_operation</value> 
-        </entry> 
-      </map> 
-    </property>  
-    <property name="subTableIdSortFieldMapping"> 
-      <map> 
-        <entry key="SysOperation"> 
-          <value>OPER_SORT</value> 
-        </entry> 
-      </map> 
-    </property> 
-  </bean>  
-  <bean id="handlerManageService" parent="transactionBase"> 
-    <property name="target" ref="handlerManageTarget"/> 
-  </bean>  
-  <bean id="wcmGeneralGroup8ContentManageTarget" class="com.agileai.hr.bizmoduler.system.WcmGeneralGroup8ContentManageImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="WcmGeneralGroup8Associates"/>  
-    <property name="tableName" value="wcm_general_group"/>  
-    <property name="tabIdAndTableNameMapping"> 
-      <map> 
-        <entry key="WcmGeneralResource"> 
-          <value>wcm_general_resource</value> 
-        </entry> 
-      </map> 
-    </property>  
-    <property name="tabIdAndColFieldMapping"> 
-      <map> 
-        <entry key="WcmGeneralResource"> 
-          <value>GRP_ID</value> 
-        </entry> 
-      </map> 
-    </property>  
-    <property name="tabIdAndTableModeMapping"> 
-      <map> 
-        <entry key="WcmGeneralResource"> 
-          <value>One2Many</value> 
-        </entry> 
-      </map> 
-    </property> 
-  </bean>  
-  <bean id="wcmGeneralGroup8ContentManageService" parent="transactionBase"> 
-    <property name="target" ref="wcmGeneralGroup8ContentManageTarget"/> 
-  </bean>  
-  <bean id="deptTreeSelectTarget" class="com.agileai.hr.bizmoduler.information.DeptTreeSelectImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="DeptTreeSelect"/> 
-  </bean>  
-  <bean id="deptTreeSelectService" parent="transactionBase"> 
-    <property name="target" ref="deptTreeSelectTarget"/> 
-  </bean>  
-  <bean id="hrEmployeeManageTarget" class="com.agileai.hr.bizmoduler.information.HrEmployeeManageImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="hremployee"/>  
-    <property name="tableName" value="hr_employee"/>  
-    <property name="subTableIdNameMapping"> 
-      <map> 
-        <entry key="HrEducation"> 
-          <value>hr_education</value> 
-        </entry>  
-        <entry key="HrExperience"> 
-          <value>hr_experience</value> 
-        </entry>  
-        <entry key="HrWorkPerformance"> 
-          <value>hr_work_performance</value> 
-        </entry> 
-      </map> 
-    </property>  
-    <property name="subTableIdSortFieldMapping"> 
-      <map> 
-        <entry key="HrEducation"> 
-          <value/> 
-        </entry>  
-        <entry key="HrExperience"> 
-          <value/> 
-        </entry>  
-        <entry key="HrWorkPerformance"> 
-          <value/> 
-        </entry> 
-      </map> 
-    </property> 
-  </bean>  
-  <bean id="hrEmployeeManageService" parent="transactionBase"> 
-    <property name="target" ref="hrEmployeeManageTarget"/> 
-  </bean>  
-  <bean id="hrAttendanceManageTarget" class="com.agileai.hr.bizmoduler.attendance.HrAttendanceManageImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="HrAttendance"/>  
-    <property name="tableName" value="hr_attendance"/> 
-  </bean>  
-  <bean id="hrAttendanceManageService" parent="transactionBase"> 
-    <property name="target" ref="hrAttendanceManageTarget"/> 
-  </bean>  
-  <bean id="hrWorkOvertimeManageTarget" class="com.agileai.hr.bizmoduler.workovertime.HrWorkOvertimeManageImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="HrWorkOvertime"/>  
-    <property name="tableName" value="hr_work_overtime"/> 
-  </bean>  
-  <bean id="hrWorkOvertimeManageService" parent="transactionBase"> 
-    <property name="target" ref="hrWorkOvertimeManageTarget"/> 
-  </bean>  
-  <bean id="hrLeaveManageTarget" class="com.agileai.hr.bizmoduler.leave.HrLeaveManageImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="HrLeave"/>  
-    <property name="tableName" value="hr_leave"/> 
-  </bean>  
-  <bean id="hrLeaveManageService" parent="transactionBase"> 
-    <property name="target" ref="hrLeaveManageTarget"/> 
-  </bean>  
-  <bean id="hrEvectionManageTarget" class="com.agileai.hr.bizmoduler.evection.HrEvectionManageImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="hrevection"/>  
-    <property name="tableName" value="hr_evection"/>  
-    <property name="subTableIdNameMapping"> 
-      <map> 
-        <entry key="HrExpenses"> 
-          <value>hr_expenses</value> 
-        </entry> 
-      </map> 
-    </property>  
-    <property name="subTableIdSortFieldMapping"> 
-      <map> 
-        <entry key="HrExpenses"> 
-          <value/> 
-        </entry> 
-      </map> 
-    </property> 
-  </bean>  
-  <bean id="hrEvectionManageService" parent="transactionBase"> 
-    <property name="target" ref="hrEvectionManageTarget"/> 
-  </bean>  
-  <bean id="hrSalaryManageTarget" class="com.agileai.hr.bizmoduler.salary.HrSalaryManageImpl" parent="baseService"> 
-    <property name="sqlNameSpace" value="HrSalary"/>  
-    <property name="tableName" value="hr_salary"/> 
-  </bean>  
-  <bean id="hrSalaryManageService" parent="transactionBase"> 
-    <property name="target" ref="hrSalaryManageTarget"/> 
-  </bean>  
-  <bean id="userListSelectTarget" class="com.agileai.hr.bizmoduler.evection.UserListSelectImpl" parent="baseService">
-    <property name="sqlNameSpace" value="UserListSelect"/>
   </bean>
-  <bean id="userListSelectService" parent="transactionBase">
-    <property name="target" ref="userListSelectTarget"/>
+  <bean id="securityAuthorizationConfigTarget" class="com.agileai.hr.cxmodule.SecurityAuthorizationConfigImpl" parent="baseService"> 
+    <property name="sqlNameSpace" value="SecurityAuthorizationConfig"/> 
+  </bean>  
+  <bean id="securityAuthorizationConfigService" parent="transactionBase"> 
+    <property name="target" ref="securityAuthorizationConfigTarget"/> 
   </bean>
 </beans>
+

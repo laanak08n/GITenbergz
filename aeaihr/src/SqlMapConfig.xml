@@ -3,28 +3,14 @@
 
 <sqlMapConfig> 
   <settings cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="true" errorTracingEnabled="true" maxRequests="32" maxSessions="10" maxTransactions="5" useStatementNamespaces="true"/>  
-  <sqlMap resource="sqlmap/SysFunction.xml"/>  
-  <sqlMap resource="sqlmap/SysHandler.xml"/>  
-  <sqlMap resource="sqlmap/Util.xml"/>  
-  <sqlMap resource="sqlmap/CodeList.xml"/>  
-  <sqlMap resource="sqlmap/CodeType.xml"/>  
-  <sqlMap resource="sqlmap/SysLog.xml"/>  
-  <sqlMap resource="sqlmap/SysOnlineCount.xml"/>  
-  <sqlMap resource="sqlmap/SecurityRole.xml"/>  
-  <sqlMap resource="sqlmap/SecurityGroup8Associates.xml"/>  
-  <sqlMap resource="sqlmap/SecurityUserQuery.xml"/>  
-  <sqlMap resource="sqlmap/SecurityGroupTreeSelect.xml"/>  
-  <sqlMap resource="sqlmap/SecurityGroupQuery.xml"/>  
-  <sqlMap resource="sqlmap/SecurityUserTreeSelect.xml"/>  
-  <sqlMap resource="sqlmap/SecurityRoleTreeSelect.xml"/>  
-  <sqlMap resource="sqlmap/SecurityAuthorizationConfig.xml"/>  
-  <sqlMap resource="sqlmap/WcmGeneralGroup8Associates.xml"/>  
-  <sqlMap resource="sqlmap/DeptTreeSelect.xml"/>  
-  <sqlMap resource="sqlmap/HrEmployee.xml"/>  
-  <sqlMap resource="sqlmap/HrAttendance.xml"/>  
-  <sqlMap resource="sqlmap/HrWorkOvertime.xml"/>  
-  <sqlMap resource="sqlmap/HrLeave.xml"/>  
-  <sqlMap resource="sqlmap/HrEvection.xml"/>  
-  <sqlMap resource="sqlmap/HrSalary.xml"/>  
-  <sqlMap resource="sqlmap/UserListSelect.xml"/>
+	<sqlMap resource="sqlmap/SysFunction.xml"/>
+	<sqlMap resource="sqlmap/SysHandler.xml"/>
+	<sqlMap resource="sqlmap/Util.xml"/>
+	<sqlMap resource="sqlmap/CodeList.xml"/>
+	<sqlMap resource="sqlmap/CodeType.xml"/>
+  	<sqlMap resource="sqlmap/SysLog.xml"/>
+  	<sqlMap resource="sqlmap/SysOnlineCount.xml"/>  	
+	<sqlMap resource="sqlmap/SecurityAuthorizationConfig.xml"/>
+	<sqlMap resource="sqlmap/SecurityGroup8Associates.xml"/>
+	<sqlMap resource="sqlmap/UserListSelect.xml"/>
 </sqlMapConfig>

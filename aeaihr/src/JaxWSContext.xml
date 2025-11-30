@@ -12,8 +12,6 @@ http://cxf.apache.org/simple http://cxf.apache.org/schemas/simple.xsd">
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
     <import resource="classpath:META-INF/cxf/cxf-extension-jms.xml" />	
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-	<import resource="classpath:ServiceContext.xml"/>
-	
 	<jaxws:server id="HelloWorld" serviceClass="com.agileai.hr.service.demo.HelloWorld"
 		address="/HelloWorld">
 		<jaxws:serviceBean>
