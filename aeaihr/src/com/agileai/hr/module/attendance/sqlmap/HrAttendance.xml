@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="HrAttendance">
+	<select id="findRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select a.ATD_ID,a.ATD_DATE,a.USER_ID,b.USER_NAME as
+		USER_ID_NAME,a.ATD_IN_TIME,a.ATD_OUT_TIME,a.ATD_IN_PLACE,a.ATD_OUT_PLACE
+		from hr_attendance a left join security_user b on a.USER_ID =
+		b.USER_ID
+		where 1=1
+		<isNotEmpty prepend=" " property="adtDate">
+			and ATD_DATE=#adtDate#
+		</isNotEmpty>
+		<isNotEmpty prepend=" " property="expression">
+			$expression$ order by ATD_OUT_TIME
+		</isNotEmpty>		
+		<isEmpty  prepend=" " property="expression">
+		order by ATD_IN_TIME
+		</isEmpty>
+	</select>
+	<select id="getRecord" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select a.ATD_ID,a.ATD_DATE,a.USER_ID,b.USER_NAME as
+		USER_ID_NAME,a.ATD_IN_TIME,a.ATD_OUT_TIME,a.ATD_IN_PLACE,a.ATD_OUT_PLACE
+		from hr_attendance a left join security_user b on a.USER_ID =
+		b.USER_ID
+		where 1=1
+		<isNotEmpty prepend="and " property="currentUser">
+			b.USER_ID=#currentUser#
+		</isNotEmpty>	
+		<isNotEmpty prepend="and " property="currentDate">
+			ATD_DATE=#currentDate#
+		</isNotEmpty>
+	</select>
+	<insert id="insertRecord" parameterClass="com.agileai.domain.DataParam">
+		insert into hr_attendance
+		(ATD_ID,ATD_DATE,USER_ID,ATD_IN_TIME,ATD_IN_PLACE)values
+		(#ATD_ID:CHAR#,#ATD_DATE:DATETIME#,#USER_ID:CHAR#,#ATD_IN_TIME:DATETIME#,#ATD_IN_PLACE:VARCHAR#)
+	</insert>
+	<update id="updateRecord" parameterClass="com.agileai.domain.DataParam">
+		update hr_attendance
+		set
+		ATD_OUT_TIME=#ATD_OUT_TIME:DATETIME#,ATD_OUT_PLACE=#ATD_OUT_PLACE:VARCHAR#
+		where ATD_ID=#ATD_ID#
+	</update>
+	<select id="attendanceStatisticsRecords" parameterClass="com.agileai.domain.DataParam"
+		resultClass="com.agileai.domain.DataRow">
+		select USER_NAME,COUNT(ATD_IN_TIME) as IN_NUM,COUNT(ATD_OUT_TIME) as OUT_NUM 
+		from hr_attendance a left join security_user b on a.USER_ID = b.USER_ID
+		where 1=1
+        and ATD_DATE &gt;= #sdate#
+		and ATD_DATE &lt;= #edate#
+		group by a.USER_ID
+	</select>	
+</sqlMap>
