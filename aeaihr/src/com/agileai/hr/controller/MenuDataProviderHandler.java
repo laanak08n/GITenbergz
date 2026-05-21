@@ -20,7 +20,7 @@ import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.domain.system.FuncMenu;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.bizmoduler.system.FunctionTreeManage;
+import com.agileai.hr.cxmodule.FunctionTreeManage;
 
 public class MenuDataProviderHandler extends BaseHandler{
 	

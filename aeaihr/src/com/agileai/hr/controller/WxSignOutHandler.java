@@ -10,7 +10,7 @@ import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.controller.core.SimpleHandler;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.bizmoduler.attendance.HrAttendanceManage;
+import com.agileai.hr.module.attendance.service.HrAttendanceManage;
 import com.agileai.util.DateUtil;
 import com.agileai.util.MapUtil;
 import com.agileai.util.StringUtil;

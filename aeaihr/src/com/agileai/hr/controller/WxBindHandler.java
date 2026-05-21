@@ -9,7 +9,7 @@ import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.bizmoduler.attendance.HrAttendanceManage;
+import com.agileai.hr.module.attendance.service.HrAttendanceManage;
 import com.agileai.util.CryptionUtil;
 import com.agileai.util.MapUtil;
 
