@@ -21,23 +21,9 @@
     <property name="maximumConnectionCount" value="50"/>  
     <property name="minimumConnectionCount" value="2"/> 
   </bean>  
-  <bean id="appConfig" class="com.agileai.common.AppConfig"> 
-    <property name="sections"> 
-      <map> 
-        <entry> 
-          <key> 
-            <value>GlobalConfig</value> 
-          </key>  
-          <list> 
-            <bean class="com.agileai.common.KeyValuePair"> 
-              <property name="key" value="SecurityKey"/>  
-              <property name="value" value="${dataSource.securityKey}"/> 
-            </bean> 
-          </list> 
-        </entry> 
-      </map> 
-    </property> 
-  </bean>  
+	<bean id="appConfig" class="com.agileai.hotweb.config.AppConfigFactoryBean"> 
+	   <property name="configFile" value="ConfigContext.xml"></property> 
+	</bean> 
 	<bean id="sqlMapClient"
 		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="configLocations"
