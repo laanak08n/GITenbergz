@@ -13,7 +13,7 @@
     <ServerAddress>localhost</ServerAddress>  
     <ServerPort>6060</ServerPort>  
     <ServerUserId>admin</ServerUserId>  
-    <ServerUserPwd>K6CG7IXQGv4=</ServerUserPwd> 
+    <ServerUserPwd>K6CG7IXQGv4=</ServerUserPwd> 	
   </ServerConfig>  
   <FuncTree> 
     <FuncList id="1427165423457" name="业务管理"> 
