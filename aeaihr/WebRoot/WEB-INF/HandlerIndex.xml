@@ -50,7 +50,7 @@
 	<bean id="HrEvectionManageList" module="evection" ></bean>
 	<bean id="HrEvectionManageEdit" module="evection" ></bean>
 	<bean id="HrExpensesEditBox" module="evection" ></bean>
-	<bean id="UserListSelectList" module="evection" ></bean>
+	<bean id="UserListSelectList" module="workovertime" ></bean>
 	<bean id="DeptTreeSelect" module="information" ></bean>
 	<bean id="HrEducationEditBox" module="information" ></bean>
 	<bean id="HrEmployeeManageList" module="information" ></bean>

@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.agileai.domain.DataParam;
+import com.agileai.domain.DataRow;
+import com.agileai.hotweb.bizmoduler.core.MasterSubService;
 import com.agileai.hotweb.controller.core.MasterSubEditMainHandler;
-import com.agileai.hr.cxmodule.FunctionTreeManage;
 import com.agileai.hotweb.domain.FormSelectFactory;
-import com.agileai.hr.module.system.service.HandlerManage;
+import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
+import com.agileai.hr.cxmodule.FunctionTreeManage;
+import com.agileai.hr.module.system.service.HandlerManage;
 
 public class HandlerManageEditHandler
         extends MasterSubEditMainHandler {
@@ -20,6 +23,29 @@ public class HandlerManageEditHandler
         this.baseTablePK = "HANLER_ID";
         this.defaultTabId = "SysOperation";
     }
+    
+	public ViewRenderer prepareDisplay(DataParam param) {
+		String operaType = param.get(OperaType.KEY);
+		if (isReqRecordOperaType(operaType)){
+			DataRow record = getService().getMasterRecord(param);
+			this.setAttributes(record);			
+		}
+		String currentSubTableId = param.get("currentSubTableId",defaultTabId);
+		if (!currentSubTableId.equals(MasterSubService.BASE_TABLE_ID)){
+			String subRecordsKey = currentSubTableId + "Records";
+			if (!this.getAttributesContainer().containsKey(subRecordsKey)){
+				List<DataRow> subRecords = getService().findSubRecords(currentSubTableId, param);
+				this.setAttribute(currentSubTableId+"Records", subRecords);
+			}
+		}
+		this.setAttribute("FUNC_ID", param.get("funcId"));
+		this.setAttribute("currentSubTableId", currentSubTableId);
+		this.setAttribute("currentSubTableIndex", getTabIndex(currentSubTableId));
+		String operateType = param.get(OperaType.KEY);
+		this.setOperaType(operateType);
+		processPageAttributes(param);
+		return new LocalRenderer(getPage());
+	}
 
     protected void processPageAttributes(DataParam param) {
         setAttribute("HANLER_TYPE",

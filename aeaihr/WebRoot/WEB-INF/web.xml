@@ -71,7 +71,7 @@
 		</init-param>
 		<init-param>
 			<param-name>publicHandlerIds</param-name>
-			<param-value>WxSignIn,WxSignOut,WxBind,MenuDataProvider</param-value>
+			<param-value>WxSignIn,WxSignOut,WxBind,MenuDataProvider,ModuleCycle</param-value>
 		</init-param>
 		<!-- -->
 		<init-param>

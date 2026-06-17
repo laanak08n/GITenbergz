@@ -3,4 +3,5 @@
 <beans> 
   <bean id="HrWorkOvertimeManageList" class="com.agileai.hr.module.workovertime.handler.HrWorkOvertimeManageListHandler" page="workovertime/HrWorkOvertimeManageList.jsp"/>  
   <bean id="HrWorkOvertimeManageEdit" class="com.agileai.hr.module.workovertime.handler.HrWorkOvertimeManageEditHandler" page="workovertime/HrWorkOvertimeManageEdit.jsp"/>
+  <bean id="UserListSelectList" class="com.agileai.hr.module.workovertime.handler.UserListSelectListHandler" page="evection/UserListSelectList.jsp"/>
 </beans>
