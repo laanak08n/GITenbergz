@@ -2,6 +2,7 @@
 <%@page import="javax.ccpp.SetAttribute"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://www.ecside.org" prefix="ec"%>
+<%@ taglib uri="http://www.agileai.com" prefix="aeai"%>
 <jsp:useBean id="pageBean" scope="request" class="com.agileai.hotweb.domain.PageBean"/>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -31,10 +32,10 @@ function exportFile(fileType){
 <div id="__ToolBar__">
 <table class="toolTable" border="0" cellpadding="0" cellspacing="1">
 <tr>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="A" align="center" onclick="showEditBox('insertRequest')"><input id="singInImgBtn" value="&nbsp;" title="新增" type="button" class="createImgBtn" />签到</td>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="E" align="center" onclick="showEditBox('updateRequest')"><input id="singOutImgBtn" value="&nbsp;" title="编辑" type="button" class="editImgBtn" />签退</td>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="e" align="center" onclick="exportFile('word')"><input value="&nbsp;" title="导出WORD" type="button" class="wordImgBtn" style="margin-right:" />导出WORD</td>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="p" align="center" onclick="exportFile('pdf')"><input value="&nbsp;" title="导出PDF" type="button" class="pdfImgBtn" style="margin-right:" />导出PDF</td>
+   <aeai:previlege code="signIn"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="A" align="center" onclick="showEditBox('insertRequest')"><input id="singInImgBtn" value="&nbsp;" title="签到" type="button" class="createImgBtn" />签到</td></aeai:previlege>
+   <aeai:previlege code="signOut"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="E" align="center" onclick="showEditBox('updateRequest')"><input id="singOutImgBtn" value="&nbsp;" title="签退" type="button" class="editImgBtn" />签退</td></aeai:previlege>
+   <aeai:previlege code="exportWord"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="e" align="center" onclick="exportFile('word')"><input value="&nbsp;" title="导出WORD" type="button" class="wordImgBtn" style="margin-right:" />导出WORD</td></aeai:previlege>
+   <aeai:previlege code="exportPdf"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="p" align="center" onclick="exportFile('pdf')"><input value="&nbsp;" title="导出PDF" type="button" class="pdfImgBtn" style="margin-right:" />导出PDF</td></aeai:previlege>
 </tr>
 </table>
 </div>

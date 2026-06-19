@@ -32,11 +32,9 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 		String operaType = param.get(OperaType.KEY);
 		if ("insert".equals(operaType)) {
 			setAttribute("doDetail", true);
-			setAttribute("doApprove", false);
 			setAttribute("onlyRead", "");
 		}
 		if ("update".equals(operaType)) {
-			setAttribute("doApprove", false);
 			setAttribute("doDetail", true);
 			setAttribute("onlyRead", "readonly");
 			if (isReqRecordOperaType(operaType)) {
@@ -56,48 +54,29 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 		}
 		if ("approve".equals(operaType)) {
 			setAttribute("isApprove", true);
-			setAttribute("doDetail", false);
 			setAttribute("doApprove", true);
 			if (!isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getMasterRecord(param);
 				this.setAttributes(record);
 			}
-		} else {
-			setAttribute("isApprove", false);
 		}
 		if ("detail".equals(operaType)) {
 			setAttribute("onlyRead", "readonly");
-			User user = (User) this.getUser();
-			PrivilegeHelper privilegeHelper = new PrivilegeHelper(user);
-			if (privilegeHelper.isHRMASTER()) {
-				setAttribute("doDetail", true);
-				setAttribute("doApprove", false);
-			} else {
-				setAttribute("doApprove", false);
-			}
 			if (isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getMasterRecord(param);
-				if (record != null) {
-					if (!privilegeHelper.isHRMASTER()) {
-						setAttribute("onlyRead", "readonly");
-						if (record.get("EMP_STATE").equals("drafe")) {
-							setAttribute("doDetail", true);
-							setAttribute("doApprove", true);
-						}
-					} else if (privilegeHelper.isHRMASTER()) {
-						setAttribute("onlyRead", "");
-						setAttribute("codeReadonly", "codereadonly");
-						setAttribute("isappover","apporver");
-						if(record.get("EMP_STATE").equals("drafe")){
-						setAttribute("doDetail", true);
-						setAttribute("doApprove", true);
-						}else if(record.get("EMP_STATE").equals("approved")){
-							setAttribute("doDetail", false);
-							setAttribute("doApprove", false);
-							setAttribute("doRevokeApprove", true);
-						} 
-					} 
+				if (record.get("EMP_STATE").equals("drafe")) {
+					setAttribute("doDetail", true);
+					setAttribute("doApprove", true);
 				}
+				if(record.get("EMP_STATE").equals("drafe")){
+				setAttribute("doDetail", true);
+				setAttribute("doApprove", true);
+				}
+				if(record.get("EMP_STATE").equals("approved")){
+					setAttribute("doDetail", false);
+					setAttribute("doApprove", false);
+					setAttribute("doRevokeApprove", true);
+				} 
 				this.setAttributes(record);
 			}
 		}

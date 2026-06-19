@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <jsp:useBean id="pageBean" scope="request"
 	class="com.agileai.hotweb.domain.PageBean" />
+<%@ taglib uri="http://www.agileai.com" prefix="aeai"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -19,13 +20,13 @@
 		<div id="__ToolBar__">
 			<table border="0" cellpadding="0" cellspacing="1">
 				<tr>
-					<td onmouseover="onMover(this);" onmouseout="onMout(this);"
+					<aeai:previlege code="confirm"><td onmouseover="onMover(this);" onmouseout="onMout(this);"
 						class="bartdx" align="center"
 						onclick="doSubmit({actionType:'save',target:'_parent'})"><input value="&nbsp;"
-						type="button" class="saveImgBtn" id="saveImgBtn" title="确认" />确认</td>
-					<td onmouseover="onMover(this);" onmouseout="onMout(this);"
+						type="button" class="saveImgBtn" id="saveImgBtn" title="确认" />确认</td></aeai:previlege>
+					<aeai:previlege code="close"><td onmouseover="onMover(this);" onmouseout="onMout(this);"
 						class="bartdx" align="center" onclick="parent.PopupBox.closeCurrent()">
-						<input value="&nbsp;" type="button" class="closeImgBtn" title="关闭" />关闭</td>
+						<input value="&nbsp;" type="button" class="closeImgBtn" title="关闭" />关闭</td></aeai:previlege>
 				</tr>
 			</table>
 		</div>
