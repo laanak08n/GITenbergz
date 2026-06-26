@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://www.agileai.com" prefix="aeai"%>
 <jsp:useBean id="pageBean" scope="request" class="com.agileai.hotweb.domain.PageBean"/>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -50,19 +51,19 @@ function saveMasterRecord(){
 <table border="0" cellpadding="0" cellspacing="1">
 <tr>
 <%if(pageBean.getBoolValue("doEdit")){%>
-  <td  align="center"class="bartdx"onclick="saveMasterRecord()" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;" type="button" class="saveImgBtn" id="savedrafeImgBtn" title="保存" />保存</td>
+  <aeai:previlege code="save"><td  align="center"class="bartdx"onclick="saveMasterRecord()" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;" type="button" class="saveImgBtn" id="savedrafeImgBtn" title="保存" />保存</td></aeai:previlege>
 <%}%>
 <%if(pageBean.getBoolValue("doSubmit")){%>
-  <td  align="center"class="bartdx"onclick="stateSubmit();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="submitImgBtn" id="submitImgBtn" title="提交" />提交</td>
+  <aeai:previlege code="submit"><td  align="center"class="bartdx"onclick="stateSubmit();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="submitImgBtn" id="submitImgBtn" title="提交" />提交</td></aeai:previlege>
 <%} %>
 <%if(pageBean.getBoolValue("doApprove")){ %>
-  <td  align="center"class="bartdx"onclick="stateDrafe();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="reSubmittedImgBtn" id="drafeImgBtn" title="反提交" />反提交</td>
-  <td  align="center"class="bartdx"onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="approveImgBtn" id="approveImgBtn" title="核准" />核准</td>
+  <aeai:previlege code="resubmit"><td  align="center"class="bartdx"onclick="stateDrafe();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="reSubmittedImgBtn" id="drafeImgBtn" title="反提交" />反提交</td></aeai:previlege>
+  <aeai:previlege code="approve"><td  align="center"class="bartdx"onclick="stateApprove();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="approveImgBtn" id="approveImgBtn" title="核准" />核准</td></aeai:previlege>
 <%} %>
 <%if(pageBean.getBoolValue("doRevokeApprove")){ %>
-   <td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>
+   <aeai:previlege code="revokeApproval"><td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td></aeai:previlege>
 <%}%>
-  <td  align="center"class="bartdx"onclick="goToBack();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="backImgBtn" title="返回" />返回</td>
+  <aeai:previlege code="back"><td  align="center"class="bartdx"onclick="goToBack();" onmouseover="onMover(this);" onmouseout="onMout(this);"><input value="&nbsp;"type="button" class="backImgBtn" title="返回" />返回</td></aeai:previlege>
 </tr>
 </table>
 </div>

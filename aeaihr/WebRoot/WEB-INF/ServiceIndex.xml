@@ -31,11 +31,10 @@
 	<bean id="handlerManageService" module="system"></bean>
 	
 	<bean id="hrAttendanceManageService" module="attendance"></bean>
-	<bean id="hrEvectionManageService" module="evection"></bean>
-	<bean id="userListSelectService" module="workovertime"></bean>
 	<bean id="deptTreeSelectService" module="information"></bean>
 	<bean id="hrEmployeeManageService" module="information"></bean>
 	<bean id="hrLeaveManageService" module="leave"></bean>
 	<bean id="hrSalaryManageService" module="salary"></bean>
 	<bean id="hrWorkOvertimeManageService" module="workovertime"></bean>
+	<bean id="userListSelectService" module="workovertime"></bean>
 </Services>

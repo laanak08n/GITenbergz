@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://www.ecside.org" prefix="ec"%>
 <jsp:useBean id="pageBean" scope="request" class="com.agileai.hotweb.domain.PageBean"/>
+<%@ taglib uri="http://www.agileai.com" prefix="aeai"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -70,8 +71,8 @@ function fillNames()
   </tr>
   <tr>
     <td align="center">
-    <input class="formbutton" type="button" name="Button23" value="确定" onclick="doSelectRequest()"/>&nbsp; &nbsp;
-    <input class="formbutton" type="button" name="Button22" value="关闭" onclick="javascript:parent.PopupBox.closeCurrent();"/></td>
+    <aeai:previlege code="confirm"><input class="formbutton" type="button" name="Button23" value="确定" onclick="doSelectRequest()"/></aeai:previlege>&nbsp; &nbsp;
+    <aeai:previlege code="close"><input class="formbutton" type="button" name="Button22" value="关闭" onclick="javascript:parent.PopupBox.closeCurrent();"/></aeai:previlege></td>
   </tr>
 </table>
 <input type="hidden" name="actionType" id="actionType" />

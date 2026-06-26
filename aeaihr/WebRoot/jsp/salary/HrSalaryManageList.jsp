@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://www.ecside.org" prefix="ec"%>
+<%@ taglib uri="http://www.agileai.com" prefix="aeai"%>
 <jsp:useBean id="pageBean" scope="request" class="com.agileai.hotweb.domain.PageBean"/>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -41,16 +42,15 @@ function revokeApproval(){
 	%>
 <%if(pageBean.getBoolValue("canGather")){
 	%>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="A" align="center" onclick="gatherData()" <%if(!pageBean.getBoolValue("validDays")){
-	%>hidden="hidden"<%}%> ><input id="gatherImgBtn" value="&nbsp;" title="汇总" type="button"  class="createImgBtn" />汇总</td>
+   <aeai:previlege code="summary"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="A" align="center" onclick="gatherData()" <%if(!pageBean.getBoolValue("validDays")){%>hidden="hidden"<%}%> ><input id="gatherImgBtn" value="&nbsp;" title="汇总" type="button"  class="createImgBtn" />汇总</td></aeai:previlege>
    <%}%>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="E" align="center" onclick="doRequest('updateRequest')"><input value="&nbsp;" title="编辑" type="button" id="edit" class="editImgBtn"  />编辑</td>
-  <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="R" align="center" onclick="doRequest('approveRequest')"><input value="&nbsp;" title="核准" type="button" id="approve" class="approveImgBtn"   />核准</td>
-  <td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td>  
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="setValidDays()" ><input value="&nbsp;" title="设置有效天数" type="button" class="editImgBtn" />设置有效天数</td>
-    <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input id="deleteImgBtn" value="&nbsp;" title="删除"  type="button"  class="delImgBtn" />删除</td>  
+   <aeai:previlege code="edit"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="E" align="center" onclick="doRequest('updateRequest')"><input value="&nbsp;" title="编辑" type="button" id="edit" class="editImgBtn"  />编辑</td></aeai:previlege>
+   <aeai:previlege code="approve"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="R" align="center" onclick="doRequest('approveRequest')"><input value="&nbsp;" title="核准" type="button" id="approve" class="approveImgBtn"   />核准</td></aeai:previlege>
+   <aeai:previlege code="revokeApproval"><td  align="center"class="bartdx" onclick="revokeApproval()" onmouseover="onMover(this);" onmouseout="onMout(this);"  ><input value="&nbsp;"type="button" class="revokeApproveImgBtn" id="revokeApproval" title="反核准" />反核准</td></aeai:previlege>
+   <aeai:previlege code="validDays"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" align="center" onclick="setValidDays()" ><input value="&nbsp;" title="设置有效天数" type="button" class="editImgBtn" />设置有效天数</td></aeai:previlege>
+   <aeai:previlege code="delete"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="D" align="center" onclick="doDelete($('#'+rsIdTagId).val());"><input id="deleteImgBtn" value="&nbsp;" title="删除"  type="button"  class="delImgBtn" />删除</td></aeai:previlege>
    <%}%>
-   <td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td>    
+   <aeai:previlege code="detail"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doRequest('viewDetail')"><input value="&nbsp;" title="查看" type="button" class="detailImgBtn" />查看</td></aeai:previlege>    
 </tr>
 </table>
 </div>

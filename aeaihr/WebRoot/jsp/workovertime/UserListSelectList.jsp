@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://www.ecside.org" prefix="ec"%>
+<%@ taglib uri="http://www.agileai.com" prefix="aeai"%>
 <jsp:useBean id="pageBean" scope="request" class="com.agileai.hotweb.domain.PageBean"/>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -32,8 +33,8 @@ function doSelectRequest(){
 <div id="__ToolBar__">
 <table border="0" cellpadding="0" cellspacing="1">
 <tr>
-	<td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doSelectRequest()"><input value="&nbsp;" type="button" class="saveImgBtn" title="选择" />选择</td>
-	<td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="B" align="center" onclick="javascript:parent.PopupBox.closeCurrent();"><input value="&nbsp;" type="button" class="closeImgBtn" title="关闭" />关闭</td>        
+	<aeai:previlege code="choice"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doSelectRequest()"><input value="&nbsp;" type="button" class="saveImgBtn" title="选择" />选择</td></aeai:previlege>
+	<aeai:previlege code="close"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="B" align="center" onclick="javascript:parent.PopupBox.closeCurrent();"><input value="&nbsp;" type="button" class="closeImgBtn" title="关闭" />关闭</td></aeai:previlege>        
 </tr>
 </table>
 </div>

@@ -47,10 +47,6 @@
 
 	<bean id="HrAttendanceManageList" module="attendance" ></bean>
 	<bean id="HrAttendanceManageEdit" module="attendance" ></bean>
-	<bean id="HrEvectionManageList" module="evection" ></bean>
-	<bean id="HrEvectionManageEdit" module="evection" ></bean>
-	<bean id="HrExpensesEditBox" module="evection" ></bean>
-	<bean id="UserListSelectList" module="workovertime" ></bean>
 	<bean id="DeptTreeSelect" module="information" ></bean>
 	<bean id="HrEducationEditBox" module="information" ></bean>
 	<bean id="HrEmployeeManageList" module="information" ></bean>
@@ -64,4 +60,5 @@
 	<bean id="HrValidDays" module="salary" ></bean>
 	<bean id="HrWorkOvertimeManageList" module="workovertime" ></bean>
 	<bean id="HrWorkOvertimeManageEdit" module="workovertime" ></bean>
+	<bean id="UserListSelectList" module="workovertime" ></bean>
 </Handlers>
