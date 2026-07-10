@@ -11,12 +11,10 @@ import com.agileai.hotweb.annotation.PageAction;
 import com.agileai.hotweb.bizmoduler.core.MasterSubService;
 import com.agileai.hotweb.controller.core.MasterSubEditMainHandler;
 import com.agileai.hotweb.domain.FormSelectFactory;
-import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.common.PrivilegeHelper;
 import com.agileai.hr.module.information.service.HrEmployeeManage;
 
 public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
@@ -39,16 +37,6 @@ public class HrEmployeeManageEditHandler extends MasterSubEditMainHandler {
 			setAttribute("onlyRead", "readonly");
 			if (isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getMasterRecord(param);
-				if(record!=null){
-				User user = (User) this.getUser();
-				PrivilegeHelper privilegeHelper = new PrivilegeHelper(user);
-				if(privilegeHelper.isHRMASTER()){
-					setAttribute("onlyRead", "");
-					setAttribute("codeReadonly", "codereadonly");
-				}else{
-					setAttribute("onlyRead", "readonly");
-				}
-				}
 				this.setAttributes(record);
 			}
 		}

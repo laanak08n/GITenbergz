@@ -12,7 +12,6 @@ import com.agileai.hotweb.renders.AjaxRenderer;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.common.PrivilegeHelper;
 import com.agileai.hr.module.workovertime.service.HrWorkOvertimeManage;
 import com.agileai.util.DateUtil;
 
@@ -74,36 +73,19 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 			setAttribute("doRevokeApprove", true);
 		}
 		if("detail".equals(operaType)){
-			PrivilegeHelper privilegeHelper = new PrivilegeHelper(user);
-			setAttribute("doEdit", true);
-			setAttribute("doApprove",false);
 			if (isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getNowRecord(param);
 				if(record!=null){
-					if(!privilegeHelper.isApprove()&&record.get("STATE").equals("drafe")){
-						setAttribute("doEdit", true);
-						setAttribute("doApprove",false);
-						setAttribute("doSignIn", false);
-						setAttribute("doSubmit", true);
-					}else if(!privilegeHelper.isApprove()&&record.get("STATE").equals("submitted")){
-						setAttribute("doEdit", false);
-						setAttribute("doApprove",false);
-						setAttribute("doSignIn", false);
-					}else if(!privilegeHelper.isApprove()&&record.get("STATE").equals("approved")){
-						setAttribute("doEdit", false);
-						setAttribute("doApprove",false);
+					if(record.get("STATE").equals("approved")){
 						setAttribute("doSignIn", true);
-					}else if(privilegeHelper.isApprove()&&record.get("STATE").equals("drafe")){
-						setAttribute("doEdit", false);
-						setAttribute("doApprove",false);
-						setAttribute("doSignIn", false);
-						setAttribute("doSubmit", true);
+					}
+					if(record.get("STATE").equals("drafe")){
 						if(user.getUserId().equals(record.get("USER_ID"))){
 							setAttribute("doEdit", true);
+							setAttribute("doSubmit", true);
 						}
 					}
-					else if(privilegeHelper.isApprove()&&record.get("STATE").equals("submitted")){
-						setAttribute("doEdit", false);
+					if(record.get("STATE").equals("submitted")){
 						setAttribute("doApprove",true);
 						setAttribute("doSignIn", true);
 						DataRow records = getService().getNowRecord(param);
@@ -119,9 +101,8 @@ public class HrWorkOvertimeManageEditHandler extends StandardEditHandler {
 									DateUtil.YYMMDDHHMI_HORIZONTAL, new Date());
 							this.setAttribute("WOT_APP_TIME", date);
 						}
-					}else if(privilegeHelper.isApprove()&&record.get("STATE").equals("approved")){
-						setAttribute("doEdit", false);
-						setAttribute("doApprove",false);
+					}
+					if(record.get("STATE").equals("approved")){
 						setAttribute("doSignIn", true);
 						setAttribute("doRevokeApprove", true);
 					}
