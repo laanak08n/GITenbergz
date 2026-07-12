@@ -11,7 +11,6 @@ import com.agileai.hotweb.domain.core.User;
 import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.RedirectRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
-import com.agileai.hr.common.PrivilegeHelper;
 import com.agileai.hr.module.leave.service.HrLeaveManage;
 import com.agileai.util.DateUtil;
 
@@ -69,36 +68,19 @@ public class HrLeaveManageEditHandler
 			setAttribute("isApprove", false);
 		}
 		if("detail".equals(operaType)){
-		PrivilegeHelper privilegeHelper = new PrivilegeHelper(user);
-			setAttribute("doInsertEdit", true);
-			setAttribute("doApprove",true);
 			if (isReqRecordOperaType(operaType)) {
 				DataRow record = getService().getNowRecord(param);
 				if(record!=null){
-					if(!privilegeHelper.isApprove()&&record.get("STATE").equals("drafe")){
-						setAttribute("doInsertEdit", true);
-						setAttribute("doApprove",false);
-						setAttribute("doSignIn", false);
-						setAttribute("doSubmit", true);
-					}else if(!privilegeHelper.isApprove()&&record.get("STATE").equals("submitted")){
-						setAttribute("doInsertEdit", false);
-						setAttribute("doApprove",false);
-						setAttribute("doSignIn", false);
-					}else if(!privilegeHelper.isApprove()&&record.get("STATE").equals("approved")){
-						setAttribute("doInsertEdit", false);
-						setAttribute("doApprove",false);
+					if(record.get("STATE").equals("approved")){
 						setAttribute("doSignIn", true);
-					}else if(privilegeHelper.isApprove()&&record.get("STATE").equals("drafe")){
-						setAttribute("doInsertEdit", false);
-						setAttribute("doApprove",false);
-						setAttribute("doSignIn", false);
-						setAttribute("doSubmit", true);
+					}
+					if(record.get("STATE").equals("drafe")){
 						if(user.getUserId().equals(record.get("USER_ID"))){
+							setAttribute("doSubmit", true);
 							setAttribute("doInsertEdit", true);
 						}
 					}
-					else if(privilegeHelper.isApprove()&&record.get("STATE").equals("submitted")){
-						setAttribute("doInsertEdit", false);
+					if(record.get("STATE").equals("submitted")){
 						setAttribute("doApprove",true);
 						setAttribute("doSignIn", true);
 						DataRow records = getService().getNowRecord(param);
@@ -114,9 +96,8 @@ public class HrLeaveManageEditHandler
 									DateUtil.YYMMDDHHMI_HORIZONTAL, new Date());
 							this.setAttribute("LEA_APP_TIME", date);
 						}
-					}else if(privilegeHelper.isApprove()&&record.get("STATE").equals("approved")){
-						setAttribute("doInsertEdit", false);
-						setAttribute("doApprove",false);
+					}
+					if(record.get("STATE").equals("approved")){
 						setAttribute("doSignIn", true);
 					}
 				}
