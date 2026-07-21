@@ -13,6 +13,10 @@
 	           <bean class="com.agileai.common.KeyValuePair"> 
 	             <property name="key" value="SecurityKey"/>  
 	             <property name="value" value="${dataSource.securityKey}"/> 
+	           </bean>
+		       <bean class="com.agileai.common.KeyValuePair"> 
+	             <property name="key" value="MenuURLPrefix"/>  
+	             <property name="value" value="http://localhost:6060/aeaihr/"/> 
 	           </bean> 
 	         </list> 
 	       </entry> 
