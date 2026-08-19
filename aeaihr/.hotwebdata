@@ -13,22 +13,31 @@
     <ServerAddress>localhost</ServerAddress>  
     <ServerPort>6060</ServerPort>  
     <ServerUserId>admin</ServerUserId>  
-    <ServerUserPwd>K6CG7IXQGv4=</ServerUserPwd> 	
+    <ServerUserPwd>K6CG7IXQGv4=</ServerUserPwd> 
   </ServerConfig>  
-  <FuncTree> 
-    <FuncList id="1427165423457" name="业务管理"> 
-      <FuncNode id="1427165444236" name="基本信息" subPkg="information" type="mastersubmodel" typeName="主从表操作功能模型"/>  
-      <FuncNode id="1427245348163" name="部门选择" subPkg="information" type="treefillmodel" typeName="树形选择功能模型"/>  
-      <FuncNode id="1427347928220" name="考勤系统" subPkg="attendance" type="standard" typeName="单表操作功能模型"/>  
-      <FuncNode id="1427856370027" name="加班申请" subPkg="workovertime" type="standard" typeName="单表操作功能模型"/>  
-      <FuncNode id="1427859854345" name="加班人员查询选择" subPkg="workovertime" type="pickfillmodel" typeName="列表选择功能模型"/>  
-      <FuncNode id="1428045206670" name="请假申请" subPkg="leave" type="standard" typeName="单表操作功能模型"/>  
-      <FuncNode id="1428048635892" name="请假人员查询选择" subPkg="leave" type="pickfillmodel" typeName="列表选择功能模型"/>  
-      <FuncNode id="1427419026005" name="出差信息" subPkg="evection" type="mastersubmodel" typeName="主从表操作功能模型"/>  
-      <FuncNode id="1429175423593" name="出差人员查询选择" subPkg="evection" type="pickfillmodel" typeName="列表选择功能模型"/>  
-      <FuncNode id="1430043330762" name="微信签到" subPkg="weixin" type="simplest" typeName="基础功能模型"/>  
-      <FuncNode id="1430043390460" name="微信签退" subPkg="weixin" type="simplest" typeName="基础功能模型"/>  
-      <FuncNode id="1430104984341" name="绑定微信" subPkg="weixin" type="simplest" typeName="基础功能模型"/> 
-    </FuncList> 
-  </FuncTree> 
+  <FuncTree>
+    <FuncList id="1427165423457" name="基本信息">
+      <FuncNode id="1427165444236" name="基本信息" subPkg="information" type="mastersubmodel" typeName="主从表操作功能模型"/>
+      <FuncNode id="1427245348163" name="部门选择" subPkg="information" type="treefillmodel" typeName="树形选择功能模型"/>
+    </FuncList>
+    <FuncList id="1427165423458" name="考勤管理">
+      <FuncNode id="1427347928220" name="考勤系统" subPkg="attendance" type="standard" typeName="单表操作功能模型"/>
+    </FuncList>
+    <FuncList id="1427165423413" name="加班申请">
+      <FuncNode id="1427856370027" name="加班申请" subPkg="workovertime" type="standard" typeName="单表操作功能模型"/>
+      <FuncNode id="1427859854345" name="加班人员查询选择" subPkg="workovertime" type="pickfillmodel" typeName="列表选择功能模型"/>
+    </FuncList>
+    <FuncList id="1427165423412" name="请假申请">
+      <FuncNode id="1428045206670" name="请假申请" subPkg="leave" type="standard" typeName="单表操作功能模型"/>
+      <FuncNode id="1428048635892" name="请假人员查询选择" subPkg="leave" type="pickfillmodel" typeName="列表选择功能模型"/>
+    </FuncList>
+    <FuncList id="1427165423412" name="薪资管理">
+      <FuncNode id="1428045206671" name="薪资管理" subPkg="salary" type="standard" typeName="单表操作功能模型"/>
+    </FuncList>
+    <FuncList id="1427165423132" name="微信">
+      <FuncNode id="1430043330762" name="微信签到" subPkg="weixin" type="simplest" typeName="基础功能模型"/>
+      <FuncNode id="1430043390460" name="微信签退" subPkg="weixin" type="simplest" typeName="基础功能模型"/>
+      <FuncNode id="1430104984341" name="绑定微信" subPkg="weixin" type="simplest" typeName="基础功能模型"/>
+    </FuncList>
+  </FuncTree>
 </HotwebModule>
