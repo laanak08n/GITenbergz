@@ -32,7 +32,7 @@
       <FuncNode id="1428048635892" name="请假人员查询选择" subPkg="leave" type="pickfillmodel" typeName="列表选择功能模型"/>
     </FuncList>
     <FuncList id="1427165423412" name="薪资管理">
-      <FuncNode id="1428045206671" name="薪资管理" subPkg="salary" type="standard" typeName="单表操作功能模型"/>
+      <FuncNode id="1428377359231" name="薪资管理" subPkg="salary" type="standard" typeName="单表操作功能模型"/>
     </FuncList>
     <FuncList id="1427165423132" name="微信">
       <FuncNode id="1430043330762" name="微信签到" subPkg="weixin" type="simplest" typeName="基础功能模型"/>
