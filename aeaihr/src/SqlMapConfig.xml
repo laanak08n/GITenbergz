@@ -13,4 +13,5 @@
 	<sqlMap resource="sqlmap/SecurityAuthorizationConfig.xml"/>
 	<sqlMap resource="sqlmap/SecurityGroup8Associates.xml"/>
 	<sqlMap resource="sqlmap/UserListSelect.xml"/>
+	<sqlMap resource="sqlmap/SecurityUserQuery.xml"/>
 </sqlMapConfig>

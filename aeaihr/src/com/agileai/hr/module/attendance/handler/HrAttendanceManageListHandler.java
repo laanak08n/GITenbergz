@@ -14,7 +14,7 @@ import com.agileai.hotweb.renders.LocalRenderer;
 import com.agileai.hotweb.renders.NullRenderer;
 import com.agileai.hotweb.renders.ViewRenderer;
 import com.agileai.hr.common.ExportFileHelper;
-import com.agileai.hr.module.attendance.service.HrAttendanceManage;
+import com.agileai.hr.cxmodule.HrAttendanceManage;
 import com.agileai.util.DateUtil;
 
 public class HrAttendanceManageListHandler extends StandardListHandler {
