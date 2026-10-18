@@ -83,7 +83,7 @@ height="390px"
 	<ec:column width="100" property="EMP_BIRTHDAY" title="出生日期" cell="date" format="yyyy-MM-dd" />
 	<ec:column width="100" property="EMP_TEL" title="电话"   />
 	<ec:column width="100" property="EMP_EMAIL" title="邮箱"   />
-	<ec:column width="100" property="EMP_NOW_DEPT" title="部门"   />
+	<ec:column width="100" property="EMP_NOW_DEPT_NAME" title="部门"   />
 	<ec:column width="100" property="EMP_NOW_JOB" title="岗位"   />
 	<ec:column width="100" property="EMP_EDUCATION" title="学历"   mappingItem="EMP_EDUCATION"/>
 	<ec:column width="100" property="EMP_STATE" title="状态" mappingItem="EMP_STATE"/>

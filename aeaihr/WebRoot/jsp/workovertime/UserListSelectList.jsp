@@ -33,8 +33,8 @@ function doSelectRequest(){
 <div id="__ToolBar__">
 <table border="0" cellpadding="0" cellspacing="1">
 <tr>
-	<aeai:previlege code="choice"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doSelectRequest()"><input value="&nbsp;" type="button" class="saveImgBtn" title="选择" />选择</td></aeai:previlege>
-	<aeai:previlege code="close"><td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="B" align="center" onclick="javascript:parent.PopupBox.closeCurrent();"><input value="&nbsp;" type="button" class="closeImgBtn" title="关闭" />关闭</td></aeai:previlege>        
+	<td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="V" align="center" onclick="doSelectRequest()"><input value="&nbsp;" type="button" class="saveImgBtn" title="选择" />选择</td>
+	<td onmouseover="onMover(this);" onmouseout="onMout(this);" class="bartdx" hotKey="B" align="center" onclick="javascript:parent.PopupBox.closeCurrent();"><input value="&nbsp;" type="button" class="closeImgBtn" title="关闭" />关闭</td>        
 </tr>
 </table>
 </div>

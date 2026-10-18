@@ -26,7 +26,7 @@ function openGrpIdBox(){
 	if (!grpIdBox){
 		grpIdBox = new PopupBox('grpIdBox','请选择部门',{size:'normal',width:'300',top:'2px'});
 	}
-	var url = 'index?'+handlerId+'&targetId=GRP_ID&targetName=EMP_NOW_DEPT';
+	var url = 'index?'+handlerId+'&targetId=EMP_NOW_DEPT&targetName=EMP_NOW_DEPT_NAME';
 	grpIdBox.sendRequest(url);
 }
 
@@ -227,10 +227,9 @@ function revokeApproval(){
 </tr>
 <tr>
 	<th width="100" nowrap>部门</th>
-	<td><input id="EMP_NOW_DEPT" name="EMP_NOW_DEPT" type="text" value="<%=pageBean.inputValue("EMP_NOW_DEPT")%>" size="24" class="text" readonly="readonly" /><input type="hidden" label="部门" id="GRP_ID" name="GRP_ID" value="<%=pageBean.inputValue("GRP_ID")%>" readonly="<%=pageBean.getAttribute("onlyRead") %>" />
-	<%if(!"readonly".equals(pageBean.getAttribute("onlyRead"))){ %>
+	<td><input id="EMP_NOW_DEPT_NAME" name="EMP_NOW_DEPT_NAME" type="text" value="<%=pageBean.inputValue("EMP_NOW_DEPT_NAME")%>" size="24" class="text" readonly="readonly" />
+	<input type="hidden" label="部门" id="EMP_NOW_DEPT" name="EMP_NOW_DEPT" value="<%=pageBean.inputValue("EMP_NOW_DEPT")%>" />
 	<img id="grpIdSelectImage" src="images/sta.gif" width="16" height="16" onclick="openGrpIdBox()"/>
-	<%} %>
 </td>
 <th width="100" nowrap>学历</th>
 	<td><select id="EMP_EDUCATION" label="学历" name="EMP_EDUCATION" class="select"><%=pageBean.selectValue("EMP_EDUCATION")%></select>
