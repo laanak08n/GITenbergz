@@ -8,6 +8,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.agileai.common.AppConfig;
 import com.agileai.domain.DataParam;
 import com.agileai.domain.DataRow;
 import com.agileai.hotweb.bizmoduler.frame.FunctionManage;
@@ -27,7 +28,7 @@ public class MenuDataProviderHandler extends BaseHandler{
 	
 	public ViewRenderer prepareDisplay(DataParam param){
 		String userId = param.get("userId");
-		String folderId = param.get("folderId"); 
+		String folderId = param.get("folderId");
 		SecurityAuthorizationConfig authorizationConfig = 
 				(SecurityAuthorizationConfig)this.lookupService("securityAuthorizationConfigService");
 		DataRow userRow = authorizationConfig.retrieveUserRecord(userId);
@@ -46,10 +47,10 @@ public class MenuDataProviderHandler extends BaseHandler{
 			JSONArray jsonArray = new JSONArray();
 			jsonObject.put("menus", jsonArray);
 			
-//			BeanFactory beanFactory = BeanFactory.instance();
-//			AppConfig appConfig = beanFactory.getAppConfig();
-//			String menuURLPrefix = appConfig.getConfig("GlobalConfig","MenuURlPrefix");
-			String menuURLPrefix = "http://localhost:6060/aeaihr/";
+			BeanFactory beanFactory = BeanFactory.instance();
+			AppConfig appConfig = beanFactory.getAppConfig();
+			String menuURLPrefix = appConfig.getConfig("GlobalConfig","MenuURLPrefix");
+//			String menuURLPrefix = "http://@USER-20150405WP:6060/aeaihr/";
 			
 			for (int i = 0; i < treeModels.size(); i++) {
 				TreeModel topChildModel = treeModels.get(i);
