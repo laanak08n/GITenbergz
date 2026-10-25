@@ -70,7 +70,11 @@ public class MenuDataProviderHandler extends BaseHandler{
 			JSONObject jsonObject, String menuURLPrefix)throws JSONException {
 		jsonObject.put("id",treeModel.getId());
 		jsonObject.put("text", treeModel.getName());
-		jsonObject.put("url",menuURLPrefix + treeModel.getProperty().get("funcUrl"));
+		String funcURL = (String)treeModel.getProperty().get("funcUrl");
+		if (funcURL.startsWith("index")){
+    		funcURL = menuURLPrefix + funcURL + "&__function_id__="+treeModel.getId();
+    	}
+		jsonObject.put("url", funcURL);
 		jsonObject.put("height", "");
 		
 		List<TreeModel> children = treeModel.getChildren();
