@@ -42,7 +42,7 @@ $(function(){
 					if (confirm("绑定成功！签到不？")){
 						doSubmit({actionType:'signIn'});
 					}else{
-						window.location.href = "index?WxSignIn&actionType=showToday"
+						window.location.href = "resource?WxSignIn&actionType=showToday"
 					}
 				}else{
 					$("#status").css("color","red");
@@ -66,7 +66,7 @@ function changeValideCode(){
 </script>
 </head>
 <body>
-<form action="<%=pageBean.getHandlerURL()%>" name="form1" id="form1" method="post" style="padding:7px 5px">
+<form action="resource?WxBind" name="form1" id="form1" method="post" style="padding:7px 5px">
 <div class="error"></div>
 <div id="status" class="status"></div>
 <label for="userId">用户名：</label>

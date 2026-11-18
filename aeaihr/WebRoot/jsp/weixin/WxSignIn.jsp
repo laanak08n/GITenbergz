@@ -47,12 +47,12 @@ function showToday(){
 	doSubmit({actionType:'showToday'});
 }
 function bindWxUser(){
-	window.location.href="index?WxBind";
+	window.location.href="resource?WxBind";
 }
 </script>
 </head>
 <body>
-<form action="<%=pageBean.getHandlerURL()%>" name="form1" id="form1" method="post" style="padding:7px 5px">
+<form action="resource?WxSignIn" name="form1" id="form1" method="post" style="padding:7px 5px">
 <div id="status" class="status">
 <%
 String statusMsg = (String)request.getAttribute("errorMsg");
