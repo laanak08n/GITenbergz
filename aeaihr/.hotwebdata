@@ -10,7 +10,7 @@
     <UserPwd>pM2i4+HjFrl5VvGQvelc4g==</UserPwd> 
   </DBConfig>  
   <ServerConfig> 
-    <ServerAddress>admin</ServerAddress>  
+    <ServerAddress>localhost</ServerAddress>  
     <ServerPort>6060</ServerPort>  
     <ServerUserId>admin</ServerUserId>  
     <ServerUserPwd>K6CG7IXQGv4=</ServerUserPwd> 
